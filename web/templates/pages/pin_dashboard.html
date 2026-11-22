@@ -1,0 +1,2717 @@
+{{define "content"}}
+<style>
+.pin-dash-page-wrap {
+    max-width: 1200px;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+}
+.pin-user-header {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.04);
+}
+.pin-user-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.pin-user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(230,0,35,0.08) 0%, rgba(230,0,35,0.18) 100%);
+    border: 1px solid rgba(230,0,35,0.2);
+    color: #e60023;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pin-user-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pin-code-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 7px 12px;
+    border-radius: 10px;
+}
+.pin-logout-btn {
+    padding: 7px 14px;
+    background: #ffffff;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.pin-logout-btn:hover {
+    border-color: #fca5a5;
+    color: #dc2626;
+    background: #fef2f2;
+}
+.pin-dash-tabs-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.pin-dash-tabs-bar::-webkit-scrollbar {
+    display: none;
+}
+.pin-tab-btn {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+    background: #f1f5f9;
+    color: #475569;
+}
+.pin-tab-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+.pin-tab-btn.active {
+    background: #e60023;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(230,0,35,0.25);
+}
+.pin-tab-btn.active-dark {
+    background: #0f172a;
+    color: #ffffff;
+}
+.pin-tab-badge {
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(0, 0, 0, 0.08);
+    color: inherit;
+}
+.pin-tab-btn.active .pin-tab-badge {
+    background: #ffffff;
+    color: #e60023;
+}
+.pin-tab-btn.active-dark .pin-tab-badge {
+    background: #334155;
+    color: #ffffff;
+}
+.pin-quota-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+.pin-task-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.04);
+}
+.pin-task-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pin-step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, rgba(230,0,35,0.08) 0%, rgba(230,0,35,0.16) 100%);
+    color: #e60023;
+    border: 1.5px solid rgba(230,0,35,0.25);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.pin-reserved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #059669;
+    font-weight: 800;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+.pin-job-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+}
+.pin-desc-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+.pin-btn-copy-desc {
+    padding: 5px 12px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+.pin-btn-toggle-desc {
+    padding: 5px 10px;
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.pin-badges-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 14px 18px;
+}
+.pin-job-badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+.pin-job-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1e293b;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.pin-job-badge.remote {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #047857;
+}
+.pin-btn-copy-details {
+    padding: 7px 14px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.pin-job-link-box {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 26px;
+}
+.pin-job-link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.pin-target-url {
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0A66C2;
+    word-break: break-all;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    flex: 1;
+    min-width: 240px;
+}
+.pin-job-link-actions {
+    display: flex;
+    gap: 8px;
+}
+.pin-btn-copy-link {
+    padding: 10px 16px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.pin-btn-open-link {
+    padding: 10px 14px;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.pin-submit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.pin-url-input {
+    width: 100%;
+    height: 50px;
+    padding: 12px 16px 12px 42px;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    outline: none;
+    background: #ffffff;
+    color: #0f172a;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+.pin-submit-btn {
+    height: 48px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.96rem;
+    font-weight: 800;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+.pin-history-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+.pin-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pin-history-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+.pin-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+.pin-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 540px;
+}
+.pin-history-table th {
+    padding: 12px 16px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+.pin-history-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+.pin-history-row {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s;
+}
+.pin-history-row:hover {
+    background: #f8fafc;
+}
+.pin-job-link-title {
+    font-weight: 800;
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    display: inline-block;
+}
+.pin-job-link-title:hover {
+    color: #0284c7;
+}
+.pin-table-loc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+}
+.pin-row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+.pin-btn-view-pin {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: rgba(230,0,35,0.08);
+    color: #e60023;
+    border: 1px solid rgba(230,0,35,0.25);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.pin-btn-view-pin:hover {
+    background: rgba(230,0,35,0.15);
+}
+.pin-btn-edit-pin {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.pin-schedule-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+.pin-schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.pin-schedule-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.pin-schedule-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+}
+.pin-schedule-desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    max-width: 520px;
+    line-height: 1.5;
+}
+.pin-clocks-wrap {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.pin-clock-box {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    min-width: 180px;
+}
+.pin-clock-box.highlight {
+    border-color: #cbd5e1;
+}
+.pin-clock-time {
+    font-family: monospace;
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: 0.04em;
+}
+.pin-clock-date {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 2px;
+    font-weight: 600;
+}
+.pin-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+.pin-slot-card {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    transition: all 0.2s;
+}
+.pin-slot-card.prime {
+    background: #fffafa;
+    border-color: #fecaca;
+}
+.pin-trends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+.pin-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+.pin-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 28px 16px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pin-meta-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    color: #0f172a;
+    outline: none;
+    box-sizing: border-box;
+}
+.pin-meta-input:focus {
+    border-color: #e60023;
+}
+.pin-btn-field-copy {
+    padding: 2px 8px;
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.pin-meta-btn-copy {
+    width: 100%;
+    height: 46px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.pin-meta-btn-download {
+    width: 100%;
+    height: 42px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.pin-btn-copy-all {
+    width: 100%;
+    padding: 10px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+@media (max-width: 767px) {
+    .pin-dash-page-wrap {
+        width: 100% !important;
+        padding: 12px 10px 60px !important;
+    }
+    .pin-user-header {
+        padding: 14px 12px !important;
+        border-radius: 16px !important;
+        gap: 12px !important;
+    }
+    .pin-user-header-left {
+        width: 100% !important;
+    }
+    .pin-user-header-right {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    .pin-code-badge {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.78rem !important;
+        padding: 6px 10px !important;
+    }
+    .pin-logout-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+    }
+    .pin-dash-tabs-bar {
+        margin-bottom: 18px !important;
+        gap: 6px !important;
+    }
+    .pin-tab-btn {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
+    }
+    .pin-quota-card {
+        padding: 14px 14px !important;
+        border-radius: 14px !important;
+        margin-bottom: 18px !important;
+    }
+    .pin-task-card {
+        padding: 16px 14px !important;
+        border-radius: 16px !important;
+    }
+    .pin-job-title {
+        font-size: 1.2rem !important;
+    }
+    .pin-desc-box {
+        padding: 12px 14px !important;
+        margin-bottom: 16px !important;
+    }
+    .pin-badges-card {
+        padding: 12px 14px !important;
+        margin-bottom: 18px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .pin-btn-copy-details {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    .pin-job-link-box {
+        padding: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    .pin-job-link-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .pin-target-url {
+        min-width: 100% !important;
+        font-size: 0.82rem !important;
+    }
+    .pin-job-link-actions {
+        width: 100% !important;
+    }
+    .pin-btn-copy-link,
+    .pin-btn-open-link {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.84rem !important;
+        padding: 9px 12px !important;
+    }
+    .pin-url-input {
+        height: 46px !important;
+        font-size: 0.86rem !important;
+    }
+    .pin-submit-btn {
+        height: 46px !important;
+        font-size: 0.9rem !important;
+    }
+    .pin-history-card {
+        padding: 16px 12px !important;
+        border-radius: 16px !important;
+    }
+    .pin-schedule-card {
+        padding: 16px 14px !important;
+        border-radius: 16px !important;
+    }
+    .pin-schedule-title {
+        font-size: 1.15rem !important;
+    }
+    .pin-clocks-wrap {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .pin-clock-box {
+        min-width: 0 !important;
+        padding: 10px 12px !important;
+    }
+    .pin-clock-time {
+        font-size: 1.15rem !important;
+    }
+    .pin-slots-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .pin-slot-card {
+        padding: 10px 12px !important;
+    }
+    .pin-trends-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .pin-meta-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+}
+</style>
+
+<div class="pin-dash-page-wrap">
+    
+    <!-- User Header Bar -->
+    <div class="pin-user-header">
+        <div class="pin-user-header-left">
+            <div class="pin-user-avatar">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+            </div>
+            <div>
+                <div style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.06em; margin-bottom: 2px;">Pinterest Poster Portal</div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <h2 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -0.02em;">
+                        {{.Data.User.Name}}
+                    </h2>
+                    <!-- Pinterest Handle Badge & Edit Trigger -->
+                    <button type="button" onclick="openHandleModal()" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(230,0,35,0.06); color: #e60023; border: 1px solid rgba(230,0,35,0.2); padding: 3px 9px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                        <span>@{{if .Data.User.PinterestHandle}}{{.Data.User.PinterestHandle}}{{else}}Set Handle{{end}}</span>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pin-user-header-right">
+            <div class="pin-code-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #64748b;">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Code: <strong style="font-family: monospace; font-size: 0.92rem; color: #0f172a;">{{.Data.User.AccessCode}}</strong></span>
+            </div>
+            <a href="/pin-logout" class="pin-logout-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Feedback Alerts -->
+    {{if .Data.Success}}
+    <!-- Success Modal -->
+    <div id="modal-alert-success" style="position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.25s ease;" onclick="this.remove()">
+        <div style="background: #ffffff; border-radius: 24px; padding: 32px 28px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">
+            <div style="width: 56px; height: 56px; background: #ecfdf5; border: 2px solid #a7f3d0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #065f46; margin: 0 0 8px 0;">Success!</h3>
+            <p style="font-size: 0.92rem; color: #475569; margin: 0 0 20px 0; line-height: 1.5;">{{.Data.Success}}</p>
+            <button onclick="document.getElementById('modal-alert-success').remove()" style="padding: 9px 24px; background: #059669; color: #ffffff; border: none; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer;">
+                Got it
+            </button>
+        </div>
+    </div>
+    {{end}}
+    {{if .Data.Error}}
+    <!-- Error Modal -->
+    <div id="modal-alert-error" style="position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.25s ease;" onclick="this.remove()">
+        <div style="background: #ffffff; border-radius: 24px; padding: 32px 28px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">
+            <div style="width: 56px; height: 56px; background: #fef2f2; border: 2px solid #fecaca; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #991b1b; margin: 0 0 8px 0;">Oops!</h3>
+            <p style="font-size: 0.92rem; color: #475569; margin: 0 0 20px 0; line-height: 1.5;">{{.Data.Error}}</p>
+            <button onclick="document.getElementById('modal-alert-error').remove()" style="padding: 9px 24px; background: #dc2626; color: #ffffff; border: none; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer;">
+                Dismiss
+            </button>
+        </div>
+    </div>
+    {{end}}
+
+    <!-- Tabs Navigation Bar (Scrollable on mobile) -->
+    <div class="pin-dash-tabs-bar" id="pinDashTabsBar">
+        <a href="/pin-dashboard?tab=active" {{if eq .Data.Tab "active"}}id="pin-active-tab"{{end}} class="pin-tab-btn {{if eq .Data.Tab "active"}}active{{end}}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+            </svg>
+            <span>Today's Task</span>
+            <span class="pin-tab-badge">
+                {{.Data.Progress.TodayCompleted}} / {{.Data.Progress.DailyLimit}}
+            </span>
+        </a>
+        <a href="/pin-dashboard?tab=history" {{if eq .Data.Tab "history"}}id="pin-active-tab"{{end}} class="pin-tab-btn {{if eq .Data.Tab "history"}}active-dark{{end}}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>History</span>
+            <span class="pin-tab-badge">
+                {{.Data.TotalHistory}}
+            </span>
+        </a>
+        <a href="/pin-dashboard?tab=schedule" {{if eq .Data.Tab "schedule"}}id="pin-active-tab"{{end}} class="pin-tab-btn {{if eq .Data.Tab "schedule"}}active{{end}}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>UK / PK Schedule</span>
+        </a>
+        <a href="/pin-dashboard?tab=meta" {{if eq .Data.Tab "meta"}}id="pin-active-tab"{{end}} class="pin-tab-btn {{if eq .Data.Tab "meta"}}active{{end}}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Image Metadata</span>
+            <span class="pin-tab-badge">PNG/JPG</span>
+        </a>
+    </div>
+    <script>
+    (function() {
+        function alignActiveTab() {
+            var bar = document.getElementById('pinDashTabsBar');
+            var active = document.getElementById('pin-active-tab') || (bar ? bar.querySelector('.pin-tab-btn.active, .pin-tab-btn.active-dark') : null);
+            if (bar && active) {
+                var target = active.offsetLeft - (bar.clientWidth / 2) + (active.clientWidth / 2);
+                bar.scrollLeft = Math.max(0, target);
+            }
+        }
+        alignActiveTab();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', alignActiveTab);
+        }
+        window.addEventListener('load', function() {
+            alignActiveTab();
+            setTimeout(alignActiveTab, 50);
+            setTimeout(alignActiveTab, 200);
+        });
+        window.addEventListener('resize', alignActiveTab);
+    })();
+    </script>
+
+    {{if eq .Data.Tab "active"}}
+        <!-- Daily Quota Progress Meter -->
+        <div class="pin-quota-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 800; color: #0f172a;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #e60023;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Daily Pinning Goal</span>
+                </div>
+                <span style="font-size: 0.95rem; font-weight: 900; color: #e60023;">
+                    {{.Data.Progress.TodayCompleted}} of {{.Data.Progress.DailyLimit}} Completed
+                </span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div style="width: 100%; height: 12px; background: #f1f5f9; border-radius: 99px; overflow: hidden; position: relative;">
+                {{$pct := 0}}
+                {{if gt .Data.Progress.DailyLimit 0}}
+                    {{$pct = div (mul .Data.Progress.TodayCompleted 100) .Data.Progress.DailyLimit}}
+                {{end}}
+                <div style="height: 100%; width: {{$pct}}%; background: linear-gradient(90deg, #e60023 0%, #ff5252 100%); border-radius: 99px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px rgba(230,0,35,0.4);"></div>
+            </div>
+        </div>
+
+        {{if .Data.Progress.IsCompleted}}
+            <!-- Quota Complete Celebration Card -->
+            <div style="background: #ffffff; border: 2px solid #6ee7b7; border-radius: 24px; padding: 56px 36px; text-align: center; box-shadow: 0 10px 30px -5px rgba(16,185,129,0.12);">
+                <div style="width: 80px; height: 80px; background: #ecfdf5; border: 2px solid #a7f3d0; border-radius: 24px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #059669;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                        <path d="M4 22h16"></path>
+                        <path d="M10 14.66V17c0 .55-.45 1-1 1H7.5a1.5 1.5 0 0 0 0 3h9a1.5 1.5 0 0 0 0-3H15c-.55 0-1-.45-1-1v-2.34"></path>
+                        <path d="M18 4H6v7a6 6 0 0 0 12 0V4z"></path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.75rem; font-weight: 800; color: #065f46; margin: 0 0 10px 0; letter-spacing: -0.02em;">
+                    Daily Quota Complete!
+                </h3>
+                <p style="font-size: 1.05rem; color: #475569; max-width: 520px; margin: 0 auto 28px auto; line-height: 1.6;">
+                    You have successfully submitted all <strong>{{.Data.Progress.DailyLimit}} Pinterest pins</strong> for today. Outstanding work! Check back tomorrow for new unique vacancies.
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="/pin-dashboard?tab=history" style="padding: 12px 26px; background: #0f172a; color: #ffffff; border-radius: 12px; font-weight: 800; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <span>View My Submission Report</span>
+                    </a>
+                </div>
+            </div>
+        {{else if .Data.Progress.CurrentJob}}
+            <!-- 1 Active Job Link Card (Step by Step) -->
+            <div class="pin-task-card">
+                
+                <!-- Step Counter Header -->
+                <div class="pin-task-header-row">
+                    <span class="pin-step-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <span>Task #{{add .Data.Progress.TodayCompleted 1}} of {{.Data.Progress.DailyLimit}}</span>
+                    </span>
+                    <span class="pin-reserved-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Reserved for You</span>
+                    </span>
+                </div>
+
+                <!-- Job Title & Employer -->
+                <div style="margin-bottom: 16px;">
+                    <h1 class="pin-job-title">
+                        {{.Data.Progress.CurrentJob.Title}}
+                    </h1>
+                    <div style="font-size: 0.92rem; color: #475569; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #64748b; flex-shrink: 0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="6" x2="9.01" y2="6"></line><line x1="15" y1="6" x2="15.01" y2="6"></line><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line><line x1="9" y1="14" x2="9.01" y2="14"></line><line x1="15" y1="14" x2="15.01" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+                        <span>{{if .Data.Progress.CurrentJob.EmployerName}}{{.Data.Progress.CurrentJob.EmployerName}}{{else}}Direct Hiring Employer{{end}}</span>
+                    </div>
+                </div>
+
+                <!-- Job Description Snippet & Copy CTA -->
+                {{if .Data.Progress.CurrentJob.Description}}
+                <div class="pin-desc-box">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>Job Description / Caption</span>
+                        </span>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" id="btn-copy-desc" onclick="copyJobDescription(this)" class="pin-btn-copy-desc">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <span>Copy</span>
+                            </button>
+                            <button type="button" onclick="toggleDescriptionExpansion()" id="btn-toggle-desc" class="pin-btn-toggle-desc">
+                                Show Full
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Snippet view (plain text, no HTML tags) -->
+                    <div id="job-desc-snippet" style="font-size: 0.9rem; line-height: 1.6; color: #334155; max-height: 72px; overflow: hidden; position: relative;">
+                        {{truncateText .Data.Progress.CurrentJob.Description 260}}
+                    </div>
+                    <!-- Full description rendered as formatted HTML -->
+                    <div id="job-desc-full" style="display: none; font-size: 0.9rem; line-height: 1.65; color: #334155; max-height: 300px; overflow-y: auto; padding-right: 8px; margin-top: 8px; border-top: 1px dashed #e2e8f0; padding-top: 10px;">
+                        {{safeHTML .Data.Progress.CurrentJob.Description}}
+                    </div>
+                    <!-- Hidden plain text version for clipboard copy -->
+                    <div id="job-desc-plaintext" style="display: none;">{{stripHTML .Data.Progress.CurrentJob.Description}}</div>
+                </div>
+                {{end}}
+
+                <!-- 5 Key Badges with SVG Icons & Copy CTA Button -->
+                <div class="pin-badges-card">
+                    <div id="job-badges-container" class="pin-job-badges-list">
+                        <!-- 1. Location (e.g. York) -->
+                        <span class="job-meta-badge pin-job-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #e60023; flex-shrink: 0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span class="badge-text">{{.Data.Progress.CurrentJob.DisplayLocation}}</span>
+                        </span>
+
+                        <!-- 2. Work Mode (On-site / Remote) -->
+                        <span class="job-meta-badge pin-job-badge {{if .Data.Progress.CurrentJob.IsRemote}}remote{{end}}">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: {{if .Data.Progress.CurrentJob.IsRemote}}#059669{{else}}#64748b{{end}}; flex-shrink: 0;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <span class="badge-text">{{.Data.Progress.CurrentJob.WorkMode}}</span>
+                        </span>
+
+                        <!-- 3. Contract Type (Permanent) -->
+                        <span class="job-meta-badge pin-job-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #64748b; flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span class="badge-text">{{.Data.Progress.CurrentJob.ContractTypeSimple}}</span>
+                        </span>
+
+                        <!-- 4. Salary (Competitive) -->
+                        <span class="job-meta-badge pin-job-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #059669; flex-shrink: 0;"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+                            <span class="badge-text">{{.Data.Progress.CurrentJob.FormattedSalary}}</span>
+                        </span>
+
+                        <!-- 5. Job Type (Full-time) -->
+                        <span class="job-meta-badge pin-job-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #64748b; flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span class="badge-text">{{.Data.Progress.CurrentJob.JobTypeSimple}}</span>
+                        </span>
+                    </div>
+
+                    <!-- Copy Badges CTA Button -->
+                    <button type="button" id="btn-copy-badges" onclick="copyJobBadges(this)" class="pin-btn-copy-details">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Copy Details</span>
+                    </button>
+                </div>
+
+                <!-- Big Job Link Copy & Open Box -->
+                <div class="pin-job-link-box">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #475569; letter-spacing: 0.05em; margin-bottom: 10px;">
+                        <span style="width: 22px; height: 22px; background: #0f172a; color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900;">1</span>
+                        <span>Copy Job Listing Link For Your Pinterest Pin</span>
+                    </div>
+                    <div class="pin-job-link-row">
+                        <div class="pin-target-url" id="job-target-url">
+                            {{$.Data.BaseURL}}/jobs/{{.Data.Progress.CurrentJob.Slug}}/
+                        </div>
+                        <div class="pin-job-link-actions">
+                            <button type="button" onclick="copyTargetJobUrl('{{$.Data.BaseURL}}/jobs/{{.Data.Progress.CurrentJob.Slug}}/', this)" class="pin-btn-copy-link">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <span>Copy Link</span>
+                            </button>
+                            <a href="/jobs/{{.Data.Progress.CurrentJob.Slug}}/" target="_blank" class="pin-btn-open-link">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                <span>Open</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pinterest Pin Submission Form with Validation -->
+                <form id="pin-submit-form" onsubmit="handlePinSubmission(event, '{{.Data.Progress.CurrentJob.ID}}')" class="pin-submit-form">
+                    <input type="hidden" id="submit_job_id" name="job_id" value="{{.Data.Progress.CurrentJob.ID}}" />
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                            <label for="pin_url" style="font-size: 0.88rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                                <span style="width: 22px; height: 22px; background: #e60023; color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900;">2</span>
+                                <span>Paste Published Pinterest Pin URL</span>
+                            </label>
+                            <span id="pin-validation-msg" style="font-size: 0.8rem; font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                <span>Paste pin URL to unlock</span>
+                            </span>
+                        </div>
+                        <div style="position: relative;">
+                            <input type="url" id="pin_url" name="pin_url" required 
+                                   placeholder="https://www.pinterest.com/pin/1234567890/ or https://pin.it/abcxyz" 
+                                   class="pin-url-input"
+                                   oninput="validatePinInput(this.value)"
+                                   onpaste="setTimeout(function(){ const p = document.getElementById('pin_url'); if(p) validatePinInput(p.value); }, 10)"
+                                   onkeyup="validatePinInput(this.value)"
+                                   onchange="validatePinInput(this.value)" />
+                            <svg style="position: absolute; left: 14px; top: 16px; width: 18px; height: 18px; color: #e60023;" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-pin" disabled class="pin-submit-btn">
+                        <span>Submit Pin & Reveal Next Link</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </form>
+
+            </div>
+        {{else}}
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 40px 20px; text-align: center; color: #64748b;">
+                <p style="font-size: 1rem; margin: 0;">No active jobs currently available for pinning. Please check back shortly.</p>
+            </div>
+        {{end}}
+
+    {{else if eq .Data.Tab "history"}}
+        <!-- Submission History & Report Tab -->
+        <div class="pin-history-card">
+            <div class="pin-history-header">
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -0.02em;">
+                    My Pinning Activity Log
+                </h3>
+                <span class="pin-history-badge">
+                    {{.Data.TotalHistory}} Pins Submitted
+                </span>
+            </div>
+
+            {{if .Data.History}}
+            <div class="pin-table-container">
+                <table class="pin-history-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 110px;">Date</th>
+                            <th>Job Title & Company</th>
+                            <th style="width: 160px;">Location</th>
+                            <th style="width: 140px; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Data.History}}
+                        <tr class="pin-history-row">
+                            <td style="white-space: nowrap; font-size: 0.82rem; color: #64748b; font-weight: 600;">
+                                {{formatDate .SubmittedAt}}
+                            </td>
+                            <td>
+                                <a href="/jobs/{{.JobSlug}}/" target="_blank" class="pin-job-link-title">
+                                    {{.JobTitle}}
+                                </a>
+                                {{if .EmployerName}}
+                                <div style="font-size: 0.8rem; color: #64748b; margin-top: 3px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: #64748b; flex-shrink: 0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="6" x2="9.01" y2="6"></line><line x1="15" y1="6" x2="15.01" y2="6"></line><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line><line x1="9" y1="14" x2="9.01" y2="14"></line><line x1="15" y1="14" x2="15.01" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+                                    <span>{{.EmployerName}}</span>
+                                </div>
+                                {{end}}
+                            </td>
+                            <td>
+                                <span class="pin-table-loc-badge" title="{{if .LocationName}}{{.LocationName}}{{else}}United Kingdom{{end}}">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #e60023; flex-shrink: 0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <span>{{cleanLocation .LocationName}}</span>
+                                </span>
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="pin-row-actions">
+                                    <!-- View Pin button -->
+                                    <a href="{{.PinURL}}" target="_blank" id="pin-link-{{.ID}}" class="pin-btn-view-pin">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0;">
+                                            <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                                        </svg>
+                                        <span>View</span>
+                                    </a>
+                                    <!-- Edit Pin Button -->
+                                    <button type="button" onclick="openEditPinModal('{{.ID}}', '{{.PinURL}}', '{{.JobTitle}}')" class="pin-btn-edit-pin">
+                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>Edit</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+            {{else}}
+            <div style="text-align: center; padding: 36px 16px; color: #64748b; font-size: 0.92rem;">
+                No pin submissions recorded yet. Start pinning from the "Today's Task" tab!
+            </div>
+            {{end}}
+        </div>
+    {{else if eq .Data.Tab "schedule"}}
+        <!-- Tab 3: Best Posting Times & UK/PK Live Clock Hub (Clean White & Minimalist Aesthetic) -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- Hero Timezone & Live Clocks Card -->
+            <div class="pin-schedule-card">
+                <div class="pin-schedule-header">
+                    <div>
+                        <div class="pin-schedule-pill">
+                            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981;"></span>
+                            <span>Live Timezone Synchronizer</span>
+                        </div>
+                        <h2 class="pin-schedule-title">
+                            UK 🇬🇧 vs Pakistan 🇵🇰 Schedule
+                        </h2>
+                        <p class="pin-schedule-desc">
+                            UK audience ke peak active hours ke mutabiq Pakistan time par pin submit karein.
+                        </p>
+                    </div>
+
+                    <!-- 2 Clean Clocks -->
+                    <div class="pin-clocks-wrap">
+                        <!-- UK London Clock -->
+                        <div class="pin-clock-box">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                                <span style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: #64748b;">🇬🇧 London, UK</span>
+                                <span style="background: #e2e8f0; color: #334155; font-size: 0.65rem; font-weight: 700; padding: 1px 5px; border-radius: 4px;">Target</span>
+                            </div>
+                            <div id="hub-clock-uk" class="pin-clock-time">--:--:--</div>
+                            <div id="hub-date-uk" class="pin-clock-date">--</div>
+                        </div>
+
+                        <!-- Pakistan Clock -->
+                        <div class="pin-clock-box highlight">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                                <span style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: #0f172a;">🇵🇰 Pakistan</span>
+                                <span style="background: #ecfdf5; color: #047857; font-size: 0.65rem; font-weight: 800; padding: 1px 5px; border-radius: 4px; border: 1px solid #a7f3d0;">Your Time</span>
+                            </div>
+                            <div id="hub-clock-pk" class="pin-clock-time">--:--:--</div>
+                            <div id="hub-date-pk" class="pin-clock-date" style="color: #047857;">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Daily Posts Schedule Cards -->
+            <div class="pin-schedule-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <span>Daily {{.Data.DailyLimit}} Pins Timetable</span>
+                            <span style="font-size: 0.75rem; font-weight: 800; background: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 99px;">
+                                {{.Data.DailyLimit}} Slots
+                            </span>
+                        </h3>
+                        <p style="font-size: 0.8rem; color: #64748b; margin: 3px 0 0 0;">
+                            Aapki daily quota ke mutabiq best publishing timing aur recommended gaps.
+                        </p>
+                    </div>
+                    <span style="font-size: 0.76rem; font-weight: 700; color: #475569; background: #f1f5f9; padding: 4px 10px; border-radius: 6px;">
+                        {{if le .Data.DailyLimit 3}}
+                            Gap: 3–4 Hours
+                        {{else if le .Data.DailyLimit 6}}
+                            Gap: 2–3 Hours
+                        {{else if le .Data.DailyLimit 10}}
+                            Gap: 1.5–2 Hours
+                        {{else}}
+                            Gap: 45–60 Mins
+                        {{end}}
+                    </span>
+                </div>
+
+                <div class="pin-slots-grid">
+                    {{range .Data.OptimalSlots}}
+                        <div class="pin-slot-card {{if .IsPrime}}prime{{end}}">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <span style="font-size: 0.72rem; font-weight: 800; color: {{if .IsPrime}}#b91c1c{{else}}#64748b{{end}}; text-transform: uppercase;">
+                                    #{{.SlotNumber}} • {{.Title}}
+                                </span>
+                                {{if .Badge}}
+                                    <span style="font-size: 0.65rem; font-weight: 800; background: {{if .IsPrime}}#fee2e2{{else}}#f1f5f9{{end}}; color: {{if .IsPrime}}#991b1b{{else}}#475569{{end}}; padding: 1px 5px; border-radius: 4px;">
+                                        {{.Badge}}
+                                    </span>
+                                {{end}}
+                            </div>
+                            <div style="font-size: 0.8rem; font-weight: 700; color: {{if .IsPrime}}#b91c1c{{else}}#64748b{{end}};">
+                                🇬🇧 {{.UKTime}} UK
+                            </div>
+                            <div style="font-size: 1.15rem; font-weight: 900; color: {{if .IsPrime}}#b91c1c{{else}}#0f172a{{end}}; margin: 2px 0 4px 0;">
+                                🇵🇰 {{.PKTime}} PKT
+                            </div>
+                            <div style="font-size: 0.74rem; color: #64748b; line-height: 1.35;">
+                                {{.Description}}
+                            </div>
+                        </div>
+                    {{else}}
+                        <div style="text-align: center; padding: 20px; color: #64748b;">No schedule slots generated.</div>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- 2-Column: Weekly Matrix & Pro Rules -->
+            <div class="pin-trends-grid">
+                
+                <!-- Weekly Traffic Matrix -->
+                <div class="pin-schedule-card">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin: 0;">Weekly UK Job Trends</h4>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #ecfdf5; border-radius: 8px; border: 1px solid #a7f3d0;">
+                            <span style="font-weight: 700; font-size: 0.82rem; color: #065f46;">Sun Evening & Monday</span>
+                            <span style="font-size: 0.74rem; font-weight: 800; color: #047857;">⭐⭐⭐⭐⭐ Mega Peak</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-weight: 700; font-size: 0.82rem; color: #0f172a;">Tuesday & Wednesday</span>
+                            <span style="font-size: 0.74rem; font-weight: 700; color: #0284c7;">⭐⭐⭐⭐ High Traffic</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-weight: 700; font-size: 0.82rem; color: #0f172a;">Thursday & Friday</span>
+                            <span style="font-size: 0.74rem; font-weight: 700; color: #64748b;">⭐⭐⭐ Moderate</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-weight: 700; font-size: 0.82rem; color: #0f172a;">Saturday</span>
+                            <span style="font-size: 0.74rem; font-weight: 700; color: #64748b;">⭐⭐ Casual</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pro Guidelines Card -->
+                <div class="pin-schedule-card">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin: 0;">Posting Guidelines</h4>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; color: #475569; line-height: 1.45;">
+                        <div style="display: flex; gap: 6px; align-items: flex-start;">
+                            <span style="color: #059669; font-weight: 900;">✓</span>
+                            <span><strong>Spaced Out:</strong> Saari pins ek hi waqt me post mat karein; gap rakhne se organic reach boost hoti hai.</span>
+                        </div>
+                        <div style="display: flex; gap: 6px; align-items: flex-start;">
+                            <span style="color: #059669; font-weight: 900;">✓</span>
+                            <span><strong>Evening Prime:</strong> UK sham 7:15 PM (PKT 11:15 PM) par 60% applications trigger hoti hain.</span>
+                        </div>
+                        <div style="display: flex; gap: 6px; align-items: flex-start;">
+                            <span style="color: #059669; font-weight: 900;">✓</span>
+                            <span><strong>Valid Links:</strong> Hamesha working Pinterest pin link submit karein (<code>pinterest.com/pin/...</code> ya <code>pin.it/...</code>).</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    {{else if eq .Data.Tab "meta"}}
+        <!-- Pinterest Pin Image Metadata Studio Tab -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+
+            <!-- Header Info Banner -->
+            <div class="pin-schedule-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <div>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; background: rgba(230,0,35,0.08); color: #e60023; border: 1px solid rgba(230,0,35,0.2); border-radius: 20px; font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+                        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6a3 3 0 0 0-6 0v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path></svg>Pinterest SEO & Image Metadata Studio</span>
+                    </div>
+                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; letter-spacing: -0.02em;">
+                        Pin Image Metadata & EXIF Tool
+                    </h2>
+                    <p style="font-size: 0.88rem; color: #64748b; margin: 0; max-width: 680px; line-height: 1.5;">
+                        Upload your Pinterest Pin image (<strong>PNG</strong> or <strong>JPG</strong>) to optimize metadata, keywords, hashtags, and SEO tags.
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <span style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; color: #0f172a; display: inline-flex; align-items: center; gap: 5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e60023" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <span>PNG / JPG</span>
+                    </span>
+                    <span style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; color: #0f172a; display: inline-flex; align-items: center; gap: 5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>2:3 (1000×1500)</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- 2-Column Studio Layout -->
+            <div class="pin-meta-grid">
+                
+                <!-- Left Column: Image Uploader & Live Preview -->
+                <div class="pin-schedule-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 22px; height: 22px; background: #e60023; color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900;">1</span>
+                            <span>Upload Pin Image</span>
+                        </h3>
+                        <div id="img-specs-badge" style="display: none; align-items: center; gap: 6px;">
+                            <span style="font-size: 0.74rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Photoshop Metadata Injected</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Dropzone -->
+                    <div id="meta-dropzone" onclick="document.getElementById('meta-file-input').click()" 
+                         ondragover="handleMetaDragOver(event)" ondragleave="handleMetaDragLeave(event)" ondrop="handleMetaDrop(event)"
+                         class="pin-dropzone">
+                        <input type="file" id="meta-file-input" accept="image/png, image/jpeg, image/jpg" style="display: none;" onchange="handleMetaFileSelect(event)" />
+                        
+                        <div id="dropzone-idle-content">
+                            <div style="width: 50px; height: 50px; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px; color: #e60023; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin-bottom: 4px;">
+                                Click to Upload or Drag & Drop Image
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 10px;">
+                                Supports PNG & JPG
+                            </div>
+                            <span style="display: inline-block; padding: 6px 14px; background: #0f172a; color: #ffffff; border-radius: 8px; font-size: 0.8rem; font-weight: 700;">
+                                Browse Image
+                            </span>
+                        </div>
+
+                        <!-- Image Preview Area (Hidden Initially) -->
+                        <div id="dropzone-preview-content" style="display: none;">
+                            <div style="position: relative; display: inline-block; margin-bottom: 12px; max-width: 100%;">
+                                <img id="meta-img-preview" src="" alt="Pin preview" style="max-height: 240px; max-width: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;" />
+                            </div>
+                            <div id="meta-img-info" style="font-size: 0.8rem; color: #475569; font-weight: 700; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+                                <span id="meta-info-name">file.png</span>
+                                <span style="color: #cbd5e1;">•</span>
+                                <span id="meta-info-dim">1000 × 1500 px</span>
+                                <span style="color: #cbd5e1;">•</span>
+                                <span id="meta-info-size">1.2 MB</span>
+                            </div>
+                            <button type="button" onclick="event.stopPropagation(); resetMetaImage();" style="padding: 5px 12px; background: #ffffff; color: #475569; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+                                Choose Another
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons: Copy Image to Clipboard & Download -->
+                    <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+                        <button type="button" id="btn-copy-meta-img" onclick="copyImageToClipboard(this)" disabled class="pin-meta-btn-copy">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Copy Image (Paste on Pinterest)</span>
+                        </button>
+
+                        <button type="button" id="btn-download-meta-img" onclick="downloadOptimizedImage()" disabled class="pin-meta-btn-download">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download Image</span>
+                        </button>
+
+                        <div style="font-size: 0.75rem; color: #64748b; text-align: center; line-height: 1.4; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
+                            <span><strong>Tip:</strong> Click <strong>"Copy Image"</strong></span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8;"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            <span>Go to Pinterest</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8;"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            <span><strong>Ctrl + V</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Metadata Fields & Auto-Fill -->
+                <div class="pin-schedule-card">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 22px; height: 22px; background: #0f172a; color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900;">2</span>
+                            <span>SEO Metadata & Captions</span>
+                        </h3>
+                        {{if and .Data.Progress .Data.Progress.CurrentJob}}
+                        <button type="button" onclick="autoFillActiveJobMetadata()" style="padding: 5px 12px; background: #ecfdf5; color: #047857; border: 1.5px solid #a7f3d0; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s;">
+                            <span>⚡ Auto-Fill Active Job</span>
+                        </button>
+                        {{end}}
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        
+                        <!-- Field 1: Pin Title -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <label style="font-size: 0.82rem; font-weight: 800; color: #1e293b;">
+                                    📌 Pin Title
+                                </label>
+                                <button type="button" onclick="copyMetaField('meta_title', this)" class="pin-btn-field-copy">
+                                    Copy
+                                </button>
+                            </div>
+                            <input type="text" id="meta_title" 
+                                   value="{{if and .Data.Progress .Data.Progress.CurrentJob}}{{.Data.Progress.CurrentJob.Title}} in {{.Data.Progress.CurrentJob.DisplayLocation}} | JobyUK.com{{else}}Job Vacancy | UK Jobs on JobyUK.com{{end}}"
+                                   class="pin-meta-input" />
+                        </div>
+
+                        <!-- Field 2: Pin Description & Hashtags -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <label style="font-size: 0.82rem; font-weight: 800; color: #1e293b;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Description & Hashtags
+                                </label>
+                                <button type="button" onclick="copyMetaField('meta_desc', this)" class="pin-btn-field-copy">
+                                    Copy
+                                </button>
+                            </div>
+                            <textarea id="meta_desc" rows="4" 
+                                      class="pin-meta-input" style="resize: vertical; font-family: inherit;">{{if and .Data.Progress .Data.Progress.CurrentJob}}Looking for {{.Data.Progress.CurrentJob.Title}} roles in {{.Data.Progress.CurrentJob.DisplayLocation}}? Explore verified vacancy requirements, competitive salary, and apply directly.
+
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Location: {{.Data.Progress.CurrentJob.DisplayLocation}}
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>Mode: {{.Data.Progress.CurrentJob.WorkMode}}
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>Salary: {{.Data.Progress.CurrentJob.FormattedSalary}}
+⏱ Type: {{.Data.Progress.CurrentJob.JobTypeSimple}}
+
+#UKJobs #HiringNow #UKCareers #{{replace .Data.Progress.CurrentJob.DisplayLocation " " ""}}Jobs #JobSearch #JobyUK.com{{else}}Discover latest verified UK job opportunities and apply directly on JobyUK.com. #UKJobs #JobSearch #HiringNow #JobyUK.com{{end}}</textarea>
+                        </div>
+
+                        <!-- Field 3: Alt Text (Accessibility & SEO) -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <label style="font-size: 0.82rem; font-weight: 800; color: #1e293b;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>Alt Text (SEO)
+                                </label>
+                                <button type="button" onclick="copyMetaField('meta_alt', this)" class="pin-btn-field-copy">
+                                    Copy
+                                </button>
+                            </div>
+                            <input type="text" id="meta_alt" 
+                                   value="{{if and .Data.Progress .Data.Progress.CurrentJob}}{{.Data.Progress.CurrentJob.Title}} opportunity in {{.Data.Progress.CurrentJob.DisplayLocation}} - Apply on JobyUK.com{{else}}UK Job vacancy listing on JobyUK.com{{end}}"
+                                   class="pin-meta-input" />
+                        </div>
+
+                        <!-- Field 4: Destination Link -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <label style="font-size: 0.82rem; font-weight: 800; color: #1e293b;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Destination URL
+                                </label>
+                                <button type="button" onclick="copyMetaField('meta_url', this)" class="pin-btn-field-copy">
+                                    Copy
+                                </button>
+                            </div>
+                            <input type="text" id="meta_url" 
+                                   value="{{if and .Data.Progress .Data.Progress.CurrentJob}}{{$.Data.BaseURL}}/jobs/{{.Data.Progress.CurrentJob.Slug}}/{{else}}{{$.Data.BaseURL}}/jobs/{{end}}"
+                                   class="pin-meta-input" style="font-family: monospace; color: #0A66C2;" />
+                        </div>
+
+                        <!-- Field 5: Keywords / Tags -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <label style="font-size: 0.82rem; font-weight: 800; color: #1e293b;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>Keywords / Tags
+                                </label>
+                                <button type="button" onclick="copyMetaField('meta_keywords', this)" class="pin-btn-field-copy">
+                                    Copy
+                                </button>
+                            </div>
+                            <input type="text" id="meta_keywords" 
+                                   value="{{if and .Data.Progress .Data.Progress.CurrentJob}}{{.Data.Progress.CurrentJob.Title}}, {{.Data.Progress.CurrentJob.DisplayLocation}} Jobs, {{.Data.Progress.CurrentJob.WorkMode}}, {{.Data.Progress.CurrentJob.JobTypeSimple}}, UK Jobs, JobyUK.com{{else}}UK Jobs, Careers, Job Search, JobyUK.com{{end}}"
+                                   class="pin-meta-input" />
+                        </div>
+
+                        <!-- Copy All Action Button -->
+                        <div style="margin-top: 6px; padding-top: 12px; border-top: 1px dashed #e2e8f0;">
+                            <button type="button" onclick="copyAllMetadata(this)" class="pin-btn-copy-all">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <span>Copy All Metadata</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    {{end}}
+
+</div>
+
+<!-- Modal 1: Edit Pinterest Account Handle -->
+<div id="modal-handle" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: #ffffff; border-radius: 20px; padding: 32px; width: 100%; max-width: 440px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#e60023">
+                    <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;">My Pinterest Handle</h3>
+            </div>
+            <button type="button" onclick="closeHandleModal()" style="background: none; border: none; font-size: 1.3rem; color: #64748b; cursor: pointer; display: flex; align-items: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+
+        <form onsubmit="handleSavePinterestHandle(event)" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">
+                    Pinterest Account Username / Handle
+                </label>
+                <div style="display: flex; align-items: stretch; border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #ffffff; transition: border-color 0.2s;" onfocusin="this.style.borderColor='#e60023'" onfocusout="this.style.borderColor='#cbd5e1'">
+                    <span style="background: #f8fafc; color: #64748b; font-weight: 800; font-size: 1rem; padding: 0 14px; display: flex; align-items: center; justify-content: center; border-right: 1.5px solid #e2e8f0; user-select: none;">@</span>
+                    <input type="text" id="input_handle" name="pinterest_handle" value="{{.Data.User.PinterestHandle}}" required placeholder="JobyUK.com_jobs" 
+                           style="flex: 1; border: none; outline: none; padding: 12px 14px; font-size: 0.95rem; font-weight: 700; color: #0f172a; background: transparent;" />
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+                <button type="submit" id="btn-save-handle" style="flex: 1; padding: 12px; background: #e60023; color: #ffffff; border: none; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer;">
+                    Save Handle
+                </button>
+                <button type="button" onclick="closeHandleModal()" style="padding: 12px 18px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal 2: Edit/Update Submitted Pin URL -->
+<div id="modal-edit-pin" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: #ffffff; border-radius: 20px; padding: 32px; width: 100%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #0f172a;">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;">Edit Pinterest Pin Link</h3>
+            </div>
+            <button type="button" onclick="closeEditPinModal()" style="background: none; border: none; font-size: 1.3rem; color: #64748b; cursor: pointer; display: flex; align-items: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+
+        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 16px; font-weight: 600;" id="edit-modal-job-title"></div>
+
+        <form onsubmit="handleSaveEditedPin(event)" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" id="edit_assignment_id" />
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">
+                    Correct Pinterest Pin URL
+                </label>
+                <input type="url" id="edit_pin_url" required placeholder="https://www.pinterest.com/pin/1234567890/ or https://pin.it/..." 
+                       style="width: 100%; padding: 11px 14px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 0.92rem; outline: none;" />
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+                <button type="submit" id="btn-update-pin" style="flex: 1; padding: 12px; background: #0f172a; color: #ffffff; border: none; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer;">
+                    Update Pin URL
+                </button>
+                <button type="button" onclick="closeEditPinModal()" style="padding: 12px 18px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Auto-scroll active tab into view on mobile/smaller screens
+function scrollActiveTabIntoView() {
+    const tabsBar = document.getElementById('pinDashTabsBar') || document.querySelector('.pin-dash-tabs-bar');
+    if (!tabsBar) return;
+    const activeTab = tabsBar.querySelector('.pin-tab-btn.active, .pin-tab-btn.active-dark');
+    if (activeTab) {
+        const targetScroll = activeTab.offsetLeft - (tabsBar.clientWidth / 2) + (activeTab.clientWidth / 2);
+        tabsBar.scrollLeft = Math.max(0, targetScroll);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scrollActiveTabIntoView);
+} else {
+    scrollActiveTabIntoView();
+}
+window.addEventListener('resize', scrollActiveTabIntoView);
+
+const pinRegex = /(?:https?:\/\/)?(?:(?:[a-zA-Z0-9-]+\.)?pinterest\.(?:com|[a-z]{2,3}(?:\.[a-z]{2})?)\/pin\/[0-9a-zA-Z_-]+|pin\.it\/[0-9a-zA-Z_-]+)/i;
+
+function validatePinInput(val) {
+    const input = document.getElementById('pin_url');
+    const msg = document.getElementById('pin-validation-msg');
+    const btn = document.getElementById('btn-submit-pin');
+    const trimmed = (val || '').trim();
+
+    if (!input) return false;
+
+    if (!trimmed) {
+        if (msg) {
+            msg.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span>Paste published pin URL to unlock submission</span>';
+            msg.style.color = '#64748b';
+        }
+        input.style.borderColor = '#cbd5e1';
+        input.style.boxShadow = 'none';
+        if (btn) {
+            btn.disabled = true;
+            btn.style.background = '#94a3b8';
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'not-allowed';
+            btn.style.boxShadow = 'none';
+        }
+        return false;
+    }
+
+    if (pinRegex.test(trimmed)) {
+        if (msg) {
+            msg.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #10b981;"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="color: #10b981; font-weight: 800;">Valid Pinterest Pin URL (Ready to Submit)</span>';
+            msg.style.color = '#10b981';
+        }
+        input.style.borderColor = '#10b981';
+        input.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.15)';
+        if (btn) {
+            btn.disabled = false;
+            btn.style.background = '#e60023';
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+            btn.style.boxShadow = '0 4px 14px rgba(230,0,35,0.25)';
+        }
+        return true;
+    } else {
+        if (msg) {
+            msg.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #ef4444;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span style="color: #ef4444; font-weight: 700;">Invalid URL format (must be pinterest.com/pin/... or pin.it/...)</span>';
+            msg.style.color = '#ef4444';
+        }
+        input.style.borderColor = '#ef4444';
+        input.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.12)';
+        if (btn) {
+            btn.disabled = true;
+            btn.style.background = '#94a3b8';
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'not-allowed';
+            btn.style.boxShadow = 'none';
+        }
+        return false;
+    }
+}
+
+function copyTargetJobUrl(url, btnElement) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            showBtnCopyFeedback(btnElement, 'Copied!');
+        }).catch(function() {
+            fallbackCopy(url, btnElement, 'Copied!');
+        });
+    } else {
+        fallbackCopy(url, btnElement, 'Copied!');
+    }
+}
+
+function copyJobDescription(btnElement) {
+    const plainEl = document.getElementById('job-desc-plaintext');
+    const textToCopy = plainEl ? plainEl.innerText.trim() : '';
+    if (!textToCopy) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            showBtnCopyFeedback(btnElement, 'Description Copied!');
+        }).catch(function() {
+            fallbackCopy(textToCopy, btnElement, 'Description Copied!');
+        });
+    } else {
+        fallbackCopy(textToCopy, btnElement, 'Description Copied!');
+    }
+}
+
+function copyJobBadges(btnElement) {
+    const badgeElements = document.querySelectorAll('#job-badges-container .badge-text');
+    const items = [];
+    badgeElements.forEach(function(el) {
+        const text = el.innerText.trim();
+        if (text) {
+            items.push(text);
+        }
+    });
+
+    if (items.length === 0) return;
+    const textToCopy = items.join('\n');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            showBtnCopyFeedback(btnElement, 'Details Copied!');
+        }).catch(function() {
+            fallbackCopy(textToCopy, btnElement, 'Details Copied!');
+        });
+    } else {
+        fallbackCopy(textToCopy, btnElement, 'Details Copied!');
+    }
+}
+
+function fallbackCopy(text, btnElement, label) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showBtnCopyFeedback(btnElement, label);
+    } catch (err) {
+        if (window.JobyUKToast) {
+            window.JobyUKToast("Copied to clipboard!", "success");
+        }
+    }
+    document.body.removeChild(textArea);
+}
+
+function showBtnCopyFeedback(btn, label) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #047857;"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="color: #047857; font-weight: 800;">' + label + '</span>';
+    btn.style.background = '#ecfdf5';
+    btn.style.color = '#047857';
+    setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.style.background = '#0f172a';
+        btn.style.color = '#ffffff';
+    }, 2200);
+}
+
+function toggleDescriptionExpansion() {
+    const full = document.getElementById('job-desc-full');
+    const snippet = document.getElementById('job-desc-snippet');
+    const btn = document.getElementById('btn-toggle-desc');
+
+    if (full.style.display === 'none') {
+        full.style.display = 'block';
+        snippet.style.display = 'none';
+        btn.textContent = 'Show Less';
+    } else {
+        full.style.display = 'none';
+        snippet.style.display = 'block';
+        btn.textContent = 'Show Full';
+    }
+}
+
+function showDashboardErrorModal(msg) {
+    var existing = document.getElementById('modal-alert-error');
+    if (existing) existing.remove();
+    var modalHtml = '<div id="modal-alert-error" style="position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.25s ease;" onclick="this.remove()">' +
+        '<div style="background: #ffffff; border-radius: 24px; padding: 40px 36px; text-align: center; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">' +
+            '<div style="width: 64px; height: 64px; background: #fef2f2; border: 2px solid #fecaca; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px;">' +
+                '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>' +
+            '</div>' +
+            '<h3 style="font-size: 1.3rem; font-weight: 800; color: #991b1b; margin: 0 0 8px 0;">Notice</h3>' +
+            '<p style="font-size: 0.95rem; color: #475569; margin: 0 0 24px 0; line-height: 1.5;">' + msg + '</p>' +
+            '<button onclick="document.getElementById(\'modal-alert-error\').remove()" style="padding: 10px 28px; background: #dc2626; color: #ffffff; border: none; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer;">Dismiss</button>' +
+        '</div>' +
+    '</div>';
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function handlePinSubmission(e, jobId) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById('pin_url');
+    const val = input.value.trim();
+
+    if (!jobId || jobId === '') {
+        const hiddenJobEl = document.getElementById('submit_job_id');
+        if (hiddenJobEl) jobId = hiddenJobEl.value;
+    }
+
+    if (!pinRegex.test(val)) {
+        showDashboardErrorModal('Please enter a valid Pinterest Pin link (e.g. https://www.pinterest.com/pin/12345/ or https://pin.it/abc)');
+        input.focus();
+        return;
+    }
+
+    const btn = document.getElementById('btn-submit-pin');
+    btn.disabled = true;
+    btn.innerHTML = '<span>Verifying & Saving Pin...</span>';
+
+    const params = new URLSearchParams();
+    params.append('job_id', jobId);
+    params.append('pin_url', val);
+
+    fetch('/pin-dashboard/submit', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+        if (data.success) {
+            btn.innerHTML = '<span style="color: #10b981;">✓ Success! Loading Next Link...</span>';
+            setTimeout(function() {
+                window.location.href = '/pin-dashboard?tab=active&success=Pin+recorded+successfully!';
+            }, 500);
+        } else {
+            showDashboardErrorModal(data.error || 'Failed to submit Pin URL');
+            if (btn) {
+                btn.innerHTML = '<span>Submit Pin & Reveal Next Link</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+                validatePinInput(val);
+            }
+        }
+    })
+    .catch(function(err) {
+        showDashboardErrorModal('Network error while saving submission.');
+        if (btn) {
+            btn.innerHTML = '<span>Submit Pin & Reveal Next Link</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+            validatePinInput(val);
+        }
+    });
+}
+
+// Pinterest Handle Modal Handlers
+function openHandleModal() {
+    document.getElementById('modal-handle').style.display = 'flex';
+    document.getElementById('input_handle').focus();
+}
+
+function closeHandleModal() {
+    document.getElementById('modal-handle').style.display = 'none';
+}
+
+function handleSavePinterestHandle(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const handleVal = document.getElementById('input_handle').value.trim();
+    const btn = document.getElementById('btn-save-handle');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    const params = new URLSearchParams();
+    params.append('pinterest_handle', handleVal);
+
+    fetch('/pin-dashboard/handle', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            showDashboardErrorModal(data.error || 'Failed to update handle');
+            btn.disabled = false;
+            btn.textContent = 'Save Handle';
+        }
+    })
+    .catch(err => {
+        showDashboardErrorModal('Network error while saving handle.');
+        btn.disabled = false;
+        btn.textContent = 'Save Handle';
+    });
+}
+
+// Edit Submitted Pin Modal Handlers
+function openEditPinModal(assignmentId, currentUrl, jobTitle) {
+    document.getElementById('edit_assignment_id').value = assignmentId;
+    document.getElementById('edit_pin_url').value = currentUrl;
+    document.getElementById('edit-modal-job-title').textContent = 'Editing pin for: ' + jobTitle;
+    document.getElementById('modal-edit-pin').style.display = 'flex';
+    document.getElementById('edit_pin_url').focus();
+}
+
+function closeEditPinModal() {
+    document.getElementById('modal-edit-pin').style.display = 'none';
+}
+
+function handleSaveEditedPin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const assignmentId = document.getElementById('edit_assignment_id').value;
+    const pinUrl = document.getElementById('edit_pin_url').value.trim();
+
+    if (!pinRegex.test(pinUrl)) {
+        showDashboardErrorModal('Please enter a valid Pinterest Pin link (e.g. https://www.pinterest.com/pin/12345/ or https://pin.it/abc)');
+        return;
+    }
+
+    const btn = document.getElementById('btn-update-pin');
+    btn.disabled = true;
+    btn.textContent = 'Updating...';
+
+    const params = new URLSearchParams();
+    params.append('assignment_id', assignmentId);
+    params.append('pin_url', pinUrl);
+
+    fetch('/pin-dashboard/edit-pin', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '/pin-dashboard?tab=history&success=Pin+URL+updated+successfully!';
+        } else {
+            showDashboardErrorModal(data.error || 'Failed to update pin URL');
+            btn.disabled = false;
+            btn.textContent = 'Update Pin URL';
+        }
+    })
+    .catch(err => {
+        showDashboardErrorModal('Network error while updating pin.');
+        btn.disabled = false;
+        btn.textContent = 'Update Pin URL';
+    });
+}
+
+// Live Clocks and Dates for UK (London) and Pakistan (PKT)
+function updateLiveClocks() {
+    const now = new Date();
+    
+    // London Time (Handles GMT/BST automatically)
+    const ukTimeStr = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    }).format(now);
+
+    const ukDateStr = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+    }).format(now);
+    
+    // Pakistan Time (PKT)
+    const pkTimeStr = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Karachi',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    }).format(now);
+
+    const pkDateStr = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Karachi',
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+    }).format(now);
+
+    // Dedicated Hub Clocks & Dates
+    const hubUkClock = document.getElementById('hub-clock-uk');
+    const hubUkDate = document.getElementById('hub-date-uk');
+    const hubPkClock = document.getElementById('hub-clock-pk');
+    const hubPkDate = document.getElementById('hub-date-pk');
+
+    if (hubUkClock) hubUkClock.textContent = ukTimeStr;
+    if (hubUkDate) hubUkDate.textContent = ukDateStr;
+    if (hubPkClock) hubPkClock.textContent = pkTimeStr;
+    if (hubPkDate) hubPkDate.textContent = pkDateStr;
+}
+
+// Image Metadata Studio Handlers
+let currentMetaFile = null;
+let currentMetaImgData = null;
+
+function handleMetaDragOver(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropzone = document.getElementById('meta-dropzone');
+    if (dropzone) {
+        dropzone.style.borderColor = '#e60023';
+        dropzone.style.background = 'rgba(230,0,35,0.04)';
+    }
+}
+
+function handleMetaDragLeave(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropzone = document.getElementById('meta-dropzone');
+    if (dropzone) {
+        dropzone.style.borderColor = '#cbd5e1';
+        dropzone.style.background = '#f8fafc';
+    }
+}
+
+function handleMetaDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropzone = document.getElementById('meta-dropzone');
+    if (dropzone) {
+        dropzone.style.borderColor = '#cbd5e1';
+        dropzone.style.background = '#f8fafc';
+    }
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        processMetaImageFile(e.dataTransfer.files[0]);
+    }
+}
+
+function handleMetaFileSelect(e) {
+    if (e.target && e.target.files && e.target.files[0]) {
+        processMetaImageFile(e.target.files[0]);
+    }
+}
+
+// PNG Binary Metadata Scrubber & Adobe Photoshop XMP Injector Engine
+const PngScrubber = {
+    crcTable: null,
+    initCrcTable: function() {
+        if (this.crcTable) return;
+        const cTable = new Uint32Array(256);
+        for (let n = 0; n < 256; n++) {
+            let c = n;
+            for (let k = 0; k < 8; k++) {
+                c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+            }
+            cTable[n] = c;
+        }
+        this.crcTable = cTable;
+    },
+    crc32: function(buf, offset, length) {
+        this.initCrcTable();
+        let c = 0xFFFFFFFF;
+        for (let i = offset; i < offset + length; i++) {
+            c = this.crcTable[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+        }
+        return (c ^ 0xFFFFFFFF) >>> 0;
+    },
+    createChunk: function(typeStr, dataBytes) {
+        const len = dataBytes ? dataBytes.length : 0;
+        const totalLen = 4 + 4 + len + 4;
+        const chunk = new Uint8Array(totalLen);
+        const view = new DataView(chunk.buffer);
+
+        view.setUint32(0, len, false);
+
+        const enc = new TextEncoder();
+        const typeBytes = enc.encode(typeStr);
+        chunk.set(typeBytes, 4);
+
+        if (len > 0) {
+            chunk.set(dataBytes, 8);
+        }
+
+        const crcVal = this.crc32(chunk, 4, 4 + len);
+        view.setUint32(8 + len, crcVal, false);
+
+        return chunk;
+    },
+    createTextChunk: function(key, val) {
+        const enc = new TextEncoder();
+        const kBytes = enc.encode(key);
+        const vBytes = enc.encode(val);
+        const data = new Uint8Array(kBytes.length + 1 + vBytes.length);
+        data.set(kBytes, 0);
+        data[kBytes.length] = 0;
+        data.set(vBytes, kBytes.length + 1);
+        return this.createChunk('tEXt', data);
+    },
+    createItxtChunk: function(key, val) {
+        const enc = new TextEncoder();
+        const kBytes = enc.encode(key);
+        const vBytes = enc.encode(val);
+        const data = new Uint8Array(kBytes.length + 5 + vBytes.length);
+        data.set(kBytes, 0);
+        data[kBytes.length] = 0;
+        data[kBytes.length + 1] = 0;
+        data[kBytes.length + 2] = 0;
+        data[kBytes.length + 3] = 0;
+        data[kBytes.length + 4] = 0;
+        data.set(vBytes, kBytes.length + 5);
+        return this.createChunk('iTXt', data);
+    },
+    processAndInject: function(arrayBuffer, meta) {
+        const bytes = new Uint8Array(arrayBuffer);
+        const pngHeader = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+        for (let i = 0; i < 8; i++) {
+            if (bytes[i] !== pngHeader[i]) return null;
+        }
+
+        let ihdrChunk = null;
+        let physChunk = null;
+        const idatChunks = [];
+        const safeChunks = [];
+
+        let offset = 8;
+        const view = new DataView(arrayBuffer);
+
+        while (offset + 8 <= bytes.length) {
+            const length = view.getUint32(offset, false);
+            const type = String.fromCharCode(bytes[offset + 4], bytes[offset + 5], bytes[offset + 6], bytes[offset + 7]);
+            const totalChunkLen = 4 + 4 + length + 4;
+            const chunkSlice = bytes.subarray(offset, offset + totalChunkLen);
+            offset += totalChunkLen;
+
+            if (type === 'IHDR') {
+                ihdrChunk = chunkSlice;
+            } else if (type === 'pHYs') {
+                physChunk = chunkSlice;
+            } else if (type === 'IDAT') {
+                idatChunks.push(chunkSlice);
+            } else if (['sRGB', 'gAMA', 'cHRM', 'PLTE', 'tRNS'].includes(type)) {
+                safeChunks.push(chunkSlice);
+            }
+        }
+
+        if (!ihdrChunk) return null;
+
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const nowIso = now.toISOString();
+        const title = meta.title || 'UK Job Vacancy | JobyUK.com';
+        const desc = meta.description || 'Verified UK Job Vacancy on JobyUK.com.';
+        const url = meta.url || 'https://jobyuk.com';
+        const keywords = meta.keywords ? meta.keywords.split(',').map(k => k.trim()).filter(Boolean) : ['UK Jobs', 'JobyUK.com'];
+        const location = meta.location || 'United Kingdom';
+
+        const keywordsXml = keywords.map(k => `<rdf:li>${k.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</rdf:li>`).join('\n    ');
+
+        const xmpXml = `<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x='adobe:ns:meta/'>
+<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+ <rdf:Description rdf:about=''
+  xmlns:dc='http://purl.org/dc/elements/1.1/'
+  xmlns:xmp='http://ns.adobe.com/xap/1.0/'
+  xmlns:xmpRights='http://ns.adobe.com/xap/1.0/rights/'
+  xmlns:photoshop='http://ns.adobe.com/photoshop/1.0/'>
+  <dc:title>
+   <rdf:Alt><rdf:li xml:lang='x-default'>${title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</rdf:li></rdf:Alt>
+  </dc:title>
+  <dc:creator>
+   <rdf:Seq><rdf:li>JobyUK.com Creative Studio</rdf:li></rdf:Seq>
+  </dc:creator>
+  <dc:description>
+   <rdf:Alt><rdf:li xml:lang='x-default'>${desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</rdf:li></rdf:Alt>
+  </dc:description>
+  <dc:subject>
+   <rdf:Bag>
+    ${keywordsXml}
+   </rdf:Bag>
+  </dc:subject>
+  <xmp:CreatorTool>Adobe Photoshop ${currentYear} (Macintosh)</xmp:CreatorTool>
+  <xmp:CreateDate>${nowIso}</xmp:CreateDate>
+  <xmp:ModifyDate>${nowIso}</xmp:ModifyDate>
+  <xmp:MetadataDate>${nowIso}</xmp:MetadataDate>
+  <photoshop:AuthorsPosition>Official Creative Design Agency</photoshop:AuthorsPosition>
+  <photoshop:Credit>JobyUK.com Verified Employer Portal</photoshop:Credit>
+  <photoshop:City>${location.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</photoshop:City>
+  <photoshop:Country>United Kingdom</photoshop:Country>
+  <xmpRights:Marked>True</xmpRights:Marked>
+  <xmpRights:WebStatement>${url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</xmpRights:WebStatement>
+  <xmpRights:UsageTerms>
+   <rdf:Alt><rdf:li xml:lang='x-default'>Official Pinterest publication asset for JobyUK.com Verified UK Vacancies (${currentYear}). Copyright © ${currentYear} JobyUK.com. All rights reserved.</rdf:li></rdf:Alt>
+  </xmpRights:UsageTerms>
+ </rdf:Description>
+</rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>`;
+
+        const outChunks = [
+            new Uint8Array([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]),
+            ihdrChunk
+        ];
+
+        if (physChunk) outChunks.push(physChunk);
+        for (const sc of safeChunks) outChunks.push(sc);
+
+        outChunks.push(this.createItxtChunk('XML:com.adobe.xmp', xmpXml));
+        outChunks.push(this.createTextChunk('Title', title));
+        outChunks.push(this.createTextChunk('Author', 'JobyUK.com Creative Studio'));
+        outChunks.push(this.createTextChunk('Software', `Adobe Photoshop ${currentYear} (Macintosh)`));
+        outChunks.push(this.createTextChunk('Description', desc));
+        outChunks.push(this.createTextChunk('Copyright', `© ${currentYear} JobyUK.com. All rights reserved.`));
+        outChunks.push(this.createTextChunk('Source', url));
+
+        for (const idat of idatChunks) outChunks.push(idat);
+        outChunks.push(this.createChunk('IEND', null));
+
+        let totalLength = 0;
+        for (const ch of outChunks) totalLength += ch.length;
+
+        const result = new Uint8Array(totalLength);
+        let cur = 0;
+        for (const ch of outChunks) {
+            result.set(ch, cur);
+            cur += ch.length;
+        }
+
+        return result;
+    }
+};
+
+let currentMetaArrayBuffer = null;
+
+function processMetaImageFile(file) {
+    if (!file) return;
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!validTypes.includes(file.type)) {
+        showDashboardErrorModal('Please upload a valid PNG or JPG/JPEG image.');
+        return;
+    }
+
+    currentMetaFile = file;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        currentMetaImgData = e.target.result;
+        
+        // Also read raw buffer for scrubbing
+        const bufReader = new FileReader();
+        bufReader.onload = function(bufEvt) {
+            currentMetaArrayBuffer = bufEvt.target.result;
+        };
+        bufReader.readAsArrayBuffer(file);
+
+        const img = new Image();
+        img.onload = function() {
+            document.getElementById('dropzone-idle-content').style.display = 'none';
+            document.getElementById('dropzone-preview-content').style.display = 'block';
+            document.getElementById('meta-img-preview').src = currentMetaImgData;
+
+            document.getElementById('meta-info-name').textContent = file.name;
+            document.getElementById('meta-info-dim').textContent = img.naturalWidth + ' × ' + img.naturalHeight + ' px';
+            
+            const sizeKb = Math.round(file.size / 1024);
+            const sizeStr = sizeKb > 1024 ? (sizeKb / 1024).toFixed(1) + ' MB' : sizeKb + ' KB';
+            document.getElementById('meta-info-size').textContent = sizeStr;
+
+            const dlBtn = document.getElementById('btn-download-meta-img');
+            if (dlBtn) {
+                dlBtn.disabled = false;
+                dlBtn.style.background = '#0f172a';
+                dlBtn.style.opacity = '1';
+                dlBtn.style.cursor = 'pointer';
+            }
+
+            const copyImgBtn = document.getElementById('btn-copy-meta-img');
+            if (copyImgBtn) {
+                copyImgBtn.disabled = false;
+                copyImgBtn.style.background = '#e60023';
+                copyImgBtn.style.opacity = '1';
+                copyImgBtn.style.cursor = 'pointer';
+                copyImgBtn.style.boxShadow = '0 4px 14px rgba(230,0,35,0.25)';
+            }
+
+            const specsBadge = document.getElementById('img-specs-badge');
+            if (specsBadge) specsBadge.style.display = 'flex';
+        };
+        img.src = currentMetaImgData;
+    };
+    reader.readAsDataURL(file);
+}
+
+function resetMetaImage() {
+    currentMetaFile = null;
+    currentMetaImgData = null;
+    currentMetaArrayBuffer = null;
+    const fileInput = document.getElementById('meta-file-input');
+    if (fileInput) fileInput.value = '';
+
+    document.getElementById('dropzone-idle-content').style.display = 'block';
+    document.getElementById('dropzone-preview-content').style.display = 'none';
+    document.getElementById('meta-img-preview').src = '';
+
+    const dlBtn = document.getElementById('btn-download-meta-img');
+    if (dlBtn) {
+        dlBtn.disabled = true;
+        dlBtn.style.background = '#94a3b8';
+        dlBtn.style.opacity = '0.6';
+        dlBtn.style.cursor = 'not-allowed';
+    }
+
+    const copyImgBtn = document.getElementById('btn-copy-meta-img');
+    if (copyImgBtn) {
+        copyImgBtn.disabled = true;
+        copyImgBtn.style.background = '#94a3b8';
+        copyImgBtn.style.opacity = '0.6';
+        copyImgBtn.style.cursor = 'not-allowed';
+        copyImgBtn.style.boxShadow = 'none';
+    }
+
+    const specsBadge = document.getElementById('img-specs-badge');
+    if (specsBadge) specsBadge.style.display = 'none';
+}
+
+function copyImageToClipboard(btn) {
+    if (!currentMetaImgData || !currentMetaFile) return;
+
+    try {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            canvas.toBlob(function(blob) {
+                if (!blob) {
+                    showDashboardErrorModal('Failed to convert image to clipboard blob.');
+                    return;
+                }
+                if (navigator.clipboard && navigator.clipboard.write) {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    navigator.clipboard.write([item]).then(function() {
+                        showBtnCopyFeedback(btn, '📋 Clean Image Copied! Press Ctrl+V on Pinterest');
+                    }).catch(function(err) {
+                        showDashboardErrorModal('Could not copy image automatically. Right-click the preview image and select "Copy Image".');
+                    });
+                } else {
+                    showDashboardErrorModal('Clipboard image write not supported in this browser. Right-click the preview image and select "Copy Image".');
+                }
+            }, 'image/png');
+        };
+        img.src = currentMetaImgData;
+    } catch (e) {
+        showDashboardErrorModal('Right-click preview image and select "Copy Image".');
+    }
+}
+
+function downloadOptimizedImage() {
+    if (!currentMetaImgData || !currentMetaFile) return;
+
+    const titleVal = document.getElementById('meta_title') ? document.getElementById('meta_title').value : 'JobyUK.com-job-pin';
+    const descVal = document.getElementById('meta_desc') ? document.getElementById('meta_desc').value : '';
+    const urlVal = document.getElementById('meta_url') ? document.getElementById('meta_url').value : '';
+    const kwVal = document.getElementById('meta_keywords') ? document.getElementById('meta_keywords').value : '';
+
+    const cleanName = titleVal.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'pin-image';
+    const filename = cleanName + '.png';
+
+    // Apply binary scrubbing & Adobe XMP metadata injection
+    let downloadUrl = currentMetaImgData;
+    if (currentMetaArrayBuffer && currentMetaFile.type === 'image/png') {
+        const cleanedBytes = PngScrubber.processAndInject(currentMetaArrayBuffer, {
+            title: titleVal,
+            description: descVal,
+            url: urlVal,
+            keywords: kwVal,
+            location: 'United Kingdom'
+        });
+        if (cleanedBytes) {
+            const blob = new Blob([cleanedBytes], { type: 'image/png' });
+            downloadUrl = URL.createObjectURL(blob);
+        }
+    }
+
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    const btn = document.getElementById('btn-download-meta-img');
+    if (btn) {
+        showBtnCopyFeedback(btn, '✨ Cleaned & Downloaded!');
+    }
+}
+
+function copyMetaField(id, btn) {
+    const el = document.getElementById(id);
+    const text = el ? (el.value || el.innerText || '') : '';
+    if (!text) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+            showBtnCopyFeedback(btn, 'Copied!');
+        }).catch(function() {
+            fallbackCopy(text, btn, 'Copied!');
+        });
+    } else {
+        fallbackCopy(text, btn, 'Copied!');
+    }
+}
+
+function copyAllMetadata(btn) {
+    const title = document.getElementById('meta_title') ? document.getElementById('meta_title').value : '';
+    const desc = document.getElementById('meta_desc') ? document.getElementById('meta_desc').value : '';
+    const alt = document.getElementById('meta_alt') ? document.getElementById('meta_alt').value : '';
+    const url = document.getElementById('meta_url') ? document.getElementById('meta_url').value : '';
+    const keywords = document.getElementById('meta_keywords') ? document.getElementById('meta_keywords').value : '';
+
+    const lines = [
+        "📌 Pin Title:\n" + title,
+        "\n<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Destination URL:\n" + url,
+        "\n🏷️ Alt Text:\n" + alt,
+        "\n<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>Keywords / Tags:\n" + keywords,
+        "\n📝 Pin Description & Hashtags:\n" + desc
+    ];
+
+    const textToCopy = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            showBtnCopyFeedback(btn, 'All Meta Copied!');
+        }).catch(function() {
+            fallbackCopy(textToCopy, btn, 'All Meta Copied!');
+        });
+    } else {
+        fallbackCopy(textToCopy, btn, 'All Meta Copied!');
+    }
+}
+
+function autoFillActiveJobMetadata() {
+    {{if and .Data.Progress .Data.Progress.CurrentJob}}
+    const jobTitle = {{.Data.Progress.CurrentJob.Title}};
+    const jobLoc = {{.Data.Progress.CurrentJob.DisplayLocation}};
+    const jobEmployer = {{if .Data.Progress.CurrentJob.EmployerName}}{{.Data.Progress.CurrentJob.EmployerName}}{{else}}"Direct Hiring Employer"{{end}};
+    const jobMode = {{.Data.Progress.CurrentJob.WorkMode}};
+    const jobSalary = {{.Data.Progress.CurrentJob.FormattedSalary}};
+    const jobType = {{.Data.Progress.CurrentJob.JobTypeSimple}};
+    const jobSlug = {{.Data.Progress.CurrentJob.Slug}};
+    const baseUrl = {{$.Data.BaseURL}};
+
+    const locTag = jobLoc.replace(/\s+/g, '');
+
+    const titleEl = document.getElementById('meta_title');
+    const descEl = document.getElementById('meta_desc');
+    const altEl = document.getElementById('meta_alt');
+    const urlEl = document.getElementById('meta_url');
+    const kwEl = document.getElementById('meta_keywords');
+
+    if (titleEl) titleEl.value = jobTitle + ' in ' + jobLoc + ' | JobyUK.com';
+    if (descEl) descEl.value = 'Looking for ' + jobTitle + ' roles in ' + jobLoc + '? Explore verified vacancy requirements, ' + jobSalary + ', and apply directly.\n\n<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Location: ' + jobLoc + '\n<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>Mode: ' + jobMode + '\n<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>Salary: ' + jobSalary + '\n⏱ Type: ' + jobType + '\n\n#UKJobs #HiringNow #UKCareers #' + locTag + 'Jobs #JobSearch #JobyUK.com';
+    if (altEl) altEl.value = jobTitle + ' opportunity at ' + jobEmployer + ' in ' + jobLoc + ', UK - Apply on JobyUK.com';
+    if (urlEl) urlEl.value = baseUrl + '/jobs/' + jobSlug + '/';
+    if (kwEl) kwEl.value = jobTitle + ', ' + jobLoc + ' Jobs, ' + jobMode + ', ' + jobType + ', ' + jobSalary + ', UK Jobs, JobyUK.com';
+
+    const btn = event ? event.target : null;
+    if (btn) showBtnCopyFeedback(btn, '⚡ Auto-Filled!');
+    {{end}}
+}
+
+setInterval(updateLiveClocks, 1000);
+updateLiveClocks();
+
+// Initialize form validation state on load
+(function() {
+    const pinEl = document.getElementById('pin_url');
+    if (pinEl) {
+        validatePinInput(pinEl.value);
+    }
+})();
+
+// =========================================================================
+// Next-Level Real-Time Inactivity Security Watchdog for Pinterest Poster Portal
+// Tracks: Mouse Movement, Typing, Touch, Scroll, Tab Visibility
+// =========================================================================
+(function() {
+    const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000; // 15 Minutes
+    const WARNING_TIME_MS = 60 * 1000;            // 60 Seconds warning
+    const HEARTBEAT_INTERVAL_MS = 2 * 60 * 1000;  // 2 Minutes heartbeat when active
+    
+    let lastActivityTime = Date.now();
+    let lastHeartbeatTime = Date.now();
+    let warningModalShown = false;
+
+    const modal = document.getElementById("pin-inactivity-warning-modal");
+    const countdownEl = document.getElementById("pin-inactivity-countdown");
+
+    function recordUserActivity() {
+        lastActivityTime = Date.now();
+        if (warningModalShown) {
+            dismissWarning();
+            sendHeartbeat();
+        } else if (Date.now() - lastHeartbeatTime > HEARTBEAT_INTERVAL_MS) {
+            sendHeartbeat();
+        }
+    }
+
+    function sendHeartbeat() {
+        lastHeartbeatTime = Date.now();
+        fetch("/pin-dashboard/heartbeat", { credentials: "same-origin" })
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    forceLogout();
+                }
+            })
+            .catch(() => {});
+    }
+
+    window.extendPinSession = function() {
+        recordUserActivity();
+        sendHeartbeat();
+    };
+
+    function showWarning(secondsLeft) {
+        warningModalShown = true;
+        if (modal) {
+            modal.style.display = "flex";
+        }
+        updateCountdown(secondsLeft);
+    }
+
+    function dismissWarning() {
+        warningModalShown = false;
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function updateCountdown(secondsLeft) {
+        if (!countdownEl) return;
+        const mins = Math.floor(secondsLeft / 60);
+        const secs = secondsLeft % 60;
+        countdownEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function forceLogout() {
+        window.location.href = "/pin-login?error=Your+session+has+expired+due+to+15+minutes+of+inactivity.+Please+log+in+again.";
+    }
+
+    // High-Performance Interaction Listeners (Throttled)
+    let throttleTimer = null;
+    function onInteraction() {
+        if (!throttleTimer) {
+            throttleTimer = setTimeout(() => {
+                recordUserActivity();
+                throttleTimer = null;
+            }, 500);
+        }
+    }
+
+    ['mousemove', 'mousedown', 'pointerdown', 'keydown', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove'].forEach(evt => {
+        window.addEventListener(evt, onInteraction, { passive: true });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+            onInteraction();
+        }
+    });
+
+    // Master Watchdog Tick Every 1 Second
+    setInterval(() => {
+        const idleMs = Date.now() - lastActivityTime;
+        const remainingMs = INACTIVITY_TIMEOUT_MS - idleMs;
+
+        if (remainingMs <= 0) {
+            forceLogout();
+        } else if (remainingMs <= WARNING_TIME_MS) {
+            showWarning(Math.ceil(remainingMs / 1000));
+        } else if (warningModalShown) {
+            dismissWarning();
+        }
+    }, 1000);
+})();
+</script>
+
+<!-- Pin Portal Inactivity Expiry Warning Modal -->
+<div id="pin-inactivity-warning-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #ffffff; border-radius: 24px; max-width: 440px; width: 100%; padding: 36px 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); text-align: center; border: 1px solid #e2e8f0;">
+        <div style="width: 60px; height: 60px; border-radius: 18px; background: #fff1f2; color: #e11d48; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">Poster Session Timeout</h3>
+        <p style="font-size: 0.9rem; color: #64748b; margin: 0 0 22px 0; line-height: 1.5;">
+            You have been inactive. To protect your work quota, your session will automatically lock in:
+        </p>
+        <div id="pin-inactivity-countdown" style="font-family: monospace; font-size: 2.6rem; font-weight: 900; color: #e11d48; margin-bottom: 26px; letter-spacing: 0.05em;">
+            01:00
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <button onclick="extendPinSession()" style="flex: 1; height: 50px; background: #e60023; color: #ffffff; border: none; border-radius: 14px; font-weight: 800; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(230,0,35,0.3);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Stay Working
+            </button>
+            <a href="/pin-logout" style="height: 50px; padding: 0 20px; background: #f1f5f9; color: #475569; border-radius: 14px; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                Exit
+            </a>
+        </div>
+    </div>
+</div>
+
+{{end}}
+

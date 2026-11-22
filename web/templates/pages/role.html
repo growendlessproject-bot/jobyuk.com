@@ -1,0 +1,917 @@
+{{define "content"}}
+<div class="jy-role-hub-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        {{if .Data.Role}}
+        <!-- =========================================================================
+             1. ROLE DETAIL VIEW (/job-roles/{slug}/) - JobyUK Next-Level Hub Layout
+             ========================================================================= -->
+        
+        <!-- Header Card: Role Title & Job Search -->
+        <section class="jy-dream-header" aria-label="Job Role Search Header" style="margin-bottom: 32px;">
+            <div class="jy-dream-header__top" style="margin-bottom: 22px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 6px;">
+                        Direct ATS Jobs
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 6px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem;">
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: #059669; color: #ffffff; flex-shrink: 0; box-shadow: 0 1px 3px rgba(5, 150, 105, 0.3);">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </span>
+                        <span>No Agency Middlemen</span>
+                    </span>
+                </div>
+                <h1 class="jy-dream-header__title" style="margin: 0 0 8px; font-size: 2.5rem; font-weight: 850; color: #0B1F1A; letter-spacing: -0.025em; line-height: 1.2;">
+                    {{.Data.Role.Name}} Jobs in the UK
+                </h1>
+                <p class="jy-dream-header__count" style="margin: 0 0 10px; font-size: 1.05rem; color: #64748B;">
+                    {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                        Browse <strong style="color: #0F172A; font-weight: 800;">{{formatSalary .Data.Results.Total}}</strong> hiring-now {{.Data.Role.Name}} vacancies across the UK. Direct employer links, real salaries, zero recruiter spam.
+                    {{else}}
+                        Browse live {{.Data.Role.Name}} jobs from verified UK employers. Apply direct in 2 minutes.
+                    {{end}}
+                </p>
+                {{if .Data.IntroText}}
+                <p class="jy-dream-header__intro" style="font-size: 0.95rem; line-height: 1.6; color: #475569; margin: 0 0 18px; max-width: 820px;">
+                    {{.Data.IntroText}}
+                </p>
+                {{end}}
+            </div>
+
+            <!-- Integrated Search Bar with Suggestions -->
+            <form action="/jobs/" method="GET" class="jy-dream-search-form" id="role-search-form">
+                <div class="jy-dream-search-bar">
+                    <!-- Field 1: Role / Keywords -->
+                    <div class="jy-dream-input-pill" style="position: relative;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="role-search-q" name="q" value="{{.Data.Role.Name}}" placeholder="Job title or keywords..." autocomplete="off" aria-label="Search job title or keywords" />
+                        <button type="button" class="jy-search-clear-btn" id="role-clear-q" style="display: none;" aria-label="Clear job search">✕</button>
+                        <div class="jy-suggest-dropdown" id="suggest-dropdown-role-q" style="display: none;"></div>
+                    </div>
+
+                    <!-- Field 2: Location -->
+                    <div class="jy-dream-input-pill" style="position: relative;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="role-search-loc" name="location" placeholder="London, Manchester, Remote..." autocomplete="off" aria-label="Location" />
+                        <button type="button" class="jy-search-clear-btn" id="role-clear-loc" style="display: none;" aria-label="Clear location search">✕</button>
+                        <div class="jy-suggest-dropdown" id="suggest-dropdown-role-loc" style="display: none;"></div>
+                    </div>
+
+                    <!-- Field 3: Salary -->
+                    <div class="jy-dream-input-pill" style="max-width: 240px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <select name="min_salary" aria-label="Salary range" style="cursor: pointer;">
+                            <option value="">Any salary</option>
+                            <option value="25000">£25,000+ per year</option>
+                            <option value="40000">£40,000+ per year</option>
+                            <option value="60000">£60,000+ per year</option>
+                            <option value="80000">£80,000+ per year</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="jy-dream-search-btn">Search Jobs</button>
+                </div>
+
+                <!-- Quick Filter Tag Pills -->
+                <div class="jy-dream-tags">
+                    <a href="/jobs/?q={{.Data.Role.Name}}&job_type=full_time" class="jy-dream-tag">Full Time</a>
+                    <a href="/jobs/?q={{.Data.Role.Name}}&remote_type=remote" class="jy-dream-tag">Remote</a>
+                    <a href="/jobs/?q={{.Data.Role.Name}}&location=London" class="jy-dream-tag">London</a>
+                    <a href="/jobs/?q={{.Data.Role.Name}}&location=Manchester" class="jy-dream-tag">Manchester</a>
+                    <a href="/salary-calculator/" class="jy-dream-tag jy-dream-tag--emerald">
+                        <span>Salary Calculator</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <!-- Main Content Area: Left Sticky Filter Sidebar + Right Listings Feed -->
+        <div class="jy-dream-layout">
+            
+            <!-- Column 1: Left Sticky Filter Sidebar (Listing Page Filter) -->
+            <aside class="jy-dream-sidebar" aria-label="Job filters">
+                <div class="jy-dream-sidebar__header">
+                    <h2 class="jy-dream-sidebar__title">Filters</h2>
+                    <a href="/jobs/?q={{.Data.Role.Name}}" class="jy-dream-clear-link" title="Reset all filters">Clear all</a>
+                </div>
+
+                <form action="/jobs/" method="GET" id="sidebar-filter-form">
+                    <input type="hidden" name="q" value="{{.Data.Role.Name}}">
+                    {{if .Data.Params.Location}}<input type="hidden" name="location" value="{{.Data.Params.Location}}">{{end}}
+
+                    <!-- Section 1: Work Mode (iOS Toggle Switches) -->
+                    <div>
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">On-site</span>
+                            <input type="checkbox" name="remote_type" value="on_site" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "on_site"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">Remote</span>
+                            <input type="checkbox" name="remote_type" value="remote" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "remote"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">Hybrid</span>
+                            <input type="checkbox" name="remote_type" value="hybrid" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "hybrid"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">
+                                <span>Friendly Offers</span>
+                                <span>🇬🇧</span>
+                            </span>
+                            <input type="checkbox" name="easy_apply" value="true" class="jy-toggle-input" {{if .Data.Params.EasyApply}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+                    </div>
+
+                    <!-- Section 2: Jobs you might like -->
+                    <div class="jy-sidebar-sec">
+                        <h3 class="jy-sidebar-sec__title">Jobs you might like</h3>
+                        <div class="jy-sidebar-options">
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="" {{if not .Data.Params.SortBy}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Best Matches</span>
+                                </span>
+                                <span class="jy-sidebar-count">{{if .Data.Results}}{{.Data.Results.Total}}{{else}}219{{end}}</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="date" {{if eq .Data.Params.SortBy "date"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Most Recent</span>
+                                </span>
+                                <span class="jy-sidebar-count">10</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="salary" {{if eq .Data.Params.SortBy "salary"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Offers with salary</span>
+                                </span>
+                                <span class="jy-sidebar-count">19</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Experience -->
+                    <div class="jy-sidebar-sec">
+                        <h3 class="jy-sidebar-sec__title">Experience</h3>
+                        <div class="jy-sidebar-options">
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="entry" {{if eq .Data.Params.ExperienceLevel "entry"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Under 1 year</span>
+                                </span>
+                                <span class="jy-sidebar-count">4</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="junior" {{if eq .Data.Params.ExperienceLevel "junior"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>1-2 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">15</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="mid" {{if or (eq .Data.Params.ExperienceLevel "mid") (not .Data.Params.ExperienceLevel)}}checked{{end}} onchange="this.form.submit()">
+                                    <span>2-6 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">49</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="senior" {{if eq .Data.Params.ExperienceLevel "senior"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Over 6 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">23</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <div style="margin-top: 24px;">
+                    {{template "whatsapp_sidebar_card" dict "Role" .Data.Role.Name}}
+                </div>
+            </aside>
+
+            <!-- Column 2: Main Job Cards Feed -->
+            <main class="jy-dream-listings" aria-label="{{.Data.Role.Name}} job listings">
+                {{template "whatsapp_infeed_card" dict "CustomTitle" (printf "Get New %s Vacancies on WhatsApp" .Data.Role.Name) "CustomDesc" (printf "Instant direct job alerts for %s openings across the UK. 100%% free." .Data.Role.Name) "Role" .Data.Role.Name}}
+                
+                <div class="listing-jobs stagger">
+                    {{range $index, $job := .Data.Results.Jobs}}
+                        {{template "job_card" $job}}
+                        {{if or (eq $index 3) (eq $index 11)}}
+                            {{template "wfa_incontent" $}}
+                        {{end}}
+                    {{else}}
+                        <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 20px; padding: 48px 32px; text-align: center; border: 1.5px solid #EEF2F6;">
+                            <div style="width: 60px; height: 60px; border-radius: 16px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </div>
+                            <h2 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 8px;">No current vacancies for {{$.Data.Role.Name}}</h2>
+                            <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 20px; line-height: 1.5;">Check back soon or explore related roles in our directory.</p>
+                            <a href="/job-roles/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.92rem; padding: 10px 24px; border-radius: 12px; text-decoration: none;">
+                                Browse All Job Roles
+                            </a>
+                        </div>
+                    {{end}}
+                </div>
+
+                <!-- Load More Jobs & Auto-Scroll Controller -->
+                {{if gt .Data.Results.TotalPages 1}}
+                <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs">
+                    <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn">
+                        <svg class="jy-load-more-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                        <span class="jy-load-more-text">Load More Jobs</span>
+                        <svg class="jy-load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                    </button>
+                </div>
+                {{end}}
+
+                <!-- Pagination -->
+                <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 32px;">
+                    {{template "pagination" .Data.Results}}
+                </div>
+            </main>
+        </div>
+
+        <!-- UK Hiring Realities & Career Intelligence (Interactive SEO-Optimized Accordion) -->
+        <details class="jy-reality-accordion animate-fade-in" id="uk-hiring-guide" aria-label="UK Hiring Realities & Career Intelligence">
+            <!-- 1. Interactive Summary Bar (Visible on Page Load, Compact & Clickable) -->
+            <summary class="jy-reality-summary">
+                <div class="jy-reality-summary__left">
+                    <div class="jy-reality-summary__icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <div class="jy-reality-summary__info">
+                        <div class="jy-reality-summary__badge-row">
+                            <span class="jy-reality-summary__badge">UK Market Intelligence</span>
+                            <span class="jy-reality-summary__tagline">Candidate Briefing · 3 Key Insights</span>
+                        </div>
+                        <h2 class="jy-reality-summary__title">
+                            What UK Employers Actually Look For in a {{.Data.Role.Name}}
+                        </h2>
+                        <p class="jy-reality-summary__subtitle">
+                            Skip the buzzwords. Tap to explore real delivery benchmarks, direct ATS hiring advantages, and take-home pay calculations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="jy-reality-summary__right">
+                    <div class="jy-reality-summary__btn">
+                        <span>Read Career Guide</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-reality-chevron">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </summary>
+
+            <!-- 2. Expandable Body (Fully indexed by Google, reveals on click) -->
+            <div class="jy-reality-body">
+                <!-- Market Signals Strip -->
+                <div class="jy-reality-facts">
+                    <div class="jy-reality-fact-pill">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                        <span><strong>Production Delivery:</strong> 83% of UK tech leads value shipping record over degrees</span>
+                    </div>
+                    <div class="jy-reality-fact-pill">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span><strong>Direct Application:</strong> 4.2x faster response rate via employer ATS</span>
+                    </div>
+                    <div class="jy-reality-fact-pill">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+                        <span><strong>HMRC Net Pay:</strong> Real take-home is ~28%–42% lower than advertised headline</span>
+                    </div>
+                </div>
+
+                <!-- 3 Architectural Columns -->
+                <div class="jy-reality-grid">
+                    <!-- Pillar 1: What you will actually do -->
+                    <div class="jy-reality-card">
+                        <div>
+                            <div class="jy-reality-card__top">
+                                <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--emerald">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                    </svg>
+                                </div>
+                                <span class="jy-reality-card__pillar jy-reality-card__pillar--emerald">01 · Daily Reality</span>
+                            </div>
+                            <h3 class="jy-reality-card__title">What you will actually do</h3>
+                            <p class="jy-reality-card__desc">
+                                Solving real day-to-day problems and delivering work on time. Most UK hiring managers care far more about your practical track record than fancy degree titles or buzzword-stuffed CVs.
+                            </p>
+
+                            <!-- Visual Breakdown Box -->
+                            <div class="jy-reality-box">
+                                <div class="jy-reality-box-row jy-reality-box-row--check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Shipping maintainable, tested code to production</span>
+                                </div>
+                                <div class="jy-reality-box-row jy-reality-box-row--check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Unblocking teammates &amp; pragmatic engineering</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jy-reality-card__footer">
+                            <div class="jy-reality-badge-bottom">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Track record beats credentialism</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2: What gets you hired faster -->
+                    <div class="jy-reality-card">
+                        <div>
+                            <div class="jy-reality-card__top">
+                                <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--blue">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                    </svg>
+                                </div>
+                                <span class="jy-reality-card__pillar jy-reality-card__pillar--blue">02 · Hiring Edge</span>
+                            </div>
+                            <h3 class="jy-reality-card__title">What gets you hired faster</h3>
+                            <p class="jy-reality-card__desc">
+                                Clear examples of work you've delivered, solid answers to technical or scenario questions, and applying direct to hiring managers before recruiter pipelines get crowded.
+                            </p>
+
+                            <!-- Visual Breakdown Box -->
+                            <div class="jy-reality-box">
+                                <div class="jy-reality-box-row jy-reality-box-row--check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span><strong>Direct on JobyUK:</strong> Straight to employer ATS review</span>
+                                </div>
+                                <div class="jy-reality-box-row jy-reality-box-row--check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Articulate project deep-dives &amp; architecture decisions</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jy-reality-card__footer">
+                            <div class="jy-reality-badge-bottom" style="color: #1D4ED8;">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Direct ATS pipeline advantage</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3: What you actually take home (Featured Financial Conversion Card) -->
+                    <div class="jy-reality-card jy-reality-card--featured">
+                        <div>
+                            <div class="jy-reality-card__top">
+                                <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--amber">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path>
+                                        <path d="M6 13h10"></path>
+                                    </svg>
+                                </div>
+                                <span class="jy-reality-card__pillar jy-reality-card__pillar--amber">03 · Net Pay Reality</span>
+                            </div>
+                            <h3 class="jy-reality-card__title">What you actually take home</h3>
+                            <p class="jy-reality-card__desc">
+                                Headline salary numbers can be misleading after HMRC takes tax, National Insurance, and pension. Check your real monthly earnings before saying yes.
+                            </p>
+
+                            <!-- Realistic Payslip Mini Preview -->
+                            <div class="jy-reality-payslip">
+                                <div class="jy-reality-payslip__row">
+                                    <span>Headline Advertised</span>
+                                    <span class="jy-reality-payslip__row--strong">£65,000 / yr</span>
+                                </div>
+                                <div class="jy-reality-payslip__row">
+                                    <span>HMRC Tax &amp; NI (est.)</span>
+                                    <span style="color: #DC2626; font-weight: 700;">-£1,532 / mo</span>
+                                </div>
+                                <div class="jy-reality-payslip__divider"></div>
+                                <div class="jy-reality-payslip__net">
+                                    <span>Net in Bank:</span>
+                                    <span>~£3,885 / mo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jy-reality-card__footer" style="padding-top: 0; border-top: none;">
+                            <a href="/salary-calculator/" class="jy-reality-cta-btn">
+                                <span>Check your take-home pay</span>
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                            <span class="jy-reality-cta-sub">Free UK Salary &amp; Tax Calculator · Current HMRC Rates</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Collapse Action -->
+                <div class="jy-reality-collapse-row">
+                    <button type="button" class="jy-reality-collapse-btn" onclick="document.getElementById('uk-hiring-guide').removeAttribute('open'); document.getElementById('uk-hiring-guide').scrollIntoView({behavior: 'smooth', block: 'nearest'});">
+                        <span>Collapse Guide</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </details>
+        {{else}}
+        <!-- =========================================================================
+             2. ROLE DIRECTORY INDEX VIEW (/job-roles/) - JobyUK Modern Directory
+             ========================================================================= -->
+
+        <!-- Hero Header -->
+        <header class="jy-dream-header" aria-label="Job Roles Directory Hero" style="padding: 36px 40px; margin-bottom: 32px;">
+            <div style="max-width: 820px; margin-bottom: 24px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 6px;">
+                        JobyUK UK Role Directory
+                    </span>
+                    <span style="font-size: 0.78rem; font-weight: 750; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 12px; border-radius: 9999px;">
+                        {{.Data.TotalCount}}+ UK Job Titles
+                    </span>
+                </div>
+
+                <h1 style="font-size: 2.85rem; font-weight: 850; color: #0B1F1A; line-height: 1.15; letter-spacing: -0.03em; margin: 0 0 12px;">
+                    Find UK Jobs by Role
+                </h1>
+                <p style="font-size: 1.1rem; color: #64748B; line-height: 1.6; margin: 0;">
+                    Pick your trade or title. See who’s hiring this week, what it actually pays across the UK, and apply straight to the employer — zero agency spam.
+                </p>
+            </div>
+
+            <!-- Instant Search Bar -->
+            <div style="position: relative; max-width: 680px; margin-bottom: 24px;">
+                <form action="/job-roles/" method="GET" class="jy-hero__search-card" onsubmit="event.preventDefault(); applyRoleFilter();" style="width: 100%; box-shadow: 0 8px 24px -4px rgba(15, 81, 50, 0.08);">
+                    <div class="jy-hero__search-field" style="padding-left: 4px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" name="q" id="role-search-input" value="{{.Data.Query}}" placeholder="Search job roles (e.g. Software Developer, Nurse, Accountant)..." class="jy-hero__search-input" autocomplete="off" oninput="filterRolesLive(this.value)">
+                        <button type="button" id="role-search-clear" onclick="clearRoleSearch()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: #475569; font-weight: 800; font-size: 11px; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 8px;">✕</button>
+                    </div>
+                    <div class="jy-hero__search-btn-glass">
+                        <button type="submit" class="jy-hero__search-btn">Search Roles</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- A-Z Alphabet Filter Navigation -->
+            <div class="jy-roles-az-bar" style="border-top: 1px solid #EEF2F6; padding-top: 20px;">
+                <div style="font-size: 0.75rem; font-weight: 800; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+                    Filter Roles Alphabetically:
+                </div>
+                <div class="jy-roles-az-slider" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                    <a href="/job-roles/" class="jy-az-pill {{if eq .Data.SelectedLetter ""}}active{{end}}">All</a>
+                    {{$selectedLetter := .Data.SelectedLetter}}
+                    {{range .Data.Alphabet}}
+                        <a href="/job-roles/?letter={{.}}" class="jy-az-pill {{if eq $selectedLetter .}}active{{end}}">{{.}}</a>
+                    {{end}}
+                </div>
+            </div>
+        </header>
+
+        {{template "whatsapp_context_banner" dict "Title" "Get Verified Role Vacancies on WhatsApp" "Desc" "Select your preferred job role and receive instant alerts directly on WhatsApp in under 60 seconds." "Role" "Role Alerts"}}
+
+        <!-- 3-Column Roles Directory Grid -->
+        {{template "wfa_incontent" .}}
+        <div id="roles-directory-container" style="margin-top: 24px;">
+            <div class="jy-roles-grid" id="roles-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+                {{range .Data.Roles}}
+                <article class="jy-role-card" data-name="{{lower .Name}}" data-slug="{{.Slug}}">
+                    <a href="/job-roles/{{.Slug}}/" class="jy-role-card__overlay" aria-label="Explore {{.Name}} jobs"></a>
+                    <div class="jy-role-card__inner">
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 14px;">
+                            <div class="jy-role-card__icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </div>
+                            <span class="jy-role-card__badge">{{.FormattedJobCount}}</span>
+                        </div>
+
+                        <h2 class="jy-role-card__title">
+                            <a href="/job-roles/{{.Slug}}/">{{.Name}}</a>
+                        </h2>
+
+                        <div class="jy-role-card__footer">
+                            <span class="jy-role-card__cta">
+                                <span>View Vacancies</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </span>
+                            <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">Verified ATS</span>
+                        </div>
+                    </div>
+                </article>
+                {{else}}
+                <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 20px; padding: 48px 32px; text-align: center; border: 1.5px solid #EEF2F6; grid-column: 1 / -1;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: #F1F5F9; color: #64748B; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <h2 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">No job roles found matching your search</h2>
+                    <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 16px;">Try searching for a different role title or reset your filters.</p>
+                    <a href="/job-roles/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.88rem; padding: 9px 22px; border-radius: 10px; text-decoration: none;">
+                        Reset Filters
+                    </a>
+                </div>
+                {{end}}
+            </div>
+
+            <!-- Empty Search State for Live Client Search -->
+            <div id="noRolesLiveEmptyState" style="display: none; background: #FFFFFF; border-radius: 20px; padding: 48px 32px; text-align: center; border: 1.5px solid #EEF2F6; margin-top: 16px;">
+                <div style="width: 54px; height: 54px; border-radius: 16px; background: #F1F5F9; color: #64748B; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #0B1F1A; margin: 0 0 6px;">No roles match your search</h3>
+                <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 16px;">Try searching for "Software", "Nurse", "Manager", or "Designer".</p>
+                <button type="button" onclick="clearRoleSearch()" style="background: #059669; color: #FFFFFF; border: none; padding: 9px 20px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer;">
+                    Reset Search
+                </button>
+            </div>
+
+            <!-- Load More Roles & Auto-Scroll Controller -->
+            {{if gt .Data.TotalPages 1}}
+            <div class="jy-load-more-wrap" id="load-more-roles-wrap" data-current-page="{{.Data.Page}}" data-total-pages="{{.Data.TotalPages}}" data-type="roles">
+                <button type="button" class="jy-load-more-btn" id="load-more-roles-btn">
+                    <svg class="jy-load-more-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                    <span class="jy-load-more-text">Load More Roles</span>
+                    <svg class="jy-load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                </button>
+            </div>
+
+            <!-- Fallback Static Pagination for SEO & Non-JS -->
+            <noscript>
+                <div style="margin-top: 24px; display: flex; justify-content: center;">
+                    <div class="jy-pagination-wrap" style="display: flex; align-items: center; gap: 8px;">
+                        {{if gt .Data.Page 1}}
+                        <a href="/job-roles/?page={{sub .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-page-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>Previous</span>
+                        </a>
+                        {{end}}
+                        <span style="font-size: 0.88rem; font-weight: 700; color: #475569; padding: 6px 14px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px;">
+                            Page {{.Data.Page}} of {{.Data.TotalPages}}
+                        </span>
+                        {{if lt .Data.Page .Data.TotalPages}}
+                        <a href="/job-roles/?page={{add .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-page-btn">
+                            <span>Next</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        {{end}}
+                    </div>
+                </div>
+            </noscript>
+            {{end}}
+        </div>
+
+        {{end}}
+
+        {{template "listing_floating_bar" .Data}}
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   Job Roles Theme Styling (JobyUK Design System)
+   ========================================================================= */
+
+/* A-Z Pills */
+.j-az-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #475569;
+    border: 1.5px solid #CBD5E1;
+    font-size: 0.82rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.j-az-pill:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #F0FDF4;
+    transform: translateY(-2px);
+}
+.j-az-pill.active {
+    background: #059669 !important;
+    color: #FFFFFF !important;
+    border-color: #059669 !important;
+    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+}
+
+/* Role Card Component */
+.j-role-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.03);
+}
+.j-role-card:hover {
+    border-color: #059669;
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px -6px rgba(5, 150, 105, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+.j-role-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.j-role-card__inner {
+    padding: 24px 22px;
+}
+.j-role-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #ECFDF5;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+.j-role-card:hover .j-role-card__icon {
+    transform: scale(1.08);
+}
+.j-role-card__badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    white-space: nowrap;
+}
+.j-role-card__title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0B1F1A;
+    line-height: 1.3;
+    margin: 0 0 16px;
+    letter-spacing: -0.015em;
+}
+.j-role-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+.j-role-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+}
+.j-role-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    font-weight: 750;
+    color: #059669;
+    transition: transform 0.2s ease;
+}
+.j-role-card:hover .j-role-card__cta svg {
+    transform: translateX(3px);
+}
+
+/* Pagination Button */
+.j-page-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    color: #0F172A;
+    font-weight: 750;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.j-page-btn:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #F0FDF4;
+}
+</style>
+
+<script>
+// Role form submission & search filter
+function applyRoleFilter() {
+    const input = document.getElementById('role-search-input');
+    if (input) {
+        const val = input.value.trim();
+        if (val) {
+            window.location.href = '/job-roles/?q=' + encodeURIComponent(val);
+        } else {
+            window.location.href = '/job-roles/';
+        }
+    }
+}
+
+// Live client-side role filtering
+function filterRolesLive(val) {
+    const q = (val || '').toLowerCase().trim();
+    const clearBtn = document.getElementById('role-search-clear');
+    if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
+
+    const cards = document.querySelectorAll('#roles-cards-grid .j-role-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+        const name = card.getAttribute('data-name') || '';
+        if (!q || name.includes(q)) {
+            card.style.display = 'block';
+            visible++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const empty = document.getElementById('noRolesLiveEmptyState');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+}
+
+function clearRoleSearch() {
+    const input = document.getElementById('role-search-input');
+    if (input) {
+        input.value = '';
+        input.focus();
+    }
+    filterRolesLive('');
+}
+
+// Autocomplete on Role Search Inputs if present
+(function() {
+    function initRoleAutocomplete(inputId, clearBtnId, dropdownId, type, formId) {
+        const input = document.getElementById(inputId);
+        const clearBtn = document.getElementById(clearBtnId);
+        const dropdown = document.getElementById(dropdownId);
+        const form = document.getElementById(formId);
+        if (!input || !dropdown) return;
+        if (input.dataset.autocompleteAttached === 'true') return;
+        input.dataset.autocompleteAttached = 'true';
+
+        let debounceTimer = null;
+
+        function fetchRoleSuggestions(q) {
+            const url = '/api/search/suggestions/?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q || '');
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        renderSuggestions(data, q);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function renderSuggestions(list, query) {
+            if (!list || list.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            let html = '<div class="jy-suggest-header"><span>Suggestions</span><span>Instant</span></div>';
+            list.forEach(item => {
+                html += '<div class="jy-suggest-item" data-val="' + encodeURIComponent(item.value) + '">';
+                html += '  <div class="jy-suggest-left">';
+                html += '    <div class="jy-suggest-icon-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>';
+                html += '    <span class="jy-suggest-title">' + (item.label || item.value) + '</span>';
+                html += '  </div>';
+                html += '  <span class="jy-suggest-badge">' + (item.count ? item.count + ' jobs' : item.category) + '</span>';
+                html += '</div>';
+            });
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+
+            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+                const selectItemHandler = function(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    const target = e.currentTarget || this;
+                    const rawVal = target.getAttribute('data-val');
+                    if (rawVal) {
+                        chooseRoleItem(decodeURIComponent(rawVal));
+                    }
+                };
+                el.addEventListener('mousedown', selectItemHandler);
+                el.addEventListener('click', selectItemHandler);
+                el.addEventListener('touchend', selectItemHandler);
+            });
+        }
+
+        let lastRoleSelectedTime = 0;
+        function chooseRoleItem(val) {
+            const now = Date.now();
+            if (now - lastRoleSelectedTime < 350) return;
+            lastRoleSelectedTime = now;
+
+            input.value = val;
+            dropdown.style.display = 'none';
+            isOverDropdown = false;
+            if (clearBtn) clearBtn.style.display = 'flex';
+            if (form) {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        dropdown.addEventListener('mousedown', function(e) { e.preventDefault(); });
+
+        let isOverDropdown = false;
+        dropdown.addEventListener('mouseenter', function() { isOverDropdown = true; });
+        dropdown.addEventListener('mouseleave', function() { isOverDropdown = false; });
+        dropdown.addEventListener('touchstart', function() { isOverDropdown = true; }, { passive: true });
+        dropdown.addEventListener('touchend', function() { setTimeout(() => { isOverDropdown = false; }, 300); }, { passive: true });
+
+        input.addEventListener('input', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetchRoleSuggestions(val);
+            }, 100);
+        });
+
+        input.addEventListener('focus', function() {
+            fetchRoleSuggestions(this.value);
+        });
+
+        input.addEventListener('click', function() {
+            if (dropdown.style.display === 'none' || dropdown.innerHTML === '') {
+                fetchRoleSuggestions(this.value);
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!isOverDropdown) {
+                    dropdown.style.display = 'none';
+                }
+            }, 250);
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                input.value = '';
+                clearBtn.style.display = 'none';
+                input.focus();
+            });
+        }
+    }
+
+    function setupRoleSearchAutocomplete() {
+        initRoleAutocomplete('role-search-q', 'role-clear-q', 'suggest-dropdown-role-q', 'job', 'role-search-form');
+        initRoleAutocomplete('role-search-loc', 'role-clear-loc', 'suggest-dropdown-role-loc', 'location', 'role-search-form');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupRoleSearchAutocomplete);
+    } else {
+        setupRoleSearchAutocomplete();
+    }
+    window.addEventListener('jobyuk:turbo-load', setupRoleSearchAutocomplete);
+    window.addEventListener('popstate', function() { setTimeout(setupRoleSearchAutocomplete, 50); });
+})();
+</script>
+{{end}}

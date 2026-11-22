@@ -1,0 +1,64 @@
+{{define "content"}}
+<div style="background: #F8FAF8; padding-top: 24px; padding-bottom: 64px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <div style="max-width: 860px; margin: 0 auto;">
+
+    <header style="text-align: center; margin-bottom: 40px;">
+
+        <h1 style="font-size: 2.75rem; font-weight: 850; color: #0F172A; line-height: 1.15; letter-spacing: -0.03em; margin: 0 0 12px;">
+            Terms of Service
+        </h1>
+        <p style="font-size: 1rem; color: #64748B; margin: 0;">
+            Effective Date: October 2026 • Governed by the Laws of England and Wales
+        </p>
+    </header>
+
+    <article style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 24px; padding: 44px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05); font-size: 1.05rem; line-height: 1.8; color: #334155;">
+        <!-- Quick Summary Box -->
+        <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 22px; margin-bottom: 36px;">
+            <div style="font-size: 0.8125rem; font-weight: 800; color: #059669; text-transform: uppercase; margin-bottom: 6px;">At a Glance</div>
+            <p style="margin: 0; font-size: 0.95rem; color: #475569; line-height: 1.6;">
+                JobyUK.com is a free UK employment index. We connect job seekers directly to authenticated employer hiring systems without fees, user accounts, or intermediary markups. By accessing this platform, you agree to the conditions outlined below.
+            </p>
+        </div>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">1. Acceptance of Terms</h2>
+        <p>
+            By accessing and utilizing JobyUK.com ("the Website", "the Platform"), you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Service. If you do not agree with any part of these terms, you should immediately cease use of the service.
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">2. Direct Application & Free Candidate Access</h2>
+        <p>
+            JobyUK.com does not charge job seekers any fees to browse, search, or apply for vacancies. All application routes redirect directly to the official applicant tracking systems (ATS) or careers portals of the respective employers.
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">3. Intellectual Property Rights</h2>
+        <p>
+            All original editorial guides, salary benchmarks, calculations, design components, and visual layouts on JobyUK.com are the exclusive intellectual property of JobyUK.com. Company trademarks, corporate brand names, and job description texts remain the exclusive property of their respective employer entities.
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">4. Disclaimer of Warranty & Accuracy</h2>
+        <p>
+            Job vacancies, salary figures, and employment terms are indexed directly from authentic third-party feeds and verified employer career portals. While our automated monitoring routinely validates links and purges expired postings, JobyUK.com does not warrant that all listings are error-free or that every listed position remains available at the time of your view.
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">5. Governing Jurisdiction</h2>
+        <p>
+            These Terms of Service are governed by and construed in accordance with the laws of England and Wales. Any disputes arising out of the use of this website shall be subject to the exclusive jurisdiction of the Courts of England and Wales.
+        </p>
+
+        <!-- Legal Contact -->
+        <div style="margin-top: 40px; padding: 24px; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <div>
+                <strong style="color: #064E3B; font-size: 1rem; display: block; margin-bottom: 2px;">Legal Inquiries</strong>
+                <span style="font-size: 0.9rem; color: #047857;">For questions regarding our terms, email our compliance team.</span>
+            </div>
+            <a href="mailto:{{getSiteEmail}}" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.9rem; padding: 10px 22px; border-radius: 8px; text-decoration: none;">{{getSiteEmail}}</a>
+        </div>
+    </article>
+        </div>
+    </div>
+</div>
+{{end}}

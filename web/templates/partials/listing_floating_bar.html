@@ -1,0 +1,452 @@
+{{define "listing_floating_bar"}}
+{{$role := ""}}
+{{if .Role}}
+    {{if (eq (printf "%T" .Role) "string")}}
+        {{$role = .Role}}
+    {{else}}
+        {{$role = .Role.Name}}
+    {{end}}
+{{else if .Data}}
+    {{if .Data.Role}}
+        {{$role = .Data.Role.Name}}
+    {{else if .Data.Params}}
+        {{$role = .Data.Params.Query}}
+    {{end}}
+{{else if .Params}}
+    {{$role = .Params.Query}}
+{{end}}
+
+{{$loc := ""}}
+{{if .Location}}
+    {{if (eq (printf "%T" .Location) "string")}}
+        {{$loc = .Location}}
+    {{else}}
+        {{$loc = .Location.Name}}
+    {{end}}
+{{else if .Params}}
+    {{$loc = .Params.Location}}
+{{else if .Data}}
+    {{if .Data.Params}}
+        {{$loc = .Data.Params.Location}}
+    {{end}}
+{{end}}
+
+{{$totalPages := 1}}
+{{if .TotalPages}}
+    {{$totalPages = .TotalPages}}
+{{else if .Results}}
+    {{$totalPages = .Results.TotalPages}}
+{{else if .Data}}
+    {{if .Data.Results}}
+        {{$totalPages = .Data.Results.TotalPages}}
+    {{end}}
+{{end}}
+
+<!-- Listing Bottom Bar (Desktop: Floating Glass Pill | Mobile: Fixed Docked Trial Bar) -->
+{{if or whatsappAlertsEnabled (gt $totalPages 1)}}
+<div id="sticky-view-mode-bar" class="glass-floating-bar animate-float-in">
+    <div class="glass-floating-bar__content">
+        {{if whatsappAlertsEnabled}}
+        <!-- WhatsApp Instant Alerts Trigger -->
+        <button type="button" class="glass-toggle-btn glass-wa-btn" onclick="if(typeof openWhatsAppModal==='function'){openWhatsAppModal({role: '{{$role}}', location: '{{$loc}}', source: 'floating_bar', ariaLabel: 'Activate 3-Day Free Trial on WhatsApp - Floating Bottom Bar', placement: 'Floating Bottom Bar'});}else{window.location.href='/whatsapp-alerts/';}" title="Activate 3-Day Free Trial on WhatsApp{{if $role}} for {{$role}}{{end}}" aria-label="Activate 3-Day Free Trial on WhatsApp - Floating Bottom Bar" data-wa-source="floating_bar" data-wa-placement="Floating Bottom Bar">
+            <div class="glass-wa-left">
+                <span class="glass-wa-icon-box" aria-hidden="true">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display: block;">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/>
+                        <path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/>
+                    </svg>
+                </span>
+                <div class="glass-wa-text-box">
+                    <span class="glass-wa-text" style="font-weight: 800; color: #0f172a;">{{if $role}}{{$role}} Alerts{{else}}Instant WhatsApp Alerts{{end}}</span>
+                    <span class="glass-wa-sub" style="font-size: 0.70rem; color: #64748b; font-weight: 600;">3-Day Free Trial • Real-Time</span>
+                </div>
+            </div>
+            <span class="glass-wa-badge" style="display: inline-flex !important; align-items: center !important; gap: 4px !important; flex-shrink: 0 !important;">
+                <span>3-Day Free</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block !important; vertical-align: middle !important; stroke: #ffffff !important; flex-shrink: 0 !important;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </span>
+        </button>
+        {{end}}
+    </div>
+</div>
+{{end}}
+
+<style>
+/* Hide Mode Bar completely on Desktop */
+@media (min-width: 769px) {
+    #sticky-view-mode-bar,
+    .glass-floating-bar {
+        display: none !important;
+    }
+}
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1.5px solid rgba(226, 232, 240, 0.95);
+    border-radius: 9999px;
+    padding: 6px 10px;
+    box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass-floating-bar:hover {
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(148, 163, 184, 0.6);
+    box-shadow: 0 20px 44px -10px rgba(15, 23, 42, 0.22), 0 0 0 1px #ffffff inset;
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.glass-bar--hidden {
+    opacity: 0 !important;
+    transform: translate(-50%, 60px) scale(0.92) !important;
+    pointer-events: none !important;
+}
+
+.glass-floating-bar__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.glass-wa-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.glass-wa-text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.glass-wa-sub {
+    display: none;
+    font-size: 0.64rem;
+    color: #059669;
+    font-weight: 700;
+}
+
+.glass-floating-bar__divider {
+    width: 1px;
+    height: 22px;
+    background: #cbd5e1;
+    margin: 0 2px;
+}
+
+.glass-floating-bar__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 6px 0 8px;
+}
+
+.glass-icon-spark {
+    color: #0F5132;
+    animation: pulseSpark 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseSpark {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.18); }
+}
+
+.glass-segmented-toggle {
+    display: inline-flex;
+    background: #f1f5f9;
+    border-radius: 9999px;
+    padding: 4px;
+    border: 1px solid #cbd5e1;
+    gap: 4px;
+}
+
+.glass-toggle-btn {
+    border: none;
+    background: transparent;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.glass-toggle-btn svg {
+    transition: transform 0.2s ease, stroke 0.2s ease;
+    stroke: #475569;
+}
+
+.glass-toggle-btn:hover {
+    color: #0f172a;
+}
+
+.glass-toggle-btn:hover svg {
+    stroke: #0f172a;
+    transform: translateY(-1px);
+}
+
+.glass-toggle-btn.active {
+    background: #0F5132 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(15, 81, 50, 0.35);
+}
+
+.glass-toggle-btn.active svg {
+    stroke: #ffffff !important;
+}
+
+/* WhatsApp Alert Button in Glass Floating Bar */
+.glass-wa-btn {
+    background: transparent !important;
+    color: #0f172a !important;
+    border: none !important;
+    font-weight: 800 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.glass-wa-btn:hover {
+    background: rgba(15, 23, 42, 0.04) !important;
+    border: none !important;
+    color: #0f172a !important;
+    transform: translateY(-1px) !important;
+    box-shadow: none !important;
+}
+
+.glass-wa-icon-box svg,
+.glass-wa-icon-box svg path {
+    stroke: none !important;
+}
+
+.glass-wa-icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.glass-wa-text {
+    font-size: 0.82rem;
+    letter-spacing: -0.01em;
+}
+
+.glass-wa-badge {
+    font-size: 0.70rem;
+    font-weight: 850;
+    background: #10b981;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.glass-wa-badge svg {
+    stroke: #ffffff !important;
+    stroke-width: 3 !important;
+    fill: none !important;
+    width: 11px !important;
+    height: 11px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+}
+
+.animate-float-in {
+    animation: glassFloatIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes glassFloatIn {
+    0% { opacity: 0; transform: translate(-50%, 40px) scale(0.94); }
+    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* Dedicated Mobile Fixed Docked Trial Bottom Bar */
+@media (max-width: 768px) {
+    body, #jobs-top, .listing-layout, .container.section {
+        padding-bottom: 74px !important;
+    }
+
+    #sticky-view-mode-bar,
+    #sticky-view-mode-bar.glass-floating-bar,
+    .glass-floating-bar {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 16px 16px 0 0 !important;
+        padding: 8px 14px !important;
+        padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border: none !important;
+        border-top: 1px solid #e2e8f0 !important;
+        box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08) !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        animation: none !important;
+    }
+
+    #sticky-view-mode-bar:hover,
+    .glass-floating-bar:hover {
+        transform: none !important;
+    }
+
+    /* Never hide on mobile on scroll */
+    #sticky-view-mode-bar.glass-bar--hidden,
+    .glass-bar--hidden {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+    }
+
+    .glass-floating-bar__content {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 0 !important;
+    }
+
+    /* Completely hide right-side Mode / Pagination toggles on mobile */
+    .glass-floating-bar__divider,
+    .glass-floating-bar__label,
+    .glass-segmented-toggle,
+    .glass-segmented-toggle * {
+        display: none !important;
+    }
+
+    .glass-wa-btn {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        padding: 4px 6px !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        border: none !important;
+        box-sizing: border-box !important;
+        text-decoration: none !important;
+    }
+
+    .glass-wa-left {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+    }
+
+    .glass-wa-icon-box {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .glass-wa-icon-box svg {
+        width: 30px !important;
+        height: 30px !important;
+        display: block !important;
+        filter: drop-shadow(0 2px 5px rgba(37, 211, 102, 0.3)) !important;
+    }
+
+    .glass-wa-text-box {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        min-width: 0 !important;
+        line-height: 1.25 !important;
+    }
+
+    .glass-wa-text {
+        font-size: 0.88rem !important;
+        font-weight: 800 !important;
+        color: #065f46 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        letter-spacing: -0.01em !important;
+        display: block !important;
+    }
+
+    .glass-wa-sub {
+        display: block !important;
+        font-size: 0.70rem !important;
+        font-weight: 700 !important;
+        color: #059669 !important;
+        white-space: nowrap !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    .glass-wa-badge {
+        font-size: 0.74rem !important;
+        font-weight: 850 !important;
+        padding: 7px 14px !important;
+        border-radius: 9999px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 3px 8px rgba(16, 185, 129, 0.35) !important;
+        margin-left: 8px !important;
+    }
+}
+</style>
+{{end}}

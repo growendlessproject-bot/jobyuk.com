@@ -1,0 +1,1935 @@
+{{define "content"}}
+<style>
+.wa-dash-wrap {
+    max-width: 1240px;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+.wa-header-bar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 20px 26px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.04);
+}
+.wa-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.wa-avatar-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.25) 100%);
+    border: 1.5px solid rgba(16, 185, 129, 0.35);
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+}
+.wa-header-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.wa-count-badge {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 2px 10px;
+    border-radius: 999px;
+    letter-spacing: normal;
+}
+.wa-header-sub {
+    font-size: 0.84rem;
+    color: #64748b;
+    margin: 0;
+}
+.wa-tabs-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.wa-tabs-bar::-webkit-scrollbar {
+    display: none;
+}
+.wa-tab-btn {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    color: #64748b;
+    background: transparent;
+}
+.wa-tab-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+.wa-tab-btn.active {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+.wa-tab-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    color: inherit;
+}
+.wa-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+.wa-stat-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.wa-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+.wa-stat-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+}
+.wa-stat-num {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+}
+.wa-stat-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.wa-btn {
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+.wa-btn-primary {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+.wa-btn-primary:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+}
+.wa-btn-secondary {
+    background: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+}
+.wa-btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+.wa-btn-dark {
+    background: #0f172a;
+    color: #ffffff;
+}
+.wa-btn-dark:hover {
+    background: #1e293b;
+}
+.wa-btn-danger-outline {
+    background: #ffffff;
+    color: #dc2626;
+    border: 1.5px solid #fecaca;
+}
+.wa-btn-danger-outline:hover {
+    background: #fef2f2;
+    border-color: #dc2626;
+}
+.wa-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    margin-bottom: 24px;
+}
+.wa-toolbar-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.wa-form-input {
+    box-sizing: border-box;
+    padding: 11px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 11px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+    color: #0f172a;
+    background: #ffffff;
+}
+.wa-form-input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+.wa-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: left;
+}
+.wa-table th {
+    padding: 14px 18px;
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 800;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid #e2e8f0;
+}
+.wa-table td {
+    padding: 18px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    vertical-align: middle;
+}
+.wa-table tbody tr {
+    transition: background 0.15s ease;
+}
+.wa-table tbody tr:hover {
+    background: #f8fafc;
+}
+.wa-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.wa-user-initials {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1.5px solid #bbf7d0;
+    color: #15803d;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+}
+.wa-phone-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 3px 9px;
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 4px;
+    transition: all 0.15s;
+}
+.wa-phone-pill:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+.wa-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #64748b;
+    text-decoration: none;
+    margin-top: 3px;
+}
+.wa-email-link:hover {
+    color: #0f172a;
+}
+.wa-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+}
+.wa-pill-active {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+.wa-pill-paused {
+    background: #fefce8;
+    color: #854d0e;
+    border: 1px solid #fef08a;
+}
+.wa-pill-expired {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+.wa-pill-plan {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+.wa-pill-cooldown {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+}
+.wa-pill-available {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+.wa-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+.wa-dot-green {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+.wa-dot-yellow {
+    background: #eab308;
+}
+.wa-dot-red {
+    background: #ef4444;
+}
+.wa-criteria-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.wa-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+.wa-tag-loc {
+    background: #eff6ff;
+    color: #0369a1;
+    border-color: #bfdbfe;
+}
+.wa-tag-sal {
+    background: #ecfdf5;
+    color: #047857;
+    border-color: #a7f3d0;
+}
+.wa-action-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.wa-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.wa-modal {
+    background: #ffffff;
+    border-radius: 22px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 30px;
+    box-shadow: 0 25px 45px -5px rgba(0, 0, 0, 0.18);
+}
+@keyframes waFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes waScaleIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+
+/* Mobile Executive Navigation - Hidden by default on Desktop */
+.wa-ios-admin-nav,
+.wa-ios-page-hero,
+.wa-ios-sub-actions {
+    display: none;
+}
+.wa-subscribers-mobile-feed {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Global Viewport Containment */
+    html, body {
+        overflow-x: clip !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+
+    .wa-dash-wrap {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 10px 12px 70px 12px !important;
+        box-sizing: border-box !important;
+        overflow-x: clip !important;
+        margin: 0 !important;
+    }
+
+    /* Hide Desktop Header and Desktop Tabs completely on mobile */
+    .wa-header-bar,
+    .wa-tabs-bar {
+        display: none !important;
+    }
+
+    /* Mobile Executive Navigation (Exact wa-client style) */
+    .wa-ios-admin-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-bottom: 12px !important;
+    }
+    .wa-ios-admin-topbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-admin-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    .wa-ios-admin-avatar {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 11px !important;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.22) 100%) !important;
+        border: 1.5px solid rgba(16, 185, 129, 0.3) !important;
+        color: #059669 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+    .wa-ios-admin-name {
+        font-size: 0.88rem !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+        line-height: 1.2 !important;
+    }
+    .wa-ios-admin-meta {
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        font-size: 0.70rem !important;
+        font-weight: 650 !important;
+        color: #64748b !important;
+    }
+    .wa-ios-live-dot {
+        width: 6px !important;
+        height: 6px !important;
+        border-radius: 50% !important;
+        background: #10b981 !important;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.8) !important;
+        animation: waPulse 2s infinite !important;
+    }
+    .wa-ios-logout-pill {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 5px 10px !important;
+        border-radius: 9999px !important;
+        background: #fef2f2 !important;
+        border: 1px solid #fee2e2 !important;
+        color: #dc2626 !important;
+        font-size: 0.72rem !important;
+        font-weight: 750 !important;
+        text-decoration: none !important;
+        transition: all 0.15s ease !important;
+    }
+    .wa-ios-logout-pill:active {
+        transform: scale(0.94) !important;
+        background: #fee2e2 !important;
+    }
+
+    /* 5-Icon Navigation Tabs (Matching wa-client direct row) */
+    .wa-ios-modes-row {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 2px !important;
+        margin-bottom: 12px !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-mode-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 4px !important;
+        cursor: pointer !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        max-width: 20% !important;
+        text-decoration: none !important;
+        position: relative !important;
+        -webkit-tap-highlight-color: transparent !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-mode-circle {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 14px !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #64748b !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        position: relative !important;
+        margin: 0 auto !important;
+        flex-shrink: 0 !important;
+    }
+    .wa-ios-mode-item:active .wa-ios-mode-circle {
+        transform: scale(0.92) !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-circle {
+        border-color: #059669 !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 6px 18px rgba(16, 185, 129, 0.32) !important;
+        transform: translateY(-2px) !important;
+    }
+    .wa-ios-mode-label {
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        color: #64748b !important;
+        transition: color 0.15s ease !important;
+        text-align: center !important;
+        width: 100% !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-label {
+        color: #059669 !important;
+        font-weight: 850 !important;
+    }
+    .wa-ios-mode-dot {
+        width: 4px !important;
+        height: 4px !important;
+        border-radius: 50% !important;
+        background: transparent !important;
+        transition: all 0.2s !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-dot {
+        background: #059669 !important;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    /* Page Hero on Mobile */
+    .wa-ios-page-hero {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 10px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-hero-title {
+        font-size: 0.95rem !important;
+        font-weight: 850 !important;
+        color: #0f172a !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+    .wa-ios-hero-sub {
+        font-size: 0.70rem !important;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        margin-top: 2px !important;
+    }
+    .wa-ios-hero-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 11px !important;
+        padding: 7px 13px !important;
+        font-size: 0.76rem !important;
+        font-weight: 750 !important;
+        cursor: pointer !important;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.28) !important;
+        transition: all 0.15s ease !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
+    .wa-ios-hero-btn:active {
+        transform: scale(0.94) !important;
+    }
+
+    /* Mobile Secondary Action Buttons (Export & Google Sync) */
+    .wa-ios-sub-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-sub-action-card {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        font-size: 0.75rem !important;
+        font-weight: 750 !important;
+        padding: 9px 8px !important;
+        border-radius: 12px !important;
+        text-decoration: none !important;
+        transition: all 0.15s ease !important;
+    }
+    .wa-ios-sub-action-card:active {
+        transform: scale(0.95) !important;
+    }
+    .wa-ios-sub-action-card.google {
+        border: 1.5px solid #bfdbfe !important;
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+    }
+    .wa-ios-sub-action-card.export {
+        border: 1.5px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        color: #334155 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    }
+    .wa-ios-sub-action-card.active {
+        background: #f0fdf4 !important;
+        border: 1.5px solid #bbf7d0 !important;
+        color: #166534 !important;
+    }
+    .wa-ios-sync-dot {
+        width: 6px !important;
+        height: 6px !important;
+        border-radius: 50% !important;
+        background: #10b981 !important;
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.8) !important;
+    }
+
+    /* 2x2 Stat Grid on Mobile */
+    .wa-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+        width: 100% !important;
+    }
+    .wa-stat-card {
+        padding: 12px 10px !important;
+        border-radius: 14px !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    .wa-stat-label {
+        font-size: 0.64rem !important;
+        margin-bottom: 3px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .wa-stat-num {
+        font-size: 1.35rem !important;
+        line-height: 1.1 !important;
+    }
+    .wa-stat-icon-box {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+        flex-shrink: 0 !important;
+    }
+    .wa-stat-icon-box svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    /* Search & Filter Toolbar */
+    .wa-toolbar-card {
+        padding: 12px !important;
+        border-radius: 14px !important;
+        margin-bottom: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-toolbar-card form {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-toolbar-card form > div,
+    .wa-toolbar-card form select,
+    .wa-toolbar-card form button,
+    .wa-toolbar-card form a {
+        width: 100% !important;
+        min-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-toolbar-card .wa-btn {
+        justify-content: center !important;
+    }
+
+    /* Table to Mobile Feed Switch */
+    .wa-subscribers-desktop-table {
+        display: none !important;
+    }
+    .wa-subscribers-mobile-feed {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-sub-mobile-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .wa-smc-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .wa-smc-user {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .wa-smc-initials {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 1.5px solid #bbf7d0;
+        color: #15803d;
+        font-weight: 800;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .wa-smc-name {
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .wa-smc-details-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+    }
+    .wa-smc-tags-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        border-radius: 9px;
+        padding: 6px 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .wa-smc-footer-actions {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 6px;
+        padding-top: 8px;
+        border-top: 1px solid #f1f5f9;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .wa-modal {
+        padding: 18px 14px !important;
+        border-radius: 18px !important;
+        max-height: 90vh !important;
+        max-width: calc(100% - 24px) !important;
+        width: calc(100% - 24px) !important;
+    }
+    .wa-modal form > div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+}
+</style>
+
+<div class="wa-dash-wrap">
+    <!-- MOBILE EXECUTIVE NAVIGATION (Exact wa-client 5-Icon Navigation) -->
+    <div class="wa-ios-admin-nav">
+        <!-- Top Executive Status Bar -->
+        <div class="wa-ios-admin-topbar">
+            <div class="wa-ios-admin-brand">
+                <div class="wa-ios-admin-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="wa-ios-admin-name">WhatsApp Admin</div>
+                    <div class="wa-ios-admin-meta">
+                        <span class="wa-ios-live-dot"></span>
+                        <span class="wa-ios-live-text">Directory Station</span>
+                    </div>
+                </div>
+            </div>
+            <div class="wa-ios-admin-top-actions">
+                <a href="/wa-portal/logout" class="wa-ios-logout-pill" title="Sign Out">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Exit</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5-Icon Navigation Tabs (The Real Direct Mobile Tabs) -->
+        <div class="wa-ios-modes-row">
+            <!-- 1. Overview -->
+            <a href="/wa-portal" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Overview</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 2. Subscribers -->
+            <a href="/wa-portal/subscribers" class="wa-ios-mode-item active">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Subscribers</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 3. Logs -->
+            <a href="/wa-portal/logs" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Logs</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 4. Payments -->
+            <a href="/wa-portal/payment-settings" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Payments</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 5. Analytics -->
+            <a href="/wa-portal/analytics" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Analytics</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Sub-Hero (Quick Action to Add Subscriber) -->
+    <div class="wa-ios-page-hero">
+        <div>
+            <div class="wa-ios-hero-title">
+                <span>Subscribers</span>
+                <span class="wa-count-badge" style="font-size: 0.65rem; padding: 1px 6px;">{{.Data.Total}}</span>
+            </div>
+            <div class="wa-ios-hero-sub">Job alert subscriptions</div>
+        </div>
+        <div>
+            <button type="button" class="wa-ios-hero-btn" onclick="document.getElementById('addModal').style.display='flex'">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add Candidate</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Secondary Actions (Export & Google Contacts) -->
+    <div class="wa-ios-sub-actions">
+        {{if .Data.GoogleConnected}}
+        <div class="wa-ios-sub-action-card active">
+            <span class="wa-ios-sync-dot"></span>
+            <span>Google Synced</span>
+        </div>
+        {{else}}
+        <a href="/wa-portal/google-connect" class="wa-ios-sub-action-card google">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <span>Link Google</span>
+        </a>
+        {{end}}
+        <a href="/wa-portal/contacts/export.vcf" class="wa-ios-sub-action-card export">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Export .vcf</span>
+        </a>
+    </div>
+
+    <!-- Header Bar (Desktop Only) -->
+    <div class="wa-header-bar">
+        <div class="wa-header-left">
+            <div class="wa-avatar-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="wa-header-title">
+                    <span>Subscribers Directory</span>
+                    <span class="wa-count-badge">{{.Data.Total}} Total</span>
+                </h1>
+                <p class="wa-header-sub">Manage WhatsApp job alert subscribers, subscription tiers, and delivery preferences</p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            {{if .Data.GoogleConnected}}
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: #ecfdf5; border: 1.5px solid #a7f3d0; padding: 7px 14px; border-radius: 9px; font-size: 13px; font-weight: 600; color: #065f46;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; box-shadow: 0 0 0 3px rgba(16,185,129,0.25);"></span>
+                <span>Google Auto-Sync Active</span>
+                {{if .Data.GoogleEmail}}<span style="font-size: 11.5px; color: #047857; opacity: 0.9;">({{.Data.GoogleEmail}})</span>{{end}}
+                <form method="POST" action="/wa-portal/google-disconnect" style="margin: 0; display: inline;">
+                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #b91c1c; font-size: 11px; text-decoration: underline; padding: 0 4px; font-weight: 600;" title="Disconnect Google Contacts">Disconnect</button>
+                </form>
+            </div>
+            {{else}}
+            <a href="/wa-portal/google-connect" class="wa-btn wa-btn-secondary" style="border: 1.5px solid #93c5fd; background: #eff6ff; color: #1d4ed8; text-decoration: none; font-weight: 600;" title="Link Google Account to auto-sync candidates directly into your phone's Google Contacts in real-time">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                <span>Connect Google Contacts</span>
+            </a>
+            {{end}}
+            <a href="/wa-portal/contacts/export.vcf" class="wa-btn wa-btn-secondary" style="border: 1.5px solid #cbd5e1; background: #ffffff; color: #334155; text-decoration: none;" title="Download all subscribers to phone address book in 1 click (.vcf)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Export Contacts (.vcf)</span>
+            </a>
+            <button type="button" class="wa-btn wa-btn-primary" onclick="document.getElementById('addModal').style.display='flex'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add Subscriber</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs Bar (Desktop Only) -->
+    <div class="wa-tabs-bar">
+        <a href="/wa-portal" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>Overview</span>
+        </a>
+        <a href="/wa-portal/subscribers" class="wa-tab-btn active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Subscribers</span>
+        </a>
+        <a href="/wa-portal/logs" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>Delivery Logs</span>
+        </a>
+        <a href="/wa-portal/payment-settings" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+            <span>Payments & Wallets</span>
+        </a>
+        <a href="/wa-portal/analytics" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span>Analytics</span>
+        </a>
+    </div>
+
+    {{if .Data.GoogleSuccess}}
+    <div style="margin-bottom: 20px; padding: 13px 18px; border-radius: 10px; background: #ecfdf5; border: 1.5px solid #6ee7b7; color: #065f46; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 13.5px; box-shadow: 0 2px 8px rgba(16,185,129,0.08);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Google Account Connected Successfully! Recipient candidate numbers will now automatically synchronize to your physical phone's Google Contacts in real-time.</span>
+    </div>
+    {{end}}
+    {{if .Data.GoogleError}}
+    <div style="margin-bottom: 20px; padding: 13px 18px; border-radius: 10px; background: #fef2f2; border: 1.5px solid #fca5a5; color: #991b1b; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 13.5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>Google Connection Notice: {{.Data.GoogleError}}</span>
+    </div>
+    {{end}}
+
+    <!-- Stats Highlights -->
+    <div class="wa-stat-grid">
+        <div class="wa-stat-card">
+            <div class="wa-stat-info">
+                <span class="wa-stat-label">Total Subscribers</span>
+                <span class="wa-stat-num">{{.Data.Stats.TotalSubscribers}}</span>
+            </div>
+            <div class="wa-stat-icon-box" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wa-stat-card">
+            <div class="wa-stat-info">
+                <span class="wa-stat-label">Active Delivery</span>
+                <span class="wa-stat-num" style="color: #10b981;">{{.Data.Stats.ActiveSubscribers}}</span>
+            </div>
+            <div class="wa-stat-icon-box" style="background: rgba(2, 132, 199, 0.1); color: #0284c7;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wa-stat-card">
+            <div class="wa-stat-info">
+                <span class="wa-stat-label">Paused Subscriptions</span>
+                <span class="wa-stat-num" style="color: #64748b;">{{.Data.Stats.PausedSubscribers}}</span>
+            </div>
+            <div class="wa-stat-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wa-stat-card">
+            <div class="wa-stat-info">
+                <span class="wa-stat-label">Alerts Dispatched Today</span>
+                <span class="wa-stat-num">{{.Data.Stats.AlertsSentToday}}</span>
+            </div>
+            <div class="wa-stat-icon-box" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="wa-tabs-bar">
+        <a href="/wa-portal" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>Overview</span>
+        </a>
+        <a href="/wa-portal/subscribers" class="wa-tab-btn active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Subscribers</span>
+            <span class="wa-tab-badge">{{.Data.Total}}</span>
+        </a>
+        <a href="/wa-portal/logs" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>Delivery Logs</span>
+        </a>
+        <a href="/wa-portal/payment-settings" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+            <span>Payments & Wallets</span>
+        </a>
+    </div>
+
+    <!-- Floating Feedback Alert Modals -->
+    {{if .Data.Success}}
+    <div id="modal-alert-success" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: waFadeIn 0.2s ease;" onclick="this.remove()">
+        <div style="background: #ffffff; border-radius: 20px; padding: 32px 28px; text-align: center; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid #e2e8f0; animation: waScaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">
+            <div style="width: 60px; height: 60px; background: #ecfdf5; border: 2px solid #a7f3d0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #065f46; margin: 0 0 8px 0;">Success</h3>
+            <p style="font-size: 0.92rem; color: #475569; margin: 0 0 24px 0; line-height: 1.55;">{{.Data.Success}}</p>
+            <button onclick="document.getElementById('modal-alert-success').remove()" class="wa-btn wa-btn-primary" style="width: 100%; justify-content: center; padding: 11px 20px; font-weight: 800;">
+                Got it
+            </button>
+        </div>
+    </div>
+    {{end}}
+    {{if .Data.Error}}
+    <div id="modal-alert-error" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: waFadeIn 0.2s ease;" onclick="this.remove()">
+        <div style="background: #ffffff; border-radius: 20px; padding: 32px 28px; text-align: center; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid #fee2e2; animation: waScaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">
+            <div style="width: 60px; height: 60px; background: #fef2f2; border: 2px solid #fecaca; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #991b1b; margin: 0 0 8px 0;">Notice</h3>
+            <p style="font-size: 0.92rem; color: #475569; margin: 0 0 24px 0; line-height: 1.55;">{{.Data.Error}}</p>
+            <button onclick="document.getElementById('modal-alert-error').remove()" class="wa-btn wa-btn-danger" style="width: 100%; justify-content: center; padding: 11px 20px; font-weight: 800;">
+                Dismiss
+            </button>
+        </div>
+    </div>
+    {{end}}
+
+    <!-- Search & Filter Controls -->
+    <div class="wa-toolbar-card">
+        <form method="GET" action="/wa-portal/subscribers" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <div style="position: relative; flex: 2; min-width: 260px;">
+                <input type="text" name="search" value="{{.Data.Search}}" placeholder="Search by name, phone (+44...), or email..." class="wa-form-input" style="width: 100%; padding-left: 38px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="position: absolute; left: 13px; top: 50%; transform: translateY(-50%);">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <select name="status" class="wa-form-input" style="flex: 1; min-width: 150px;">
+                <option value="all">All Statuses</option>
+                <option value="active" {{if eq .Data.Status "active"}}selected{{end}}>Active</option>
+                <option value="pending_verification" {{if eq .Data.Status "pending_verification"}}selected{{end}}>Pending Verification</option>
+                <option value="paused" {{if eq .Data.Status "paused"}}selected{{end}}>Paused</option>
+                <option value="expired" {{if eq .Data.Status "expired"}}selected{{end}}>Expired</option>
+            </select>
+            <select name="plan" class="wa-form-input" style="flex: 1; min-width: 160px;">
+                <option value="all">All Plans</option>
+                <option value="trial" {{if eq .Data.Plan "trial"}}selected{{end}}>Free Trial (3-Day)</option>
+                <option value="monthly" {{if eq .Data.Plan "monthly"}}selected{{end}}>Monthly (£4.99)</option>
+                <option value="6months" {{if eq .Data.Plan "6months"}}selected{{end}}>6 Months (£24.99)</option>
+                <option value="yearly" {{if eq .Data.Plan "yearly"}}selected{{end}}>Yearly (£39.99)</option>
+                <option value="admin_pass" {{if eq .Data.Plan "admin_pass"}}selected{{end}}>Complimentary Pass</option>
+            </select>
+            <button type="submit" class="wa-btn wa-btn-dark">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span>Filter</span>
+            </button>
+            {{if or .Data.Search (ne .Data.Status "all") (ne .Data.Plan "all")}}
+            <a href="/wa-portal/subscribers" class="wa-btn wa-btn-secondary" style="color: #64748b;">Reset</a>
+            {{end}}
+        </form>
+    </div>
+
+    <!-- Subscribers Table (Desktop) -->
+    <div class="wa-card wa-subscribers-desktop-table" style="padding: 0; overflow: hidden;">
+        <div style="overflow-x: auto;">
+            <table class="wa-table">
+                <thead>
+                    <tr>
+                        <th style="width: 28%;">Subscriber</th>
+                        <th style="width: 20%;">Plan & Billing</th>
+                        <th style="width: 20%;">Phone Updates & Cooldown</th>
+                        <th style="width: 20%;">Alert Criteria</th>
+                        <th style="width: 12%;">Status & Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{if .Data.Subscribers}}
+                    {{range .Data.Subscribers}}
+                    <tr>
+                        <!-- Col 1: Subscriber Info -->
+                        <td>
+                            <div class="wa-user-cell">
+                                <div class="wa-user-initials">
+                                    {{slice .FullName 0 1}}
+                                </div>
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                        <span style="font-size: 0.95rem; font-weight: 800; color: #0f172a; line-height: 1.3;">{{.FullName}}</span>
+                                        {{if eq .Source "homepage_trial"}}
+                                        <span class="wa-badge-pill" style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-size: 0.65rem; padding: 1px 6px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px;" title="Activated 3-day free trial on Homepage">
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                            <span>Homepage Trial</span>
+                                        </span>
+                                        {{else if eq .Source "portal"}}
+                                        <span class="wa-badge-pill" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-size: 0.65rem; padding: 1px 6px; font-weight: 700;">
+                                            Portal
+                                        </span>
+                                        {{else}}
+                                        <span class="wa-badge-pill" style="background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; font-size: 0.65rem; padding: 1px 6px; font-weight: 700;">
+                                            Admin
+                                        </span>
+                                        {{end}}
+                                    </div>
+                                    <a href="https://wa.me/{{.PhoneNumber}}" target="_blank" rel="noopener noreferrer" class="wa-phone-pill" title="Chat on WhatsApp">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                        </svg>
+                                        <span>{{.PhoneNumber}}</span>
+                                    </a>
+                                    {{if .Email}}
+                                    <div>
+                                        <a href="mailto:{{.Email}}" class="wa-email-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                            </svg>
+                                            <span>{{.Email}}</span>
+                                        </a>
+                                    </div>
+                                    {{end}}
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Col 2: Plan & Billing -->
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                                <span class="wa-badge-pill wa-pill-plan">{{.PlanType}}</span>
+                                {{if .IsTrial}}
+                                    {{if .IsTrialActive}}
+                                    <span class="wa-badge-pill" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a; font-size: 0.68rem; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                        <span>Trial: {{.TrialHoursRemaining}}h left (2–3 alerts/day)</span>
+                                    </span>
+                                    {{else}}
+                                    <span class="wa-badge-pill" style="background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; font-size: 0.68rem; padding: 2px 7px;">
+                                        Trial Expired
+                                    </span>
+                                    {{end}}
+                                {{end}}
+                            </div>
+                            <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 4px;">
+                                <span style="font-size: 0.96rem; font-weight: 800; color: #0f172a;">
+                                    £{{printf "%.2f" .PlanPriceGBP}}
+                                </span>
+                                {{if eq .PaymentStatus "paid"}}
+                                <span class="wa-badge-pill" style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-size: 0.65rem; padding: 1px 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Paid</span>
+                                </span>
+                                {{else if eq .PaymentStatus "unpaid"}}
+                                <span class="wa-badge-pill" style="background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.65rem; padding: 1px 6px;">
+                                    Unpaid
+                                </span>
+                                {{else if eq .PaymentStatus "trial"}}
+                                <span class="wa-badge-pill" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.65rem; padding: 1px 6px;">
+                                    Free Trial
+                                </span>
+                                {{end}}
+                            </div>
+                            <div style="font-size: 0.76rem; color: #64748b; margin-top: 2px; display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                <span>Expires {{formatDate .ExpiresAt}}</span>
+                            </div>
+                        </td>
+
+                        <!-- Col 3: Phone Changes & Cooldown -->
+                        <td>
+                            <div style="font-weight: 800; font-size: 0.86rem; color: #0f172a; margin-bottom: 5px;">
+                                {{.NumberChangesUsed}} of {{.MaxNumberChanges}} changes used
+                            </div>
+                            {{if .CooldownActive}}
+                            <span class="wa-badge-pill wa-pill-cooldown" title="A 14-day anti-abuse cooldown is enforced after phone changes">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>14d Cooldown ({{.CooldownEndsIn}})</span>
+                            </span>
+                            {{else}}
+                            <span class="wa-badge-pill wa-pill-available">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Change Available</span>
+                            </span>
+                            {{end}}
+                        </td>
+
+                        <!-- Col 4: Alert Criteria -->
+                        <td>
+                            <div class="wa-criteria-box">
+                                <div>
+                                    {{if .Categories}}
+                                    {{range .Categories}}
+                                    <span class="wa-tag">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                        </svg>
+                                        <span>{{.}}</span>
+                                    </span>
+                                    {{end}}
+                                    {{else}}
+                                    <span class="wa-tag" style="color: #64748b;">All Tech Roles</span>
+                                    {{end}}
+                                </div>
+                                <div>
+                                    {{if .Locations}}
+                                    {{range .Locations}}
+                                    <span class="wa-tag wa-tag-loc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>{{.}}</span>
+                                    </span>
+                                    {{end}}
+                                    {{else}}
+                                    <span class="wa-tag wa-tag-loc">United Kingdom</span>
+                                    {{end}}
+                                </div>
+                                {{if gt .MinSalary 0}}
+                                <div>
+                                    <span class="wa-tag wa-tag-sal">
+                                        <span>Min: £{{.MinSalary}}/yr</span>
+                                    </span>
+                                </div>
+                                {{end}}
+                            </div>
+                        </td>
+
+                        <!-- Col 5: Status & Actions -->
+                        <td>
+                            <div style="margin-bottom: 10px;">
+                                {{if eq .Status "active"}}
+                                <span class="wa-badge-pill wa-pill-active">
+                                    <span class="wa-dot wa-dot-green"></span>
+                                    <span>Active</span>
+                                </span>
+                                {{else if eq .Status "pending_verification"}}
+                                <span class="wa-badge-pill" style="background: #fef3c7; color: #92400e; border: 1.5px solid #fde68a; font-weight: 800;" title="Candidate received OTP on WhatsApp and is awaiting verification">
+                                    <span class="wa-dot" style="background: #f59e0b;"></span>
+                                    <span>Pending Verification</span>
+                                </span>
+                                {{else if eq .Status "paused"}}
+                                <span class="wa-badge-pill wa-pill-paused">
+                                    <span class="wa-dot wa-dot-yellow"></span>
+                                    <span>Paused</span>
+                                </span>
+                                {{else}}
+                                <span class="wa-badge-pill wa-pill-expired">
+                                    <span class="wa-dot wa-dot-red"></span>
+                                    <span>Expired</span>
+                                </span>
+                                {{end}}
+                            </div>
+
+                            <div class="wa-action-group">
+                                <button type="button" onclick="openActivatePlanModal('{{.ID}}', '{{.FullName}}', '{{.PhoneNumber}}')" class="wa-btn wa-btn-primary" style="padding: 6px 11px; font-size: 0.78rem; background: #059669; border-color: #059669;" title="Activate 1M, 6M, or 1Y VIP Plan">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                    </svg>
+                                    <span>Activate</span>
+                                </button>
+
+                                <form method="POST" action="/wa-portal/subscribers/{{.ID}}/toggle" style="margin: 0;">
+                                    {{if eq .Status "active"}}
+                                    <input type="hidden" name="new_status" value="paused">
+                                    <button type="submit" class="wa-btn wa-btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;" title="Pause WhatsApp alerts">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <rect x="6" y="4" width="4" height="16"></rect>
+                                            <rect x="14" y="4" width="4" height="16"></rect>
+                                        </svg>
+                                        <span>Pause</span>
+                                    </button>
+                                    {{else}}
+                                    <input type="hidden" name="new_status" value="active">
+                                    <button type="submit" class="wa-btn wa-btn-primary" style="padding: 6px 12px; font-size: 0.78rem;" title="Resume WhatsApp alerts">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                        <span>Resume</span>
+                                    </button>
+                                    {{end}}
+                                </form>
+
+                                <button type="button" onclick="openDeleteModal('{{.ID}}', '{{.FullName}}')" class="wa-btn wa-btn-danger-outline" style="padding: 6px 10px; font-size: 0.78rem;" title="Delete subscriber">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {{end}}
+                    {{else}}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 56px 20px; color: #64748b;">
+                            <div style="width: 52px; height: 52px; border-radius: 50%; background: #f1f5f9; color: #94a3b8; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px auto;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div style="font-weight: 800; font-size: 1rem; color: #0f172a; margin-bottom: 4px;">No subscribers found</div>
+                            <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 18px;">Click below to register your first WhatsApp job alert subscriber.</div>
+                            <button type="button" class="wa-btn wa-btn-primary" onclick="document.getElementById('addModal').style.display='flex'">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                <span>Add Subscriber</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Mobile Subscribers Feed (Mobile Only) -->
+    <div class="wa-subscribers-mobile-feed">
+        {{if .Data.Subscribers}}
+        {{range .Data.Subscribers}}
+        <div class="wa-sub-mobile-card">
+            <!-- Header Row: User Info & Status -->
+            <div class="wa-smc-top">
+                <div class="wa-smc-user">
+                    <div class="wa-smc-initials">{{slice .FullName 0 1}}</div>
+                    <div>
+                        <div class="wa-smc-name">{{.FullName}}</div>
+                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 3px;">
+                            {{if eq .Source "homepage_trial"}}
+                            <span class="wa-badge-pill" style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-size: 0.62rem; padding: 2px 6px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>Homepage Trial</span>
+                            </span>
+                            {{else if eq .Source "portal"}}
+                            <span class="wa-badge-pill" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-size: 0.62rem; padding: 1px 5px; font-weight: 700;">Portal</span>
+                            {{else}}
+                            <span class="wa-badge-pill" style="background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; font-size: 0.62rem; padding: 1px 5px; font-weight: 700;">Admin</span>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    {{if eq .Status "active"}}
+                    <span class="wa-badge-pill wa-pill-active" style="font-size: 0.7rem; padding: 3px 8px;">
+                        <span class="wa-dot wa-dot-green"></span>
+                        <span>Active</span>
+                    </span>
+                    {{else if eq .Status "pending_verification"}}
+                    <span class="wa-badge-pill" style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-size: 0.7rem; padding: 3px 8px;">
+                        <span class="wa-dot" style="background: #f59e0b;"></span>
+                        <span>Pending</span>
+                    </span>
+                    {{else if eq .Status "paused"}}
+                    <span class="wa-badge-pill wa-pill-paused" style="font-size: 0.7rem; padding: 3px 8px;">
+                        <span class="wa-dot wa-dot-yellow"></span>
+                        <span>Paused</span>
+                    </span>
+                    {{else}}
+                    <span class="wa-badge-pill wa-pill-expired" style="font-size: 0.7rem; padding: 3px 8px;">
+                        <span class="wa-dot wa-dot-red"></span>
+                        <span>Expired</span>
+                    </span>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Contact Row -->
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
+                <a href="https://wa.me/{{.PhoneNumber}}" target="_blank" rel="noopener noreferrer" class="wa-phone-pill" style="margin-top: 0;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span>{{.PhoneNumber}}</span>
+                </a>
+                {{if .Email}}
+                <a href="mailto:{{.Email}}" class="wa-email-link" style="margin-top: 0; font-size: 0.75rem;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span>{{.Email}}</span>
+                </a>
+                {{end}}
+            </div>
+
+            <!-- Plan & Expiry Details -->
+            <div style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="wa-badge-pill wa-pill-plan" style="font-size: 0.68rem; padding: 2px 7px;">{{.PlanType}}</span>
+                    <span style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">£{{printf "%.2f" .PlanPriceGBP}}</span>
+                    {{if eq .PaymentStatus "paid"}}
+                    <span class="wa-badge-pill" style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-size: 0.62rem; padding: 1px 5px;">Paid</span>
+                    {{else}}
+                    <span class="wa-badge-pill" style="background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.62rem; padding: 1px 5px;">{{.PaymentStatus}}</span>
+                    {{end}}
+                </div>
+                <div style="font-size: 0.72rem; color: #64748b;">
+                    Expires {{formatDate .ExpiresAt}}
+                </div>
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="wa-smc-tags-wrap">
+                {{if .Categories}}
+                    {{range .Categories}}
+                    <span class="wa-tag" style="font-size: 0.68rem; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>{{.}}</span>
+                    </span>
+                    {{end}}
+                {{else}}
+                    <span class="wa-tag" style="font-size: 0.68rem; padding: 2px 7px; color: #64748b; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>All Tech Roles</span>
+                    </span>
+                {{end}}
+
+                {{if .Locations}}
+                    {{range .Locations}}
+                    <span class="wa-tag wa-tag-loc" style="font-size: 0.68rem; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>{{.}}</span>
+                    </span>
+                    {{end}}
+                {{else}}
+                    <span class="wa-tag wa-tag-loc" style="font-size: 0.68rem; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>UK Wide</span>
+                    </span>
+                {{end}}
+
+                {{if gt .MinSalary 0}}
+                    <span class="wa-tag wa-tag-sal" style="font-size: 0.68rem; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 7c0-5.333-8-5.333-8 0v10h8m-8-5h6m-9 5h12"></path></svg>
+                        <span>Min £{{.MinSalary}}</span>
+                    </span>
+                {{end}}
+            </div>
+
+            <!-- Cooldown / Limit -->
+            <div style="font-size: 0.74rem; color: #64748b; display: flex; justify-content: space-between; align-items: center;">
+                <span>{{.NumberChangesUsed}} of {{.MaxNumberChanges}} phone changes</span>
+                {{if .CooldownActive}}
+                <span class="wa-badge-pill wa-pill-cooldown" style="font-size: 0.65rem; padding: 2px 6px;">14d Cooldown</span>
+                {{else}}
+                <span class="wa-badge-pill wa-pill-available" style="font-size: 0.65rem; padding: 2px 6px;">Change Free</span>
+                {{end}}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="wa-smc-footer-actions">
+                <button type="button" onclick="openActivatePlanModal('{{.ID}}', '{{.FullName}}', '{{.PhoneNumber}}')" class="wa-btn wa-btn-primary" style="padding: 8px 12px; font-size: 0.8rem; background: #059669; border-color: #059669;" title="Activate 1M, 6M, or 1Y VIP Plan">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>Activate Plan</span>
+                </button>
+
+                <form method="POST" action="/wa-portal/subscribers/{{.ID}}/toggle" style="margin: 0; flex: 1;">
+                    {{if eq .Status "active"}}
+                    <input type="hidden" name="new_status" value="paused">
+                    <button type="submit" class="wa-btn wa-btn-secondary" style="width: 100%; justify-content: center; padding: 8px 12px; font-size: 0.8rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                        <span>Pause</span>
+                    </button>
+                    {{else}}
+                    <input type="hidden" name="new_status" value="active">
+                    <button type="submit" class="wa-btn wa-btn-primary" style="width: 100%; justify-content: center; padding: 8px 12px; font-size: 0.8rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Resume</span>
+                    </button>
+                    {{end}}
+                </form>
+
+                <button type="button" onclick="openDeleteModal('{{.ID}}', '{{.FullName}}')" class="wa-btn wa-btn-danger-outline" style="padding: 8px 12px; font-size: 0.8rem;" title="Delete subscriber">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+            </div>
+        </div>
+        {{end}}
+        {{else}}
+        <div style="text-align: center; padding: 36px 16px; background: #ffffff; border: 1.5px dashed #e2e8f0; border-radius: 16px; color: #64748b;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a; margin-bottom: 4px;">No subscribers found</div>
+            <div style="font-size: 0.8rem; margin-bottom: 14px;">Register a candidate or clear your search filters.</div>
+            <button type="button" class="wa-btn wa-btn-primary" onclick="document.getElementById('addModal').style.display='flex'" style="font-size: 0.82rem; padding: 8px 16px;">
+                <span>+ Add Subscriber</span>
+            </button>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+<!-- Modal: Add Subscriber -->
+<div id="addModal" class="wa-modal-backdrop" onclick="if(event.target === this) this.style.display='none'">
+    <div class="wa-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+            <h2 style="margin: 0; font-size: 1.22rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 10px;">
+                <div style="width: 38px; height: 38px; border-radius: 12px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </div>
+                <span>Add New Subscriber</span>
+            </h2>
+            <button type="button" onclick="document.getElementById('addModal').style.display='none'" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #94a3b8; line-height: 1;">&times;</button>
+        </div>
+
+        <form method="POST" action="/wa-portal/subscribers/new">
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Full Name *</label>
+                <input type="text" name="full_name" placeholder="e.g. Sarah Jenkins" required class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">WhatsApp Mobile Number (+44 UK) *</label>
+                <input type="tel" name="phone_number" placeholder="+44 7123 456789" required class="wa-form-input" style="width: 100%;">
+                <div style="font-size: 0.74rem; color: #64748b; margin-top: 4px;">Must be in standard UK international format (+44...)</div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Email Address (Optional)</label>
+                <input type="email" name="email" placeholder="sarah@example.co.uk" class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+                <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Subscription Plan</label>
+                    <select name="plan_type" class="wa-form-input" style="width: 100%;">
+                        <option value="trial">Free Trial (3-Day • 2–3 alerts/day)</option>
+                        <option value="monthly" selected>Monthly (£4.99/mo - 1 change)</option>
+                        <option value="6months">6 Months (£24.99 - 3 changes)</option>
+                        <option value="yearly">Annual (£39.99 - 5 changes)</option>
+                        <option value="admin_pass">Complimentary Pass (£0.00)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Status</label>
+                    <select name="status" class="wa-form-input" style="width: 100%;">
+                        <option value="active">Active (Deliver Alerts)</option>
+                        <option value="paused">Paused</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Target Job Titles (comma-separated)</label>
+                <input type="text" name="categories" placeholder="e.g. Software Engineer, DevOps, Product Manager" class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Preferred Locations (comma-separated)</label>
+                <input type="text" name="locations" placeholder="e.g. London, Manchester, Remote UK" class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px;">
+                <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Minimum Salary (£/yr)</label>
+                    <input type="number" name="min_salary" placeholder="50000" class="wa-form-input" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Delivery Frequency</label>
+                    <select name="alert_mode" class="wa-form-input" style="width: 100%;">
+                        <option value="instant">Instant (Real-time vacancy alerts)</option>
+                        <option value="daily_digest">Daily Digest (Evening summary at 18:00)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #f1f5f9; padding-top: 18px;">
+                <button type="button" onclick="document.getElementById('addModal').style.display='none'" class="wa-btn wa-btn-secondary">Cancel</button>
+                <button type="submit" class="wa-btn wa-btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>Save & Register Subscriber</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center; padding: 20px; animation: waFadeIn 0.2s ease;" onclick="this.style.display='none'">
+    <div style="background: #ffffff; border-radius: 20px; padding: 32px 28px; text-align: center; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid #fee2e2; animation: waScaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);" onclick="event.stopPropagation()">
+        <div style="width: 58px; height: 58px; background: #fff1f2; border: 2px solid #fecdd3; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2.5">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+        </div>
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">Delete Subscriber?</h3>
+        <p style="font-size: 0.9rem; color: #64748b; margin: 0 0 24px 0; line-height: 1.5;">
+            Are you sure you want to permanently remove <strong id="deleteTargetName"></strong>? Their active alerts and quotas will be cancelled.
+        </p>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" onclick="document.getElementById('deleteModal').style.display='none'" class="wa-btn wa-btn-secondary" style="flex: 1; justify-content: center; padding: 10px 16px;">
+                Cancel
+            </button>
+            <form id="deleteForm" method="POST" action="" style="flex: 1; margin: 0;">
+                <button type="submit" class="wa-btn wa-btn-danger" style="width: 100%; justify-content: center; padding: 10px 16px;">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Activate VIP Plan -->
+<div id="activatePlanModal" class="wa-modal-backdrop" onclick="if(event.target === this) this.style.display='none'">
+    <div class="wa-modal" style="max-width: 500px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+            <h2 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <span>Activate VIP Membership Plan</span>
+            </h2>
+            <button type="button" onclick="document.getElementById('activatePlanModal').style.display='none'" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #94a3b8; line-height: 1;">&times;</button>
+        </div>
+
+        <form id="activatePlanForm" method="POST" action="">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;">
+                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 750;">Candidate</div>
+                <div id="activatePlanCandidateName" style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-top: 2px;"></div>
+                <div id="activatePlanCandidatePhone" style="font-size: 0.8rem; color: #047857; font-weight: 700; margin-top: 2px;"></div>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Select VIP Plan Duration *</label>
+                <select name="plan_type" id="activatePlanTypeSelect" class="wa-form-input" style="width: 100%; font-weight: 700;" required>
+                    <option value="monthly">Monthly Plan — £4.99 (30 Days)</option>
+                    <option value="6months" selected>6-Month Pass — £24.99 (180 Days)</option>
+                    <option value="yearly">Yearly VIP Pass — £39.99 (365 Days)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Transaction ID / Bank Reference</label>
+                <input type="text" name="tx_ref" placeholder="e.g. TX-9823412, Wise ID, or Sort/Acc ref" class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Payment Proof URL / Screenshot Link</label>
+                <input type="url" name="screenshot_url" placeholder="https://... or uploaded image link" class="wa-form-input" style="width: 100%;">
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Admin Notes (Optional)</label>
+                <textarea name="admin_notes" rows="2" placeholder="e.g. Verified manual transfer via concierge..." class="wa-form-input" style="width: 100%; resize: vertical;"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+                <button type="button" onclick="document.getElementById('activatePlanModal').style.display='none'" class="wa-btn wa-btn-secondary">Cancel</button>
+                <button type="submit" class="wa-btn wa-btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>Activate Plan & Notify Candidate</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openDeleteModal(subId, subName) {
+    document.getElementById('deleteTargetName').textContent = subName || 'this subscriber';
+    document.getElementById('deleteForm').action = '/wa-portal/subscribers/' + subId + '/delete';
+    document.getElementById('deleteModal').style.display = 'flex';
+}
+
+function openActivatePlanModal(subId, subName, subPhone) {
+    document.getElementById('activatePlanCandidateName').textContent = subName || 'Subscriber #' + subId;
+    document.getElementById('activatePlanCandidatePhone').textContent = subPhone || '';
+    document.getElementById('activatePlanForm').action = '/wa-portal/subscribers/' + subId + '/activate-plan';
+    document.getElementById('activatePlanModal').style.display = 'flex';
+}
+</script>
+{{end}}

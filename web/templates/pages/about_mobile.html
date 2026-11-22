@@ -1,0 +1,61 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 20px; padding-bottom: 50px;">
+    {{template "breadcrumbs" .}}
+
+    <!-- Mobile Hero -->
+    <header style="margin-bottom: 24px;">
+
+        <h1 style="font-size: 1.75rem; font-weight: 850; color: #0F172A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 10px;">
+            Direct, Middleman-Free UK Job Search
+        </h1>
+        <p style="font-size: 0.92rem; color: #64748B; line-height: 1.5; margin: 0;">
+            Connecting candidates directly to employer hiring systems across the UK. Zero ghost postings, zero candidate fees.
+        </p>
+    </header>
+
+    <!-- Mobile Metrics 2x2 Grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px;">
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 850; color: #059669; line-height: 1; margin-bottom: 4px;">100%</div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #0F172A;">Direct Apply</div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 850; color: #059669; line-height: 1; margin-bottom: 4px;">0</div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #0F172A;">Ghost Jobs</div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 850; color: #059669; line-height: 1; margin-bottom: 4px;">1,000+</div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #0F172A;">UK Employers</div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 850; color: #059669; line-height: 1; margin-bottom: 4px;">Free</div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #0F172A;">For Candidates</div>
+        </div>
+    </div>
+
+    <!-- Article Content -->
+    <article style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px 18px; font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 24px;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 10px;">Our Mission</h2>
+        <p style="margin: 0 0 16px;">
+            We created <strong>JobyUK.com</strong> to eliminate the frustration of aggregator loops, dead links, and ghost listings. We pull vacancies straight from employer hiring systems like Greenhouse, Lever, and Workday.
+        </p>
+
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 20px 0 10px;">Our Quality Standards</h2>
+        <ul style="padding-left: 18px; margin: 0 0 20px; font-size: 0.9rem; line-height: 1.6;">
+            <li><strong>Verified Sources:</strong> Real company hiring portals only.</li>
+            <li><strong>No Duplicates:</strong> Each unique opening appears only once.</li>
+            <li><strong>Always Fresh:</strong> Postings inactive after 30 days are purged.</li>
+            <li><strong>UK Only:</strong> Verified for UK work eligibility.</li>
+        </ul>
+
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; text-align: center;">
+            <h3 style="font-size: 1rem; font-weight: 750; color: #0F172A; margin: 0 0 4px;">Need Help?</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin: 0 0 12px;">Get in touch with our support team.</p>
+            <a href="/contact/" style="display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: #FFFFFF; padding: 10px 22px; border-radius: 8px; font-weight: 700; font-size: 0.88rem; text-decoration: none;">
+                <span>Contact Us</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </article>
+</div>
+{{end}}

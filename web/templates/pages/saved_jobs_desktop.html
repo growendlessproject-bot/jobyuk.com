@@ -1,0 +1,306 @@
+{{define "content"}}
+<div class="jy-saved-page-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <div class="jy-saved-container" style="width: 100%; margin-top: 8px;">
+            <!-- Header -->
+            <div class="jy-saved-header">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+                    <h1 class="jy-saved-title" style="margin: 0;">Saved Jobs</h1>
+                    <span id="savedBadgePill" style="display: none; font-size: 0.8rem; font-weight: 800; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 12px; border-radius: 9999px;">
+                        <span id="savedBadgeCount">0</span> Bookmarked
+                    </span>
+                </div>
+
+                <div class="jy-saved-subrow" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding-top: 4px;">
+                    <p class="jy-saved-count-text" style="margin: 0; font-size: 0.95rem; color: #64748B;">
+                        You have <strong id="savedJobsCount" style="color: #0B1F1A; font-weight: 800;">0</strong> jobs saved in your JobyUK list
+                    </p>
+
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <!-- Inline Quick Filter if 2+ jobs -->
+                        <div id="savedFilterWrap" style="display: none; position: relative;">
+                            <input type="text" id="savedFilterInput" placeholder="Filter saved jobs..." oninput="filterSavedJobs(this.value)" style="padding: 7px 14px 7px 32px; font-size: 0.85rem; border: 1.5px solid #E2E8F0; border-radius: 9999px; background: #FFFFFF; color: #0F172A; outline: none; width: 180px; transition: all 0.2s ease;" onfocus="this.style.borderColor='#059669'; this.style.width='220px';" onblur="this.style.borderColor='#E2E8F0'; if(!this.value) this.style.width='180px';" />
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.3" style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+
+                        <button type="button" class="jy-saved-clear-btn" id="clearAllSavedBtn" onclick="confirmClearAllSaved()" style="display: none;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <span>Clear all</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Saved Jobs List Container -->
+            <div class="jy-saved-list" id="savedJobsList" style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+                <!-- Filled dynamically by JavaScript -->
+            </div>
+
+            <!-- Empty State Container (shown when 0 saved jobs) -->
+            <div class="jy-saved-empty" id="savedJobsEmpty" style="display: none; text-align: center; padding: 56px 24px; background: #FFFFFF; border-radius: 20px; border: 1.5px solid #EEF2F6; box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.03); margin-top: 14px;">
+                <div class="jy-saved-empty__icon" style="width: 56px; height: 56px; border-radius: 16px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                </div>
+                <h2 class="jy-saved-empty__title" style="font-size: 1.45rem; font-weight: 850; color: #0B1F1A; margin: 0 0 8px;">No saved jobs yet</h2>
+                <p class="jy-saved-empty__desc" style="font-size: 0.95rem; color: #64748B; max-width: 480px; margin: 0 auto 22px; line-height: 1.6;">
+                    Bookmark live UK opportunities while searching to track roles, compare salaries, and apply whenever you are ready.
+                </p>
+                <a href="/jobs/" class="jy-saved-empty__btn" style="display: inline-flex; align-items: center; gap: 8px; background: #0F5132; color: #FFFFFF; font-weight: 800; font-size: 0.95rem; padding: 12px 24px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 14px rgba(15, 81, 50, 0.2); transition: all 0.2s ease;">
+                    <span>Browse UK Jobs</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recommended Jobs Live Section -->
+        {{if .Data.SampleJobs}}
+        <section style="margin-top: 56px;" aria-label="Recommended Jobs">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <span style="font-size: 0.72rem; font-weight: 850; text-transform: uppercase; letter-spacing: 0.6px; color: #059669; display: block; margin-bottom: 4px;">Explore Opportunities</span>
+                    <h2 style="font-size: 1.55rem; font-weight: 850; color: #0B1F1A; margin: 0; letter-spacing: -0.02em;">Recommended Jobs for You</h2>
+                </div>
+                <a href="/jobs/" style="color: #059669; font-size: 0.92rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                    <span>View all vacancies</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+            </div>
+
+            <div class="jy-dream-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;">
+                {{range .Data.SampleJobs}}
+                    {{template "job_card" .}}
+                {{end}}
+            </div>
+        </section>
+        {{end}}
+
+    </div>
+</div>
+
+<script>
+// Live Dynamic Renderer for Saved Jobs
+var activeSearchQuery = '';
+
+function renderSavedJobsList() {
+    const listEl = document.getElementById('savedJobsList');
+    const emptyEl = document.getElementById('savedJobsEmpty');
+    const countEl = document.getElementById('savedJobsCount');
+    const badgeEl = document.getElementById('savedBadgePill');
+    const badgeCountEl = document.getElementById('savedBadgeCount');
+    const clearBtn = document.getElementById('clearAllSavedBtn');
+    const filterWrap = document.getElementById('savedFilterWrap');
+
+    if (!listEl || !emptyEl || typeof JobyUKSaved === 'undefined') return;
+
+    let allSaved = JobyUKSaved.getAll();
+    const totalCount = allSaved.length;
+
+    if (countEl) countEl.textContent = totalCount;
+    if (badgeCountEl) badgeCountEl.textContent = totalCount;
+
+    if (totalCount === 0) {
+        listEl.style.display = 'none';
+        emptyEl.style.display = 'block';
+        if (clearBtn) clearBtn.style.display = 'none';
+        if (filterWrap) filterWrap.style.display = 'none';
+        if (badgeEl) badgeEl.style.display = 'none';
+        return;
+    }
+
+    listEl.style.display = 'flex';
+    emptyEl.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'inline-flex';
+    if (badgeEl) badgeEl.style.display = 'inline-flex';
+    if (filterWrap) filterWrap.style.display = totalCount >= 2 ? 'block' : 'none';
+
+    // Apply client filter
+    let displayed = allSaved;
+    if (activeSearchQuery.trim()) {
+        const q = activeSearchQuery.toLowerCase().trim();
+        displayed = allSaved.filter(j => 
+            (j.title && j.title.toLowerCase().includes(q)) ||
+            (j.employer && j.employer.toLowerCase().includes(q)) ||
+            (j.location && j.location.toLowerCase().includes(q))
+        );
+    }
+
+    if (displayed.length === 0) {
+        listEl.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; background: #FFFFFF; border-radius: 16px; border: 1.5px dashed #E2E8F0;">
+                <p style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0 0 6px;">No saved jobs match "${escapeHtml(activeSearchQuery)}"</p>
+                <button type="button" onclick="clearSavedFilter()" style="background: none; border: none; color: #059669; font-weight: 700; cursor: pointer; text-decoration: underline;">Clear filter</button>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    displayed.forEach(job => {
+        const logoContent = job.logoUrl 
+            ? `<img src="${escapeHtml(job.logoUrl)}" alt="${escapeHtml(job.employer)}" width="36" height="36" loading="lazy" style="border-radius: 8px; object-fit: contain;" />`
+            : `<span style="font-size: 16px; font-weight: 850; color: #0F5132;">${escapeHtml((job.employer || 'J').charAt(0).toUpperCase())}</span>`;
+
+        const employerLink = job.employerSlug 
+            ? `<a href="/companies/${escapeHtml(job.employerSlug)}/" class="jy-saved-card__logo" title="View ${escapeHtml(job.employer)} profile" aria-label="${escapeHtml(job.employer)} profile" style="position: relative; z-index: 2; text-decoration: none;">${logoContent}</a>`
+            : (job.employer 
+                ? `<a href="/jobs/?q=${encodeURIComponent(job.employer)}" class="jy-saved-card__logo" title="View ${escapeHtml(job.employer)} jobs" aria-label="${escapeHtml(job.employer)} jobs" style="position: relative; z-index: 2; text-decoration: none;">${logoContent}</a>`
+                : `<div class="jy-saved-card__logo" aria-hidden="true">${logoContent}</div>`);
+
+        html += `
+        <article class="jy-saved-card" id="saved-job-card-${escapeHtml(job.id)}" data-job-id="${escapeHtml(job.id)}">
+            <a href="/jobs/${escapeHtml(job.slug)}/" class="jy-saved-card__overlay" aria-label="View ${escapeHtml(job.title)}"></a>
+            
+            <div class="jy-saved-card__left">
+                ${employerLink}
+
+                <div style="min-width: 0;">
+                    <h2 class="jy-saved-card__title">
+                        <a href="/jobs/${escapeHtml(job.slug)}/">${escapeHtml(job.title)}</a>
+                    </h2>
+                    <p class="jy-saved-card__meta">
+                        <span class="jy-saved-card__company">${escapeHtml(job.employer)}</span>
+                        <span class="jy-saved-card__meta-dot">•</span>
+                        <span>${escapeHtml(job.location || 'United Kingdom')}</span>
+                        <span class="jy-saved-card__meta-dot">•</span>
+                        <span>${job.isRemote ? 'Remote Friendly' : 'Hybrid / On-site'}</span>
+                    </p>
+                    <p class="jy-saved-card__salary">${escapeHtml(job.salary || 'Competitive salary')}</p>
+                </div>
+            </div>
+
+            <div class="jy-saved-card__right">
+                <span class="jy-saved-card__time">${escapeHtml(job.timeAgo || 'Recently')}</span>
+
+                <div style="display: flex; align-items: center; gap: 8px; position: relative; z-index: 5;">
+                    <a href="/jobs/${escapeHtml(job.id)}/apply/" target="_blank" rel="noopener noreferrer" class="jy-dream-apply-cta" style="padding: 7px 16px; font-size: 13px; text-decoration: none;" title="Apply for ${escapeHtml(job.title)}">
+                        <span>Apply</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+
+                    <div style="position: relative;">
+                        <button type="button" class="jy-saved-card__menu-btn" onclick="toggleSavedMenu(event, 'menu-${escapeHtml(job.id)}')" aria-label="Job actions">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                        </button>
+                        <div class="jy-saved-card__menu-dropdown" id="menu-${escapeHtml(job.id)}">
+                            <a href="/jobs/${escapeHtml(job.id)}/apply/" target="_blank" rel="noopener noreferrer" class="jy-saved-card__menu-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                <span>Apply Now</span>
+                            </a>
+                            <a href="/jobs/${escapeHtml(job.slug)}/" class="jy-saved-card__menu-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span>View Details</span>
+                            </a>
+                            <button type="button" class="jy-saved-card__menu-item jy-saved-card__menu-item--remove" onclick="handleRemoveClick(event, '${escapeHtml(job.id)}')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                <span>Remove</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        `;
+    });
+
+    listEl.innerHTML = html;
+}
+
+function handleRemoveClick(e, jobId) {
+    if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    const card = document.getElementById('saved-job-card-' + jobId);
+    if (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-10px)';
+        card.style.transition = 'all 0.22s ease';
+    }
+    setTimeout(() => {
+        JobyUKSaved.remove(jobId);
+        renderSavedJobsList();
+    }, 200);
+}
+
+function confirmClearAllSaved() {
+    if (confirm('Are you sure you want to remove all saved jobs from your bookmarks?')) {
+        JobyUKSaved.clear();
+        renderSavedJobsList();
+    }
+}
+
+function filterSavedJobs(val) {
+    activeSearchQuery = val || '';
+    renderSavedJobsList();
+}
+
+function clearSavedFilter() {
+    activeSearchQuery = '';
+    const input = document.getElementById('savedFilterInput');
+    if (input) input.value = '';
+    renderSavedJobsList();
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+// Toggle Action Dropdown
+function toggleSavedMenu(e, menuId) {
+    e.stopPropagation();
+    e.preventDefault();
+    const dropdown = document.getElementById(menuId);
+    if (!dropdown) return;
+    const wasOpen = dropdown.classList.contains('show');
+    
+    document.querySelectorAll('.j-saved-card__menu-dropdown').forEach(d => {
+        d.classList.remove('show');
+        d.classList.remove('drop-up');
+    });
+    document.querySelectorAll('.j-saved-card').forEach(c => {
+        c.classList.remove('menu-open');
+        c.style.zIndex = '';
+    });
+    
+    if (!wasOpen) {
+        dropdown.classList.add('show');
+        const card = dropdown.closest('.j-saved-card');
+        if (card) {
+            card.classList.add('menu-open');
+            card.style.zIndex = '100';
+        }
+        const rect = dropdown.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight - 20) {
+            dropdown.classList.add('drop-up');
+        }
+    }
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.j-saved-card__menu-dropdown') && !e.target.closest('.j-saved-card__menu-btn')) {
+        document.querySelectorAll('.j-saved-card__menu-dropdown').forEach(d => {
+            d.classList.remove('show');
+            d.classList.remove('drop-up');
+        });
+        document.querySelectorAll('.j-saved-card').forEach(c => {
+            c.classList.remove('menu-open');
+            c.style.zIndex = '';
+        });
+    }
+});
+
+// React live if any job is bookmarked/removed anywhere on the page
+window.addEventListener('jobyuk:saved-changed', renderSavedJobsList);
+
+document.addEventListener('DOMContentLoaded', renderSavedJobsList);
+if (document.readyState !== 'loading') renderSavedJobsList();
+</script>
+{{end}}

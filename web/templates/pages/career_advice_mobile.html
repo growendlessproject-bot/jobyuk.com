@@ -1,0 +1,733 @@
+{{define "content"}}
+<div class="jy-career-mobile-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 50px; min-height: 85vh;">
+    <div class="jy-container" style="padding-left: 16px; padding-right: 16px;">
+        {{template "breadcrumbs" .}}
+
+        {{if .Data.Article}}
+        <!-- =========================================================================
+             1. MOBILE SINGLE ARTICLE VIEW (Magazine-Grade Clean Layout)
+             ========================================================================= -->
+        <article class="jy-mob-article animate-fade-in" style="background: #FFFFFF; border: 1.5px solid #EEF2F6; border-radius: 18px; padding: 22px 18px; box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04); margin-top: 10px;">
+            <header style="margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #F1F5F9;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <a href="/career-advice/{{.Data.Article.Category}}/" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; text-decoration: none;">
+                        <span>{{.Data.Article.Category}}</span>
+                    </a>
+                    
+                    <span style="display: inline-flex; align-items: center; gap: 4px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 8px; border-radius: 9999px; font-weight: 700; font-size: 0.7rem;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        UK Fact-Checked
+                    </span>
+                </div>
+
+                <h1 style="font-size: 1.65rem; font-weight: 850; color: #0B1F1A; line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 12px;">
+                    {{.Data.Article.Title}}
+                </h1>
+
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #64748B; flex-wrap: wrap;">
+                    <div style="display: inline-flex; align-items: center; gap: 6px;">
+                        <div style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 850; font-size: 11px;">J</div>
+                        <span>JobyUK Editorial</span>
+                    </div>
+                    <span>•</span>
+                    <span>5 min read</span>
+                    {{if .Data.Article.PublishedAt}}
+                    <span>•</span>
+                    <time datetime="{{.Data.Article.PublishedAt}}">{{.Data.Article.PublishedAt.Format "02 Jan 2006"}}</time>
+                    {{end}}
+                </div>
+            </header>
+
+            {{template "wfa_incontent" .}}
+
+            <div class="jy-mob-article-body" style="font-size: 0.98rem; line-height: 1.75; color: #334155;">
+                {{.Data.Article.Content | safeHTML}}
+            </div>
+
+            <!-- Author & Fact-Check E-E-A-T Box -->
+            <div style="margin-top: 32px; padding: 18px; background: #F8FAFC; border: 1.5px solid #EEF2F6; border-radius: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                    <div style="width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 850; font-size: 1.15rem; flex-shrink: 0; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);">
+                        J
+                    </div>
+                    <div>
+                        <div style="font-size: 0.92rem; font-weight: 800; color: #0F172A;">JobyUK UK Career Editorial</div>
+                        <div style="font-size: 0.72rem; color: #059669; font-weight: 700;">Verified UK Employment Guidance</div>
+                    </div>
+                </div>
+                <p style="margin: 0 0 10px; font-size: 0.84rem; line-height: 1.5; color: #475569;">
+                    Researched and vetted by UK recruitment and workplace specialists. Cross-checked with ACAS and HMRC statutory guidelines.
+                </p>
+                <a href="/about/" style="color: #059669; font-weight: 700; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                    <span>Learn about our editorial standards</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+            </div>
+
+            <!-- Footer Return Actions -->
+            <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #F1F5F9; display: flex; flex-direction: column; gap: 10px;">
+                <a href="/career-advice/" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; font-weight: 700; font-size: 0.9rem; color: #065F46; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; text-decoration: none;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Back to Career Hub</span>
+                </a>
+
+                <a href="/jobs/" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; font-weight: 700; font-size: 0.9rem; color: #FFFFFF; background: #0F5132; border-radius: 12px; text-decoration: none;">
+                    <span>Browse UK Vacancies</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+            </div>
+        </article>
+
+        {{else if .Data.Articles}}
+        <!-- =========================================================================
+             2. MOBILE CATEGORY ARCHIVE VIEW
+             ========================================================================= -->
+        <header style="background: #FFFFFF; border: 1.5px solid #EEF2F6; border-radius: 18px; padding: 22px 18px; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);">
+            <div style="display: inline-block; font-size: 0.7rem; font-weight: 800; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; margin-bottom: 8px;">
+                Category Archive
+            </div>
+            <h1 style="font-size: 1.7rem; font-weight: 850; color: #0B1F1A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px;">
+                {{.Data.Category | title}} Guides
+            </h1>
+            <p style="font-size: 0.88rem; color: #64748B; margin: 0; line-height: 1.5;">
+                Actionable UK guidance, framework checklists, and insights for {{.Data.Category}}.
+            </p>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+            {{range .Data.Articles}}
+            <article class="jy-mob-guide-card">
+                <a href="/career-advice/{{.Category}}/{{.Slug}}/" class="jy-mob-guide-card__overlay" aria-label="Read {{.Title}}"></a>
+                <div class="jy-mob-guide-card__inner">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                        <span class="jy-mob-badge">{{.Category}}</span>
+                        <span style="font-size: 0.72rem; color: #94A3B8;">5 min read</span>
+                    </div>
+
+                    <h2 class="jy-mob-guide-title">
+                        <a href="/career-advice/{{.Category}}/{{.Slug}}/">{{.Title}}</a>
+                    </h2>
+
+                    {{if .SEODescription}}
+                    <p class="jy-mob-guide-desc">{{.SEODescription}}</p>
+                    {{else}}
+                    <p class="jy-mob-guide-desc">Comprehensive UK guide covering key statutory details, employer expectations, and candidate tips.</p>
+                    {{end}}
+
+                    <div class="jy-mob-guide-footer">
+                        <span class="jy-mob-read-link">
+                            <span>Read Guide</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
+                        {{if .PublishedAt}}
+                        <time datetime="{{.PublishedAt}}" style="font-size: 0.72rem; color: #94A3B8;">{{.PublishedAt.Format "02 Jan 2006"}}</time>
+                        {{end}}
+                    </div>
+                </div>
+            </article>
+            {{else}}
+            <div style="text-align: center; padding: 40px 16px; background: #FFFFFF; border-radius: 16px; border: 1.5px solid #EEF2F6;">
+                <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">No articles in this category</h2>
+                <p style="color: #64748B; font-size: 0.88rem;">We're currently publishing new verified guides. Check back soon!</p>
+                <a href="/career-advice/" style="display: inline-block; margin-top: 10px; color: #059669; font-weight: 700; font-size: 0.88rem;">Return to Career Hub</a>
+            </div>
+            {{end}}
+        </div>
+
+        {{else}}
+        <!-- =========================================================================
+             3. MOBILE MAIN CAREER ADVICE HUB
+             ========================================================================= -->
+
+        <!-- Hero Header -->
+        <header class="jy-dream-header" style="padding: 24px 18px; margin-top: 10px; margin-bottom: 20px;" aria-label="Career Advice Hero">
+            <h1 style="font-size: 1.85rem; font-weight: 850; color: #0B1F1A; line-height: 1.2; letter-spacing: -0.025em; margin: 0 0 8px;">
+                UK Career Advice & Guides
+            </h1>
+            <p style="font-size: 0.92rem; color: #64748B; line-height: 1.55; margin: 0 0 18px;">
+                Real UK career advice without corporate fluff. Practical CV tips that get replies, interview prep, and what UK jobs actually pay.
+            </p>
+
+            <!-- Mobile Proper JobyUK Search Card -->
+            <div style="margin-bottom: 14px;">
+                <form class="jy-mob-search-card" onsubmit="event.preventDefault(); applyFiltersMobile();" role="search" aria-label="Career Advice Search">
+                    <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; padding-left: 2px;">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="careerSearchInputMobile" placeholder="Search CV, interview, salary..." style="width: 100%; border: none; outline: none; font-size: 0.92rem; color: #0F172A; background: transparent; font-family: inherit; font-weight: 500;" oninput="filterCareerGuidesMobile(this.value)" autocomplete="off" />
+                        <button type="button" id="careerSearchClearBtnMobile" onclick="clearCareerSearchMobile()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; color: #475569; font-weight: 800; font-size: 10px; align-items: center; justify-content: center; flex-shrink: 0;">✕</button>
+                    </div>
+                    <button type="submit" class="jy-mob-search-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <span>Search</span>
+                    </button>
+                </form>
+
+                <!-- Mobile Trending Searches Tags -->
+                <div class="jy-mob-trending-tags" style="display: flex; align-items: center; gap: 6px; overflow-x: auto; padding-top: 8px; padding-bottom: 2px; scrollbar-width: none;">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #64748B; white-space: nowrap;">Trending:</span>
+                    <button type="button" class="jy-mob-tag" onclick="quickSearchMobile('CV')">CV Tips</button>
+                    <button type="button" class="jy-mob-tag" onclick="quickSearchMobile('STAR')">STAR</button>
+                    <button type="button" class="jy-mob-tag" onclick="quickSearchMobile('Civil Service')">Civil Service</button>
+                    <button type="button" class="jy-mob-tag" onclick="quickSearchMobile('Minimum Wage')">Min Wage</button>
+                    <button type="button" class="jy-mob-tag" onclick="quickSearchMobile('NHS')">NHS Pay</button>
+                </div>
+            </div>
+
+            <!-- Horizontally Scrollable Category Filter Pills -->
+            <div class="jy-mob-pill-slider">
+                <button type="button" class="jy-mob-pill active" onclick="filterByCategoryMobile('all', this)">All Topics</button>
+                <button type="button" class="jy-mob-pill" onclick="filterByCategoryMobile('cv', this)">CV & Resume</button>
+                <button type="button" class="jy-mob-pill" onclick="filterByCategoryMobile('interviews', this)">Interview Prep</button>
+                <button type="button" class="jy-mob-pill" onclick="filterByCategoryMobile('job-search', this)">Job Search</button>
+                <button type="button" class="jy-mob-pill" onclick="filterByCategoryMobile('salary', this)">Salary & Rights</button>
+            </div>
+        </header>
+
+        <!-- 4 Core Topic Pillar Cards (2x2 Grid) -->
+        <section style="margin-bottom: 24px;" aria-label="Core Career Pillars">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                
+                <!-- Pillar 1: CV Tips -->
+                <a href="/career-advice/cv/" class="jy-mob-pillar-card">
+                    <div class="jy-mob-pillar-icon" style="background: #ECFDF5; color: #059669;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </div>
+                    <div>
+                        <span class="jy-mob-pillar-kicker" style="color: #065F46;">CV & Resume</span>
+                        <h3 class="jy-mob-pillar-title">CVs That Win Interviews</h3>
+                        <p class="jy-mob-pillar-desc">UK-standard layouts & clear proof</p>
+                    </div>
+                </a>
+
+                <!-- Pillar 2: Interview Prep -->
+                <a href="/career-advice/interviews/" class="jy-mob-pillar-card">
+                    <div class="jy-mob-pillar-icon" style="background: #FEF3C7; color: #D97706;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div>
+                        <span class="jy-mob-pillar-kicker" style="color: #B45309;">Interviews</span>
+                        <h3 class="jy-mob-pillar-title">Tough Questions</h3>
+                        <p class="jy-mob-pillar-desc">Proven STAR stories & answers</p>
+                    </div>
+                </a>
+
+                <!-- Pillar 3: Job Search Strategy -->
+                <a href="/career-advice/job-search/" class="jy-mob-pillar-card">
+                    <div class="jy-mob-pillar-icon" style="background: #EEF2FF; color: #4F46E5;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <div>
+                        <span class="jy-mob-pillar-kicker" style="color: #4338CA;">Job Search</span>
+                        <h3 class="jy-mob-pillar-title">Direct Apply</h3>
+                        <p class="jy-mob-pillar-desc">Bypass recruiters & get hired</p>
+                    </div>
+                </a>
+
+                <!-- Pillar 4: Salary & Taxes -->
+                <a href="/salaries/" class="jy-mob-pillar-card">
+                    <div class="jy-mob-pillar-icon" style="background: #F0FDF4; color: #16A34A;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div>
+                        <span class="jy-mob-pillar-kicker" style="color: #15803D;">Salaries</span>
+                        <h3 class="jy-mob-pillar-title">Pay & Rights</h3>
+                        <p class="jy-mob-pillar-desc">Real UK wage rates & legal rights</p>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Interactive UK Take-Home Pay & Tax Calculator Feature Card -->
+        <a href="/salary-calculator/" class="jy-mob-calc-card" style="margin-bottom: 28px;" aria-label="Salary Calculator Tool">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="jy-mob-calc-tag">2026/27 TAX TOOL</span>
+                <span style="font-size: 0.72rem; color: #A7F3D0; font-weight: 700;">Instant Net Pay</span>
+            </div>
+            <h2 style="font-size: 1.25rem; font-weight: 850; color: #FFFFFF; line-height: 1.25; margin: 0 0 6px;">
+                What Will You Actually Take Home?
+            </h2>
+            <p style="font-size: 0.82rem; color: #E6F4EA; line-height: 1.45; margin: 0 0 14px;">
+                See your real monthly bank take-home pay after PAYE tax, National Insurance, student loans, and pension.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                <span style="font-size: 0.85rem; font-weight: 800; color: #FFFFFF;">Calculate Net Pay</span>
+                <span style="width: 28px; height: 28px; border-radius: 50%; background: #FFFFFF; color: #064E3B; display: inline-flex; align-items: center; justify-content: center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+            </div>
+        </a>
+
+        <!-- Latest Guides Feed -->
+        <section aria-label="Latest Career Guides">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <h2 style="font-size: 1.25rem; font-weight: 850; color: #0B1F1A; margin: 0; letter-spacing: -0.02em;">
+                    Latest Guides
+                </h2>
+                <span id="guideCountBadgeMobile" style="font-size: 0.75rem; font-weight: 700; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                    {{len .Data.RecentArticles}} Guides
+                </span>
+            </div>
+
+            <div class="jy-mob-guides-list" id="careerGuidesListMobile">
+                {{range .Data.RecentArticles}}
+                <article class="jy-mob-guide-card" data-category="{{.Category}}" data-title="{{lower .Title}}" data-desc="{{lower .SEODescription}}">
+                    <a href="/career-advice/{{.Category}}/{{.Slug}}/" class="jy-mob-guide-card__overlay" aria-label="Read {{.Title}}"></a>
+                    
+                    <div class="jy-mob-guide-card__inner">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <span class="jy-mob-badge">{{.Category}}</span>
+                            <span style="font-size: 0.72rem; color: #94A3B8;">5 min read</span>
+                        </div>
+
+                        <h3 class="jy-mob-guide-title">
+                            <a href="/career-advice/{{.Category}}/{{.Slug}}/">{{.Title}}</a>
+                        </h3>
+
+                        {{if .SEODescription}}
+                        <p class="jy-mob-guide-desc">{{.SEODescription}}</p>
+                        {{else}}
+                        <p class="jy-mob-guide-desc">Comprehensive UK guide covering key statutory details, employer expectations, and candidate tips.</p>
+                        {{end}}
+
+                        <div class="jy-mob-guide-footer">
+                            <span class="jy-mob-read-link">
+                                <span>Read Guide</span>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </span>
+                            {{if .PublishedAt}}
+                            <time datetime="{{.PublishedAt}}" style="font-size: 0.72rem; color: #94A3B8;">{{.PublishedAt.Format "02 Jan 2006"}}</time>
+                            {{end}}
+                        </div>
+                    </div>
+                </article>
+                {{end}}
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="noGuidesEmptyStateMobile" style="display: none; text-align: center; padding: 36px 16px; background: #FFFFFF; border: 1.5px solid #EEF2F6; border-radius: 16px; margin-top: 12px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: #F1F5F9; color: #64748B; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <h3 style="font-size: 1.1rem; font-weight: 800; color: #0B1F1A; margin: 0 0 4px;">No guides matched</h3>
+                <p style="color: #64748B; font-size: 0.85rem; margin: 0 0 12px;">Try searching for "CV", "STAR", or "Salary".</p>
+                <button type="button" onclick="clearCareerSearchMobile()" style="background: #059669; color: #FFFFFF; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;">
+                    Reset Filter
+                </button>
+            </div>
+        </section>
+
+        <!-- E-E-A-T Editorial Trust Strip -->
+        <section style="margin-top: 36px; background: #FFFFFF; border: 1.5px solid #EEF2F6; border-radius: 18px; padding: 22px 18px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);" aria-label="Editorial Standards">
+            <h3 style="font-size: 1.15rem; font-weight: 850; color: #0B1F1A; margin: 0 0 4px;">JobyUK Editorial Standards</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin: 0 0 16px; line-height: 1.45;">
+                Direct candidate advocacy. No sponsored recruitment agency bias.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <div>
+                        <strong style="font-size: 0.88rem; color: #0F172A; display: block; margin-bottom: 2px;">ACAS & HMRC Aligned</strong>
+                        <span style="font-size: 0.78rem; color: #64748B; line-height: 1.4; display: block;">Employment rights and tax bands cross-checked with UK statutory bodies.</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                    <div>
+                        <strong style="font-size: 0.88rem; color: #0F172A; display: block; margin-bottom: 2px;">Direct Employer Focus</strong>
+                        <span style="font-size: 0.78rem; color: #64748B; line-height: 1.4; display: block;">Practical frameworks designed to help you bypass recruitment middleman gates.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{end}}
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   Career Advice Mobile Next-Level Theme Styling
+   ========================================================================= */
+
+/* Horizontally scrollable pill slider */
+.j-mob-pill-slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+.j-mob-pill-slider::-webkit-scrollbar {
+    display: none;
+}
+.j-mob-pill {
+    background: #FFFFFF;
+    color: #475569;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 9999px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    outline: none;
+}
+.j-mob-pill.active {
+    background: #059669 !important;
+    color: #FFFFFF !important;
+    border-color: #059669 !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+}
+
+/* Pillar Cards */
+.j-mob-pillar-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 14px;
+    padding: 14px 12px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.j-mob-pillar-card:active {
+    transform: scale(0.98);
+    border-color: #059669;
+}
+.j-mob-pillar-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.j-mob-pillar-kicker {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    display: block;
+    margin-bottom: 2px;
+}
+.j-mob-pillar-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0B1F1A;
+    line-height: 1.25;
+    margin: 0 0 2px;
+}
+.j-mob-pillar-desc {
+    font-size: 0.72rem;
+    color: #64748B;
+    line-height: 1.35;
+    margin: 0;
+}
+
+/* Tax Calculator Card */
+.j-mob-calc-card {
+    display: block;
+    background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+    border-radius: 16px;
+    padding: 20px 18px;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(5, 150, 105, 0.22);
+    transition: transform 0.2s ease;
+}
+.j-mob-calc-card:active {
+    transform: scale(0.98);
+}
+.j-mob-calc-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+/* Guides Feed Cards */
+.j-mob-guides-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.j-mob-guide-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.j-mob-guide-card:active {
+    border-color: #059669;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1);
+}
+.j-mob-guide-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.j-mob-guide-card__inner {
+    padding: 16px 14px;
+}
+.j-mob-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+.j-mob-guide-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0B1F1A;
+    line-height: 1.35;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+}
+.j-mob-guide-title a {
+    color: inherit;
+    text-decoration: none;
+}
+.j-mob-guide-desc {
+    font-size: 0.84rem;
+    color: #64748B;
+    line-height: 1.45;
+    margin: 0 0 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.j-mob-guide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #F1F5F9;
+}
+.j-mob-read-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 750;
+    color: #059669;
+}
+
+/* Article Typography */
+.j-mob-article-body h2 {
+    font-size: 1.3rem;
+    font-weight: 850;
+    color: #0B1F1A;
+    margin: 26px 0 10px;
+    line-height: 1.3;
+}
+.j-mob-article-body h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 20px 0 8px;
+    line-height: 1.35;
+}
+.j-mob-article-body p {
+    margin: 0 0 16px;
+}
+.j-mob-article-body ul,
+.j-mob-article-body ol {
+    margin: 0 0 16px;
+    padding-left: 20px;
+}
+.j-mob-article-body li {
+    margin-bottom: 6px;
+}
+.j-mob-article-body blockquote {
+    border-left: 3.5px solid #059669;
+    padding-left: 14px;
+    margin: 18px 0;
+    font-style: italic;
+    color: #475569;
+    background: #F8FAF8;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 0 8px 8px 0;
+}
+.j-mob-article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.82rem;
+    display: block;
+    overflow-x: auto;
+}
+.j-mob-article-body th {
+    background: #F1F5F9;
+    padding: 8px 10px;
+    border: 1px solid #CBD5E1;
+    font-weight: 750;
+    text-align: left;
+    white-space: nowrap;
+}
+.j-mob-article-body td {
+    padding: 8px 10px;
+    border: 1px solid #E2E8F0;
+    white-space: nowrap;
+}
+
+/* Mobile Proper Search Card */
+.j-mob-search-card {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid rgba(15, 81, 50, 0.16);
+    border-radius: 16px;
+    padding: 5px 6px 5px 12px;
+    box-shadow: 0 4px 14px -2px rgba(15, 81, 50, 0.06);
+    transition: all 0.2s ease;
+}
+.j-mob-search-card:focus-within {
+    border-color: #059669;
+    box-shadow: 0 6px 20px -2px rgba(5, 150, 105, 0.15);
+}
+.j-mob-search-btn {
+    background: linear-gradient(180deg, #0F5132 0%, #0B4228 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 11px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-weight: 750;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    font-family: inherit;
+    box-shadow: 0 2px 6px rgba(15, 81, 50, 0.2);
+}
+.j-mob-tag {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #475569;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 650;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+.j-mob-tag:active {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+}
+</style>
+
+<script>
+// Filter by category pill on mobile
+var activeCategoryMobile = 'all';
+
+function filterByCategoryMobile(cat, btn) {
+    activeCategoryMobile = cat;
+    document.querySelectorAll('.j-mob-pill').forEach(p => p.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    applyFiltersMobile();
+}
+
+// Quick Search from trending topics
+function quickSearchMobile(term) {
+    const input = document.getElementById('careerSearchInputMobile');
+    if (input) {
+        input.value = term;
+        filterCareerGuidesMobile(term);
+        const list = document.getElementById('careerGuidesListMobile');
+        if (list) {
+            list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+
+// Live search input on mobile
+function filterCareerGuidesMobile(searchVal) {
+    const clearBtn = document.getElementById('careerSearchClearBtnMobile');
+    if (clearBtn) {
+        clearBtn.style.display = searchVal.trim().length > 0 ? 'inline-flex' : 'none';
+    }
+    applyFiltersMobile();
+}
+
+function clearCareerSearchMobile() {
+    const input = document.getElementById('careerSearchInputMobile');
+    if (input) {
+        input.value = '';
+        input.focus();
+    }
+    const clearBtn = document.getElementById('careerSearchClearBtnMobile');
+    if (clearBtn) clearBtn.style.display = 'none';
+    applyFiltersMobile();
+}
+
+function applyFiltersMobile() {
+    const query = (document.getElementById('careerSearchInputMobile')?.value || '').toLowerCase().trim();
+    const cards = document.querySelectorAll('#careerGuidesListMobile .j-mob-guide-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        const title = card.getAttribute('data-title') || '';
+        const desc = card.getAttribute('data-desc') || '';
+
+        const matchesCat = (activeCategoryMobile === 'all') || (cat === activeCategoryMobile);
+        const matchesQuery = !query || title.includes(query) || desc.includes(query) || cat.includes(query);
+
+        if (matchesCat && matchesQuery) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const emptyState = document.getElementById('noGuidesEmptyStateMobile');
+    if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    const countBadge = document.getElementById('guideCountBadgeMobile');
+    if (countBadge) {
+        countBadge.textContent = visibleCount + (visibleCount === 1 ? ' Guide' : ' Guides');
+    }
+}
+</script>
+{{end}}

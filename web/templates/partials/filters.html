@@ -1,0 +1,238 @@
+{{define "filters"}}
+<div class="filters">
+    <!-- Filters Header -->
+    <div class="filters__header">
+        <div class="filters__header-left">
+            <svg class="filters__header-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F5132" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <h3 class="filters__header-title">Filters</h3>
+        </div>
+        <div class="filters__header-actions">
+            {{$hasFilters := false}}
+            {{if .Params}}
+                {{$hasFilters = or .Params.EasyApply .Params.RemoteType .Params.DatePostedRange .Params.ExperienceLevel .Params.JobType (gt .Params.MinSalary 0.0) (gt .Params.MaxSalary 0.0)}}
+            {{end}}
+            <button type="button" class="filters__reset-btn{{if $hasFilters}} is-active{{end}}" id="sidebar-filters-reset-btn" {{if not $hasFilters}}style="display: none;"{{end}} title="Reset all filters">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <span>Reset all</span>
+            </button>
+            <button type="button" class="filters__close-btn" id="filters-close-drawer-btn" aria-label="Close filters drawer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <form action="/jobs/" method="GET">
+        <!-- Preserve Search Query, Location & Sort -->
+        {{if .Params.Query}}
+            <input type="hidden" name="q" value="{{.Params.Query}}">
+        {{end}}
+        {{if .Params.Location}}
+            <input type="hidden" name="location" value="{{.Params.Location}}">
+        {{end}}
+        {{if .Params.SortBy}}
+            <input type="hidden" name="sort" value="{{.Params.SortBy}}">
+        {{end}}
+
+        <!-- Scrollable Body Container -->
+        <div class="filters__body">
+            <!-- 1. Apply Type -->
+            <div class="filters__section">
+                <h4 class="filters__title">Apply Type</h4>
+                <ul class="filters__list">
+                    <li class="filters__item">
+                        <input type="radio" name="easy_apply" id="apply-all" value="" class="filters__checkbox" {{if not .Params.EasyApply}}checked{{end}}>
+                        <label for="apply-all" class="filters__label">All apply types</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="easy_apply" id="apply-easy" value="true" class="filters__checkbox" {{if .Params.EasyApply}}checked{{end}}>
+                        <label for="apply-easy" class="filters__label">Easily apply only</label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 2. Remote -->
+            <div class="filters__section">
+                <h4 class="filters__title">Remote</h4>
+                <ul class="filters__list">
+                    <li class="filters__item">
+                        <input type="radio" name="remote_type" id="remote-all" value="" class="filters__checkbox" {{if not .Params.RemoteType}}checked{{end}}>
+                        <label for="remote-all" class="filters__label">All remote/on-site</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="remote_type" id="remote-onsite" value="on_site" class="filters__checkbox" {{if eq .Params.RemoteType "on_site"}}checked{{end}}>
+                        <label for="remote-onsite" class="filters__label">On-site</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="remote_type" id="remote-remote" value="remote" class="filters__checkbox" {{if eq .Params.RemoteType "remote"}}checked{{end}}>
+                        <label for="remote-remote" class="filters__label">Remote</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="remote_type" id="remote-hybrid" value="hybrid" class="filters__checkbox" {{if eq .Params.RemoteType "hybrid"}}checked{{end}}>
+                        <label for="remote-hybrid" class="filters__label">Hybrid</label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 3. Date Posted -->
+            <div class="filters__section">
+                <h4 class="filters__title">Date Posted</h4>
+                <ul class="filters__list">
+                    <li class="filters__item">
+                        <input type="radio" name="date_posted" id="date-anytime" value="" class="filters__checkbox" {{if not .Params.DatePostedRange}}checked{{end}}>
+                        <label for="date-anytime" class="filters__label">Posted anytime</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="date_posted" id="date-30d" value="30d" class="filters__checkbox" {{if eq .Params.DatePostedRange "30d"}}checked{{end}}>
+                        <label for="date-30d" class="filters__label">Within 30 days</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="date_posted" id="date-10d" value="10d" class="filters__checkbox" {{if eq .Params.DatePostedRange "10d"}}checked{{end}}>
+                        <label for="date-10d" class="filters__label">Within 10 days</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="date_posted" id="date-5d" value="5d" class="filters__checkbox" {{if eq .Params.DatePostedRange "5d"}}checked{{end}}>
+                        <label for="date-5d" class="filters__label">Within 5 days</label>
+                    </li>
+                    <li class="filters__item">
+                        <input type="radio" name="date_posted" id="date-1d" value="1d" class="filters__checkbox" {{if eq .Params.DatePostedRange "1d"}}checked{{end}}>
+                        <label for="date-1d" class="filters__label">Within 1 day</label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 4. Experience Level (Accordion) -->
+            <div class="filters__section accordion">
+                <button type="button" class="accordion__header" aria-expanded="true" aria-label="Toggle experience level filter">
+                    <span class="filters__title">Experience Level</span>
+                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="accordion__content">
+                    <ul class="filters__list" style="margin-top: 10px;">
+                        <li class="filters__item">
+                            <input type="radio" name="experience" id="exp-all" value="" class="filters__checkbox" {{if not .Params.ExperienceLevel}}checked{{end}}>
+                            <label for="exp-all" class="filters__label">All Experience Levels</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="experience" id="exp-none" value="no_experience" class="filters__checkbox" {{if eq .Params.ExperienceLevel "no_experience"}}checked{{end}}>
+                            <label for="exp-none" class="filters__label">No experience needed</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="experience" id="exp-junior" value="junior" class="filters__checkbox" {{if eq .Params.ExperienceLevel "junior"}}checked{{end}}>
+                            <label for="exp-junior" class="filters__label">Junior level</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="experience" id="exp-mid" value="mid" class="filters__checkbox" {{if eq .Params.ExperienceLevel "mid"}}checked{{end}}>
+                            <label for="exp-mid" class="filters__label">Mid level</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="experience" id="exp-senior" value="senior" class="filters__checkbox" {{if eq .Params.ExperienceLevel "senior"}}checked{{end}}>
+                            <label for="exp-senior" class="filters__label">Senior level and above</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. Contract Type (Accordion) -->
+            <div class="filters__section accordion">
+                <button type="button" class="accordion__header" aria-expanded="true" aria-label="Toggle contract type filter">
+                    <span class="filters__title">Contract Type</span>
+                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="accordion__content">
+                    <ul class="filters__list" style="margin-top: 10px;">
+                        <li class="filters__item">
+                            <input type="radio" name="type" id="type-all" value="" class="filters__checkbox" {{if not .Params.ContractType}}checked{{end}}>
+                            <label for="type-all" class="filters__label">All Types</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="type" id="type-permanent" value="permanent" class="filters__checkbox" {{if eq .Params.ContractType "permanent"}}checked{{end}}>
+                            <label for="type-permanent" class="filters__label">Permanent</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="type" id="type-contract" value="contract" class="filters__checkbox" {{if eq .Params.ContractType "contract"}}checked{{end}}>
+                            <label for="type-contract" class="filters__label">Contract</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="type" id="type-temporary" value="temporary" class="filters__checkbox" {{if eq .Params.ContractType "temporary"}}checked{{end}}>
+                            <label for="type-temporary" class="filters__label">Temporary</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 6. Employment Type (Accordion) -->
+            <div class="filters__section accordion">
+                <button type="button" class="accordion__header" aria-expanded="true" aria-label="Toggle employment type filter">
+                    <span class="filters__title">Employment Type</span>
+                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="accordion__content">
+                    <ul class="filters__list" style="margin-top: 10px;">
+                        <li class="filters__item">
+                            <input type="radio" name="job_type" id="job-type-all" value="" class="filters__checkbox" {{if not .Params.JobType}}checked{{end}}>
+                            <label for="job-type-all" class="filters__label">All Hours</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="job_type" id="job-type-full" value="full_time" class="filters__checkbox" {{if eq .Params.JobType "full_time"}}checked{{end}}>
+                            <label for="job-type-full" class="filters__label">Full Time</label>
+                        </li>
+                        <li class="filters__item">
+                            <input type="radio" name="job_type" id="job-type-part" value="part_time" class="filters__checkbox" {{if eq .Params.JobType "part_time"}}checked{{end}}>
+                            <label for="job-type-part" class="filters__label">Part Time</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 7. Yearly Salary (Accordion) -->
+            <div class="filters__section accordion">
+                <button type="button" class="accordion__header" aria-expanded="true" aria-label="Toggle yearly salary filter">
+                    <span class="filters__title">Yearly Salary</span>
+                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="accordion__content">
+                    <div class="filters__range" style="margin-top: 10px;">
+                        <div class="filters__range-inputs">
+                            <div class="filters__range-group" style="margin-bottom: 10px;">
+                                <label class="filters__range-label" for="min-salary-input" style="font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Min Salary</label>
+                                <div class="filters__input-wrapper" style="position: relative; display: flex; align-items: center;">
+                                    <span class="filters__input-prefix" style="position: absolute; left: 10px; color: #94a3b8; font-size: 13px;">£</span>
+                                    <input type="number" name="min_salary" id="min-salary-input" placeholder="e.g. 25,000" class="filters__range-input" style="width: 100%; padding: 8px 8px 8px 24px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;" value="{{if and .Params (gt .Params.MinSalary 0.0)}}{{.Params.MinSalary}}{{end}}" min="0">
+                                </div>
+                            </div>
+                            <div class="filters__range-group">
+                                <label class="filters__range-label" for="max-salary-input" style="font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Max Salary</label>
+                                <div class="filters__input-wrapper" style="position: relative; display: flex; align-items: center;">
+                                    <span class="filters__input-prefix" style="position: absolute; left: 10px; color: #94a3b8; font-size: 13px;">£</span>
+                                    <input type="number" name="max_salary" id="max-salary-input" placeholder="e.g. 60,000" class="filters__range-input" style="width: 100%; padding: 8px 8px 8px 24px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;" value="{{if and .Params (gt .Params.MaxSalary 0.0)}}{{.Params.MaxSalary}}{{end}}" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Footer CTA -->
+        <div class="filters__footer">
+            <button type="submit" class="btn btn--primary btn--full" style="width: 100%; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer;">Apply Filters</button>
+        </div>
+    </form>
+</div>
+{{end}}

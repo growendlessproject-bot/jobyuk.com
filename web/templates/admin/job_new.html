@@ -1,0 +1,211 @@
+{{define "admin_content"}}
+<div class="admin-form-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); max-width: 800px; margin: 0 auto;">
+    <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.02em;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#0284c7" style="width: 20px; height: 20px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Create New Job Listing
+    </h3>
+
+    <form method="POST" action="/admin-lol/jobs/new" style="margin: 0; display: flex; flex-direction: column; gap: 20px;">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        
+        <div class="admin-form-row admin-form-row--2col">
+            <div class="admin-field-group">
+                <label class="admin-form-label">Job Title <span style="color: #ef4444;">*</span></label>
+                <input type="text" name="title" required placeholder="e.g. Senior Software Engineer" class="admin-form-input" />
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">Company Name <span style="color: #ef4444;">*</span></label>
+                <input type="text" name="company_name" required placeholder="e.g. Acme Corporation" class="admin-form-input" />
+            </div>
+        </div>
+
+        <div class="admin-form-row admin-form-row--2col">
+            <div class="admin-field-group">
+                <label class="admin-form-label">Location <span style="color: #ef4444;">*</span></label>
+                <input type="text" name="location_name" required placeholder="e.g. London or Remote" class="admin-form-input" />
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">External Application URL</label>
+                <input type="url" name="external_url" placeholder="e.g. https://company.com/apply" class="admin-form-input" />
+            </div>
+        </div>
+
+        <div class="admin-form-row admin-form-row--3col">
+            <div class="admin-field-group">
+                <label class="admin-form-label">Salary Type</label>
+                <select name="salary_type" class="admin-form-select">
+                    <option value="per_annum">Per Annum</option>
+                    <option value="per_hour">Per Hour</option>
+                    <option value="per_day">Per Day</option>
+                    <option value="per_week">Per Week</option>
+                    <option value="per_month">Per Month</option>
+                </select>
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">Min Salary (£)</label>
+                <input type="number" name="min_salary" placeholder="e.g. 45000" class="admin-form-input" />
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">Max Salary (£)</label>
+                <input type="number" name="max_salary" placeholder="e.g. 55000" class="admin-form-input" />
+            </div>
+        </div>
+
+        <div class="admin-form-row admin-form-row--3col">
+            <div class="admin-field-group">
+                <label class="admin-form-label">Contract Type</label>
+                <select name="contract_type" class="admin-form-select">
+                    <option value="permanent">Permanent</option>
+                    <option value="contract">Contract</option>
+                    <option value="temporary">Temporary</option>
+                </select>
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">Job Type</label>
+                <select name="job_type" class="admin-form-select">
+                    <option value="full_time">Full Time</option>
+                    <option value="part_time">Part Time</option>
+                </select>
+            </div>
+            <div class="admin-field-group">
+                <label class="admin-form-label">Expiration Date</label>
+                <input type="date" name="expiration_date" class="admin-form-input" />
+            </div>
+        </div>
+
+        <div class="admin-checkbox-card" style="display: flex; gap: 16px; align-items: center; background: #f8fafc; padding: 14px 18px; border-radius: 12px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" id="is_remote" name="is_remote" style="width: 17px; height: 17px; cursor: pointer;" />
+                <label for="is_remote" style="font-weight: 600; font-size: 0.88rem; color: #334155; cursor: pointer;">Remote Work Eligible</label>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" id="is_graduate" name="is_graduate" style="width: 17px; height: 17px; cursor: pointer;" />
+                <label for="is_graduate" style="font-weight: 600; font-size: 0.88rem; color: #334155; cursor: pointer;">Graduate / Entry Level</label>
+            </div>
+        </div>
+
+        <div class="admin-field-group">
+            <label class="admin-form-label">Job Description <span style="color: #ef4444;">*</span></label>
+            <textarea name="description" required rows="9" placeholder="Describe the job duties, requirements, and benefits..." class="admin-form-textarea"></textarea>
+        </div>
+
+        <div class="admin-form-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+            <a href="/admin-lol/jobs" class="btn btn--cancel">Cancel</a>
+            <button type="submit" class="btn btn--submit">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <span>Publish Vacancy</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+.admin-form-row {
+    display: grid;
+    gap: 16px;
+}
+.admin-form-row--2col {
+    grid-template-columns: 1fr 1fr;
+}
+.admin-form-row--3col {
+    grid-template-columns: repeat(3, 1fr);
+}
+.admin-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.admin-form-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #334155;
+}
+.admin-form-input,
+.admin-form-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    color: #0f172a;
+    background: #ffffff;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+.admin-form-input:focus,
+.admin-form-select:focus,
+.admin-form-textarea:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+.admin-form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-family: inherit;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+}
+.btn--cancel {
+    padding: 10px 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn--cancel:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+.btn--submit {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    background: #0284c7;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.btn--submit:hover {
+    background: #0369a1;
+}
+@media (max-width: 767px) {
+    .admin-form-card {
+        padding: 20px 16px !important;
+        border-radius: 16px !important;
+    }
+    .admin-form-row--2col,
+    .admin-form-row--3col {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    .admin-form-actions {
+        flex-direction: column-reverse !important;
+        gap: 8px !important;
+    }
+    .btn--cancel,
+    .btn--submit {
+        width: 100% !important;
+        padding: 12px !important;
+    }
+}
+</style>
+{{end}}

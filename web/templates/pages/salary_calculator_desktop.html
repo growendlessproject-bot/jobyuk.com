@@ -1,0 +1,1182 @@
+{{define "content"}}
+<div class="jy-calc-page-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <!-- =========================================================================
+             1. HEADER HERO CARD - JobyUK Next-Level Brand Theme
+             ========================================================================= -->
+        <header class="jy-dream-header" aria-label="Salary Calculator Header" style="margin-top: 8px; margin-bottom: 28px;">
+            <div class="jy-dream-header__top" style="margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                    <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 9999px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        HMRC & National Insurance Verified ({{.Data.Year}}/{{add .Data.Year 1}})
+                    </span>
+                    <span style="font-size: 0.75rem; font-weight: 750; color: #059669; background: #FFFFFF; border: 1px solid #E2E8F0; padding: 4px 12px; border-radius: 9999px;">
+                        PAYE · Class 1 NI (8%) · Pension · Student Loan
+                    </span>
+                </div>
+                <h1 class="jy-dream-header__title" style="margin: 0 0 8px; font-size: 2.35rem; font-weight: 850; color: #0B1F1A; letter-spacing: -0.025em; line-height: 1.2;">
+                    UK Take-Home Pay & Salary Tax Calculator
+                </h1>
+                <p class="jy-dream-header__count" style="margin: 0; font-size: 1.05rem; color: #64748B; max-width: 820px; line-height: 1.55;">
+                    See exactly how much lands in your UK bank account every payday. Honest breakdown of PAYE Tax, 8% National Insurance, workplace pensions, and student loans for {{.Data.Year}}/{{add .Data.Year 1}} — no confusing jargon.
+                </p>
+            </div>
+        </header>
+
+        <!-- =========================================================================
+             2. TWO-COLUMN CALCULATOR WORKSPACE
+             ========================================================================= -->
+        <div class="jy-calc-layout">
+            
+            <!-- LEFT COLUMN: Inputs & Configurations -->
+            <div class="jy-calc-card jy-calc-inputs-card">
+                <div class="jy-calc-card__header">
+                    <div>
+                        <h2 class="jy-calc-card__title">Salary & Tax Details</h2>
+                        <span class="jy-calc-card__subtitle">Enter your headline salary to see what you actually keep</span>
+                    </div>
+                    <span class="jy-calc-tax-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        Tax Code: 1257L
+                    </span>
+                </div>
+
+                <!-- Gross Earnings Input -->
+                <div class="jy-calc-group">
+                    <label for="calc-gross" class="jy-calc-label">Gross Earnings</label>
+                    <div class="jy-calc-prefix-wrap">
+                        <span class="jy-calc-currency-prefix">£</span>
+                        <input type="number" id="calc-gross" class="jy-calc-input jy-calc-input--lg" value="35000" min="0" step="500" placeholder="e.g. 35,000" aria-label="Gross Salary Input" />
+                    </div>
+                </div>
+
+                <!-- Pay Period Toggle -->
+                <div class="jy-calc-group">
+                    <label class="jy-calc-label">Pay Frequency</label>
+                    <div class="jy-calc-period-grid" role="group" aria-label="Pay frequency selector">
+                        <button type="button" class="jy-calc-period-btn active" data-period="yearly">Per Year</button>
+                        <button type="button" class="jy-calc-period-btn" data-period="monthly">Per Month</button>
+                        <button type="button" class="jy-calc-period-btn" data-period="weekly">Per Week</button>
+                        <button type="button" class="jy-calc-period-btn" data-period="daily">Per Day</button>
+                        <button type="button" class="jy-calc-period-btn" data-period="hourly">Per Hour</button>
+                    </div>
+                </div>
+
+                <!-- Quick Benchmark Presets -->
+                <div class="jy-calc-group">
+                    <label class="jy-calc-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Quick UK Salary Benchmarks</span>
+                        <span style="font-size: 0.75rem; font-weight: 600; color: #94A3B8;">Click to test</span>
+                    </label>
+                    <div class="jy-calc-presets-row">
+                        <button type="button" class="jy-calc-preset-pill" data-amount="24000">£24,000</button>
+                        <button type="button" class="jy-calc-preset-pill" data-amount="30000">£30,000</button>
+                        <button type="button" class="jy-calc-preset-pill active" data-amount="35000">£35,000 <span class="jy-pill-sub">(UK Med)</span></button>
+                        <button type="button" class="jy-calc-preset-pill" data-amount="45000">£45,000</button>
+                        <button type="button" class="jy-calc-preset-pill" data-amount="60000">£60,000</button>
+                        <button type="button" class="jy-calc-preset-pill" data-amount="85000">£85,000</button>
+                        <button type="button" class="jy-calc-preset-pill" data-amount="105000">£105,000</button>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings Accordion -->
+                <details class="jy-calc-advanced" open>
+                    <summary class="jy-calc-advanced__summary">
+                        <span style="display: inline-flex; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            Pensions & Deductions Settings
+                        </span>
+                        <svg class="jy-summary-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </summary>
+                    <div class="jy-calc-advanced__body">
+                        
+                        <!-- Workplace Pension -->
+                        <div class="jy-calc-subgroup">
+                            <div class="jy-subgroup-row">
+                                <label for="calc-pension" class="jy-calc-label" style="margin: 0;">Workplace Pension (Auto-Enrolment)</label>
+                                <span id="pension-display" class="jy-pension-badge">5.0%</span>
+                            </div>
+                            <input type="range" id="calc-pension" min="0" max="20" step="0.5" value="5" class="jy-calc-range" aria-label="Pension Percentage Slider" />
+                            <span class="jy-subgroup-hint">Standard UK statutory employer matching requires a minimum 5% employee contribution.</span>
+                        </div>
+
+                        <!-- Student Loan -->
+                        <div class="jy-calc-subgroup">
+                            <label for="calc-student-loan" class="jy-calc-label">Student Loan Repayment Plan</label>
+                            <select id="calc-student-loan" class="jy-calc-select" aria-label="Student Loan Repayment Plan">
+                                <option value="none" selected>No Student Loan</option>
+                                <option value="plan1">Plan 1 (Course started before Sept 2012 in England/Wales)</option>
+                                <option value="plan2">Plan 2 (Course started after Sept 2012 in England/Wales)</option>
+                                <option value="plan4">Plan 4 (Scottish Students)</option>
+                                <option value="plan5">Plan 5 (Course started after Aug 2023 in England)</option>
+                                <option value="postgrad">Postgraduate Master's / Doctoral Loan</option>
+                            </select>
+                        </div>
+
+                        <!-- Hours & Days per Week -->
+                        <div class="jy-subgroup-grid">
+                            <div class="jy-calc-subgroup">
+                                <label for="calc-hours" class="jy-calc-label">Weekly Hours</label>
+                                <input type="number" id="calc-hours" class="jy-calc-input" value="37.5" min="1" max="80" step="0.5" aria-label="Weekly hours" />
+                            </div>
+                            <div class="jy-calc-subgroup">
+                                <label for="calc-days" class="jy-calc-label">Days per Week</label>
+                                <input type="number" id="calc-days" class="jy-calc-input" value="5" min="1" max="7" step="1" aria-label="Days per week" />
+                            </div>
+                        </div>
+
+                    </div>
+                </details>
+            </div>
+
+            <!-- RIGHT COLUMN: Live Results & Detailed Breakdown -->
+            <div class="jy-calc-card jy-calc-results-card">
+                
+                <!-- Hero Net Take-Home Card -->
+                <div class="jy-take-home-hero">
+                    <span class="jy-take-home-hero__label">WHAT YOU ACTUALLY TAKE HOME</span>
+                    <div class="jy-take-home-hero__amount" id="result-take-home">£28,248</div>
+                    <span class="jy-take-home-hero__freq" id="result-frequency-label">per year (£2,354 / month)</span>
+                </div>
+
+                <!-- Visual Breakdown Bar -->
+                <div class="jy-breakdown-section">
+                    <div class="jy-breakdown-bar" aria-label="Salary deduction visual breakdown">
+                        <div class="jy-segment jy-segment--net" id="bar-net" style="width: 76.5%;" title="Net Take-Home Pay"></div>
+                        <div class="jy-segment jy-segment--tax" id="bar-tax" style="width: 13.8%;" title="Income Tax"></div>
+                        <div class="jy-segment jy-segment--ni" id="bar-ni" style="width: 6.2%;" title="National Insurance"></div>
+                        <div class="jy-segment jy-segment--pension" id="bar-pension" style="width: 3.5%;" title="Pension"></div>
+                        <div class="jy-segment jy-segment--loan" id="bar-loan" style="width: 0%; display: none;" title="Student Loan"></div>
+                    </div>
+                    
+                    <div class="jy-breakdown-legend">
+                        <div class="jy-legend-item"><span class="jy-dot jy-dot--net"></span><span>Net Pay (<strong id="pct-net" style="color: #065F46;">76.5%</strong>)</span></div>
+                        <div class="jy-legend-item"><span class="jy-dot jy-dot--tax"></span><span>Income Tax (<strong id="pct-tax" style="color: #0B1F1A;">13.8%</strong>)</span></div>
+                        <div class="jy-legend-item"><span class="jy-dot jy-dot--ni"></span><span>National Insurance (<strong id="pct-ni" style="color: #0B1F1A;">6.2%</strong>)</span></div>
+                        <div class="jy-legend-item"><span class="jy-dot jy-dot--pension"></span><span>Pension (<strong id="pct-pension" style="color: #0B1F1A;">3.5%</strong>)</span></div>
+                        <div class="jy-legend-item" id="legend-loan" style="display: none;"><span class="jy-dot jy-dot--loan"></span><span>Student Loan (<strong id="pct-loan" style="color: #0B1F1A;">0.0%</strong>)</span></div>
+                    </div>
+                </div>
+
+                <!-- Breakdown Table -->
+                <div class="jy-table-wrap">
+                    <table class="jy-calc-table" aria-label="Detailed Salary Deductions Table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col">Yearly</th>
+                                <th scope="col">Monthly</th>
+                                <th scope="col">Weekly</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Gross Earnings</strong></td>
+                                <td id="tbl-gross-yr">£35,000</td>
+                                <td id="tbl-gross-mo">£2,917</td>
+                                <td id="tbl-gross-wk">£673</td>
+                            </tr>
+                            <tr class="jy-row--allowance">
+                                <td><span class="jy-tbl-badge jy-tbl-badge--green">Tax-Free Allowance</span></td>
+                                <td id="tbl-allowance-yr">£12,570</td>
+                                <td id="tbl-allowance-mo">£1,048</td>
+                                <td id="tbl-allowance-wk">£242</td>
+                            </tr>
+                            <tr>
+                                <td><span class="jy-tbl-badge jy-tbl-badge--amber">Income Tax (PAYE)</span></td>
+                                <td id="tbl-tax-yr">£4,486</td>
+                                <td id="tbl-tax-mo">£374</td>
+                                <td id="tbl-tax-wk">£86</td>
+                            </tr>
+                            <tr>
+                                <td><span class="jy-tbl-badge jy-tbl-badge--indigo">National Insurance (8%)</span></td>
+                                <td id="tbl-ni-yr">£1,794</td>
+                                <td id="tbl-ni-mo">£150</td>
+                                <td id="tbl-ni-wk">£35</td>
+                            </tr>
+                            <tr id="tbl-row-pension">
+                                <td><span class="jy-tbl-badge jy-tbl-badge--teal">Pension (5%)</span></td>
+                                <td id="tbl-pension-yr">£1,121</td>
+                                <td id="tbl-pension-mo">£93</td>
+                                <td id="tbl-pension-wk">£22</td>
+                            </tr>
+                            <tr id="tbl-row-loan" style="display: none;">
+                                <td><span class="jy-tbl-badge jy-tbl-badge--pink">Student Loan</span></td>
+                                <td id="tbl-loan-yr">£0</td>
+                                <td id="tbl-loan-mo">£0</td>
+                                <td id="tbl-loan-wk">£0</td>
+                            </tr>
+                            <tr class="jy-row--total">
+                                <td><strong>Net Take-Home Pay</strong></td>
+                                <td id="tbl-net-yr" class="jy-net-val">£27,599</td>
+                                <td id="tbl-net-mo" class="jy-net-val">£2,300</td>
+                                <td id="tbl-net-wk" class="jy-net-val">£531</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Matching Vacancies Callout -->
+                <div class="jy-calc-cta-card">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                        <div>
+                            <div style="font-weight: 800; font-size: 0.95rem; color: #064E3B;">Want a job paying this salary?</div>
+                            <div style="font-size: 0.8rem; color: #047857;">Browse live UK roles hiring at this pay bracket today. Direct employer links only.</div>
+                        </div>
+                    </div>
+                    <a id="btn-browse-salary-jobs" href="/jobs/?salary=35000" class="jy-calc-cta-btn">
+                        <span>See jobs paying this</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================================================================
+             3. STRAIGHT-TALKING UK TAX GUIDE (2026/2027)
+             ========================================================================= -->
+        <article class="jy-calc-guide-card">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 5px;">
+                    Straight-Talking Guide
+                </span>
+                <span style="font-size: 0.75rem; font-weight: 600; color: #64748B;">
+                    Updated for 2026/27 UK Tax Year
+                </span>
+            </div>
+            
+            <h2 class="jy-guide-heading">Where does your paycheck actually go? (2026/27 UK Tax Explained Simply)</h2>
+            
+            <p style="color: #475569; font-size: 0.96rem; line-height: 1.65; margin: 0 0 24px;">
+                Job offers always quote your gross annual pay, but that is never what hits your bank account on the last Friday of the month. In the UK, your employer deducts income tax (PAYE) and National Insurance before you get paid. Here is exactly what HMRC takes and why:
+            </p>
+
+            <div class="jy-tax-bands-grid">
+                
+                <div class="jy-band-card jy-band-card--green">
+                    <span class="jy-band-tag">0% Tax</span>
+                    <h3 class="jy-band-name">Personal Allowance</h3>
+                    <div class="jy-band-range">£0 to £12,570</div>
+                    <p class="jy-band-desc">Your first £12,570 is completely tax-free cash. (Keep in mind: if you earn over £100,000, HMRC reduces this allowance by £1 for every £2 earned above £100k until it hits zero at £125,140).</p>
+                </div>
+
+                <div class="jy-band-card jy-band-card--amber">
+                    <span class="jy-band-tag">20% Tax</span>
+                    <h3 class="jy-band-name">Basic Rate Band</h3>
+                    <div class="jy-band-range">£12,571 to £50,270</div>
+                    <p class="jy-band-desc">You pay 20p on every pound earned in this range. If you earn £35,000, you don't pay 20% on the full 35k — only on the £22,430 above your personal allowance.</p>
+                </div>
+
+                <div class="jy-band-card jy-band-card--purple">
+                    <span class="jy-band-tag">40% Tax</span>
+                    <h3 class="jy-band-name">Higher Rate Band</h3>
+                    <div class="jy-band-range">£50,271 to £125,140</div>
+                    <p class="jy-band-desc">Every pound between £50,271 and £125,140 is taxed at 40p. Any pension contributions you make in this bracket also get 40% tax relief.</p>
+                </div>
+
+                <div class="jy-band-card jy-band-card--rose">
+                    <span class="jy-band-tag">45% Tax</span>
+                    <h3 class="jy-band-name">Additional Rate Band</h3>
+                    <div class="jy-band-range">Over £125,140</div>
+                    <p class="jy-band-desc">The top UK tax rate. Anything you earn over £125,140 is taxed at 45%, with zero personal allowance.</p>
+                </div>
+
+            </div>
+
+            <h3 class="jy-guide-subheading">National Insurance: The 8% Rate Explained</h3>
+            <p style="color: #475569; font-size: 0.95rem; line-height: 1.65; margin: 0 0 12px;">Class 1 National Insurance funds the NHS, state pensions, and statutory sick pay. Here is the breakdown for employed workers:</p>
+            <ul class="jy-guide-checklist">
+                <li><strong>8% Main Rate:</strong> You pay 8% on earnings between £12,570 and £50,270 a year (£1,048 to £4,189 a month).</li>
+                <li><strong>2% Upper Rate:</strong> On anything above £50,270 a year, National Insurance drops down to just 2%.</li>
+            </ul>
+
+            <h3 class="jy-guide-subheading">The Pension Trick: Why Salary Sacrifice is a No-Brainer</h3>
+            <p style="color: #475569; font-size: 0.95rem; line-height: 1.65; margin: 0;">Most UK jobs automatically enrol you into a workplace pension (usually 5% from you, 3% from your boss). If your employer offers <em>Salary Sacrifice</em>, take it. Your pension contribution gets deducted before tax and National Insurance are calculated — which means you build your retirement fund faster while paying HMRC significantly less tax every single month.</p>
+
+        </article>
+
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   JobyUK Emerald Theme: Salary Calculator Styles
+   ========================================================================= */
+.j-calc-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 36px;
+}
+
+@media (max-width: 960px) {
+    .j-calc-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.j-calc-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05);
+}
+
+.j-calc-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F1F5F9;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.j-calc-card__title {
+    font-size: 1.25rem;
+    font-weight: 850;
+    color: #0B1F1A;
+    margin: 0 0 4px;
+}
+
+.j-calc-card__subtitle {
+    font-size: 0.84rem;
+    color: #64748B;
+}
+
+.j-calc-tax-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    font-weight: 750;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    padding: 5px 12px;
+    border-radius: 8px;
+}
+
+.j-calc-group {
+    margin-bottom: 22px;
+}
+
+.j-calc-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 750;
+    color: #0B1F1A;
+    margin-bottom: 8px;
+}
+
+.j-calc-prefix-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.j-calc-currency-prefix {
+    position: absolute;
+    left: 18px;
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #059669;
+    pointer-events: none;
+    user-select: none;
+}
+
+.j-calc-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    background: #F8FAF8;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0B1F1A;
+    outline: none;
+    transition: all 0.18s ease;
+    box-sizing: border-box;
+}
+
+.j-calc-input--lg {
+    height: 56px;
+    padding-left: 38px;
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #0B1F1A;
+}
+
+.j-calc-input:focus {
+    background: #FFFFFF;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+/* Pay Period Grid */
+.j-calc-period-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    background: #F1F5F9;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.j-calc-period-btn {
+    border: none;
+    background: transparent;
+    padding: 9px 4px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 750;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.j-calc-period-btn:hover {
+    color: #0B1F1A;
+}
+
+.j-calc-period-btn.active {
+    background: #059669;
+    color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+/* Presets */
+.j-calc-presets-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.j-calc-preset-pill {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 750;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.j-calc-preset-pill:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #ECFDF5;
+}
+
+.j-calc-preset-pill.active {
+    background: #065F46;
+    color: #FFFFFF;
+    border-color: #065F46;
+    box-shadow: 0 2px 6px rgba(6, 95, 70, 0.2);
+}
+
+.j-pill-sub {
+    font-size: 0.72rem;
+    opacity: 0.85;
+}
+
+/* Advanced Accordion */
+.j-calc-advanced {
+    border-top: 1px solid #F1F5F9;
+    padding-top: 18px;
+    margin-top: 20px;
+}
+
+.j-calc-advanced__summary {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #059669;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    list-style: none;
+}
+
+.j-calc-advanced__summary::-webkit-details-marker {
+    display: none;
+}
+
+.j-summary-chevron {
+    transition: transform 0.2s ease;
+}
+
+.j-calc-advanced[open] .j-summary-chevron {
+    transform: rotate(180deg);
+}
+
+.j-calc-advanced__body {
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.j-calc-subgroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.j-subgroup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.j-pension-badge {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.j-calc-range {
+    width: 100%;
+    accent-color: #059669;
+    cursor: pointer;
+    height: 6px;
+    border-radius: 3px;
+}
+
+.j-subgroup-hint {
+    font-size: 0.74rem;
+    color: #94A3B8;
+}
+
+.j-calc-select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 10px;
+    background: #F8FAF8;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #0B1F1A;
+    outline: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.j-calc-select:focus {
+    border-color: #059669;
+    background: #FFFFFF;
+}
+
+.j-subgroup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Results Hero Card */
+.j-take-home-hero {
+    text-align: center;
+    padding: 26px 22px;
+    background: linear-gradient(135deg, #064E3B 0%, #0B1F1A 100%);
+    border-radius: 18px;
+    color: #FFFFFF;
+    box-shadow: 0 8px 24px -4px rgba(6, 78, 59, 0.35);
+    margin-bottom: 24px;
+}
+
+.j-take-home-hero__label {
+    font-size: 0.78rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #A7F3D0;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.j-take-home-hero__amount {
+    font-size: 2.9rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    color: #FFFFFF;
+}
+
+.j-take-home-hero__freq {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+}
+
+/* Visual Breakdown Bar */
+.j-breakdown-section {
+    margin-bottom: 24px;
+}
+
+.j-breakdown-bar {
+    height: 18px;
+    display: flex;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #E2E8F0;
+    margin-bottom: 12px;
+}
+
+.j-segment {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.j-segment--net { background: #10B981; }
+.j-segment--tax { background: #F59E0B; }
+.j-segment--ni { background: #6366F1; }
+.j-segment--pension { background: #14B8A6; }
+.j-segment--loan { background: #EC4899; }
+
+.j-breakdown-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.j-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.j-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.j-dot--net { background: #10B981; }
+.j-dot--tax { background: #F59E0B; }
+.j-dot--ni { background: #6366F1; }
+.j-dot--pension { background: #14B8A6; }
+.j-dot--loan { background: #EC4899; }
+
+/* Table */
+.j-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 22px;
+}
+
+.j-calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: right;
+}
+
+.j-calc-table th {
+    padding: 10px 8px;
+    background: #F8FAF8;
+    color: #64748B;
+    font-weight: 800;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1.5px solid #E2E8F0;
+}
+
+.j-calc-table th:first-child,
+.j-calc-table td:first-child {
+    text-align: left;
+}
+
+.j-calc-table td {
+    padding: 11px 8px;
+    border-bottom: 1px solid #F1F5F9;
+    color: #334155;
+}
+
+.j-row--allowance {
+    background: #F8FAF8;
+}
+
+.j-tbl-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.j-tbl-badge--green { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+.j-tbl-badge--amber { background: #FEF3C7; color: #92400E; }
+.j-tbl-badge--indigo { background: #EEF2FF; color: #3730A3; }
+.j-tbl-badge--teal { background: #CCFBF1; color: #115E59; }
+.j-tbl-badge--pink { background: #FCE7F3; color: #9D174D; }
+
+.j-row--total td {
+    border-top: 2px solid #E2E8F0;
+    border-bottom: none;
+    padding-top: 14px;
+    color: #0B1F1A;
+    font-size: 0.98rem;
+}
+
+.j-net-val {
+    font-weight: 850;
+    color: #059669 !important;
+}
+
+/* Callout */
+.j-calc-cta-card {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.j-calc-cta-btn {
+    background: #059669;
+    color: #FFFFFF;
+    font-weight: 750;
+    font-size: 0.86rem;
+    padding: 9px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+    white-space: nowrap;
+}
+
+.j-calc-cta-btn:hover {
+    background: #047857;
+    transform: translateY(-1px);
+}
+
+/* Guide Card */
+.j-calc-guide-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 36px 38px;
+    box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05);
+    line-height: 1.7;
+    color: #334155;
+    font-size: 0.96rem;
+}
+
+.j-guide-heading {
+    font-size: 1.6rem;
+    font-weight: 850;
+    color: #0B1F1A;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+}
+
+.j-guide-subheading {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0B1F1A;
+    margin: 28px 0 10px;
+}
+
+.j-tax-bands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.j-band-card {
+    border-radius: 14px;
+    padding: 20px 20px;
+    border: 1px solid #E2E8F0;
+    background: #F8FAF8;
+}
+
+.j-band-card--green { background: #ECFDF5; border-color: #A7F3D0; }
+.j-band-card--amber { background: #FFFBEB; border-color: #FDE68A; }
+.j-band-card--purple { background: #FAF5FF; border-color: #E9D5FF; }
+.j-band-card--rose { background: #FFF1F2; border-color: #FECDD3; }
+
+.j-band-tag {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.j-band-card--green .j-band-tag { color: #065F46; }
+.j-band-card--amber .j-band-tag { color: #92400E; }
+.j-band-card--purple .j-band-tag { color: #6B21A8; }
+.j-band-card--rose .j-band-tag { color: #9F1239; }
+
+.j-band-name {
+    font-size: 1.05rem;
+    font-weight: 850;
+    color: #0B1F1A;
+    margin: 0 0 4px;
+}
+
+.j-band-range {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #475569;
+    margin-bottom: 10px;
+}
+
+.j-band-desc {
+    font-size: 0.83rem;
+    color: #64748B;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.j-guide-checklist {
+    padding-left: 20px;
+    margin: 12px 0 20px;
+}
+
+.j-guide-checklist li {
+    margin-bottom: 8px;
+    color: #475569;
+}
+</style>
+
+<script>
+// =========================================================================
+// Real-Time UK HMRC Tax & National Insurance Calculator (2026/2027 Rates)
+// =========================================================================
+(function() {
+    let currentPeriod = "yearly";
+
+    const grossInput = document.getElementById("calc-gross");
+    const pensionSlider = document.getElementById("calc-pension");
+    const pensionDisplay = document.getElementById("pension-display");
+    const studentLoanSelect = document.getElementById("calc-student-loan");
+    const hoursInput = document.getElementById("calc-hours");
+    const daysInput = document.getElementById("calc-days");
+
+    const resultTakeHome = document.getElementById("result-take-home");
+    const resultFreqLabel = document.getElementById("result-frequency-label");
+    const jobCtaBtn = document.getElementById("btn-browse-salary-jobs");
+
+    // Elements for breakdown chart
+    const barNet = document.getElementById("bar-net");
+    const barTax = document.getElementById("bar-tax");
+    const barNI = document.getElementById("bar-ni");
+    const barPension = document.getElementById("bar-pension");
+    const barLoan = document.getElementById("bar-loan");
+    const legendLoan = document.getElementById("legend-loan");
+
+    const pctNet = document.getElementById("pct-net");
+    const pctTax = document.getElementById("pct-tax");
+    const pctNI = document.getElementById("pct-ni");
+    const pctPension = document.getElementById("pct-pension");
+    const pctLoan = document.getElementById("pct-loan");
+
+    // Elements for Table
+    const tblGrossYr = document.getElementById("tbl-gross-yr");
+    const tblGrossMo = document.getElementById("tbl-gross-mo");
+    const tblGrossWk = document.getElementById("tbl-gross-wk");
+
+    const tblAllowYr = document.getElementById("tbl-allowance-yr");
+    const tblAllowMo = document.getElementById("tbl-allowance-mo");
+    const tblAllowWk = document.getElementById("tbl-allowance-wk");
+
+    const tblTaxYr = document.getElementById("tbl-tax-yr");
+    const tblTaxMo = document.getElementById("tbl-tax-mo");
+    const tblTaxWk = document.getElementById("tbl-tax-wk");
+
+    const tblNIYr = document.getElementById("tbl-ni-yr");
+    const tblNIMo = document.getElementById("tbl-ni-mo");
+    const tblNIWk = document.getElementById("tbl-ni-wk");
+
+    const tblPenYr = document.getElementById("tbl-pension-yr");
+    const tblPenMo = document.getElementById("tbl-pension-mo");
+    const tblPenWk = document.getElementById("tbl-pension-wk");
+
+    const tblLoanRow = document.getElementById("tbl-row-loan");
+    const tblLoanYr = document.getElementById("tbl-loan-yr");
+    const tblLoanMo = document.getElementById("tbl-loan-mo");
+    const tblLoanWk = document.getElementById("tbl-loan-wk");
+
+    const tblNetYr = document.getElementById("tbl-net-yr");
+    const tblNetMo = document.getElementById("tbl-net-mo");
+    const tblNetWk = document.getElementById("tbl-net-wk");
+
+    function formatCurrency(val) {
+        return "£" + Math.round(val).toLocaleString("en-GB");
+    }
+
+    function calculate() {
+        const rawGross = parseFloat(grossInput.value) || 0;
+        const hoursPerWeek = parseFloat(hoursInput.value) || 37.5;
+        const daysPerWeek = parseFloat(daysInput.value) || 5;
+
+        // Normalize raw gross to Annual Gross Salary
+        let annualGross = rawGross;
+        switch (currentPeriod) {
+            case "monthly": annualGross = rawGross * 12; break;
+            case "weekly":  annualGross = rawGross * 52; break;
+            case "daily":   annualGross = rawGross * daysPerWeek * 52; break;
+            case "hourly":  annualGross = rawGross * hoursPerWeek * 52; break;
+        }
+
+        const pensionPct = parseFloat(pensionSlider.value) || 0;
+        pensionDisplay.textContent = pensionPct.toFixed(1) + "%";
+
+        // 1. Workplace Pension (Auto-Enrolment Qualifying Earnings: between £6,240 and £50,270)
+        let pensionAnnual = 0;
+        if (pensionPct > 0) {
+            const qualifyingThreshold = 6240;
+            const qualifyingCap = 50270;
+            const pensionableEarnings = Math.max(0, Math.min(annualGross, qualifyingCap) - qualifyingThreshold);
+            pensionAnnual = pensionableEarnings * (pensionPct / 100);
+        }
+
+        // 2. Personal Allowance with Taper over £100k
+        let personalAllowance = 12570;
+        if (annualGross > 100000) {
+            const excess = annualGross - 100000;
+            const reduction = excess / 2;
+            personalAllowance = Math.max(0, 12570 - reduction);
+        }
+
+        // Taxable earnings after pension relief
+        const taxableIncome = Math.max(0, annualGross - personalAllowance - pensionAnnual);
+
+        // 3. UK Income Tax Brackets (2026/2027)
+        let taxAnnual = 0;
+        const basicRateCap = 50270 - 12570; // £37,700 basic rate bandwidth
+
+        if (taxableIncome > 0) {
+            if (taxableIncome <= basicRateCap) {
+                taxAnnual = taxableIncome * 0.20;
+            } else {
+                taxAnnual += basicRateCap * 0.20;
+                const higherRateIncome = taxableIncome - basicRateCap;
+                const additionalRateThreshold = 125140 - personalAllowance - pensionAnnual;
+
+                if (annualGross <= 125140) {
+                    taxAnnual += higherRateIncome * 0.40;
+                } else {
+                    const higherPortion = Math.max(0, additionalRateThreshold - basicRateCap);
+                    const additionalPortion = Math.max(0, taxableIncome - higherPortion - basicRateCap);
+                    taxAnnual += higherPortion * 0.40 + additionalPortion * 0.45;
+                }
+            }
+        }
+
+        // 4. Class 1 National Insurance (8% between £12,570 and £50,270, 2% above £50,270)
+        let niAnnual = 0;
+        const niThreshold = 12570;
+        const niUpperLimit = 50270;
+
+        if (annualGross > niThreshold) {
+            const mainRateEarnings = Math.min(annualGross, niUpperLimit) - niThreshold;
+            niAnnual += mainRateEarnings * 0.08;
+
+            if (annualGross > niUpperLimit) {
+                const upperEarnings = annualGross - niUpperLimit;
+                niAnnual += upperEarnings * 0.02;
+            }
+        }
+
+        // 5. Student Loan Repayments
+        const plan = studentLoanSelect.value;
+        let studentLoanAnnual = 0;
+        let loanThreshold = 0;
+        let loanRate = 0.09;
+
+        switch (plan) {
+            case "plan1": loanThreshold = 24990; break;
+            case "plan2": loanThreshold = 27295; break;
+            case "plan4": loanThreshold = 31395; break;
+            case "plan5": loanThreshold = 25000; break;
+            case "postgrad": loanThreshold = 21000; loanRate = 0.06; break;
+        }
+
+        if (plan !== "none" && annualGross > loanThreshold) {
+            studentLoanAnnual = (annualGross - loanThreshold) * loanRate;
+        }
+
+        // Net Take-Home Pay
+        const netAnnual = Math.max(0, annualGross - taxAnnual - niAnnual - pensionAnnual - studentLoanAnnual);
+
+        // Update Hero Result
+        let displayNet = netAnnual;
+        let freqText = `per year (${formatCurrency(netAnnual / 12)} / month)`;
+
+        switch (currentPeriod) {
+            case "monthly":
+                displayNet = netAnnual / 12;
+                freqText = `per month (${formatCurrency(netAnnual)} / year)`;
+                break;
+            case "weekly":
+                displayNet = netAnnual / 52;
+                freqText = `per week (${formatCurrency(netAnnual / 12)} / month)`;
+                break;
+            case "daily":
+                displayNet = (netAnnual / 52) / daysPerWeek;
+                freqText = `per day (${formatCurrency(netAnnual / 12)} / month)`;
+                break;
+            case "hourly":
+                displayNet = (netAnnual / 52) / hoursPerWeek;
+                freqText = `per hour (${formatCurrency(netAnnual / 12)} / month)`;
+                break;
+        }
+
+        resultTakeHome.textContent = formatCurrency(displayNet);
+        resultFreqLabel.textContent = freqText;
+        if (jobCtaBtn) {
+            jobCtaBtn.href = `/jobs/?salary=${Math.round(annualGross)}`;
+        }
+
+        // Percentages for visual breakdown bar
+        const total = annualGross || 1;
+        const pNet = ((netAnnual / total) * 100).toFixed(1);
+        const pTax = ((taxAnnual / total) * 100).toFixed(1);
+        const pNI = ((niAnnual / total) * 100).toFixed(1);
+        const pPen = ((pensionAnnual / total) * 100).toFixed(1);
+        const pLoan = ((studentLoanAnnual / total) * 100).toFixed(1);
+
+        barNet.style.width = pNet + "%";
+        barTax.style.width = pTax + "%";
+        barNI.style.width = pNI + "%";
+        barPension.style.width = pPen + "%";
+
+        pctNet.textContent = pNet + "%";
+        pctTax.textContent = pTax + "%";
+        pctNI.textContent = pNI + "%";
+        pctPension.textContent = pPen + "%";
+
+        if (studentLoanAnnual > 0) {
+            barLoan.style.width = pLoan + "%";
+            barLoan.style.display = "block";
+            legendLoan.style.display = "flex";
+            pctLoan.textContent = pLoan + "%";
+            tblLoanRow.style.display = "table-row";
+            tblLoanYr.textContent = formatCurrency(studentLoanAnnual);
+            tblLoanMo.textContent = formatCurrency(studentLoanAnnual / 12);
+            tblLoanWk.textContent = formatCurrency(studentLoanAnnual / 52);
+        } else {
+            barLoan.style.width = "0%";
+            barLoan.style.display = "none";
+            legendLoan.style.display = "none";
+            tblLoanRow.style.display = "none";
+        }
+
+        // Update Breakdown Table
+        tblGrossYr.textContent = formatCurrency(annualGross);
+        tblGrossMo.textContent = formatCurrency(annualGross / 12);
+        tblGrossWk.textContent = formatCurrency(annualGross / 52);
+
+        tblAllowYr.textContent = formatCurrency(personalAllowance);
+        tblAllowMo.textContent = formatCurrency(personalAllowance / 12);
+        tblAllowWk.textContent = formatCurrency(personalAllowance / 52);
+
+        tblTaxYr.textContent = formatCurrency(taxAnnual);
+        tblTaxMo.textContent = formatCurrency(taxAnnual / 12);
+        tblTaxWk.textContent = formatCurrency(taxAnnual / 52);
+
+        tblNIYr.textContent = formatCurrency(niAnnual);
+        tblNIMo.textContent = formatCurrency(niAnnual / 12);
+        tblNIWk.textContent = formatCurrency(niAnnual / 52);
+
+        tblPenYr.textContent = formatCurrency(pensionAnnual);
+        tblPenMo.textContent = formatCurrency(pensionAnnual / 12);
+        tblPenWk.textContent = formatCurrency(pensionAnnual / 52);
+
+        tblNetYr.textContent = formatCurrency(netAnnual);
+        tblNetMo.textContent = formatCurrency(netAnnual / 12);
+        tblNetWk.textContent = formatCurrency(netAnnual / 52);
+    }
+
+    // Period buttons click handler
+    document.querySelectorAll(".j-calc-period-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            document.querySelectorAll(".j-calc-period-btn").forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+            currentPeriod = this.dataset.period;
+
+            // Update placeholder & value appropriately
+            if (currentPeriod === "hourly") {
+                grossInput.value = "17.95";
+                grossInput.step = "0.5";
+            } else if (currentPeriod === "daily") {
+                grossInput.value = "135";
+                grossInput.step = "5";
+            } else if (currentPeriod === "weekly") {
+                grossInput.value = "675";
+                grossInput.step = "25";
+            } else if (currentPeriod === "monthly") {
+                grossInput.value = "2917";
+                grossInput.step = "50";
+            } else {
+                grossInput.value = "35000";
+                grossInput.step = "500";
+            }
+            calculate();
+        });
+    });
+
+    // Preset pills click handler
+    document.querySelectorAll(".j-calc-preset-pill").forEach(pill => {
+        pill.addEventListener("click", function() {
+            document.querySelectorAll(".j-calc-preset-pill").forEach(p => p.classList.remove("active"));
+            this.classList.add("active");
+
+            // Reset period to yearly for presets
+            document.querySelectorAll(".j-calc-period-btn").forEach(b => b.classList.remove("active"));
+            document.querySelector('.j-calc-period-btn[data-period="yearly"]')?.classList.add("active");
+            currentPeriod = "yearly";
+
+            grossInput.value = this.dataset.amount;
+            calculate();
+        });
+    });
+
+    // Reactive input change listeners
+    grossInput.addEventListener("input", calculate);
+    pensionSlider.addEventListener("input", calculate);
+    studentLoanSelect.addEventListener("change", calculate);
+    hoursInput.addEventListener("input", calculate);
+    daysInput.addEventListener("input", calculate);
+
+    // Initial run on mount
+    calculate();
+})();
+</script>
+{{end}}

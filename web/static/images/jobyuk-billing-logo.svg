@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Jobies Billing Deep Emerald/Forest Gradient -->
+    <linearGradient id="billingBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065F46" />
+      <stop offset="50%" stop-color="#0F5132" />
+      <stop offset="100%" stop-color="#0B1F1A" />
+    </linearGradient>
+    <!-- British Sterling Gold Badge Gradient -->
+    <linearGradient id="billingBadgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <!-- Leaf accent -->
+    <linearGradient id="billingLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0F26F" />
+      <stop offset="100%" stop-color="#86EFAC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Rounded Card -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#billingBgGradient)" />
+
+  <!-- Jobies 'J' Letterform -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 140 H350" stroke-width="44" />
+    <path d="M300 140 V300 C300 360 250 380 200 370 C160 360 140 320 145 280" stroke-width="44" />
+  </g>
+
+  <!-- Leaf accent -->
+  <circle cx="350" cy="140" r="32" fill="url(#billingLeafGrad)" stroke="#FFFFFF" stroke-width="12" />
+
+  <!-- Billing Sterling Badge -->
+  <circle cx="130" cy="380" r="42" fill="url(#billingBadgeGradient)" stroke="#FFFFFF" stroke-width="11" />
+
+  <!-- British Pound (£) Symbol Inside Badge -->
+  <text x="130" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="900" text-anchor="middle" fill="#FFFFFF">£</text>
+</svg>

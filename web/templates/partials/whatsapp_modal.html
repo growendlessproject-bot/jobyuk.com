@@ -1,0 +1,2155 @@
+{{define "whatsapp_modal"}}
+{{if whatsappAlertsEnabled}}
+<!-- Global WhatsApp Free Trial Modal -->
+<div id="waGlobalModal" class="wa-modal-backdrop" style="display: none;" onclick="if(event.target === this) closeWhatsAppModal()">
+    <div class="wa-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="waModalHeading">
+        <!-- Close Button -->
+        <button type="button" class="wa-modal-close-btn" onclick="closeWhatsAppModal()" aria-label="Close modal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- Form Step 1: Candidate Input -->
+        <div id="waModalStepForm">
+            <div class="wa-modal-header">
+                <div class="wa-modal-icon" style="background: transparent; padding: 0;">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/>
+                        <path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/>
+                    </svg>
+                </div>
+                <div class="wa-modal-header-text">
+                    <h2 class="wa-modal-title" id="waModalHeading">Activate Free WhatsApp Alerts</h2>
+                    <p class="wa-modal-subtitle">Instant 3-day access (2–3 alerts daily) • No card required</p>
+                </div>
+            </div>
+
+            <form id="waModalTrialForm" onsubmit="handleModalTrialSubmit(event)">
+                <!-- Full Name -->
+                <div class="wa-modal-field">
+                    <label class="wa-modal-label" for="waModalName">Full Name</label>
+                    <div class="wa-modal-input-wrap">
+                        <span class="wa-modal-input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </span>
+                        <input type="text" id="waModalName" name="full_name" placeholder="e.g. Sarah Jenkins" required class="wa-modal-input">
+                    </div>
+                </div>
+
+                <!-- WhatsApp Number with Dedicated Country Code Selector -->
+                <div class="wa-modal-field" style="position: relative; z-index: 60;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+                        <label class="wa-modal-label" for="waModalPhone" style="margin-bottom: 0;">WhatsApp Number</label>
+                        <span class="wa-country-tag">Country code required</span>
+                    </div>
+                    <div class="wa-phone-input-group">
+                        <!-- Next-Level Searchable Country Code Trigger -->
+                        <div class="wa-country-picker-wrap">
+                            <button type="button" class="wa-country-trigger-btn" id="waCountryTriggerBtn" onclick="toggleCountryPicker(event)" aria-haspopup="listbox" aria-expanded="false" aria-label="Select Country Code">
+                                <span class="wa-trigger-flag" id="waTriggerFlag">🇬🇧</span>
+                                <span class="wa-trigger-code" id="waTriggerCode">+44</span>
+                                <svg class="wa-trigger-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <input type="hidden" id="waModalCountryCode" name="country_code" value="+44">
+
+                            <!-- Floating Searchable Popover Menu -->
+                            <div id="waCountryPopover" class="wa-country-popover" style="display: none;" onclick="event.stopPropagation()">
+                                <div class="wa-country-search-box">
+                                    <svg class="wa-search-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    <input type="text" id="waCountrySearchInput" placeholder="Search country or code (e.g. UK, 92, US)..." autocomplete="off" oninput="filterCountriesList(this.value)">
+                                </div>
+                                <div class="wa-country-list" id="waCountryListScroll" role="listbox">
+                                    <!-- Rendered dynamically by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wa-phone-number-wrap">
+                            <input type="tel" id="waModalPhone" name="phone" placeholder="7123 456789" required class="wa-phone-number-input wa-phone-font" autocomplete="tel-national" oninput="handleModalPhoneInput(this)">
+                        </div>
+                    </div>
+                    <div id="waPhoneHelper" class="wa-phone-hint">Enter your mobile number without leading 0 (e.g. 7123 456789)</div>
+                </div>
+
+                <!-- Target Role or Sector with Instant Recommendations -->
+                <div class="wa-modal-field" style="position: relative;">
+                    <label class="wa-modal-label" for="waModalKeywords">Target Role or Sector</label>
+                    <div class="wa-modal-input-wrap">
+                        <span class="wa-modal-input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </span>
+                        <input type="text" id="waModalKeywords" name="keywords" placeholder="e.g. Software Engineer, Nurse, Finance" required class="wa-modal-input" autocomplete="off" oninput="handleModalRoleSearch(this.value)">
+                    </div>
+
+                    <!-- Instant Search Recommendations Dropdown -->
+                    <div id="waModalRoleSuggests" class="wa-modal-suggest-dropdown" style="display: none;"></div>
+
+                    <!-- Fast Recommendation Pills -->
+                    <div class="wa-modal-pills">
+                        <button type="button" class="wa-modal-pill" onclick="setModalRole('Software Engineer')">Software Engineer</button>
+                        <button type="button" class="wa-modal-pill" onclick="setModalRole('Nurse')">Nurse</button>
+                        <button type="button" class="wa-modal-pill" onclick="setModalRole('Project Manager')">Project Manager</button>
+                        <button type="button" class="wa-modal-pill" onclick="setModalRole('Accountant')">Accountant</button>
+                    </div>
+                </div>
+
+                <!-- Preferred Location (Optional) with Instant Suggestions -->
+                <div class="wa-modal-field" style="position: relative;">
+                    <label class="wa-modal-label" for="waModalLocation">Preferred Location (Optional)</label>
+                    <div class="wa-modal-input-wrap">
+                        <span class="wa-modal-input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </span>
+                        <input type="text" id="waModalLocation" name="location" placeholder="e.g. London, Manchester, or Remote UK" class="wa-modal-input" autocomplete="off" oninput="handleModalLocationSearch(this.value)">
+                    </div>
+
+                    <!-- Instant Location Search Recommendations Dropdown -->
+                    <div id="waModalLocationSuggests" class="wa-modal-suggest-dropdown" style="display: none;"></div>
+                </div>
+
+                <!-- Error Message Banner -->
+                <div id="waModalFormError" class="wa-modal-error-banner" style="display: none;"></div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="waModalSubmitBtn" class="wa-modal-submit-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span id="waModalSubmitBtnText">Start 3-Day Free Trial</span>
+                </button>
+
+                <!-- Guarantee Row with Circular Ticks -->
+                <div class="wa-modal-guarantee-row">
+                    <div class="wa-modal-guarantee-item">
+                        <span class="wa-tick-circle">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </span>
+                        <span class="wa-modal-guarantee-text">3 days free (2–3 alerts daily)</span>
+                    </div>
+                    <span class="wa-modal-guarantee-dot">•</span>
+                    <div class="wa-modal-guarantee-item">
+                        <span class="wa-tick-circle">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </span>
+                        <span class="wa-modal-guarantee-text">No credit card</span>
+                    </div>
+                    <span class="wa-modal-guarantee-dot wa-modal-guarantee-pause">•</span>
+                    <div class="wa-modal-guarantee-item wa-modal-guarantee-pause">
+                        <span class="wa-tick-circle">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </span>
+                        <span class="wa-modal-guarantee-text">Pause anytime</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Step 2: Instant PIN Verification -->
+        <div id="waModalStepVerify" style="display: none;" class="wa-modal-verify-view">
+            <div class="wa-modal-verify-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h3 class="wa-modal-verify-title">PIN Sent to Your WhatsApp</h3>
+            <p class="wa-modal-verify-desc" id="waModalVerifyNotice">
+                Please check your WhatsApp chat for a 6-digit confirmation code.
+            </p>
+
+            <!-- 6 Full-Width PIN Digit Boxes (matching CTA width start-to-end) -->
+            <div class="wa-modal-pin-boxes" id="waPinBoxesContainer">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="0" autocomplete="one-time-code" aria-label="Digit 1">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="1" autocomplete="off" aria-label="Digit 2">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="2" autocomplete="off" aria-label="Digit 3">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="3" autocomplete="off" aria-label="Digit 4">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="4" autocomplete="off" aria-label="Digit 5">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="wa-pin-digit" data-index="5" autocomplete="off" aria-label="Digit 6">
+            </div>
+
+            <div id="waModalVerifyError" class="wa-modal-error-banner" style="display: none; margin-bottom: 12px;"></div>
+
+            <!-- CTA Confirm Button with Authentic SVG Checkmark -->
+            <button type="button" onclick="verifyModalPin()" id="waModalVerifyBtn" class="wa-modal-submit-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span id="waModalVerifyBtnText">Confirm & Activate Alerts</span>
+            </button>
+
+            <!-- Change Phone Number with Authentic SVG Left Arrow -->
+            <div style="text-align: center; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                <button type="button" onclick="backToModalForm()" class="wa-modal-link-btn">
+                    <svg class="jy-arrow-left" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Change Phone Number</span>
+                </button>
+                <span style="color: #cbd5e1;">•</span>
+                <span id="waModalResendCooldown" style="font-size: 0.82rem; color: #64748b; font-weight: 600;">
+                    Resend in <strong id="waResendCountdown" style="color: #059669;">60</strong>s
+                </span>
+                <button type="button" id="waModalResendBtn" onclick="resendTrialOtp()" class="wa-modal-link-btn" style="display: none; color: #0284c7;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                    <span>Resend Code</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* WhatsApp Global Modal Styling - Executive Light Mode */
+.wa-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10000000 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: waModalFadeIn 0.2s ease-out;
+}
+
+@keyframes waModalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.wa-modal-dialog {
+    background: #ffffff;
+    width: 100%;
+    max-width: 490px;
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
+    position: relative;
+    max-height: 94vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    animation: waModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wa-modal-dialog::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+@keyframes waModalPop {
+    from { opacity: 0; transform: scale(0.96) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.wa-modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    z-index: 10;
+}
+
+.wa-modal-close-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.wa-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    padding-right: 44px; /* Clearance so title/subtitle never overlap top-right close button */
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.wa-modal-icon {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.wa-modal-header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.wa-modal-title {
+    font-size: 1.18rem;
+    font-weight: 850;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+}
+
+.wa-modal-subtitle {
+    font-size: 0.80rem;
+    color: #64748b;
+    margin: 3px 0 0 0;
+    font-weight: 550;
+    line-height: 1.35;
+}
+
+.wa-modal-field {
+    margin-bottom: 16px;
+}
+
+.wa-modal-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 750;
+    color: #334155;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+}
+
+.wa-modal-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.wa-modal-input-icon {
+    position: absolute;
+    left: 13px;
+    color: #94a3b8;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.wa-modal-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    color: #0f172a;
+    background: #f8fafc;
+    outline: none;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.wa-modal-input:focus {
+    border-color: #10b981;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.wa-modal-input.wa-phone-font {
+    font-family: monospace;
+    font-size: 0.90rem;
+}
+
+/* WhatsApp Country Code & Unified Input Group */
+.wa-country-tag {
+    font-size: 0.67rem;
+    font-weight: 750;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid #a7f3d0;
+    letter-spacing: 0.01em;
+}
+
+.wa-phone-input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    transition: all 0.15s ease;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.wa-phone-input-group:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.18);
+}
+
+/* Next-Level Searchable Country Code Picker */
+.wa-country-picker-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.wa-country-trigger-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #f8fafc;
+    border: none;
+    border-right: 1.5px solid #e2e8f0;
+    padding: 10px 13px;
+    height: 100%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 10.5px 0 0 10.5px;
+    transition: background 0.15s ease;
+    user-select: none;
+}
+
+.wa-country-trigger-btn:hover {
+    background: #f1f5f9;
+}
+
+.wa-country-trigger-btn.active {
+    background: #ecfdf5;
+}
+
+.wa-trigger-flag {
+    font-size: 1.18rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.wa-trigger-code {
+    font-size: 0.88rem;
+    font-weight: 750;
+    color: #1e293b;
+    font-family: inherit;
+}
+
+.wa-trigger-chevron {
+    color: #64748b;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wa-country-trigger-btn.active .wa-trigger-chevron {
+    transform: rotate(180deg);
+    color: #10b981;
+}
+
+/* Floating Searchable Popover */
+.wa-country-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 330px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.05);
+    z-index: 1000;
+    overflow: hidden;
+    animation: waPopoverFade 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes waPopoverFade {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.wa-country-search-box {
+    position: relative;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+}
+
+.wa-search-svg {
+    position: absolute;
+    left: 21px;
+    pointer-events: none;
+}
+
+.wa-country-search-box input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    color: #0f172a;
+    background: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+}
+
+.wa-country-search-box input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.wa-country-list {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 4px 0;
+    overscroll-behavior: contain;
+}
+
+.wa-country-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.wa-country-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.wa-country-list-heading {
+    padding: 7px 14px 4px 14px;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    user-select: none;
+}
+
+.wa-country-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    user-select: none;
+}
+
+.wa-country-item:hover, .wa-country-item.highlighted {
+    background: #f1f5f9;
+}
+
+.wa-country-item.selected {
+    background: #ecfdf5;
+    font-weight: 750;
+}
+
+.wa-country-item-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    overflow: hidden;
+}
+
+.wa-country-item-flag {
+    font-size: 1.15rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.wa-country-item-name {
+    font-size: 0.84rem;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wa-country-item.selected .wa-country-item-name {
+    color: #065f46;
+    font-weight: 750;
+}
+
+.wa-country-item-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.wa-country-item-dial {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+.wa-country-item.selected .wa-country-item-dial {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.wa-country-empty {
+    padding: 24px 14px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.wa-phone-number-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 0 10.5px 10.5px 0;
+    overflow: hidden;
+}
+
+.wa-phone-number-input {
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 10px 12px !important;
+    font-size: 0.94rem !important;
+    font-weight: 650 !important;
+    color: #0f172a !important;
+    outline: none !important;
+    font-family: inherit !important;
+}
+
+.wa-phone-hint {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 5px;
+    padding-left: 2px;
+    font-weight: 550;
+}
+
+.wa-modal-pills {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.wa-modal-pills::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.wa-modal-pill {
+    flex: 1 1 auto !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #475569 !important;
+    font-size: 0.70rem !important;
+    font-weight: 650 !important;
+    padding: 5px 8px !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    letter-spacing: -0.01em !important;
+}
+
+.wa-modal-pill:hover {
+    background: #dcfce7 !important;
+    border-color: #86efac !important;
+    color: #065f46 !important;
+}
+
+/* Role Typeahead Recommendations Dropdown */
+.wa-modal-suggest-dropdown {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+    z-index: 50;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+.wa-modal-suggest-item {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    color: #334155;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.12s;
+}
+
+.wa-modal-suggest-item:hover {
+    background: #f0fdf4;
+    color: #065f46;
+    font-weight: 700;
+}
+
+.wa-modal-error-banner {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+
+.wa-modal-submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-size: 0.94rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    transition: all 0.15s ease;
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+
+.wa-modal-submit-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.42);
+}
+
+.wa-tick-circle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    border-radius: 50% !important;
+    background: #10b981 !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(16, 185, 129, 0.35) !important;
+    flex-shrink: 0 !important;
+}
+
+.wa-tick-circle svg {
+    stroke: #ffffff !important;
+    width: 10px !important;
+    height: 10px !important;
+    display: block !important;
+}
+
+.wa-modal-guarantee-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 6px !important;
+    margin-top: 16px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.wa-modal-guarantee-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.wa-modal-guarantee-text {
+    font-size: 0.70rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    white-space: nowrap !important;
+}
+
+.wa-modal-guarantee-dot {
+    display: none !important;
+}
+
+body.wa-modal-open #sticky-view-mode-bar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Step 2 Verify View */
+.wa-modal-verify-view {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.wa-modal-verify-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+}
+
+.wa-modal-verify-title {
+    font-size: 1.25rem;
+    font-weight: 850;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+}
+
+.wa-modal-verify-desc {
+    font-size: 0.84rem;
+    color: #64748b;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+/* 6 PIN Digit Boxes matching CTA width exact start-to-end */
+.wa-modal-pin-boxes {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 0 20px 0 !important;
+}
+
+.wa-pin-digit {
+    width: 100% !important;
+    height: 54px !important;
+    text-align: center !important;
+    font-size: 1.6rem !important;
+    font-weight: 850 !important;
+    color: #0f172a !important;
+    background: #f8fafc !important;
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    outline: none !important;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+.wa-pin-digit:hover {
+    border-color: #94a3b8 !important;
+}
+
+.wa-pin-digit:focus {
+    border-color: #10b981 !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18) !important;
+    transform: translateY(-2px) !important;
+}
+
+.wa-pin-digit.filled {
+    border-color: #10b981 !important;
+    background: #f0fdf4 !important;
+    color: #065f46 !important;
+    font-weight: 850 !important;
+}
+
+.wa-modal-link-btn {
+    background: none;
+    border: none;
+    color: #059669;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.wa-modal-link-btn:hover {
+    color: #047857;
+    background: #ecfdf5;
+}
+
+.wa-modal-link-btn svg {
+    transition: transform 0.15s ease;
+}
+
+.wa-modal-link-btn:hover svg {
+    transform: translateX(-3px);
+}
+
+/* Mobile & Small Screen Responsiveness — Clean Spacing & Single-Row Alignment */
+@media (max-width: 640px) {
+    .wa-modal-guarantee-pause {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .wa-modal-backdrop {
+        padding: 12px !important;
+    }
+
+    .wa-modal-dialog {
+        padding: 22px 18px !important;
+        border-radius: 18px !important;
+        max-height: 94vh !important;
+    }
+
+    .wa-modal-header {
+        margin-bottom: 16px !important;
+        padding-bottom: 12px !important;
+        gap: 10px !important;
+        padding-right: 42px !important; /* Critical: keeps heading safely clear of 32px close button */
+        align-items: flex-start !important;
+    }
+
+    .wa-modal-icon {
+        width: 30px !important;
+        height: 30px !important;
+        margin-top: 2px !important;
+    }
+
+    .wa-modal-icon svg {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .wa-modal-title {
+        font-size: 1.05rem !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.015em !important;
+    }
+
+    .wa-modal-subtitle {
+        font-size: 0.73rem !important;
+        line-height: 1.35 !important;
+        margin-top: 3px !important;
+    }
+
+    .wa-modal-field {
+        margin-bottom: 14px !important;
+    }
+
+    .wa-modal-label {
+        font-size: 0.76rem !important;
+        margin-bottom: 5px !important;
+    }
+
+    .wa-modal-input {
+        padding: 9px 12px 9px 36px !important;
+        font-size: 0.86rem !important;
+        border-radius: 11px !important;
+    }
+
+    .wa-modal-input-icon {
+        left: 11px !important;
+    }
+
+    .wa-country-select {
+        max-width: 130px !important;
+        padding: 9px 18px 9px 8px !important;
+        font-size: 0.80rem !important;
+    }
+
+    .wa-modal-pills {
+        gap: 5px !important;
+        margin-top: 7px !important;
+    }
+
+    .wa-modal-pill {
+        font-size: 0.67rem !important;
+        padding: 4px 7px !important;
+        letter-spacing: -0.01em !important;
+    }
+
+    .wa-modal-submit-btn {
+        padding: 12px 18px !important;
+        font-size: 0.90rem !important;
+        border-radius: 11px !important;
+        margin-top: 6px !important;
+    }
+
+    .wa-modal-guarantee-row {
+        margin-top: 14px !important;
+        padding-top: 12px !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .wa-modal-guarantee-item {
+        gap: 4px !important;
+    }
+
+    .wa-modal-guarantee-text {
+        font-size: 0.69rem !important;
+    }
+
+    .wa-modal-guarantee-pause {
+        display: none !important;
+    }
+
+    .wa-tick-circle {
+        width: 15px !important;
+        height: 15px !important;
+        min-width: 15px !important;
+    }
+
+    .wa-tick-circle svg {
+        width: 9px !important;
+        height: 9px !important;
+    }
+
+    .wa-modal-pin-boxes {
+        gap: 6px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .wa-pin-digit {
+        height: 48px !important;
+        font-size: 1.35rem !important;
+        border-radius: 10px !important;
+    }
+}
+
+@media (max-height: 680px) {
+    .wa-modal-dialog {
+        padding: 16px 18px !important;
+    }
+
+    .wa-modal-header {
+        margin-bottom: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .wa-modal-field {
+        margin-bottom: 10px !important;
+    }
+
+    .wa-modal-submit-btn {
+        padding: 10px 14px !important;
+    }
+
+    .wa-modal-guarantee-row {
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+    }
+}
+</style>
+
+<script>
+(function() {
+    var POPULAR_ROLES = [
+        'Software Engineer', 'Senior Software Engineer', 'Frontend Developer', 'Backend Developer',
+        'Registered Nurse', 'Staff Nurse', 'Registered Nurse (RMN)', 'Healthcare Assistant',
+        'Project Manager', 'Product Manager', 'Operations Manager',
+        'Accountant', 'Financial Analyst', 'Management Accountant',
+        'Data Analyst', 'Data Engineer', 'Data Scientist',
+        'DevOps Engineer', 'Cloud Architect',
+        'Customer Service Advisor', 'Sales Executive'
+    ];
+
+    var POPULAR_LOCATIONS = [
+        'London', 'Greater London', 'Manchester', 'Birmingham', 'Leeds',
+        'Bristol', 'Glasgow', 'Edinburgh', 'Liverpool', 'Newcastle',
+        'Sheffield', 'Nottingham', 'Cardiff', 'Belfast', 'Remote UK'
+    ];
+
+    var activePhone = '';
+    var currentTrackingID = 0;
+
+    function getVisitorId() {
+        var vid = '';
+        try { vid = localStorage.getItem('JobyUK_wa_vid'); } catch(e){}
+        if (!vid) {
+            vid = 'v_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+            try { localStorage.setItem('JobyUK_wa_vid', vid); } catch(e){}
+        }
+        return vid;
+    }
+
+    function trackTrialClick(source, ariaLabel, placement) {
+        var vid = getVisitorId();
+        fetch('/api/whatsapp/track-click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                visitor_id: vid,
+                source: source || 'floating_bar',
+                aria_label: ariaLabel || 'Activate 3-Day Free Trial on WhatsApp',
+                trigger_placement: placement || 'Floating Bottom Bar',
+                page_url: window.location.href,
+                referrer: document.referrer || ''
+            })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+            if (d && d.tracking_id) {
+                currentTrackingID = d.tracking_id;
+                try { sessionStorage.setItem('current_wa_tracking_id', d.tracking_id); } catch(e){}
+            }
+        })
+        .catch(function(){});
+    }
+
+    window.openWhatsAppModal = function(opts) {
+        opts = opts || {};
+        trackTrialClick(opts.source, opts.ariaLabel, opts.placement);
+        var modal = document.getElementById('waGlobalModal');
+        var stepForm = document.getElementById('waModalStepForm');
+        var stepVerify = document.getElementById('waModalStepVerify');
+        var errBox = document.getElementById('waModalFormError');
+
+        if (!modal) return;
+
+        if (stepForm) stepForm.style.display = 'block';
+        if (stepVerify) stepVerify.style.display = 'none';
+        if (errBox) errBox.style.display = 'none';
+        var verifyErr = document.getElementById('waModalVerifyError');
+        if (verifyErr) verifyErr.style.display = 'none';
+        var digitBoxes = document.querySelectorAll('.wa-pin-digit');
+        digitBoxes.forEach(function(b) { b.value = ''; b.classList.remove('filled'); });
+
+        if (window.closeCountryPicker) window.closeCountryPicker();
+        if (window.renderCountryList) window.renderCountryList('');
+
+        // Pre-fill role and location if provided or auto-detect from active page context
+        var roleInput = document.getElementById('waModalKeywords');
+        var locInput = document.getElementById('waModalLocation');
+
+        var targetRole = opts.role || '';
+        var targetLoc = opts.location || '';
+
+        if (!targetRole && window.location.search) {
+            try {
+                var urlParams = new URLSearchParams(window.location.search);
+                targetRole = urlParams.get('q') || urlParams.get('role') || urlParams.get('keywords') || '';
+            } catch(e) {}
+        }
+        if (!targetRole && window.location.pathname.indexOf('/job-roles/') !== -1) {
+            var slug = window.location.pathname.replace('/job-roles/', '').replace(/\//g, '');
+            if (slug) {
+                targetRole = slug.split('-').map(function(s) { return s.charAt(0).toUpperCase() + s.slice(1); }).join(' ');
+            }
+        }
+
+        if (!targetLoc && window.location.search) {
+            try {
+                var urlParams = new URLSearchParams(window.location.search);
+                targetLoc = urlParams.get('location') || urlParams.get('loc') || '';
+            } catch(e) {}
+        }
+        if (!targetLoc && window.location.pathname.indexOf('/locations/') !== -1) {
+            var slug = window.location.pathname.replace('/locations/', '').replace(/\//g, '');
+            if (slug) {
+                targetLoc = slug.split('-').map(function(s) { return s.charAt(0).toUpperCase() + s.slice(1); }).join(' ');
+            }
+        }
+
+        if (roleInput && targetRole) {
+            roleInput.value = targetRole;
+        }
+        if (locInput && targetLoc) {
+            locInput.value = targetLoc;
+        }
+
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('wa-modal-open');
+        var stickyBar = document.getElementById('sticky-view-mode-bar');
+        if (stickyBar) stickyBar.style.setProperty('display', 'none', 'important');
+
+        // Focus first empty field
+        var nameInput = document.getElementById('waModalName');
+        var phoneInput = document.getElementById('waModalPhone');
+        if (nameInput && !nameInput.value) {
+            setTimeout(function() { nameInput.focus(); }, 100);
+        } else if (phoneInput) {
+            setTimeout(function() { phoneInput.focus(); }, 100);
+        }
+    };
+
+    window.closeWhatsAppModal = function() {
+        var modal = document.getElementById('waGlobalModal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            document.body.classList.remove('wa-modal-open');
+            var stickyBar = document.getElementById('sticky-view-mode-bar');
+            if (stickyBar) stickyBar.style.removeProperty('display');
+        }
+        var roleSuggest = document.getElementById('waModalRoleSuggests');
+        if (roleSuggest) roleSuggest.style.display = 'none';
+        var locSuggest = document.getElementById('waModalLocationSuggests');
+        if (locSuggest) locSuggest.style.display = 'none';
+        if (window.closeCountryPicker) window.closeCountryPicker();
+    };
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            var popover = document.getElementById('waCountryPopover');
+            if (popover && popover.style.display === 'block') {
+                if (window.closeCountryPicker) window.closeCountryPicker();
+                return;
+            }
+            closeWhatsAppModal();
+        }
+    });
+
+    // Close suggestions and country popover on outside click
+    document.addEventListener('click', function(e) {
+        var roleBox = document.getElementById('waModalRoleSuggests');
+        var roleInput = document.getElementById('waModalKeywords');
+        if (roleBox && roleInput && !roleBox.contains(e.target) && e.target !== roleInput) {
+            roleBox.style.display = 'none';
+        }
+        var locBox = document.getElementById('waModalLocationSuggests');
+        var locInput = document.getElementById('waModalLocation');
+        if (locBox && locInput && !locBox.contains(e.target) && e.target !== locInput) {
+            locBox.style.display = 'none';
+        }
+        var popover = document.getElementById('waCountryPopover');
+        var countryTrigger = document.getElementById('waCountryTriggerBtn');
+        if (popover && popover.style.display === 'block' && !popover.contains(e.target) && (!countryTrigger || !countryTrigger.contains(e.target))) {
+            if (window.closeCountryPicker) window.closeCountryPicker();
+        }
+    });
+
+    window.setModalRole = function(role) {
+        var input = document.getElementById('waModalKeywords');
+        if (input) {
+            input.value = role;
+            input.focus();
+        }
+        var suggestBox = document.getElementById('waModalRoleSuggests');
+        if (suggestBox) suggestBox.style.display = 'none';
+    };
+
+    window.handleModalRoleSearch = function(query) {
+        var box = document.getElementById('waModalRoleSuggests');
+        if (!box) return;
+        query = (query || '').trim().toLowerCase();
+        if (!query || query.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
+
+        var matches = POPULAR_ROLES.filter(function(r) {
+            return r.toLowerCase().indexOf(query) !== -1;
+        }).slice(0, 5);
+
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        var html = '';
+        matches.forEach(function(item) {
+            html += '<div class="wa-modal-suggest-item" onclick="setModalRole(\'' + item.replace(/'/g, "\\'") + '\')">' +
+                    '<span>' + item + '</span>' +
+                    '<span style="font-size: 0.70rem; color: #10b981; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">Select <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></span>' +
+                    '</div>';
+        });
+
+        box.innerHTML = html;
+        box.style.display = 'block';
+    };
+
+    window.setModalLocation = function(loc) {
+        var input = document.getElementById('waModalLocation');
+        if (input) {
+            input.value = loc;
+            input.focus();
+        }
+        var suggestBox = document.getElementById('waModalLocationSuggests');
+        if (suggestBox) suggestBox.style.display = 'none';
+    };
+
+    window.handleModalLocationSearch = function(query) {
+        var box = document.getElementById('waModalLocationSuggests');
+        if (!box) return;
+        query = (query || '').trim().toLowerCase();
+        if (!query || query.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
+
+        var matches = POPULAR_LOCATIONS.filter(function(l) {
+            return l.toLowerCase().indexOf(query) !== -1;
+        }).slice(0, 5);
+
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        var html = '';
+        matches.forEach(function(item) {
+            html += '<div class="wa-modal-suggest-item" onclick="setModalLocation(\'' + item.replace(/'/g, "\\'") + '\')">' +
+                    '<span>' + item + '</span>' +
+                    '<span style="font-size: 0.70rem; color: #10b981; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">Select <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></span>' +
+                    '</div>';
+        });
+
+        box.innerHTML = html;
+        box.style.display = 'block';
+    };
+
+    var TOP_PRIORITY_COUNTRIES = [
+        { iso: 'GB', name: 'United Kingdom', dial: '+44', flag: '🇬🇧', ph: '7123 456789', hint: 'UK mobile without leading 0 (e.g. 7123 456789)' },
+        { iso: 'US', name: 'United States', dial: '+1', flag: '🇺🇸', ph: '202 555 0123', hint: 'US 10-digit mobile number' },
+        { iso: 'CA', name: 'Canada', dial: '+1', flag: '🇨🇦', ph: '416 555 0123', hint: 'Canada 10-digit mobile number' },
+        { iso: 'AU', name: 'Australia', dial: '+61', flag: '🇦🇺', ph: '412 345 678', hint: 'Australia mobile without leading 0' },
+        { iso: 'DE', name: 'Germany', dial: '+49', flag: '🇩🇪', ph: '151 23456789', hint: 'Germany mobile without leading 0' },
+        { iso: 'FR', name: 'France', dial: '+33', flag: '🇫🇷', ph: '6 12 34 56 78', hint: 'France mobile without leading 0' },
+        { iso: 'NL', name: 'Netherlands', dial: '+31', flag: '🇳🇱', ph: '6 12345678', hint: 'Netherlands mobile without leading 0' },
+        { iso: 'IE', name: 'Ireland', dial: '+353', flag: '🇮🇪', ph: '87 123 4567', hint: 'Ireland mobile without leading 0 (e.g. 87 123 4567)' },
+        { iso: 'CH', name: 'Switzerland', dial: '+41', flag: '🇨🇭', ph: '79 123 45 67', hint: 'Switzerland mobile without leading 0' },
+        { iso: 'SE', name: 'Sweden', dial: '+46', flag: '🇸🇪', ph: '70 123 45 67', hint: 'Sweden mobile without leading 0' },
+        { iso: 'NZ', name: 'New Zealand', dial: '+64', flag: '🇳🇿', ph: '21 123 4567', hint: 'New Zealand mobile without leading 0' },
+        { iso: 'AE', name: 'United Arab Emirates', dial: '+971', flag: '🇦🇪', ph: '50 123 4567', hint: 'UAE mobile without leading 0 (e.g. 50 123 4567)' },
+        { iso: 'SA', name: 'Saudi Arabia', dial: '+966', flag: '🇸🇦', ph: '50 123 4567', hint: 'Saudi mobile without leading 0' },
+        { iso: 'QA', name: 'Qatar', dial: '+974', flag: '🇶🇦', ph: '3312 3456', hint: 'Qatar mobile without leading 0' },
+        { iso: 'SG', name: 'Singapore', dial: '+65', flag: '🇸🇬', ph: '8123 4567', hint: 'Singapore 8-digit mobile number' },
+        { iso: 'PK', name: 'Pakistan', dial: '+92', flag: '🇵🇰', ph: '336 3220343', hint: 'Pakistan mobile without leading 0 (e.g. 336 3220343)' },
+        { iso: 'IN', name: 'India', dial: '+91', flag: '🇮🇳', ph: '98765 43210', hint: 'India 10-digit mobile without leading 0' }
+    ];
+
+    var ALL_WORLD_COUNTRIES = [
+        { iso: 'AF', name: 'Afghanistan', dial: '+93', flag: '🇦🇫' },
+        { iso: 'AL', name: 'Albania', dial: '+355', flag: '🇦🇱' },
+        { iso: 'DZ', name: 'Algeria', dial: '+213', flag: '🇩🇿' },
+        { iso: 'AD', name: 'Andorra', dial: '+376', flag: '🇦🇩' },
+        { iso: 'AO', name: 'Angola', dial: '+244', flag: '🇦🇴' },
+        { iso: 'AG', name: 'Antigua and Barbuda', dial: '+1268', flag: '🇦🇬' },
+        { iso: 'AR', name: 'Argentina', dial: '+54', flag: '🇦🇷' },
+        { iso: 'AM', name: 'Armenia', dial: '+374', flag: '🇦🇲' },
+        { iso: 'AU', name: 'Australia', dial: '+61', flag: '🇦🇺' },
+        { iso: 'AT', name: 'Austria', dial: '+43', flag: '🇦🇹' },
+        { iso: 'AZ', name: 'Azerbaijan', dial: '+994', flag: '🇦🇿' },
+        { iso: 'BS', name: 'Bahamas', dial: '+1242', flag: '🇧🇸' },
+        { iso: 'BH', name: 'Bahrain', dial: '+973', flag: '🇧🇭' },
+        { iso: 'BD', name: 'Bangladesh', dial: '+880', flag: '🇧🇩' },
+        { iso: 'BB', name: 'Barbados', dial: '+1246', flag: '🇧🇧' },
+        { iso: 'BY', name: 'Belarus', dial: '+375', flag: '🇧🇾' },
+        { iso: 'BE', name: 'Belgium', dial: '+32', flag: '🇧🇪' },
+        { iso: 'BZ', name: 'Belize', dial: '+501', flag: '🇧🇿' },
+        { iso: 'BJ', name: 'Benin', dial: '+229', flag: '🇧🇯' },
+        { iso: 'BT', name: 'Bhutan', dial: '+975', flag: '🇧🇹' },
+        { iso: 'BO', name: 'Bolivia', dial: '+591', flag: '🇧🇴' },
+        { iso: 'BA', name: 'Bosnia and Herzegovina', dial: '+387', flag: '🇧🇦' },
+        { iso: 'BW', name: 'Botswana', dial: '+267', flag: '🇧🇼' },
+        { iso: 'BR', name: 'Brazil', dial: '+55', flag: '🇧🇷' },
+        { iso: 'BN', name: 'Brunei', dial: '+673', flag: '🇧🇳' },
+        { iso: 'BG', name: 'Bulgaria', dial: '+359', flag: '🇧🇬' },
+        { iso: 'BF', name: 'Burkina Faso', dial: '+226', flag: '🇧🇫' },
+        { iso: 'BI', name: 'Burundi', dial: '+257', flag: '🇧🇮' },
+        { iso: 'KH', name: 'Cambodia', dial: '+855', flag: '🇰🇭' },
+        { iso: 'CM', name: 'Cameroon', dial: '+237', flag: '🇨🇲' },
+        { iso: 'CA', name: 'Canada', dial: '+1', flag: '🇨🇦' },
+        { iso: 'CV', name: 'Cape Verde', dial: '+238', flag: '🇨🇻' },
+        { iso: 'CF', name: 'Central African Republic', dial: '+236', flag: '🇨🇫' },
+        { iso: 'TD', name: 'Chad', dial: '+235', flag: '🇹🇩' },
+        { iso: 'CL', name: 'Chile', dial: '+56', flag: '🇨🇱' },
+        { iso: 'CN', name: 'China', dial: '+86', flag: '🇨🇳' },
+        { iso: 'CO', name: 'Colombia', dial: '+57', flag: '🇨🇴' },
+        { iso: 'KM', name: 'Comoros', dial: '+269', flag: '🇰🇲' },
+        { iso: 'CG', name: 'Congo', dial: '+242', flag: '🇨🇬' },
+        { iso: 'CR', name: 'Costa Rica', dial: '+506', flag: '🇨🇷' },
+        { iso: 'HR', name: 'Croatia', dial: '+385', flag: '🇭🇷' },
+        { iso: 'CU', name: 'Cuba', dial: '+53', flag: '🇨🇺' },
+        { iso: 'CY', name: 'Cyprus', dial: '+357', flag: '🇨🇾' },
+        { iso: 'CZ', name: 'Czech Republic', dial: '+420', flag: '🇨🇿' },
+        { iso: 'DK', name: 'Denmark', dial: '+45', flag: '🇩🇰' },
+        { iso: 'DJ', name: 'Djibouti', dial: '+253', flag: '🇩🇯' },
+        { iso: 'DM', name: 'Dominica', dial: '+1767', flag: '🇩🇲' },
+        { iso: 'DO', name: 'Dominican Republic', dial: '+1809', flag: '🇩🇴' },
+        { iso: 'EC', name: 'Ecuador', dial: '+593', flag: '🇪🇨' },
+        { iso: 'EG', name: 'Egypt', dial: '+20', flag: '🇪🇬' },
+        { iso: 'SV', name: 'El Salvador', dial: '+503', flag: '🇸🇻' },
+        { iso: 'GQ', name: 'Equatorial Guinea', dial: '+240', flag: '🇬🇶' },
+        { iso: 'ER', name: 'Eritrea', dial: '+291', flag: '🇪🇷' },
+        { iso: 'EE', name: 'Estonia', dial: '+372', flag: '🇪🇪' },
+        { iso: 'SZ', name: 'Eswatini', dial: '+268', flag: '🇸🇿' },
+        { iso: 'ET', name: 'Ethiopia', dial: '+251', flag: '🇪🇹' },
+        { iso: 'FJ', name: 'Fiji', dial: '+679', flag: '🇫🇯' },
+        { iso: 'FI', name: 'Finland', dial: '+358', flag: '🇫🇮' },
+        { iso: 'FR', name: 'France', dial: '+33', flag: '🇫🇷' },
+        { iso: 'GA', name: 'Gabon', dial: '+241', flag: '🇬🇦' },
+        { iso: 'GM', name: 'Gambia', dial: '+220', flag: '🇬🇲' },
+        { iso: 'GE', name: 'Georgia', dial: '+995', flag: '🇬🇪' },
+        { iso: 'DE', name: 'Germany', dial: '+49', flag: '🇩🇪' },
+        { iso: 'GH', name: 'Ghana', dial: '+233', flag: '🇬🇭' },
+        { iso: 'GR', name: 'Greece', dial: '+30', flag: '🇬🇷' },
+        { iso: 'GD', name: 'Grenada', dial: '+1473', flag: '🇬🇩' },
+        { iso: 'GT', name: 'Guatemala', dial: '+502', flag: '🇬🇹' },
+        { iso: 'GN', name: 'Guinea', dial: '+224', flag: '🇬🇳' },
+        { iso: 'GW', name: 'Guinea-Bissau', dial: '+245', flag: '🇬🇼' },
+        { iso: 'GY', name: 'Guyana', dial: '+592', flag: '🇬🇾' },
+        { iso: 'HT', name: 'Haiti', dial: '+509', flag: '🇭🇹' },
+        { iso: 'HN', name: 'Honduras', dial: '+504', flag: '🇭🇳' },
+        { iso: 'HK', name: 'Hong Kong', dial: '+852', flag: '🇭🇰' },
+        { iso: 'HU', name: 'Hungary', dial: '+36', flag: '🇭🇺' },
+        { iso: 'IS', name: 'Iceland', dial: '+354', flag: '🇮🇸' },
+        { iso: 'IN', name: 'India', dial: '+91', flag: '🇮🇳' },
+        { iso: 'ID', name: 'Indonesia', dial: '+62', flag: '🇮🇩' },
+        { iso: 'IR', name: 'Iran', dial: '+98', flag: '🇮🇷' },
+        { iso: 'IQ', name: 'Iraq', dial: '+964', flag: '🇮🇶' },
+        { iso: 'IE', name: 'Ireland', dial: '+353', flag: '🇮🇪' },
+        { iso: 'IL', name: 'Israel', dial: '+972', flag: '🇮🇱' },
+        { iso: 'IT', name: 'Italy', dial: '+39', flag: '🇮🇹' },
+        { iso: 'CI', name: 'Ivory Coast', dial: '+225', flag: '🇨🇮' },
+        { iso: 'JM', name: 'Jamaica', dial: '+1876', flag: '🇯🇲' },
+        { iso: 'JP', name: 'Japan', dial: '+81', flag: '🇯🇵' },
+        { iso: 'JO', name: 'Jordan', dial: '+962', flag: '🇯🇴' },
+        { iso: 'KZ', name: 'Kazakhstan', dial: '+7', flag: '🇰🇿' },
+        { iso: 'KE', name: 'Kenya', dial: '+254', flag: '🇰🇪' },
+        { iso: 'KW', name: 'Kuwait', dial: '+965', flag: '🇰🇼' },
+        { iso: 'KG', name: 'Kyrgyzstan', dial: '+996', flag: '🇰🇬' },
+        { iso: 'LA', name: 'Laos', dial: '+856', flag: '🇱🇦' },
+        { iso: 'LV', name: 'Latvia', dial: '+371', flag: '🇱🇻' },
+        { iso: 'LB', name: 'Lebanon', dial: '+961', flag: '🇱🇧' },
+        { iso: 'LS', name: 'Lesotho', dial: '+266', flag: '🇱🇸' },
+        { iso: 'LR', name: 'Liberia', dial: '+231', flag: '🇱🇷' },
+        { iso: 'LY', name: 'Libya', dial: '+218', flag: '🇱🇾' },
+        { iso: 'LI', name: 'Liechtenstein', dial: '+423', flag: '🇱🇮' },
+        { iso: 'LT', name: 'Lithuania', dial: '+370', flag: '🇱🇹' },
+        { iso: 'LU', name: 'Luxembourg', dial: '+352', flag: '🇱🇺' },
+        { iso: 'MO', name: 'Macau', dial: '+853', flag: '🇲🇴' },
+        { iso: 'MG', name: 'Madagascar', dial: '+261', flag: '🇲🇬' },
+        { iso: 'MW', name: 'Malawi', dial: '+265', flag: '🇲🇼' },
+        { iso: 'MY', name: 'Malaysia', dial: '+60', flag: '🇲🇾' },
+        { iso: 'MV', name: 'Maldives', dial: '+960', flag: '🇲🇻' },
+        { iso: 'ML', name: 'Mali', dial: '+223', flag: '🇲🇱' },
+        { iso: 'MT', name: 'Malta', dial: '+356', flag: '🇲🇹' },
+        { iso: 'MR', name: 'Mauritania', dial: '+222', flag: '🇲🇷' },
+        { iso: 'MU', name: 'Mauritius', dial: '+230', flag: '🇲🇺' },
+        { iso: 'MX', name: 'Mexico', dial: '+52', flag: '🇲🇽' },
+        { iso: 'MD', name: 'Moldova', dial: '+373', flag: '🇲🇩' },
+        { iso: 'MC', name: 'Monaco', dial: '+377', flag: '🇲🇨' },
+        { iso: 'MN', name: 'Mongolia', dial: '+976', flag: '🇲🇳' },
+        { iso: 'ME', name: 'Montenegro', dial: '+382', flag: '🇲🇪' },
+        { iso: 'MA', name: 'Morocco', dial: '+212', flag: '🇲🇦' },
+        { iso: 'MZ', name: 'Mozambique', dial: '+258', flag: '🇲🇿' },
+        { iso: 'MM', name: 'Myanmar', dial: '+95', flag: '🇲🇲' },
+        { iso: 'NA', name: 'Namibia', dial: '+264', flag: '🇳🇦' },
+        { iso: 'NP', name: 'Nepal', dial: '+977', flag: '🇳🇵' },
+        { iso: 'NL', name: 'Netherlands', dial: '+31', flag: '🇳🇱' },
+        { iso: 'NZ', name: 'New Zealand', dial: '+64', flag: '🇳🇿' },
+        { iso: 'NI', name: 'Nicaragua', dial: '+505', flag: '🇳🇮' },
+        { iso: 'NE', name: 'Niger', dial: '+227', flag: '🇳🇪' },
+        { iso: 'NG', name: 'Nigeria', dial: '+234', flag: '🇳🇬' },
+        { iso: 'NO', name: 'Norway', dial: '+47', flag: '🇳🇴' },
+        { iso: 'OM', name: 'Oman', dial: '+968', flag: '🇴🇲' },
+        { iso: 'PK', name: 'Pakistan', dial: '+92', flag: '🇵🇰' },
+        { iso: 'PS', name: 'Palestine', dial: '+970', flag: '🇵🇸' },
+        { iso: 'PA', name: 'Panama', dial: '+507', flag: '🇵🇦' },
+        { iso: 'PG', name: 'Papua New Guinea', dial: '+675', flag: '🇵🇬' },
+        { iso: 'PY', name: 'Paraguay', dial: '+595', flag: '🇵🇾' },
+        { iso: 'PE', name: 'Peru', dial: '+51', flag: '🇵🇪' },
+        { iso: 'PH', name: 'Philippines', dial: '+63', flag: '🇵🇭' },
+        { iso: 'PL', name: 'Poland', dial: '+48', flag: '🇵🇱' },
+        { iso: 'PT', name: 'Portugal', dial: '+351', flag: '🇵🇹' },
+        { iso: 'QA', name: 'Qatar', dial: '+974', flag: '🇶🇦' },
+        { iso: 'RO', name: 'Romania', dial: '+40', flag: '🇷🇴' },
+        { iso: 'RU', name: 'Russia', dial: '+7', flag: '🇷🇺' },
+        { iso: 'RW', name: 'Rwanda', dial: '+250', flag: '🇷🇼' },
+        { iso: 'KN', name: 'Saint Kitts and Nevis', dial: '+1869', flag: '🇰🇳' },
+        { iso: 'LC', name: 'Saint Lucia', dial: '+1758', flag: '🇱🇨' },
+        { iso: 'VC', name: 'Saint Vincent', dial: '+1784', flag: '🇻🇨' },
+        { iso: 'SA', name: 'Saudi Arabia', dial: '+966', flag: '🇸🇦' },
+        { iso: 'SN', name: 'Senegal', dial: '+221', flag: '🇸🇳' },
+        { iso: 'RS', name: 'Serbia', dial: '+381', flag: '🇷🇸' },
+        { iso: 'SC', name: 'Seychelles', dial: '+248', flag: '🇸🇨' },
+        { iso: 'SL', name: 'Sierra Leone', dial: '+232', flag: '🇸🇱' },
+        { iso: 'SG', name: 'Singapore', dial: '+65', flag: '🇸🇬' },
+        { iso: 'SK', name: 'Slovakia', dial: '+421', flag: '🇸🇰' },
+        { iso: 'SI', name: 'Slovenia', dial: '+386', flag: '🇸🇮' },
+        { iso: 'SO', name: 'Somalia', dial: '+252', flag: '🇸🇴' },
+        { iso: 'ZA', name: 'South Africa', dial: '+27', flag: '🇿🇦' },
+        { iso: 'KR', name: 'South Korea', dial: '+82', flag: '🇰🇷' },
+        { iso: 'ES', name: 'Spain', dial: '+34', flag: '🇪🇸' },
+        { iso: 'LK', name: 'Sri Lanka', dial: '+94', flag: '🇱🇰' },
+        { iso: 'SD', name: 'Sudan', dial: '+249', flag: '🇸🇩' },
+        { iso: 'SE', name: 'Sweden', dial: '+46', flag: '🇸🇪' },
+        { iso: 'CH', name: 'Switzerland', dial: '+41', flag: '🇨🇭' },
+        { iso: 'TW', name: 'Taiwan', dial: '+886', flag: '🇹🇼' },
+        { iso: 'TJ', name: 'Tajikistan', dial: '+992', flag: '🇹🇯' },
+        { iso: 'TZ', name: 'Tanzania', dial: '+255', flag: '🇹🇿' },
+        { iso: 'TH', name: 'Thailand', dial: '+66', flag: '🇹🇭' },
+        { iso: 'TR', name: 'Turkey', dial: '+90', flag: '🇹🇷' },
+        { iso: 'UG', name: 'Uganda', dial: '+256', flag: '🇺🇬' },
+        { iso: 'UA', name: 'Ukraine', dial: '+380', flag: '🇺🇦' },
+        { iso: 'AE', name: 'United Arab Emirates', dial: '+971', flag: '🇦🇪' },
+        { iso: 'GB', name: 'United Kingdom', dial: '+44', flag: '🇬🇧' },
+        { iso: 'US', name: 'United States', dial: '+1', flag: '🇺🇸' },
+        { iso: 'UY', name: 'Uruguay', dial: '+598', flag: '🇺🇾' },
+        { iso: 'UZ', name: 'Uzbekistan', dial: '+998', flag: '🇺🇿' },
+        { iso: 'VE', name: 'Venezuela', dial: '+58', flag: '🇻🇪' },
+        { iso: 'VN', name: 'Vietnam', dial: '+84', flag: '🇻🇳' },
+        { iso: 'YE', name: 'Yemen', dial: '+967', flag: '🇾🇪' },
+        { iso: 'ZM', name: 'Zambia', dial: '+260', flag: '🇿🇲' },
+        { iso: 'ZW', name: 'Zimbabwe', dial: '+263', flag: '🇿🇼' }
+    ];
+
+    var COUNTRY_CONFIG_MAP = {
+        '+44': { ph: '7123 456789', hint: 'UK mobile without leading 0 (e.g. 7123 456789)' },
+        '+1':  { ph: '202 555 0123', hint: 'US/CA 10-digit number (e.g. 202 555 0123)' },
+        '+61': { ph: '412 345 678', hint: 'Australia mobile without leading 0 (e.g. 412 345 678)' },
+        '+49': { ph: '151 23456789', hint: 'Germany mobile without leading 0' },
+        '+33': { ph: '6 12 34 56 78', hint: 'France mobile without leading 0' },
+        '+31': { ph: '6 12345678', hint: 'Netherlands mobile without leading 0' },
+        '+353':{ ph: '87 123 4567', hint: 'Ireland mobile without leading 0 (e.g. 87 123 4567)' },
+        '+41': { ph: '79 123 45 67', hint: 'Switzerland mobile without leading 0' },
+        '+46': { ph: '70 123 45 67', hint: 'Sweden mobile without leading 0' },
+        '+64': { ph: '21 123 4567', hint: 'New Zealand mobile without leading 0' },
+        '+971':{ ph: '50 123 4567', hint: 'UAE mobile without leading 0 (e.g. 50 123 4567)' },
+        '+966':{ ph: '50 123 4567', hint: 'Saudi mobile without leading 0' },
+        '+974':{ ph: '3312 3456', hint: 'Qatar mobile without leading 0' },
+        '+65': { ph: '8123 4567', hint: 'Singapore mobile number' },
+        '+92': { ph: '336 3220343', hint: 'Pakistan mobile without leading 0 (e.g. 336 3220343)' },
+        '+91': { ph: '98765 43210', hint: 'India mobile without leading 0 (e.g. 98765 43210)' },
+        '+234':{ ph: '802 345 6789', hint: 'Nigeria mobile without leading 0' },
+        '+27': { ph: '82 123 4567', hint: 'South Africa mobile without leading 0' }
+    };
+
+    function escapeHtml(s) {
+        return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function buildCountryItemHtml(c, activeDial) {
+        var isSelected = (c.dial === activeDial);
+        var safeName = escapeHtml(c.name);
+        var jsSafeName = c.name.replace(/'/g, "\\'");
+        var checkSvg = isSelected 
+            ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+            : '';
+
+        return '<div class="wa-country-item ' + (isSelected ? 'selected' : '') + '" role="option" aria-selected="' + (isSelected ? 'true' : 'false') + '" onclick="selectCustomCountry(\'' + c.iso + '\', \'' + c.dial + '\', \'' + c.flag + '\', \'' + jsSafeName + '\')">' +
+            '<div class="wa-country-item-left">' +
+                '<span class="wa-country-item-flag">' + c.flag + '</span>' +
+                '<span class="wa-country-item-name">' + safeName + '</span>' +
+            '</div>' +
+            '<div class="wa-country-item-right">' +
+                '<span class="wa-country-item-dial">' + c.dial + '</span>' +
+                checkSvg +
+            '</div>' +
+        '</div>';
+    }
+
+    window.renderCountryList = function(query) {
+        var listEl = document.getElementById('waCountryListScroll');
+        if (!listEl) return;
+
+        var ccEl = document.getElementById('waModalCountryCode');
+        var activeDial = ccEl ? ccEl.value : '+44';
+
+        query = (query || '').trim().toLowerCase();
+        var qNoPlus = query.startsWith('+') ? query.slice(1) : query;
+
+        var html = '';
+
+        if (!query) {
+            // Priority Group First (UK, USA, Canada, Australia, etc.)
+            html += '<div class="wa-country-list-heading"><svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="2" style="display:inline-block; vertical-align:-1px; margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Priority Countries</div>';
+            TOP_PRIORITY_COUNTRIES.forEach(function(c) {
+                html += buildCountryItemHtml(c, activeDial);
+            });
+
+            // All Countries Group A-Z
+            html += '<div class="wa-country-list-heading">All Countries (A–Z)</div>';
+            ALL_WORLD_COUNTRIES.forEach(function(c) {
+                html += buildCountryItemHtml(c, activeDial);
+            });
+        } else {
+            // Live Search across all world countries
+            var matches = [];
+            var seen = {};
+
+            function checkMatch(c) {
+                var dClean = c.dial.replace('+', '');
+                if (c.name.toLowerCase().indexOf(query) !== -1 ||
+                    c.dial.indexOf(query) !== -1 ||
+                    dClean.indexOf(qNoPlus) !== -1 ||
+                    c.iso.toLowerCase() === query) {
+                    var key = c.iso + '_' + c.dial;
+                    if (!seen[key]) {
+                        seen[key] = true;
+                        matches.push(c);
+                    }
+                }
+            }
+
+            TOP_PRIORITY_COUNTRIES.forEach(checkMatch);
+            ALL_WORLD_COUNTRIES.forEach(checkMatch);
+
+            if (matches.length === 0) {
+                html = '<div class="wa-country-empty">No country matches "' + escapeHtml(query) + '"</div>';
+            } else {
+                html += '<div class="wa-country-list-heading">Matching Countries (' + matches.length + ')</div>';
+                matches.forEach(function(c) {
+                    html += buildCountryItemHtml(c, activeDial);
+                });
+            }
+        }
+
+        listEl.innerHTML = html;
+    };
+
+    window.toggleCountryPicker = function(e) {
+        if (e) e.stopPropagation();
+        var popover = document.getElementById('waCountryPopover');
+        var btn = document.getElementById('waCountryTriggerBtn');
+        var searchInput = document.getElementById('waCountrySearchInput');
+        if (!popover || !btn) return;
+
+        var isVisible = (popover.style.display === 'block');
+        if (isVisible) {
+            closeCountryPicker();
+        } else {
+            // Close other dropdowns
+            var roleBox = document.getElementById('waModalRoleSuggests');
+            if (roleBox) roleBox.style.display = 'none';
+            var locBox = document.getElementById('waModalLocationSuggests');
+            if (locBox) locBox.style.display = 'none';
+
+            popover.style.display = 'block';
+            btn.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            renderCountryList('');
+
+            setTimeout(function() {
+                if (searchInput) searchInput.focus();
+                // Scroll selected item into view smoothly
+                var selected = popover.querySelector('.wa-country-item.selected');
+                if (selected) {
+                    selected.scrollIntoView({ block: 'nearest' });
+                }
+            }, 60);
+        }
+    };
+
+    window.closeCountryPicker = function() {
+        var popover = document.getElementById('waCountryPopover');
+        var btn = document.getElementById('waCountryTriggerBtn');
+        if (popover) popover.style.display = 'none';
+        if (btn) {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    window.filterCountriesList = function(query) {
+        renderCountryList(query);
+    };
+
+    window.selectCustomCountry = function(iso, dial, flag, name) {
+        var ccInput = document.getElementById('waModalCountryCode');
+        var triggerFlag = document.getElementById('waTriggerFlag');
+        var triggerCode = document.getElementById('waTriggerCode');
+        var triggerBtn = document.getElementById('waCountryTriggerBtn');
+        var phoneInput = document.getElementById('waModalPhone');
+        var hintEl = document.getElementById('waPhoneHelper');
+
+        if (ccInput) ccInput.value = dial;
+        if (triggerFlag) triggerFlag.textContent = flag;
+        if (triggerCode) triggerCode.textContent = dial;
+        if (triggerBtn) triggerBtn.setAttribute('title', name + ' (' + dial + ')');
+
+        var cfg = COUNTRY_CONFIG_MAP[dial] || {
+            ph: 'Mobile Number',
+            hint: name + ' mobile number without leading 0'
+        };
+
+        if (phoneInput) {
+            phoneInput.placeholder = cfg.ph;
+            if (phoneInput.value.startsWith('0')) {
+                phoneInput.value = phoneInput.value.replace(/^0+/, '');
+            }
+        }
+        if (hintEl) {
+            hintEl.textContent = cfg.hint;
+        }
+
+        closeCountryPicker();
+
+        if (phoneInput) {
+            phoneInput.focus();
+        }
+    };
+
+    window.selectCustomCountryByDial = function(rawPhone) {
+        if (!rawPhone || !rawPhone.startsWith('+')) return null;
+        var pool = TOP_PRIORITY_COUNTRIES.concat(ALL_WORLD_COUNTRIES);
+        pool.sort(function(a, b) { return b.dial.length - a.dial.length; });
+
+        for (var i = 0; i < pool.length; i++) {
+            var c = pool[i];
+            if (rawPhone.startsWith(c.dial)) {
+                selectCustomCountry(c.iso, c.dial, c.flag, c.name);
+                return rawPhone.slice(c.dial.length).replace(/^0+/, '');
+            }
+        }
+        return null;
+    };
+
+    window.handleModalCountryChange = function() {
+        var ccEl = document.getElementById('waModalCountryCode');
+        var dial = ccEl ? ccEl.value : '+44';
+        selectCustomCountryByDial(dial);
+    };
+
+    window.handleModalPhoneInput = function(input) {
+        if (!input) return;
+        if (input.value.startsWith('0')) {
+            input.value = input.value.replace(/^0+/, '');
+        }
+    };
+
+    var resendTimerInterval = null;
+    function startResendCooldown(seconds) {
+        seconds = seconds || 60;
+        var cooldownSpan = document.getElementById('waModalResendCooldown');
+        var countdownEl = document.getElementById('waResendCountdown');
+        var resendBtn = document.getElementById('waModalResendBtn');
+        if (!cooldownSpan || !countdownEl || !resendBtn) return;
+
+        if (resendTimerInterval) {
+            clearInterval(resendTimerInterval);
+            resendTimerInterval = null;
+        }
+
+        cooldownSpan.style.display = 'inline';
+        resendBtn.style.display = 'none';
+        countdownEl.textContent = seconds;
+
+        resendTimerInterval = setInterval(function() {
+            seconds--;
+            if (seconds <= 0) {
+                clearInterval(resendTimerInterval);
+                resendTimerInterval = null;
+                cooldownSpan.style.display = 'none';
+                resendBtn.style.display = 'inline-flex';
+            } else {
+                countdownEl.textContent = seconds;
+            }
+        }, 1000);
+    }
+
+    window.resendTrialOtp = function() {
+        var resendBtn = document.getElementById('waModalResendBtn');
+        var errBox = document.getElementById('waModalVerifyError');
+        if (errBox) errBox.style.display = 'none';
+
+        if (resendBtn) {
+            resendBtn.disabled = true;
+            resendBtn.style.opacity = '0.6';
+        }
+
+        var nameVal = (document.getElementById('waModalName') ? document.getElementById('waModalName').value.trim() : '');
+        var keyVal = (document.getElementById('waModalKeywords') ? document.getElementById('waModalKeywords').value.trim() : '');
+        var locVal = (document.getElementById('waModalLocation') ? document.getElementById('waModalLocation').value.trim() : '');
+
+        fetch('/api/whatsapp/trial-subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone: activePhone,
+                full_name: nameVal,
+                keywords: keyVal,
+                location: locVal
+            })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (resendBtn) {
+                resendBtn.disabled = false;
+                resendBtn.style.opacity = '1';
+            }
+            if (data.success) {
+                startResendCooldown(60);
+                document.getElementById('waModalVerifyNotice').innerHTML = 'A new 6-digit confirmation code has been sent to <strong>' + activePhone + '</strong> via WhatsApp.';
+            } else {
+                if (data.cooldown_seconds) {
+                    startResendCooldown(data.cooldown_seconds);
+                }
+                if (errBox) {
+                    errBox.textContent = data.error || 'Could not resend code. Please try again.';
+                    errBox.style.display = 'block';
+                }
+            }
+        })
+        .catch(function() {
+            if (resendBtn) {
+                resendBtn.disabled = false;
+                resendBtn.style.opacity = '1';
+            }
+            if (errBox) {
+                errBox.textContent = 'Network error contacting WhatsApp gateway.';
+                errBox.style.display = 'block';
+            }
+        });
+    };
+
+    window.handleModalTrialSubmit = function(e) {
+        e.preventDefault();
+        var errBox = document.getElementById('waModalFormError');
+        var btn = document.getElementById('waModalSubmitBtn');
+        var btnText = document.getElementById('waModalSubmitBtnText');
+
+        if (errBox) errBox.style.display = 'none';
+
+        var countryCode = document.getElementById('waModalCountryCode').value;
+        var phoneInput = document.getElementById('waModalPhone');
+        var rawDigits = (phoneInput ? phoneInput.value : '').replace(/\D/g, '').replace(/^0+/, '');
+
+        if (!rawDigits || rawDigits.length < 7 || rawDigits.length > 14) {
+            if (errBox) {
+                errBox.textContent = 'Please enter a valid mobile number for ' + countryCode + ' (without leading 0).';
+                errBox.style.display = 'block';
+            }
+            if (phoneInput) phoneInput.focus();
+            return;
+        }
+
+        var cleanPhone = countryCode + rawDigits;
+        activePhone = cleanPhone;
+
+        btn.disabled = true;
+        btn.style.opacity = '0.75';
+        btnText.textContent = 'Connecting to WhatsApp...';
+
+        var nameInput = document.getElementById('waModalName');
+        var keyInput = document.getElementById('waModalKeywords');
+        var locInput = document.getElementById('waModalLocation');
+
+        var payload = {
+            full_name: nameInput ? nameInput.value.trim() : '',
+            phone: cleanPhone,
+            keywords: keyInput ? keyInput.value.trim() : '',
+            location: locInput ? locInput.value.trim() : '',
+            tracking_id: currentTrackingID || parseInt(sessionStorage.getItem('current_wa_tracking_id') || '0', 10),
+            visitor_id: getVisitorId()
+        };
+
+        fetch('/api/whatsapp/trial-subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btnText.textContent = 'Start 3-Day Free Trial';
+
+            if (data.success) {
+                document.getElementById('waModalStepForm').style.display = 'none';
+                var stepVerify = document.getElementById('waModalStepVerify');
+                stepVerify.style.display = 'block';
+                document.getElementById('waModalVerifyNotice').innerHTML = 'We sent a 6-digit confirmation code to <strong>' + activePhone + '</strong> via WhatsApp. Enter it below:';
+                startResendCooldown(60);
+                var digitBoxes = document.querySelectorAll('.wa-pin-digit');
+                digitBoxes.forEach(function(b) { b.value = ''; b.classList.remove('filled'); });
+                if (digitBoxes[0]) {
+                    setTimeout(function() { digitBoxes[0].focus(); }, 100);
+                }
+            } else {
+                if (errBox) {
+                    errBox.textContent = data.error || 'Could not register. Please verify your WhatsApp phone number.';
+                    errBox.style.display = 'block';
+                }
+            }
+        })
+        .catch(function() {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btnText.textContent = 'Start 3-Day Free Trial';
+            if (errBox) {
+                errBox.textContent = 'Network error contacting WhatsApp gateway. Please try again.';
+                errBox.style.display = 'block';
+            }
+        });
+    };
+
+    window.verifyModalPin = function() {
+        var digitBoxes = document.querySelectorAll('.wa-pin-digit');
+        var pin = '';
+        digitBoxes.forEach(function(b) {
+            pin += (b.value || '').trim();
+        });
+        var errBox = document.getElementById('waModalVerifyError');
+        var btn = document.getElementById('waModalVerifyBtn');
+        var btnText = document.getElementById('waModalVerifyBtnText');
+
+        if (pin.length < 6) {
+            if (errBox) {
+                errBox.textContent = 'Please enter the complete 6-digit verification PIN.';
+                errBox.style.display = 'block';
+            }
+            for (var i = 0; i < digitBoxes.length; i++) {
+                if (!digitBoxes[i].value) {
+                    digitBoxes[i].focus();
+                    break;
+                }
+            }
+            return;
+        }
+
+        if (errBox) errBox.style.display = 'none';
+        if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = '0.75';
+        }
+        if (btnText) {
+            btnText.textContent = 'Verifying PIN...';
+        }
+
+        fetch('/api/whatsapp/trial-verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone: activePhone,
+                pin: pin,
+                tracking_id: currentTrackingID || parseInt(sessionStorage.getItem('current_wa_tracking_id') || '0', 10),
+                visitor_id: getVisitorId()
+            })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+            if (btnText) {
+                btnText.textContent = 'Confirm & Activate Alerts';
+            }
+
+            if (data.success) {
+                window.location.href = '/my-alerts?success=Welcome+to+JobyUK.com!+Your+3-Day+Free+Trial+is+now+active.';
+            } else {
+                if (errBox) {
+                    errBox.textContent = data.error || 'Invalid or expired PIN. Please check your WhatsApp.';
+                    errBox.style.display = 'block';
+                }
+                digitBoxes.forEach(function(b) { b.value = ''; b.classList.remove('filled'); });
+                if (digitBoxes[0]) digitBoxes[0].focus();
+            }
+        })
+        .catch(function() {
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+            if (btnText) {
+                btnText.textContent = 'Confirm & Activate Alerts';
+            }
+            if (errBox) {
+                errBox.textContent = 'Network error verifying PIN. Please try again.';
+                errBox.style.display = 'block';
+            }
+        });
+    };
+
+    window.backToModalForm = function() {
+        document.getElementById('waModalStepVerify').style.display = 'none';
+        document.getElementById('waModalStepForm').style.display = 'block';
+        var digitBoxes = document.querySelectorAll('.wa-pin-digit');
+        digitBoxes.forEach(function(b) { b.value = ''; b.classList.remove('filled'); });
+        var phoneInput = document.getElementById('waModalPhone');
+        if (phoneInput) {
+            setTimeout(function() { phoneInput.focus(); }, 100);
+        }
+    };
+
+    function setupPinBoxListeners() {
+        var boxes = document.querySelectorAll('.wa-pin-digit');
+        boxes.forEach(function(input, idx) {
+            input.addEventListener('focus', function() {
+                input.select();
+            });
+
+            input.addEventListener('input', function(e) {
+                var val = input.value.replace(/\D/g, '');
+                if (val.length > 1) {
+                    var chars = val.split('');
+                    for (var i = 0; i < chars.length && (idx + i) < boxes.length; i++) {
+                        boxes[idx + i].value = chars[i];
+                        boxes[idx + i].classList.add('filled');
+                    }
+                    var nextIdx = Math.min(idx + chars.length, boxes.length - 1);
+                    boxes[nextIdx].focus();
+                } else if (val.length === 1) {
+                    input.value = val;
+                    input.classList.add('filled');
+                    if (idx < boxes.length - 1) {
+                        boxes[idx + 1].focus();
+                    }
+                } else {
+                    input.value = '';
+                    input.classList.remove('filled');
+                }
+
+                var allDigits = Array.from(boxes).map(function(b) { return b.value; }).join('');
+                if (allDigits.length === 6) {
+                    verifyModalPin();
+                }
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace') {
+                    if (!input.value && idx > 0) {
+                        e.preventDefault();
+                        boxes[idx - 1].value = '';
+                        boxes[idx - 1].classList.remove('filled');
+                        boxes[idx - 1].focus();
+                    } else {
+                        input.classList.remove('filled');
+                    }
+                } else if (e.key === 'ArrowLeft' && idx > 0) {
+                    e.preventDefault();
+                    boxes[idx - 1].focus();
+                } else if (e.key === 'ArrowRight' && idx < boxes.length - 1) {
+                    e.preventDefault();
+                    boxes[idx + 1].focus();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    verifyModalPin();
+                }
+            });
+
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                var text = (e.clipboardData || window.clipboardData).getData('text') || '';
+                var digits = text.replace(/\D/g, '').slice(0, 6);
+                if (!digits) return;
+                for (var i = 0; i < boxes.length; i++) {
+                    if (i < digits.length) {
+                        boxes[i].value = digits[i];
+                        boxes[i].classList.add('filled');
+                    } else {
+                        boxes[i].value = '';
+                        boxes[i].classList.remove('filled');
+                    }
+                }
+                var targetIdx = Math.min(digits.length, boxes.length - 1);
+                boxes[targetIdx].focus();
+                if (digits.length === 6) {
+                    verifyModalPin();
+                }
+            });
+        });
+
+        var phoneField = document.getElementById('waModalPhone');
+        if (phoneField) {
+            phoneField.addEventListener('paste', function(e) {
+                var pasted = (e.clipboardData || window.clipboardData).getData('text') || '';
+                pasted = pasted.trim().replace(/[\s\-\(\)]/g, '');
+                if (pasted.startsWith('00')) pasted = '+' + pasted.slice(2);
+                if (pasted.startsWith('+')) {
+                    e.preventDefault();
+                    if (window.selectCustomCountryByDial) {
+                        var remaining = window.selectCustomCountryByDial(pasted);
+                        if (remaining !== null) {
+                            phoneField.value = remaining;
+                            return;
+                        }
+                    }
+                    phoneField.value = pasted.replace(/^\+/, '').replace(/^0+/, '');
+                }
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPinBoxListeners);
+    } else {
+        setupPinBoxListeners();
+    }
+
+    // Global delegated click listener for any WhatsApp trial CTA on the page
+    document.addEventListener('click', function(e) {
+        var el = e.target.closest('[data-wa-source], .glass-wa-btn, .wa-trial-btn, .pagination__wa-pill, .pagination-wa-chip');
+        if (!el) return;
+        var source = el.getAttribute('data-wa-source') || (el.classList.contains('glass-wa-btn') ? 'floating_bar' : 'page_cta');
+        var ariaLabel = el.getAttribute('aria-label') || el.getAttribute('title') || 'Activate 3-Day Free Trial on WhatsApp';
+        var placement = el.getAttribute('data-wa-placement') || (el.classList.contains('glass-wa-btn') ? 'Floating Bottom Bar' : 'Trial CTA Button');
+        trackTrialClick(source, ariaLabel, placement);
+    });
+})();
+</script>
+{{else}}
+<script>
+window.openWhatsAppModal = function(){};
+window.closeWhatsAppModal = function(){};
+</script>
+{{end}}
+{{end}}

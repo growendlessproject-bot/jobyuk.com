@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="jobiesGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F5132" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="jobiesLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0F26F" />
+      <stop offset="100%" stop-color="#86EFAC" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#jobiesGradient)" />
+  <!-- Bold J letterform -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 140 H350" stroke-width="44" />
+    <path d="M300 140 V300 C300 360 250 380 200 370 C160 360 140 320 145 280" stroke-width="44" />
+  </g>
+  <!-- Leaf accent dot -->
+  <circle cx="350" cy="140" r="32" fill="url(#jobiesLeafGrad)" stroke="#FFFFFF" stroke-width="12" />
+</svg>

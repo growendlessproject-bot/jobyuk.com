@@ -1,0 +1,956 @@
+{{define "admin_content"}}
+<div style="max-width: 1300px; margin: 0 auto;">
+
+    <style>
+        @keyframes rowFadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .row-reveal {
+            animation: rowFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .load-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: #ffffff;
+            color: #0f172a;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .load-more-btn:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+            color: #e60023;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08);
+        }
+        .load-more-btn:active {
+            transform: translateY(0);
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.95) translateY(10px); }
+            to { transform: scale(1) translateY(0); }
+        }
+        @media (max-width: 767px) {
+            .pinterest-tabs-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 12px !important;
+                gap: 12px !important;
+            }
+            .pinterest-tabs-list {
+                width: 100% !important;
+                display: flex !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                white-space: nowrap !important;
+                gap: 6px !important;
+                padding-bottom: 6px !important;
+            }
+            .pinterest-tabs-list a {
+                flex-shrink: 0 !important;
+                padding: 8px 12px !important;
+                font-size: 0.82rem !important;
+            }
+            .pinterest-add-btn {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 12px !important;
+                font-size: 0.9rem !important;
+            }
+            .modal-card {
+                padding: 20px 16px !important;
+                border-radius: 16px !important;
+                max-width: 95vw !important;
+                max-height: 92vh !important;
+                overflow-y: auto !important;
+            }
+        }
+    </style>
+
+    <!-- Tabs Navigation & Action Button -->
+    <div class="pinterest-tabs-bar" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <div class="pinterest-tabs-list" style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 10px; flex-wrap: wrap;">
+            <a href="/admin-lol/pinterest?tab=users" style="padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; {{if eq .Data.Tab "users"}}background: #ffffff; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.08);{{else}}color: #64748b;{{end}}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Team Posters ({{len .Data.Users}})</span>
+            </a>
+            <a href="/admin-lol/pinterest?tab=user_report{{if .Data.SelectedUserID}}&user_id={{.Data.SelectedUserID}}{{else if .Data.Users}}&user_id={{(index .Data.Users 0).ID}}{{end}}" style="padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; {{if eq .Data.Tab "user_report"}}background: #ffffff; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.08);{{else}}color: #64748b;{{end}}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                <span>User Reports</span>
+            </a>
+            <a href="/admin-lol/pinterest?tab=audit" style="padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; {{if eq .Data.Tab "audit"}}background: #ffffff; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.08);{{else}}color: #64748b;{{end}}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>Daily Audit</span>
+            </a>
+            <a href="/admin-lol/pinterest?tab=submissions" style="padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; {{if eq .Data.Tab "submissions"}}background: #ffffff; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.08);{{else}}color: #64748b;{{end}}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+                <span>All Pins Feed ({{.Data.TotalSubmissions}})</span>
+            </a>
+        </div>
+
+        <button type="button" class="pinterest-add-btn" onclick="document.getElementById('modal-create-user').style.display='flex'" 
+                style="padding: 10px 18px; background: #e60023; color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(230,0,35,0.25);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add New Poster</span>
+        </button>
+    </div>
+
+    {{if eq .Data.Tab "users"}}
+    <!-- Users Management Table -->
+    <div class="admin-table-container" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 820px;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0;">
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Poster Name & Contact</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Pinterest Handle</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">6-Digit Code</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Daily Link Limit</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Today's Pins</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Total Pins</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Status</th>
+                    <th style="padding: 14px 18px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{if .Data.Users}}
+                    {{range .Data.Users}}
+                    <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='#ffffff'">
+                        <td style="padding: 16px 18px;">
+                            <div style="font-weight: 800; color: #0f172a; font-size: 0.95rem;">{{.Name}}</div>
+                            <div style="font-size: 0.82rem; color: #64748b; margin-top: 2px;">{{.Email}} {{if .Phone}}• {{.Phone}}{{end}}</div>
+                        </td>
+                        <td style="padding: 16px 18px;">
+                            {{if .PinterestHandle}}
+                            <span style="display: inline-flex; align-items: center; gap: 4px; background: rgba(230,0,35,0.06); color: #e60023; border: 1px solid rgba(230,0,35,0.2); padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 700;">
+                                <span>@{{.PinterestHandle}}</span>
+                            </span>
+                            {{else}}
+                            <span style="color: #94a3b8; font-size: 0.82rem; font-style: italic;">Not set</span>
+                            {{end}}
+                        </td>
+                        <td style="padding: 16px 18px;">
+                            <span style="font-family: monospace; font-size: 1.05rem; font-weight: 800; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.1em; color: #0f172a; border: 1px solid #e2e8f0;">
+                                {{.AccessCode}}
+                            </span>
+                        </td>
+                        <td style="padding: 16px 18px;">
+                            <form method="POST" action="/admin-lol/pinterest/users/{{.ID}}/quota" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}" />
+                                <input type="number" name="daily_limit" value="{{.DailyLimit}}" min="1" max="100" 
+                                       style="width: 54px; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 800; text-align: center; font-size: 0.88rem;" />
+                                <button type="submit" style="padding: 6px 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.78rem; font-weight: 700; color: #334155; cursor: pointer;">Save</button>
+                            </form>
+                        </td>
+                        <td style="padding: 16px 18px;">
+                            <span style="font-weight: 800; font-size: 0.95rem; color: {{if ge .TodayPinsCount .DailyLimit}}#10b981{{else if gt .TodayPinsCount 0}}#f59e0b{{else}}#64748b{{end}};">
+                                {{.TodayPinsCount}} / {{.DailyLimit}}
+                            </span>
+                        </td>
+                        <td style="padding: 16px 18px; font-weight: 800; color: #0f172a;">
+                            {{.TotalPinsCount}}
+                        </td>
+                        <td style="padding: 16px 18px;">
+                            {{if .IsActive}}
+                            <span style="background: #ecfdf5; color: #047857; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #a7f3d0;">Active</span>
+                            {{else}}
+                            <span style="background: #fef2f2; color: #991b1b; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
+                                <span>Suspended</span>
+                            </span>
+                            {{if .DeactivationReason}}
+                            <div style="font-size: 0.72rem; color: #b91c1c; font-weight: 600; margin-top: 3px; max-width: 190px; line-height: 1.25;">
+                                {{.DeactivationReason}}
+                            </div>
+                            {{end}}
+                            {{end}}
+                        </td>
+                        <td style="padding: 16px 18px; text-align: right; white-space: nowrap;">
+                            <a href="/admin-lol/pinterest?tab=user_report&user_id={{.ID}}" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #0f172a; color: #ffffff; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-decoration: none; margin-right: 6px; transition: all 0.2s;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                <span>Report</span>
+                            </a>
+                            <form id="form-regen-{{.ID}}" method="POST" action="/admin-lol/pinterest/users/{{.ID}}/regenerate-code" style="display: inline; margin-right: 6px;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}" />
+                                <button type="button" onclick="confirmModalAction('form-regen-{{.ID}}', 'Generate New 6-Digit Code', 'Are you sure you want to generate a new 6-digit login code for <strong>{{.Name}}</strong>? Their previous access code will stop working immediately.')" title="Generate New 6-Digit Code" style="padding: 6px 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #0f172a; cursor: pointer;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle;"><path d="M21 2l-2 2m-1.5 1.5L10 13l-4 4-2-2 4-4 7.5-7.5z"></path></svg>
+                                    <span>New Code</span>
+                                </button>
+                            </form>
+                            <form method="POST" action="/admin-lol/pinterest/users/{{.ID}}/toggle" style="display: inline; margin-right: 6px;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}" />
+                                <button type="submit" style="padding: 6px 12px; background: {{if .IsActive}}#fee2e2; color: #b91c1c; border: 1px solid #fca5a5;{{else}}#ecfdf5; color: #047857; border: 1px solid #a7f3d0;{{end}} border-radius: 6px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                                    {{if .IsActive}}Deactivate{{else}}Activate{{end}}
+                                </button>
+                            </form>
+                            <form id="form-del-{{.ID}}" method="POST" action="/admin-lol/pinterest/users/{{.ID}}/delete" style="display: inline;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}" />
+                                <button type="button" onclick="confirmModalAction('form-del-{{.ID}}', 'Delete Poster Permanently', 'Are you sure you want to permanently delete poster <strong>{{.Name}}</strong>? Their poster account, login access, quota history, and assignments will be completely removed from the database.')" title="Delete Poster Permanently" style="padding: 6px 10px; background: #ffffff; border: 1px solid #fecaca; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #dc2626; cursor: pointer; transition: all 0.2s;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <span>Delete</span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{end}}
+                {{else}}
+                <tr>
+                    <td colspan="8" style="padding: 36px; text-align: center; color: #64748b;">
+                        No Pinterest poster accounts created yet. Click "Add New Pinterest Poster" to get started.
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    {{else if eq .Data.Tab "user_report"}}
+    <!-- Dedicated Individual User Report View -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- User Switcher & Header Profile Card -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em;">Detailed Performance Report</span>
+                    <h2 style="font-size: 1.4rem; font-weight: 900; color: #0f172a; margin: 4px 0 0 0;">
+                        {{if .Data.SelectedUser}}{{.Data.SelectedUser.Name}}{{else}}Select a Poster{{end}}
+                    </h2>
+                </div>
+                <!-- Quick User Switcher Dropdown -->
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-size: 0.85rem; font-weight: 700; color: #64748b;">Switch Poster:</label>
+                    <select onchange="window.location.href='/admin-lol/pinterest?tab=user_report&user_id='+this.value" 
+                            style="padding: 8px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; font-weight: 700; color: #0f172a; background: #f8fafc; outline: none; cursor: pointer;">
+                        {{range .Data.Users}}
+                        <option value="{{.ID}}" {{if eq $.Data.SelectedUserID .ID}}selected{{end}}>
+                            {{.Name}} ({{.TotalPinsCount}} Pins)
+                        </option>
+                        {{end}}
+                    </select>
+                </div>
+            </div>
+
+            {{if .Data.SelectedUser}}
+            <!-- User Overview Row -->
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, rgba(230,0,35,0.08) 0%, rgba(230,0,35,0.18) 100%); border: 1px solid rgba(230,0,35,0.2); color: #e60023; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 900;">
+                        {{slice .Data.SelectedUser.Name 0 1}}
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">{{.Data.SelectedUser.Name}}</h3>
+                            {{if .Data.SelectedUser.PinterestHandle}}
+                            <span style="display: inline-flex; align-items: center; gap: 4px; background: rgba(230,0,35,0.08); color: #e60023; border: 1px solid rgba(230,0,35,0.25); padding: 2px 10px; border-radius: 14px; font-size: 0.8rem; font-weight: 800;">
+                                @{{.Data.SelectedUser.PinterestHandle}}
+                            </span>
+                            {{end}}
+                            {{if .Data.SelectedUser.IsActive}}
+                            <span style="background: #ecfdf5; color: #047857; padding: 2px 10px; border-radius: 14px; font-size: 0.78rem; font-weight: 700; border: 1px solid #a7f3d0;">Active</span>
+                            {{else}}
+                            <span style="background: #fef2f2; color: #991b1b; padding: 2px 10px; border-radius: 14px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fecaca;">Inactive</span>
+                            {{end}}
+                        </div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
+                            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>{{.Data.SelectedUser.Email}}</span>
+                            {{if .Data.SelectedUser.Phone}} &bull; <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>{{.Data.SelectedUser.Phone}}</span>{{end}}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 10px;">
+                    <div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Login Access Code</div>
+                        <div style="font-family: monospace; font-size: 1.25rem; font-weight: 900; color: #0f172a; letter-spacing: 0.1em;">{{.Data.SelectedUser.AccessCode}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Summary KPI Metric Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 10px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Today's Submission</div>
+                    <div style="font-size: 1.6rem; font-weight: 900; color: {{if ge .Data.SelectedUser.TodayPinsCount .Data.SelectedUser.DailyLimit}}#10b981{{else if gt .Data.SelectedUser.TodayPinsCount 0}}#f59e0b{{else}}#64748b{{end}}; margin-top: 4px;">
+                        {{.Data.SelectedUser.TodayPinsCount}} <span style="font-size: 0.9rem; font-weight: 600; color: #94a3b8;">/ {{.Data.SelectedUser.DailyLimit}}</span>
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Lifetime Pins Created</div>
+                    <div style="font-size: 1.6rem; font-weight: 900; color: #0f172a; margin-top: 4px;">
+                        {{.Data.UserTotalSubmissions}}
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Configured Daily Limit</div>
+                    <div style="font-size: 1.6rem; font-weight: 900; color: #0f172a; margin-top: 4px;">
+                        {{.Data.SelectedUser.DailyLimit}} <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">Links/day</span>
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Account Status</div>
+                    <div style="font-size: 1.15rem; font-weight: 800; color: {{if .Data.SelectedUser.IsActive}}#047857{{else}}#991b1b{{end}}; margin-top: 6px;">
+                        {{if .Data.SelectedUser.IsActive}}<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;margin-right:6px;"></span>Active & Pinning{{else}}<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;margin-right:6px;"></span>Suspended{{end}}
+                    </div>
+                    {{if and (not .Data.SelectedUser.IsActive) .Data.SelectedUser.DeactivationReason}}
+                    <div style="font-size: 0.74rem; color: #b91c1c; font-weight: 600; margin-top: 4px; line-height: 1.25;">
+                        {{.Data.SelectedUser.DeactivationReason}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Section 1: User's Complete Submissions History Table with 5-Row Initial View + Infinite Scroll / Load More -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+                    <span>All Pins Submitted by {{if .Data.SelectedUser}}{{.Data.SelectedUser.Name}}{{else}}User{{end}} ({{.Data.UserTotalSubmissions}})</span>
+                </h3>
+            </div>
+            
+            <div class="admin-table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #e2e8f0; border-radius: 12px;">
+                <table id="user-submissions-table" style="width: 100%; border-collapse: collapse; text-align: left; min-width: 640px;">
+                    <thead>
+                        <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0;">
+                            <th style="width: 130px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Submitted At</th>
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Job Listing & Employer</th>
+                            <th style="width: 180px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Location</th>
+                            <th style="width: 150px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase; text-align: right;">Pinterest Link</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-submissions-tbody">
+                        {{if .Data.UserSubmissions}}
+                            {{range $i, $sub := .Data.UserSubmissions}}
+                            <tr class="user-sub-row" data-index="{{$i}}" style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s; {{if ge $i 5}}display: none;{{end}}" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='#ffffff'">
+                                <td style="padding: 14px 16px; font-size: 0.85rem; color: #64748b; white-space: nowrap; vertical-align: middle;">
+                                    {{formatDate $sub.SubmittedAt}}
+                                </td>
+                                <td style="padding: 14px 16px; vertical-align: middle;">
+                                    <a href="/jobs/{{$sub.JobSlug}}/" target="_blank" style="font-weight: 800; color: #0f172a; text-decoration: none; font-size: 0.92rem;" onmouseover="this.style.color='#0A66C2'" onmouseout="this.style.color='#0f172a'">
+                                        {{$sub.JobTitle}}
+                                    </a>
+                                    {{if $sub.EmployerName}}
+                                    <div style="font-size: 0.8rem; color: #64748b; margin-top: 3px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: #64748b;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="6" x2="9.01" y2="6"></line><line x1="15" y1="6" x2="15.01" y2="6"></line><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line><line x1="9" y1="14" x2="9.01" y2="14"></line><line x1="15" y1="14" x2="15.01" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+                                        <span>{{$sub.EmployerName}}</span>
+                                    </div>
+                                    {{end}}
+                                </td>
+                                <td style="padding: 14px 16px; vertical-align: middle;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; color: #334155;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #e60023;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <span>{{cleanLocation $sub.LocationName}}</span>
+                                    </span>
+                                </td>
+                                <td style="padding: 14px 16px; vertical-align: middle; text-align: right;">
+                                    <a href="{{$sub.PinURL}}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; background: rgba(230,0,35,0.08); color: #e60023; border: 1px solid rgba(230,0,35,0.25); border-radius: 6px; font-size: 0.8rem; font-weight: 800; text-decoration: none;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.154-1.499-.697-2.435-2.887-2.435-4.647 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+                                        <span>View Pin</span>
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{end}}
+                        {{else}}
+                        <tr>
+                            <td colspan="4" style="padding: 36px; text-align: center; color: #64748b;">
+                                No pins submitted by this user yet.
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Submissions Load More Controls & Trigger Sentinel -->
+            {{if gt (len .Data.UserSubmissions) 5}}
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;">
+                <div style="font-size: 0.8rem; font-weight: 700; color: #64748b;">
+                    Showing <span id="subs-count-visible">5</span> of <span id="subs-count-total">{{len .Data.UserSubmissions}}</span> submitted pins
+                </div>
+                <button type="button" id="btn-load-more-subs" class="load-more-btn" onclick="revealMoreSubs()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+                    <span>Load More (+5 Pins)</span>
+                </button>
+                <div id="subs-scroll-sentinel" style="height: 10px; width: 100%;"></div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Section 2: 30-Day Daily Audit for This Specific User with 5-Row Initial View + Infinite Scroll / Load More + Interactive Day Details Modal Trigger -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span>30-Day Attendance & Daily Quota Log for {{if .Data.SelectedUser}}{{.Data.SelectedUser.Name}}{{else}}User{{end}}</span>
+                </h3>
+            </div>
+            
+            <div style="overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px;">
+                <table id="user-audit-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0;">
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Date</th>
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Daily Target</th>
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Pins Submitted</th>
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Performance Status</th>
+                            <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase; text-align: right;">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-audit-tbody">
+                        {{if .Data.UserAuditReports}}
+                            {{range $j, $audit := .Data.UserAuditReports}}
+                            <tr class="user-audit-row" data-index="{{$j}}" style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s; {{if ge $j 5}}display: none;{{end}}" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='#ffffff'">
+                                <td style="padding: 12px 16px; font-family: monospace; font-size: 0.88rem; color: #0f172a; font-weight: 700;">
+                                    {{$audit.Date}}
+                                </td>
+                                <td style="padding: 12px 16px; font-size: 0.85rem; color: #64748b; font-weight: 600;">
+                                    {{$audit.DailyLimit}} Links
+                                </td>
+                                <td style="padding: 12px 16px; font-weight: 800; font-size: 0.92rem;">
+                                    {{$audit.PinsSubmitted}}
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    {{if eq $audit.Status "Completed"}}
+                                    <span style="background: #ecfdf5; color: #047857; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span>Target Completed</span>
+                                    </span>
+                                    {{else if eq $audit.Status "Partial"}}
+                                    <span style="background: #fffbeb; color: #b45309; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                        <span>Partial ({{$audit.PinsSubmitted}}/{{$audit.DailyLimit}})</span>
+                                    </span>
+                                    {{else}}
+                                    <span style="background: #fef2f2; color: #991b1b; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <span>Missed (0 Pins)</span>
+                                    </span>
+                                    {{end}}
+                                </td>
+                                <td style="padding: 12px 16px; text-align: right;">
+                                    <button type="button" onclick="showDayDetailsModal('{{$audit.Date}}', '{{$.Data.SelectedUser.Name}}', '{{$audit.DailyLimit}}', '{{$audit.PinsSubmitted}}', '{{$audit.Status}}')" style="padding: 5px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.78rem; font-weight: 700; color: #0f172a; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#ffffff'; this.style.borderColor='#e60023'; this.style.color='#e60023'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'; this.style.color='#0f172a'">
+                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>Info</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            {{end}}
+                        {{else}}
+                        <tr>
+                            <td colspan="5" style="padding: 24px; text-align: center; color: #64748b;">
+                                No activity recorded for this period.
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Audit Load More Controls & Trigger Sentinel -->
+            {{if gt (len .Data.UserAuditReports) 5}}
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;">
+                <div style="font-size: 0.8rem; font-weight: 700; color: #64748b;">
+                    Showing <span id="audit-count-visible">5</span> of <span id="audit-count-total">{{len .Data.UserAuditReports}}</span> audit days
+                </div>
+                <button type="button" id="btn-load-more-audit" class="load-more-btn" onclick="revealMoreAudit()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+                    <span>Load More (+5 Days)</span>
+                </button>
+                <div id="audit-scroll-sentinel" style="height: 10px; width: 100%;"></div>
+            </div>
+            {{end}}
+        </div>
+
+    </div>
+
+    {{else if eq .Data.Tab "audit"}}
+    <!-- All Team Daily Audit & Missed Reports View -->
+    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>14-Day Team Audit & Missing Submissions</span>
+        </h3>
+        <div style="overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0;">
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Date</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Poster Name</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Daily Target</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Pins Submitted</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Daily Status</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase; text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{if .Data.AuditReports}}
+                        {{range .Data.AuditReports}}
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 14px 16px; font-family: monospace; font-size: 0.88rem; color: #0f172a; font-weight: 700;">
+                                {{.Date}}
+                            </td>
+                            <td style="padding: 14px 16px; font-weight: 800; color: #0f172a;">
+                                {{.UserName}}
+                            </td>
+                            <td style="padding: 14px 16px; font-size: 0.88rem; color: #64748b;">
+                                {{.DailyLimit}} Links
+                            </td>
+                            <td style="padding: 14px 16px; font-weight: 800; font-size: 0.92rem;">
+                                {{.PinsSubmitted}}
+                            </td>
+                            <td style="padding: 14px 16px;">
+                                {{if eq .Status "Completed"}}
+                                <span style="background: #ecfdf5; color: #047857; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Quota Completed</span>
+                                </span>
+                                {{else if eq .Status "Partial"}}
+                                <span style="background: #fffbeb; color: #b45309; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    <span>Incomplete ({{.PinsSubmitted}}/{{.DailyLimit}})</span>
+                                </span>
+                                {{else}}
+                                <span style="background: #fef2f2; color: #991b1b; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    <span>Missed (0 Pins)</span>
+                                </span>
+                                {{end}}
+                            </td>
+                            <td style="padding: 14px 16px; text-align: right;">
+                                <a href="/admin-lol/pinterest?tab=user_report&user_id={{.UserID}}" style="padding: 4px 10px; background: #f1f5f9; color: #0f172a; border-radius: 6px; font-size: 0.78rem; font-weight: 700; text-decoration: none;">
+                                    View Report
+                                </a>
+                            </td>
+                        </tr>
+                        {{end}}
+                    {{else}}
+                    <tr>
+                        <td colspan="6" style="padding: 32px; text-align: center; color: #64748b;">
+                            No audit data available yet.
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{else if eq .Data.Tab "submissions"}}
+    <!-- All Submitted Pins Feed -->
+    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+            <span>Real-Time Pinterest Submissions Feed ({{.Data.TotalSubmissions}})</span>
+        </h3>
+        <div class="admin-table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #e2e8f0; border-radius: 12px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 640px;">
+                <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0;">
+                        <th style="width: 130px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Submitted At</th>
+                        <th style="width: 150px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Poster</th>
+                        <th style="padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Job Listing & Employer</th>
+                        <th style="width: 160px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Location</th>
+                        <th style="width: 130px; padding: 12px 16px; font-size: 0.78rem; font-weight: 800; color: #64748b; text-transform: uppercase; text-align: right;">Pinterest Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{if .Data.Submissions}}
+                        {{range .Data.Submissions}}
+                        <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background='#ffffff'">
+                            <td style="padding: 14px 16px; font-size: 0.85rem; color: #64748b; white-space: nowrap; vertical-align: middle;">
+                                {{formatDate .SubmittedAt}}
+                            </td>
+                            <td style="padding: 14px 16px; font-weight: 800; color: #0f172a; vertical-align: middle;">
+                                <a href="/admin-lol/pinterest?tab=user_report&user_id={{.UserID}}" style="color: #0f172a; text-decoration: none;" onmouseover="this.style.color='#e60023'" onmouseout="this.style.color='#0f172a'">
+                                    {{.UserName}}
+                                </a>
+                            </td>
+                            <td style="padding: 14px 16px; vertical-align: middle;">
+                                <a href="/jobs/{{.JobSlug}}/" target="_blank" style="font-weight: 800; color: #0f172a; text-decoration: none; font-size: 0.9rem;" onmouseover="this.style.color='#0A66C2'" onmouseout="this.style.color='#0f172a'">
+                                    {{.JobTitle}}
+                                </a>
+                                {{if .EmployerName}}
+                                <div style="font-size: 0.78rem; color: #64748b; margin-top: 3px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: #64748b;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="6" x2="9.01" y2="6"></line><line x1="15" y1="6" x2="15.01" y2="6"></line><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line><line x1="9" y1="14" x2="9.01" y2="14"></line><line x1="15" y1="14" x2="15.01" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+                                    <span>{{.EmployerName}}</span>
+                                </div>
+                                {{end}}
+                            </td>
+                            <td style="padding: 14px 16px; vertical-align: middle;">
+                                <span style="display: inline-flex; align-items: center; gap: 4px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; color: #334155;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #e60023;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <span>{{cleanLocation .LocationName}}</span>
+                                </span>
+                            </td>
+                            <td style="padding: 14px 16px; vertical-align: middle; text-align: right;">
+                                <a href="{{.PinURL}}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; background: rgba(230,0,35,0.08); color: #e60023; border: 1px solid rgba(230,0,35,0.25); border-radius: 6px; font-size: 0.8rem; font-weight: 800; text-decoration: none;">
+                                    <span>View Pin</span>
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                </a>
+                            </td>
+                        </tr>
+                        {{end}}
+                    {{else}}
+                    <tr>
+                        <td colspan="5" style="padding: 32px; text-align: center; color: #64748b;">
+                            No pins submitted yet.
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{end}}
+
+</div>
+
+<!-- Modal 1: Create Poster Account with CSRF Token Included -->
+<div id="modal-create-user" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="padding: 32px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0;">Add New Pinterest Poster</h3>
+            <button type="button" onclick="document.getElementById('modal-create-user').style.display='none'" style="background: none; border: none; font-size: 1.1rem; color: #64748b; cursor: pointer; display: flex; align-items: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+
+        <form method="POST" action="/admin-lol/pinterest/users/new" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Full Name *</label>
+                <input type="text" name="name" required placeholder="e.g. Sarah Jenkins" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none;" />
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Email Address *</label>
+                <input type="email" name="email" required placeholder="sarah@example.com" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none;" />
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Phone Number (Optional)</label>
+                <input type="text" name="phone" placeholder="+44 7123 456789" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none;" />
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Daily Links Quota (Default: 5)</label>
+                <input type="number" name="daily_limit" value="5" min="1" max="100" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; font-weight: 700; outline: none;" />
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: #64748b; display: flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>A unique <strong>6-digit login code</strong> will be generated automatically upon submission.</span>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button type="submit" style="flex: 1; padding: 12px; background: #e60023; color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
+                    Create Poster & Generate Code
+                </button>
+                <button type="button" onclick="document.getElementById('modal-create-user').style.display='none'" style="padding: 12px 18px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal 2: Global Notification Modal for Success / Error / Code Created -->
+<div id="modal-global-alert" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="padding: 32px; text-align: center;">
+        <div id="modal-alert-icon" style="width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center;"></div>
+        <h3 id="modal-alert-title" style="font-size: 1.3rem; font-weight: 900; color: #0f172a; margin: 0 0 8px 0;"></h3>
+        <div id="modal-alert-body" style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin-bottom: 24px;"></div>
+        <button type="button" onclick="document.getElementById('modal-global-alert').style.display='none'" style="width: 100%; padding: 12px; background: #0f172a; color: #ffffff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer;">
+            Got it, Continue
+        </button>
+    </div>
+</div>
+
+<!-- Modal 3: Confirmation Modal for Regenerate Code / Dangerous Actions -->
+<div id="modal-global-confirm" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="padding: 32px; text-align: center;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #fef2f2; border: 1px solid #fee2e2; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; color: #ef4444;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </div>
+        <h3 id="modal-confirm-title" style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">Confirm Action</h3>
+        <div id="modal-confirm-msg" style="font-size: 0.92rem; color: #475569; line-height: 1.5; margin-bottom: 24px;"></div>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" id="modal-confirm-btn-yes" style="flex: 1; padding: 12px; background: #e60023; color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
+                Yes, Proceed
+            </button>
+            <button type="button" onclick="document.getElementById('modal-global-confirm').style.display='none'" style="padding: 12px 18px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 4: 30-Day Attendance & Quota Log Details Modal for Selected Poster -->
+<div id="modal-day-details" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="padding: 32px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 14px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(230,0,35,0.08); color: #e60023; display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Attendance & Quota Audit</h3>
+                    <div id="day-modal-date" style="font-family: monospace; font-size: 0.85rem; color: #64748b; font-weight: 700;"></div>
+                </div>
+            </div>
+            <button type="button" onclick="document.getElementById('modal-day-details').style.display='none'" style="background: none; border: none; font-size: 1.1rem; color: #64748b; cursor: pointer; display: flex; align-items: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.85rem; font-weight: 700; color: #64748b;">Poster Name</span>
+                <span id="day-modal-user" style="font-size: 0.95rem; font-weight: 800; color: #0f172a;"></span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Daily Target</div>
+                    <div id="day-modal-target" style="font-size: 1.3rem; font-weight: 900; color: #0f172a; margin-top: 4px;"></div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Pins Submitted</div>
+                    <div id="day-modal-submitted" style="font-size: 1.3rem; font-weight: 900; color: #0f172a; margin-top: 4px;"></div>
+                </div>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Day Status Breakdown</div>
+                <div id="day-modal-status-badge"></div>
+                <div id="day-modal-explanation" style="font-size: 0.85rem; color: #475569; margin-top: 8px; line-height: 1.4;"></div>
+            </div>
+        </div>
+
+        <button type="button" onclick="document.getElementById('modal-day-details').style.display='none'" style="width: 100%; padding: 12px; background: #0f172a; color: #ffffff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer;">
+            Close Details
+        </button>
+    </div>
+</div>
+
+<script>
+// ===== Dynamic 5-Row Pagination + Infinite Scroll Trigger Logic =====
+let currentSubsLimit = 5;
+let currentAuditLimit = 5;
+
+function revealMoreSubs() {
+    const rows = document.querySelectorAll('.user-sub-row');
+    if (!rows.length) return;
+    
+    currentSubsLimit += 5;
+    let visibleCount = 0;
+
+    rows.forEach((row, idx) => {
+        if (idx < currentSubsLimit) {
+            if (row.style.display === 'none') {
+                row.style.display = '';
+                row.classList.add('row-reveal');
+            }
+            visibleCount++;
+        }
+    });
+
+    const countEl = document.getElementById('subs-count-visible');
+    if (countEl) countEl.innerText = visibleCount;
+
+    const btn = document.getElementById('btn-load-more-subs');
+    if (btn && visibleCount >= rows.length) {
+        btn.innerHTML = '<span>✓ All ' + rows.length + ' Pins Loaded</span>';
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'default';
+    }
+}
+
+function revealMoreAudit() {
+    const rows = document.querySelectorAll('.user-audit-row');
+    if (!rows.length) return;
+
+    currentAuditLimit += 5;
+    let visibleCount = 0;
+
+    rows.forEach((row, idx) => {
+        if (idx < currentAuditLimit) {
+            if (row.style.display === 'none') {
+                row.style.display = '';
+                row.classList.add('row-reveal');
+            }
+            visibleCount++;
+        }
+    });
+
+    const countEl = document.getElementById('audit-count-visible');
+    if (countEl) countEl.innerText = visibleCount;
+
+    const btn = document.getElementById('btn-load-more-audit');
+    if (btn && visibleCount >= rows.length) {
+        btn.innerHTML = '<span>✓ All ' + rows.length + ' Days Loaded</span>';
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'default';
+    }
+}
+
+// ===== Modal Alert System =====
+function showAdminAlert(title, bodyHTML, type) {
+    const modal = document.getElementById('modal-global-alert');
+    const iconEl = document.getElementById('modal-alert-icon');
+    const titleEl = document.getElementById('modal-alert-title');
+    const bodyEl = document.getElementById('modal-alert-body');
+
+    if (!modal || !iconEl || !titleEl || !bodyEl) return;
+
+    titleEl.innerText = title;
+    bodyEl.innerHTML = bodyHTML;
+
+    if (type === 'success') {
+        iconEl.style.background = '#ecfdf5';
+        iconEl.style.border = '1px solid #a7f3d0';
+        iconEl.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    } else if (type === 'error') {
+        iconEl.style.background = '#fef2f2';
+        iconEl.style.border = '1px solid #fecaca';
+        iconEl.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+    } else {
+        iconEl.style.background = '#f0fdf4';
+        iconEl.style.border = '1px solid #86efac';
+        iconEl.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M21 2l-2 2m-1.5 1.5L10 13l-4 4-2-2 4-4 7.5-7.5z"></path></svg>';
+    }
+
+    modal.style.display = 'flex';
+}
+
+function confirmModalAction(formId, title, messageHTML) {
+    const modal = document.getElementById('modal-global-confirm');
+    const titleEl = document.getElementById('modal-confirm-title');
+    const msgEl = document.getElementById('modal-confirm-msg');
+    const yesBtn = document.getElementById('modal-confirm-btn-yes');
+
+    if (!modal) return;
+
+    titleEl.innerText = title;
+    msgEl.innerHTML = messageHTML;
+    yesBtn.onclick = function() {
+        modal.style.display = 'none';
+        const targetForm = document.getElementById(formId);
+        if (targetForm) targetForm.submit();
+    };
+
+    modal.style.display = 'flex';
+}
+
+// ===== 30-Day Attendance & Quota Log Details Modal Trigger =====
+function showDayDetailsModal(date, userName, target, submitted, status) {
+    const modal = document.getElementById('modal-day-details');
+    if (!modal) return;
+
+    document.getElementById('day-modal-date').innerText = 'Audit Date: ' + date;
+    document.getElementById('day-modal-user').innerText = userName || 'Poster';
+    document.getElementById('day-modal-target').innerText = target + ' Links';
+    document.getElementById('day-modal-submitted').innerText = submitted + ' Pins';
+
+    const badgeEl = document.getElementById('day-modal-status-badge');
+    const expEl = document.getElementById('day-modal-explanation');
+
+    if (status === 'Completed') {
+        badgeEl.innerHTML = '<span style="background: #ecfdf5; color: #047857; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">✓ Target Completed (' + submitted + '/' + target + ')</span>';
+        expEl.innerText = userName + ' successfully met or exceeded the daily assignment limit of ' + target + ' pin links on this day.';
+    } else if (status === 'Partial') {
+        badgeEl.innerHTML = '<span style="background: #fffbeb; color: #b45309; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">⚠️ Incomplete (' + submitted + '/' + target + ')</span>';
+        const rem = parseInt(target) - parseInt(submitted);
+        expEl.innerText = userName + ' submitted ' + submitted + ' pin(s) but missed ' + rem + ' link(s) to fulfill the ' + target + '-pin quota.';
+    } else {
+        badgeEl.innerHTML = '<span style="background: #fef2f2; color: #991b1b; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">✕ Missed (0 Pins)</span>';
+        expEl.innerText = 'No pins were submitted by ' + userName + ' on ' + date + ' (Target was ' + target + ' links).';
+    }
+
+    modal.style.display = 'flex';
+}
+
+// Auto-trigger Server-side Alerts in Modals on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+    {{if .Data.CreatedCode}}
+    showAdminAlert(
+        'New Poster Created Successfully',
+        '<div style="margin-bottom: 12px;">Poster <strong>{{.Data.CreatedUser}}</strong> has been registered.</div>' +
+        '<div style="background: #f8fafc; border: 2px dashed #10b981; padding: 14px; border-radius: 12px; margin: 12px 0;">' +
+        '<div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">6-Digit Access Code</div>' +
+        '<div style="font-family: monospace; font-size: 2.2rem; font-weight: 900; color: #e60023; letter-spacing: 0.2em; margin-top: 4px;">{{.Data.CreatedCode}}</div>' +
+        '</div><div style="font-size: 0.82rem; color: #64748b;">Share this code with the user to log in at <code>/pin-login</code>.</div>',
+        'code'
+    );
+    {{else if .Data.Success}}
+    showAdminAlert('Success', '{{.Data.Success}}', 'success');
+    {{else if .Data.Error}}
+    showAdminAlert('Error', '{{.Data.Error}}', 'error');
+    {{end}}
+
+    // Set up Infinite Scroll Observers
+    if ('IntersectionObserver' in window) {
+        const subsSentinel = document.getElementById('subs-scroll-sentinel');
+        if (subsSentinel) {
+            const subsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const rows = document.querySelectorAll('.user-sub-row');
+                        if (currentSubsLimit < rows.length) {
+                            revealMoreSubs();
+                        }
+                    }
+                });
+            }, { rootMargin: '150px' });
+            subsObserver.observe(subsSentinel);
+        }
+
+        const auditSentinel = document.getElementById('audit-scroll-sentinel');
+        if (auditSentinel) {
+            const auditObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const rows = document.querySelectorAll('.user-audit-row');
+                        if (currentAuditLimit < rows.length) {
+                            revealMoreAudit();
+                        }
+                    }
+                });
+            }, { rootMargin: '150px' });
+            auditObserver.observe(auditSentinel);
+        }
+    }
+});
+</script>
+{{end}}

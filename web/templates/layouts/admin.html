@@ -1,0 +1,678 @@
+{{define "admin"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{.Title}} | JobyUK.com Admin</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" type="image/svg+xml" href="/static/images/logo.svg">
+    <link rel="preload" href="{{asset "/static/css/bundle.min.css"}}" as="style">
+    <link rel="stylesheet" href="{{asset "/static/css/bundle.min.css"}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --color-admin-bg: #f8fafc;
+            --color-admin-card: #ffffff;
+            --color-admin-border: #e2e8f0;
+            --color-admin-text: #0f172a;
+            --color-admin-text-secondary: #475569;
+            --color-admin-hover: #f1f5f9;
+            --color-admin-active-bg: #eff6ff;
+            --color-admin-active-text: #0284c7;
+        }
+        body { 
+            background: var(--color-admin-bg); 
+            color: var(--color-admin-text);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .admin-layout { 
+            display: grid; 
+            grid-template-columns: 280px 1fr; 
+            min-height: 100vh; 
+            min-height: 100dvh;
+        }
+
+        /* Mobile Header (Hidden on Desktop) */
+        .admin-mobile-header {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #1e293b;
+        }
+        .admin-mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f1f5f9;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.15s ease;
+        }
+        .admin-mobile-menu-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .admin-mobile-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: -0.02em;
+        }
+        .admin-mobile-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .admin-status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        /* Sidebar Styles */
+        .admin-sidebar { 
+            background: #0f172a; 
+            border-right: 1px solid #1e293b; 
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            color: #94a3b8;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        .admin-sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+        .admin-sidebar__logo { 
+            font-size: 1.35rem; 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .admin-sidebar-close-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .admin-sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .admin-sidebar-backdrop.is-active {
+            display: block;
+            opacity: 1;
+        }
+
+        .admin-nav { list-style: none; display: flex; flex-direction: column; gap: 6px; padding: 0; margin: 0; }
+        .admin-nav__link { 
+            display: flex; 
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px; 
+            border-radius: 10px; 
+            color: #94a3b8; 
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .admin-nav__link svg {
+            transition: transform 0.2s ease, color 0.2s ease;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+        .admin-nav__link:hover { 
+            background: rgba(255, 255, 255, 0.06); 
+            color: #ffffff; 
+        }
+        .admin-nav__link:hover svg {
+            color: #38bdf8;
+            transform: scale(1.08);
+        }
+        .admin-nav__link--active { 
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.15) 0%, rgba(14, 165, 233, 0.03) 100%); 
+            color: #38bdf8 !important; 
+            font-weight: 700;
+        }
+        .admin-nav__link--active svg {
+            color: #38bdf8 !important;
+        }
+        .admin-nav__link--active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background: #38bdf8;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+        }
+
+        .admin-main { padding: 36px 40px 60px; overflow-y: auto; background: #f8fafc; min-width: 0; }
+        .admin-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 32px; 
+            border-bottom: 1px solid var(--color-admin-border); 
+            padding-bottom: 20px; 
+            gap: 16px;
+        }
+        .admin-header h2 { font-size: 1.65rem; font-weight: 800; color: var(--color-admin-text); margin: 0; letter-spacing: -0.02em; }
+        .admin-header-pill {
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: var(--color-admin-text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid var(--color-admin-border);
+            padding: 7px 14px;
+            border-radius: 9999px;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);
+            white-space: nowrap;
+        }
+        .admin-header-logout-btn {
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: #ef4444;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef2f2;
+            border: 1px solid #fee2e2;
+            padding: 7px 12px;
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .admin-header-logout-btn:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .admin-mobile-logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .admin-mobile-logout-btn:active {
+            transform: scale(0.95);
+            background: rgba(239, 68, 68, 0.3);
+        }
+        .admin-nav__link--logout {
+            color: #f87171 !important;
+        }
+        .admin-nav__link--logout svg {
+            color: #f87171 !important;
+        }
+        .admin-nav__link--logout:hover {
+            background: rgba(239, 68, 68, 0.12) !important;
+            color: #ef4444 !important;
+        }
+        .admin-nav__link--logout:hover svg {
+            color: #ef4444 !important;
+            transform: scale(1.08);
+        }
+
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1023px) {
+            .admin-layout {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .admin-mobile-header {
+                display: flex;
+            }
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 290px;
+                max-width: 85vw;
+                height: 100vh;
+                transform: translate3d(-100%, 0, 0);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: none;
+            }
+            .admin-sidebar.is-open {
+                transform: translate3d(0, 0, 0);
+                box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            }
+            .admin-sidebar-close-btn {
+                display: inline-flex;
+            }
+            .admin-main {
+                padding: 20px 14px 48px;
+            }
+            .admin-header {
+                margin-bottom: 20px;
+                padding-bottom: 14px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .admin-header h2 {
+                font-size: 1.35rem;
+            }
+            
+            /* Responsive table scroll wrap */
+            .admin-table-container,
+            .table-responsive,
+            .admin-table-wrap {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table {
+                display: table !important;
+                border-collapse: collapse;
+            }
+
+            /* Responsive stat cards on mobile */
+            .stat-card {
+                padding: 18px 16px !important;
+                border-radius: 16px !important;
+            }
+            .stat-card span[style*="font-size: 2.5rem"] {
+                font-size: 1.75rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Sticky Top Bar -->
+    <header class="admin-mobile-header">
+        <button type="button" class="admin-mobile-menu-btn" id="admin-mobile-menu-btn" aria-label="Open navigation menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <a href="/admin-lol" class="admin-mobile-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            JobyUK<span style="color: #38bdf8">UK</span>
+            <span class="admin-mobile-badge">Admin</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <a href="/admin-lol/logout" class="admin-mobile-logout-btn" title="Log Out" aria-label="Log Out">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="admin-sidebar-backdrop" id="admin-sidebar-backdrop"></div>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/admin-lol" class="admin-sidebar__logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 26px; height: 26px; color: #38bdf8; margin-right: 8px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    JobyUK<span style="color: #38bdf8">UK</span>
+                    <span style="font-weight: 700; font-size: 0.72rem; background: rgba(56, 189, 248, 0.18); color: #38bdf8; padding: 2px 8px; border-radius: 6px; margin-left: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">Admin</span>
+                </a>
+                <button type="button" class="admin-sidebar-close-btn" id="admin-sidebar-close-btn" aria-label="Close menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="admin-nav">
+                <li>
+                    <a href="/admin-lol" class="admin-nav__link" id="nav-dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/jobs" class="admin-nav__link" id="nav-jobs">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 0 1 3.75 18.375v-4.25m16.5 0a2.25 2.25 0 0 0-1.5-2.122h-13.5A2.25 2.25 0 0 0 3.75 14.15m16.5 0V9.75A2.25 2.25 0 0 0 18 7.5h-3m-3 0H6A2.25 2.25 0 0 0 3.75 9.75v4.4m11.25-6.625V5.625c0-.621-.504-1.125-1.125-1.125H10.875c-.621 0-1.125.504-1.125 1.125v1.625m4.5 0a1.125 1.125 0 0 1-1.125 1.125H10.875A1.125 1.125 0 0 1 9.75 7.5m4.5 0H9.75" />
+                        </svg>
+                        <span>Manage Vacancies</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/pinterest" class="admin-nav__link" id="nav-pinterest">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                        </svg>
+                        <span>Pinterest Posters</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/taxonomy" class="admin-nav__link" id="nav-taxonomy">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+                        </svg>
+                        <span>Taxonomy Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/reports" class="admin-nav__link" id="nav-reports">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span>Reported Jobs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/inquiries" class="admin-nav__link" id="nav-inquiries">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                        </svg>
+                        <span>Contact Inquiries</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/content" class="admin-nav__link" id="nav-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                        <span>Career Hub CMS</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/seo" class="admin-nav__link" id="nav-seo">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                        </svg>
+                        <span>Redirects & SEO</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/settings" class="admin-nav__link" id="nav-settings">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.43l-1.003.828c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.43l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        <span>Settings & Ops</span>
+                    </a>
+                </li>
+                <li style="margin-top: 20px; border-top: 1px solid #1e293b; padding-top: 14px;">
+                    <a href="/" class="admin-nav__link" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-.778.099-1.533.284-2.253" />
+                        </svg>
+                        <span>View Website</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-lol/logout" class="admin-nav__link admin-nav__link--logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                        <span>Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Surface -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>{{.Title}}</h2>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="admin-header-pill">
+                        <span class="admin-status-dot"></span>
+                        <span>Administrator</span>
+                    </div>
+                    <a href="/admin-lol/logout" class="admin-header-logout-btn" title="Log Out">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Log Out</span>
+                    </a>
+                </div>
+            </header>
+            {{template "admin_content" .}}
+        </main>
+    </div>
+
+    <!-- Inactivity Expiry Warning Modal -->
+    <div id="inactivity-warning-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 16px;">
+        <div style="background: #ffffff; border-radius: 20px; max-width: 420px; width: 100%; padding: 28px 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); text-align: center; border: 1px solid #e2e8f0;">
+            <div style="width: 52px; height: 52px; border-radius: 16px; background: #fef2f2; color: #dc2626; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">Session Expiring Soon</h3>
+            <p style="font-size: 0.88rem; color: #64748b; margin: 0 0 18px 0; line-height: 1.5;">
+                You have been inactive. For your security, you will be automatically logged out in:
+            </p>
+            <div id="inactivity-countdown" style="font-family: monospace; font-size: 2.2rem; font-weight: 900; color: #dc2626; margin-bottom: 20px; letter-spacing: 0.05em;">
+                01:00
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="extendSession()" style="flex: 1; height: 44px; min-width: 140px; background: #0284c7; color: #ffffff; border: none; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                    Stay Logged In
+                </button>
+                <a href="/admin-lol/logout" style="height: 44px; padding: 0 16px; background: #fef2f2; color: #ef4444; border: 1px solid #fee2e2; border-radius: 10px; font-weight: 700; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                    Log Out
+                </a>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        // Mobile Sidebar Drawer Toggle
+        const menuBtn = document.getElementById("admin-mobile-menu-btn");
+        const closeBtn = document.getElementById("admin-sidebar-close-btn");
+        const sidebar = document.getElementById("admin-sidebar");
+        const backdrop = document.getElementById("admin-sidebar-backdrop");
+
+        function openSidebar() {
+            if (sidebar) sidebar.classList.add("is-open");
+            if (backdrop) backdrop.classList.add("is-active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeSidebar() {
+            if (sidebar) sidebar.classList.remove("is-open");
+            if (backdrop) backdrop.classList.remove("is-active");
+            document.body.style.overflow = "";
+        }
+
+        if (menuBtn) menuBtn.addEventListener("click", openSidebar);
+        if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+        if (backdrop) backdrop.addEventListener("click", closeSidebar);
+
+        // Set active nav link class based on path
+        const path = window.location.pathname;
+        if (path === "/admin-lol" || path === "/admin-lol/") {
+            document.getElementById("nav-dashboard")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/jobs")) {
+            document.getElementById("nav-jobs")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/pinterest") || path.startsWith("/pin-admin") || path.startsWith("/admin-lol/pins")) {
+            document.getElementById("nav-pinterest")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/reports")) {
+            document.getElementById("nav-reports")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/inquiries")) {
+            document.getElementById("nav-inquiries")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/taxonomy")) {
+            document.getElementById("nav-taxonomy")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/content")) {
+            document.getElementById("nav-content")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/seo")) {
+            document.getElementById("nav-seo")?.classList.add("admin-nav__link--active");
+        } else if (path.startsWith("/admin-lol/settings")) {
+            document.getElementById("nav-settings")?.classList.add("admin-nav__link--active");
+        }
+
+        // =========================================================================
+        // Real-Time Inactivity Security Watchdog
+        // =========================================================================
+        (function() {
+            const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000; // 15 Minutes
+            const WARNING_TIME_MS = 60 * 1000;            // 60 Seconds warning
+            const HEARTBEAT_INTERVAL_MS = 2 * 60 * 1000;  // 2 Minutes heartbeat
+            
+            let lastActivityTime = Date.now();
+            let lastHeartbeatTime = Date.now();
+            let warningModalShown = false;
+
+            const modal = document.getElementById("inactivity-warning-modal");
+            const countdownEl = document.getElementById("inactivity-countdown");
+
+            function recordUserActivity() {
+                lastActivityTime = Date.now();
+                if (warningModalShown) {
+                    dismissWarning();
+                    sendHeartbeat();
+                } else if (Date.now() - lastHeartbeatTime > HEARTBEAT_INTERVAL_MS) {
+                    sendHeartbeat();
+                }
+            }
+
+            function sendHeartbeat() {
+                lastHeartbeatTime = Date.now();
+                fetch("/admin-lol/heartbeat", { credentials: "same-origin" })
+                    .then(res => {
+                        if (res.status === 401 || res.status === 403) {
+                            forceLogout();
+                        }
+                    })
+                    .catch(() => {});
+            }
+
+            window.extendSession = function() {
+                recordUserActivity();
+                sendHeartbeat();
+            };
+
+            function showWarning(secondsLeft) {
+                warningModalShown = true;
+                if (modal) modal.style.display = "flex";
+                updateCountdown(secondsLeft);
+            }
+
+            function dismissWarning() {
+                warningModalShown = false;
+                if (modal) modal.style.display = "none";
+            }
+
+            function updateCountdown(secondsLeft) {
+                if (!countdownEl) return;
+                const mins = Math.floor(secondsLeft / 60);
+                const secs = secondsLeft % 60;
+                countdownEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }
+
+            function forceLogout() {
+                window.location.href = "/admin-lol/login?error=Your+session+has+expired+due+to+15+minutes+of+inactivity.+Please+log+in+again.";
+            }
+
+            let throttleTimer = null;
+            function onInteraction() {
+                if (!throttleTimer) {
+                    throttleTimer = setTimeout(() => {
+                        recordUserActivity();
+                        throttleTimer = null;
+                    }, 500);
+                }
+            }
+
+            ['mousemove', 'mousedown', 'pointerdown', 'keydown', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove'].forEach(evt => {
+                window.addEventListener(evt, onInteraction, { passive: true });
+            });
+
+            document.addEventListener("visibilitychange", () => {
+                if (!document.hidden) onInteraction();
+            });
+
+            setInterval(() => {
+                const idleMs = Date.now() - lastActivityTime;
+                const remainingMs = INACTIVITY_TIMEOUT_MS - idleMs;
+
+                if (remainingMs <= 0) {
+                    forceLogout();
+                } else if (remainingMs <= WARNING_TIME_MS) {
+                    showWarning(Math.ceil(remainingMs / 1000));
+                } else if (warningModalShown) {
+                    dismissWarning();
+                }
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
+{{end}}

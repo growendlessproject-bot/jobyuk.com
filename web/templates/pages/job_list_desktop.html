@@ -1,0 +1,604 @@
+{{define "content"}}
+<div class="jy-dream-hub" id="jobs-top">
+    {{template "breadcrumbs" .}}
+
+    <!-- 1. Header Card: "Let's find your Dream Job!" -->
+    <section class="jy-dream-header" aria-label="Job Search Header">
+        <div class="jy-dream-header__top">
+            <h1 class="jy-dream-header__title">{{if .Data.CustomH1}}{{.Data.CustomH1}}{{else if .Data.Title}}{{.Data.Title}}{{else}}Browse UK Job Vacancies{{end}}</h1>
+            {{if .Data.IntroText}}
+            <p class="jy-dream-header__intro" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 10px 0 14px 0; max-width: 860px;">
+                {{.Data.IntroText}}
+            </p>
+            {{end}}
+            <p class="jy-dream-header__count">
+                {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                    {{formatSalary .Data.Results.Total}}+ available job vacancies in the UK
+                {{else}}
+                    500,000+ available job vacancies in the UK
+                {{end}}
+            </p>
+        </div>
+
+        <form action="/jobs/" method="GET" class="jy-dream-search-form" id="dream-search-form">
+            <div class="jy-dream-search-bar">
+                <!-- Field 1: Role / Keywords -->
+                <div class="jy-dream-input-pill" style="position: relative;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="dream-search-q" name="q" value="{{if .Data.Params}}{{.Data.Params.Query}}{{end}}" placeholder="UI/UX Designer, Developer, Marketing..." autocomplete="off" aria-label="Search job title or keywords" />
+                    <button type="button" class="jy-search-clear-btn" id="dream-clear-q" style="display: none;" aria-label="Clear job search">✕</button>
+                    <!-- Suggestions Dropdown -->
+                    <div class="jy-suggest-dropdown" id="suggest-dropdown-q" style="display: none;"></div>
+                </div>
+
+                <!-- Field 2: Location -->
+                <div class="jy-dream-input-pill" style="position: relative;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <input type="text" id="dream-search-loc" name="location" value="{{if .Data.Params}}{{.Data.Params.Location}}{{end}}" placeholder="London, Manchester, Remote..." autocomplete="off" aria-label="Location" />
+                    <button type="button" class="jy-search-clear-btn" id="dream-clear-loc" style="display: none;" aria-label="Clear location search">✕</button>
+                    <!-- Suggestions Dropdown -->
+                    <div class="jy-suggest-dropdown" id="suggest-dropdown-loc" style="display: none;"></div>
+                </div>
+
+                <!-- Field 3: Salary / Min Salary -->
+                <div class="jy-dream-input-pill" style="max-width: 260px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <select name="min_salary" aria-label="Salary range" style="cursor: pointer;">
+                        <option value="">Any salary</option>
+                        <option value="25000" {{if eq .Data.Params.MinSalary 25000.0}}selected{{end}}>£25,000+ per year</option>
+                        <option value="40000" {{if eq .Data.Params.MinSalary 40000.0}}selected{{end}}>£40,000+ per year</option>
+                        <option value="60000" {{if eq .Data.Params.MinSalary 60000.0}}selected{{end}}>£60,000+ per year</option>
+                        <option value="80000" {{if eq .Data.Params.MinSalary 80000.0}}selected{{end}}>£80,000+ per year</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <button type="submit" class="jy-dream-search-btn">Search Job</button>
+            </div>
+
+            <!-- Quick Filter Tag Pills -->
+            <div class="jy-dream-tags">
+                <a href="/jobs/?job_type=full_time" class="jy-dream-tag{{if eq .Data.Params.JobType "full_time"}} active{{end}}">Full time</a>
+                <a href="/jobs/?q=Designer" class="jy-dream-tag{{if eq .Data.Params.Query "Designer"}} active{{end}}">Designer</a>
+                <a href="/jobs/?remote_type=remote" class="jy-dream-tag{{if eq .Data.Params.RemoteType "remote"}} active{{end}}">Remote</a>
+                <a href="/jobs/?q=Developer" class="jy-dream-tag{{if eq .Data.Params.Query "Developer"}} active{{end}}">Developer</a>
+                <a href="/jobs/?q=Senior" class="jy-dream-tag{{if eq .Data.Params.Query "Senior"}} active{{end}}">Senior designer</a>
+                <a href="/jobs/?q=Marketing" class="jy-dream-tag{{if eq .Data.Params.Query "Marketing"}} active{{end}}">Marketing</a>
+                <a href="/jobs/?q=Product" class="jy-dream-tag{{if eq .Data.Params.Query "Product"}} active{{end}}">Product manager</a>
+                <a href="/jobs/?q=Finance" class="jy-dream-tag{{if eq .Data.Params.Query "Finance"}} active{{end}}">Finance</a>
+                <a href="/jobs/?q=Illustrator" class="jy-dream-tag{{if eq .Data.Params.Query "Illustrator"}} active{{end}}">Illustrator</a>
+            </div>
+        </form>
+    </section>
+
+    <!-- 2. Main 2-Column Layout: Filters Sidebar (Left Sticky) | Main Job Listings (Right) -->
+    <div class="jy-dream-layout">
+        
+        <!-- Column 1: Left Filters Sidebar (Sticky on Scroll) -->
+        <aside class="jy-dream-sidebar" aria-label="Job filters">
+            <div class="jy-dream-sidebar__header">
+                <h2 class="jy-dream-sidebar__title">Filters</h2>
+                <a href="/jobs/" class="jy-dream-clear-link" title="Reset all filters">Clear all</a>
+            </div>
+
+            <form action="/jobs/" method="GET" id="sidebar-filter-form">
+                {{if .Data.Params.Query}}<input type="hidden" name="q" value="{{.Data.Params.Query}}">{{end}}
+                {{if .Data.Params.Location}}<input type="hidden" name="location" value="{{.Data.Params.Location}}">{{end}}
+
+                <!-- Section 1: Work Mode (iOS Toggle Switches) -->
+                <div>
+                    <label class="jy-toggle-item">
+                        <span class="jy-toggle-label">On-site</span>
+                        <input type="checkbox" name="remote_type" value="on_site" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "on_site"}}checked{{end}} onchange="this.form.submit()">
+                        <span class="jy-toggle-switch"></span>
+                    </label>
+
+                    <label class="jy-toggle-item">
+                        <span class="jy-toggle-label">Remote</span>
+                        <input type="checkbox" name="remote_type" value="remote" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "remote"}}checked{{end}} onchange="this.form.submit()">
+                        <span class="jy-toggle-switch"></span>
+                    </label>
+
+                    <label class="jy-toggle-item">
+                        <span class="jy-toggle-label">Hybrid</span>
+                        <input type="checkbox" name="remote_type" value="hybrid" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "hybrid"}}checked{{end}} onchange="this.form.submit()">
+                        <span class="jy-toggle-switch"></span>
+                    </label>
+
+                    <label class="jy-toggle-item">
+                        <span class="jy-toggle-label">
+                            <span>Friendly Offers</span>
+                            <span>🇬🇧</span>
+                        </span>
+                        <input type="checkbox" name="easy_apply" value="true" class="jy-toggle-input" {{if .Data.Params.EasyApply}}checked{{end}} onchange="this.form.submit()">
+                        <span class="jy-toggle-switch"></span>
+                    </label>
+                </div>
+
+                <!-- Section 2: Jobs you might like -->
+                <div class="jy-sidebar-sec">
+                    <h3 class="jy-sidebar-sec__title">Jobs you might like</h3>
+                    <div class="jy-sidebar-options">
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="sort" value="" {{if not .Data.Params.SortBy}}checked{{end}} onchange="this.form.submit()">
+                                <span>Best Matches</span>
+                            </span>
+                            <span class="jy-sidebar-count">219</span>
+                        </label>
+
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="sort" value="date" {{if eq .Data.Params.SortBy "date"}}checked{{end}} onchange="this.form.submit()">
+                                <span>Most Recent</span>
+                            </span>
+                            <span class="jy-sidebar-count">10</span>
+                        </label>
+
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="sort" value="salary" {{if eq .Data.Params.SortBy "salary"}}checked{{end}} onchange="this.form.submit()">
+                                <span>Offers with salary</span>
+                            </span>
+                            <span class="jy-sidebar-count">19</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 3: Experience -->
+                <div class="jy-sidebar-sec">
+                    <h3 class="jy-sidebar-sec__title">Experience</h3>
+                    <div class="jy-sidebar-options">
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="experience" value="entry" {{if eq .Data.Params.ExperienceLevel "entry"}}checked{{end}} onchange="this.form.submit()">
+                                <span>Under 1 year</span>
+                            </span>
+                            <span class="jy-sidebar-count">4</span>
+                        </label>
+
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="experience" value="junior" {{if eq .Data.Params.ExperienceLevel "junior"}}checked{{end}} onchange="this.form.submit()">
+                                <span>1-2 years</span>
+                            </span>
+                            <span class="jy-sidebar-count">15</span>
+                        </label>
+
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="experience" value="mid" {{if or (eq .Data.Params.ExperienceLevel "mid") (not .Data.Params.ExperienceLevel)}}checked{{end}} onchange="this.form.submit()">
+                                <span>2-6 years</span>
+                            </span>
+                            <span class="jy-sidebar-count">49</span>
+                        </label>
+
+                        <label class="jy-sidebar-radio-label">
+                            <span class="jy-sidebar-radio-left">
+                                <input type="radio" name="experience" value="senior" {{if eq .Data.Params.ExperienceLevel "senior"}}checked{{end}} onchange="this.form.submit()">
+                                <span>Over 6 years</span>
+                            </span>
+                            <span class="jy-sidebar-count">23</span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Column 2: Main Job Cards Feed (Right) -->
+        <main class="jy-dream-listings" aria-label="Job listings list">
+            <div class="jy-listing-feed-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <h2 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin: 0; letter-spacing: -0.015em;">
+                    {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                        Live Openings ({{formatSalary .Data.Results.Total}})
+                    {{else}}
+                        Latest Vacancies
+                    {{end}}
+                </h2>
+                <span style="font-size: 0.85rem; color: #64748B; font-weight: 500;">Sorted by relevance</span>
+            </div>
+            <div class="listing-jobs">
+                {{range $index, $job := .Data.Results.Jobs}}
+                    {{template "job_card" $job}}
+                {{else}}
+                    <!-- Empty State -->
+                    <div class="empty-state" style="background: #FFFFFF; border-radius: 20px; padding: 40px; text-align: center; border: 1px solid #EEF2F6;">
+                        <h2 style="font-size: 20px; font-weight: 800; color: #0B1F1A; margin-bottom: 8px;">No job vacancies found</h2>
+                        <p style="color: #64748B; font-size: 14px; margin-bottom: 20px;">Try adjusting your filters or browse popular roles.</p>
+                        <a href="/jobs/" class="jy-dream-apply-cta" style="padding: 10px 24px; font-size: 14px;">Browse All Vacancies</a>
+                    </div>
+                {{end}}
+            </div>
+
+            <!-- Load More Jobs & Auto-Scroll Controller -->
+            {{if gt .Data.Results.TotalPages 1}}
+            <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs">
+                <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn">
+                    <svg class="jy-load-more-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                    <span class="jy-load-more-text">Load More Jobs</span>
+                    <svg class="jy-load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                </button>
+            </div>
+            {{end}}
+
+            <!-- Pagination -->
+            <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 24px;">
+                {{template "pagination" .Data.Results}}
+            </div>
+        </main>
+    </div>
+
+    {{template "listing_floating_bar" .Data}}
+</div>
+
+<style>
+/* Suggestion Dropdown styling & Stacking Context Elevation */
+.j-dream-input-pill {
+    position: relative !important;
+}
+.j-dream-input-pill:focus-within {
+    z-index: 1050 !important;
+}
+.j-suggest-dropdown {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    min-width: 320px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #EEF2F6 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 81, 50, 0.08) !important;
+    z-index: 1060 !important;
+    overflow: hidden !important;
+    padding: 8px 0 !important;
+    max-height: 380px !important;
+    overflow-y: auto !important;
+    animation: jSuggestFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+@keyframes jSuggestFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.j-suggest-header {
+    padding: 6px 16px 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.j-suggest-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    text-decoration: none;
+    color: inherit;
+    user-select: none;
+}
+.j-suggest-item * {
+    pointer-events: none !important;
+}
+.j-suggest-item:hover, .j-suggest-item.is-selected {
+    background: #F0FDF4;
+}
+.j-suggest-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+.j-suggest-icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #ECFDF5;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.j-suggest-title {
+    font-size: 0.92rem;
+    font-weight: 650;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.j-suggest-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #059669;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.j-search-clear-btn {
+    background: #E2E8F0;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+</style>
+
+<script>
+(function() {
+    function initJobyUKAutocomplete(inputId, clearBtnId, dropdownId, type, formId) {
+        const input = document.getElementById(inputId);
+        const clearBtn = document.getElementById(clearBtnId);
+        const dropdown = document.getElementById(dropdownId);
+        const form = document.getElementById(formId);
+        if (!input || !dropdown) return;
+        if (input.dataset.autocompleteAttached === 'true') return;
+        input.dataset.autocompleteAttached = 'true';
+
+        let selectedIndex = -1;
+        let items = [];
+        let debounceTimer = null;
+
+        const defaultJobs = [
+            { value: "Software Developer", label: "Software Developer", category: "Popular Role", icon: "role" },
+            { value: "UI/UX Designer", label: "UI/UX Designer", category: "Popular Role", icon: "role" },
+            { value: "Project Manager", label: "Project Manager", category: "Popular Role", icon: "role" },
+            { value: "Data Analyst", label: "Data Analyst", category: "Popular Role", icon: "role" },
+            { value: "Registered Nurse", label: "Registered Nurse", category: "Popular Role", icon: "role" },
+            { value: "Accountant", label: "Accountant", category: "Popular Role", icon: "role" },
+            { value: "Marketing Manager", label: "Marketing Manager", category: "Popular Role", icon: "role" },
+            { value: "Customer Service", label: "Customer Service", category: "Popular Role", icon: "role" }
+        ];
+
+        const defaultLocations = [
+            { value: "Remote", label: "Remote (Work From Home UK)", category: "Workplace", icon: "remote" },
+            { value: "London", label: "London, Greater London", category: "City", icon: "location" },
+            { value: "Manchester", label: "Manchester, UK", category: "City", icon: "location" },
+            { value: "Birmingham", label: "Birmingham, West Midlands", category: "City", icon: "location" },
+            { value: "Leeds", label: "Leeds, Yorkshire", category: "City", icon: "location" },
+            { value: "Glasgow", label: "Glasgow, Scotland", category: "City", icon: "location" },
+            { value: "Bristol", label: "Bristol, UK", category: "City", icon: "location" },
+            { value: "Edinburgh", label: "Edinburgh, Scotland", category: "City", icon: "location" }
+        ];
+
+        function render(list, query) {
+            items = list;
+            selectedIndex = -1;
+            if (!list || list.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            const headerLabel = query ? 'Suggestions' : (type === 'location' ? 'Popular UK Locations' : 'Popular Job Searches');
+            let html = '<div class="jy-suggest-header"><span>' + headerLabel + '</span><span>Instant</span></div>';
+
+            list.forEach((item, idx) => {
+                let iconSvg = '';
+                if (item.icon === 'location') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+                } else if (item.icon === 'remote') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>';
+                } else if (item.icon === 'company') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>';
+                } else {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
+                }
+
+                const badgeText = item.count ? (item.count + ' jobs') : item.category;
+
+                let displayLabel = item.label || item.value;
+                if (query && query.trim()) {
+                    const reg = new RegExp('(' + query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                    displayLabel = displayLabel.replace(reg, '<strong style="color: #059669;">$1</strong>');
+                }
+
+                html += '<div class="jy-suggest-item" data-idx="' + idx + '" data-val="' + encodeURIComponent(item.value) + '">';
+                html += '  <div class="jy-suggest-left">';
+                html += '    <div class="jy-suggest-icon-wrap">' + iconSvg + '</div>';
+                html += '    <span class="jy-suggest-title">' + displayLabel + '</span>';
+                html += '  </div>';
+                html += '  <span class="jy-suggest-badge">' + badgeText + '</span>';
+                html += '</div>';
+            });
+
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+
+            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+                const selectItemHandler = function(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    const target = e.currentTarget || this;
+                    const rawVal = target.getAttribute('data-val');
+                    if (rawVal) {
+                        chooseItem(decodeURIComponent(rawVal));
+                    }
+                };
+                el.addEventListener('mousedown', selectItemHandler);
+                el.addEventListener('click', selectItemHandler);
+                el.addEventListener('touchend', selectItemHandler);
+            });
+        }
+
+        let lastSelectedTime = 0;
+        function chooseItem(val) {
+            const now = Date.now();
+            if (now - lastSelectedTime < 350) return;
+            lastSelectedTime = now;
+
+            input.value = val;
+            dropdown.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = 'flex';
+            if (form) {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        function fetchSuggestions(q) {
+            const url = '/api/search/suggestions/?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q || '');
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        render(data, q);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function showSuggestions(val) {
+            val = val || '';
+            const base = type === 'location' ? defaultLocations : defaultJobs;
+            const qTrim = val.toLowerCase().trim();
+            const localMatches = qTrim ? base.filter(x => x.label.toLowerCase().includes(qTrim) || x.value.toLowerCase().includes(qTrim)) : base;
+            render(localMatches, val);
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetchSuggestions(val);
+            }, 100);
+        }
+
+        // Prevent input blur when clicking inside the dropdown or scrollbar
+        dropdown.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+        });
+
+        let isOverDropdown = false;
+        dropdown.addEventListener('mouseenter', function() { isOverDropdown = true; });
+        dropdown.addEventListener('mouseleave', function() { isOverDropdown = false; });
+        dropdown.addEventListener('touchstart', function() { isOverDropdown = true; }, { passive: true });
+        dropdown.addEventListener('touchend', function() { setTimeout(() => { isOverDropdown = false; }, 300); }, { passive: true });
+
+        input.addEventListener('input', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('focus', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('click', function() {
+            if (dropdown.style.display === 'none' || dropdown.innerHTML === '') {
+                showSuggestions(this.value);
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!isOverDropdown) {
+                    dropdown.style.display = 'none';
+                }
+            }, 250);
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                input.value = '';
+                clearBtn.style.display = 'none';
+                input.focus();
+                showSuggestions('');
+            });
+        }
+
+        input.addEventListener('keydown', function(e) {
+            if (dropdown.style.display === 'none') {
+                if (e.key === 'ArrowDown') {
+                    showSuggestions(this.value);
+                }
+                return;
+            }
+            const domItems = dropdown.querySelectorAll('.j-suggest-item');
+            if (domItems.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % domItems.length;
+                updateSelection(domItems);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + domItems.length) % domItems.length;
+                updateSelection(domItems);
+            } else if (e.key === 'Enter') {
+                if (selectedIndex >= 0 && selectedIndex < domItems.length) {
+                    e.preventDefault();
+                    const val = decodeURIComponent(domItems[selectedIndex].getAttribute('data-val'));
+                    chooseItem(val);
+                }
+            } else if (e.key === 'Escape') {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function updateSelection(domItems) {
+            domItems.forEach((el, idx) => {
+                if (idx === selectedIndex) {
+                    el.classList.add('is-selected');
+                    el.scrollIntoView({ block: 'nearest' });
+                    input.value = decodeURIComponent(el.getAttribute('data-val'));
+                } else {
+                    el.classList.remove('is-selected');
+                }
+            });
+        }
+    }
+
+    function setupJobSearchAutocomplete() {
+        initJobyUKAutocomplete('dream-search-q', 'dream-clear-q', 'suggest-dropdown-q', 'job', 'dream-search-form');
+        initJobyUKAutocomplete('dream-search-loc', 'dream-clear-loc', 'suggest-dropdown-loc', 'location', 'dream-search-form');
+    }
+
+    window.setupJobSearchAutocomplete = setupJobSearchAutocomplete;
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupJobSearchAutocomplete);
+    } else {
+        setupJobSearchAutocomplete();
+    }
+    window.addEventListener('jobyuk:turbo-load', setupJobSearchAutocomplete);
+    window.addEventListener('popstate', function() { setTimeout(setupJobSearchAutocomplete, 50); });
+})();
+</script>
+{{end}}

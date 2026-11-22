@@ -1,0 +1,543 @@
+{{define "admin_content"}}
+<!-- Header Card -->
+<div class="admin-header-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div>
+            <h1 style="margin: 0 0 6px 0; font-size: 1.45rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 10px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+                Contact Inquiries & Form Submissions
+            </h1>
+            <p style="margin: 0; color: #64748b; font-size: 0.88rem;">Review, read, and manage direct inquiries sent from the public website contact form.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a href="/contact/" target="_blank" class="admin-action-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 8px 14px; border-radius: 10px; font-size: 0.84rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>View Public Form</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Counter Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <!-- Total Inquiries -->
+    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+        <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin-bottom: 6px;">Total Inquiries</div>
+        <div style="font-size: 1.8rem; font-weight: 850; color: #0f172a;">{{.Data.Stats.Total}}</div>
+    </div>
+
+    <!-- Unread Messages -->
+    <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #c2410c;">Unread Messages</div>
+            {{if gt .Data.Stats.Unread 0}}
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ea580c; box-shadow: 0 0 6px #ea580c;"></span>
+            {{end}}
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 850; color: #ea580c;">{{.Data.Stats.Unread}}</div>
+    </div>
+
+    <!-- Read Messages -->
+    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+        <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin-bottom: 6px;">Read</div>
+        <div style="font-size: 1.8rem; font-weight: 850; color: #475569;">{{.Data.Stats.Read}}</div>
+    </div>
+
+    <!-- Resolved Inquiries -->
+    <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+        <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #15803d; margin-bottom: 6px;">Resolved</div>
+        <div style="font-size: 1.8rem; font-weight: 850; color: #16a34a;">{{.Data.Stats.Resolved}}</div>
+    </div>
+</div>
+
+<!-- Filters and Search Bar -->
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+    
+    <!-- Status Filter Pills -->
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span style="font-size: 0.82rem; font-weight: 700; color: #64748b; margin-right: 4px;">Status:</span>
+        <a href="/admin-lol/inquiries?status=all{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill {{if eq .Data.StatusFilter "all"}}filter-pill--active{{end}}">
+            All ({{.Data.Stats.Total}})
+        </a>
+        <a href="/admin-lol/inquiries?status=unread{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill {{if eq .Data.StatusFilter "unread"}}filter-pill--active{{end}}" style="{{if gt .Data.Stats.Unread 0}}color: #c2410c; border-color: #fdba74; background: #fff7ed;{{end}}">
+            Unread ({{.Data.Stats.Unread}})
+        </a>
+        <a href="/admin-lol/inquiries?status=read{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill {{if eq .Data.StatusFilter "read"}}filter-pill--active{{end}}">
+            Read ({{.Data.Stats.Read}})
+        </a>
+        <a href="/admin-lol/inquiries?status=resolved{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill {{if eq .Data.StatusFilter "resolved"}}filter-pill--active{{end}}">
+            Resolved ({{.Data.Stats.Resolved}})
+        </a>
+    </div>
+
+    <!-- Search Form -->
+    <form method="GET" action="/admin-lol/inquiries" style="display: flex; align-items: center; gap: 8px; margin: 0;">
+        {{if ne .Data.StatusFilter "all"}}
+        <input type="hidden" name="status" value="{{.Data.StatusFilter}}">
+        {{end}}
+        <div style="position: relative; display: flex; align-items: center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="position: absolute; left: 12px; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" name="q" value="{{.Data.SearchQuery}}" placeholder="Search sender, email, subject..." style="height: 38px; padding: 0 12px 0 34px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 0.85rem; width: 260px; outline: none;">
+        </div>
+        <button type="submit" style="height: 38px; padding: 0 14px; background: #0A66C2; color: #ffffff; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer;">Search</button>
+        {{if .Data.SearchQuery}}
+        <a href="/admin-lol/inquiries?status={{.Data.StatusFilter}}" style="font-size: 0.82rem; color: #ef4444; font-weight: 700; text-decoration: none;">Clear</a>
+        {{end}}
+    </form>
+</div>
+
+<!-- Table Card -->
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.03);">
+    <div class="admin-table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 850px;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;">Date & Time</th>
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;">Sender</th>
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;">Topic & Subject</th>
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;">Message Preview</th>
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;">Status</th>
+                    <th style="padding: 12px 18px; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{if not .Data.Inquiries}}
+                <tr>
+                    <td colspan="6" style="padding: 48px 18px; text-align: center; color: #94a3b8;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin: 0 auto 12px; display: block; opacity: 0.5;"><path d="M22 12h-6l-2 3h-4l-2-3H2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6z"></path><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+                        <p style="margin: 0; font-size: 0.95rem; font-weight: 600; color: #64748b;">No contact inquiries found</p>
+                        <span style="font-size: 0.82rem; color: #94a3b8;">Submissions from the public contact form will appear here in real time.</span>
+                    </td>
+                </tr>
+                {{end}}
+
+                {{range .Data.Inquiries}}
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s ease;" class="admin-inquiry-row {{if eq .Status "unread"}}inquiry-unread-row{{end}}">
+                    <!-- Date -->
+                    <td style="padding: 14px 18px; color: #64748b; font-size: 0.82rem; white-space: nowrap;">
+                        <div style="font-weight: 700; color: #1e293b;">{{formatDate .CreatedAt}}</div>
+                        <div style="font-size: 0.75rem; color: #94a3b8; font-family: monospace;">#{{.ID}}</div>
+                    </td>
+
+                    <!-- Sender Info -->
+                    <td style="padding: 14px 18px;">
+                        <div style="font-weight: 750; color: #0f172a; font-size: 0.9rem;">{{.Name}}</div>
+                        <a href="mailto:{{.Email}}" style="font-size: 0.82rem; color: #0A66C2; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path></svg>
+                            <span>{{.Email}}</span>
+                        </a>
+                        {{if .IPAddress}}
+                        <div style="font-size: 0.72rem; color: #94a3b8; font-family: monospace; margin-top: 2px;">IP: {{.IPAddress}}</div>
+                        {{end}}
+                    </td>
+
+                    <!-- Topic & Subject -->
+                    <td style="padding: 14px 18px; max-width: 240px;">
+                        <div>
+                            {{if eq .InquiryType "employer"}}
+                                <span class="badge-type badge-type--employer">Employer</span>
+                            {{else if eq .InquiryType "candidate"}}
+                                <span class="badge-type badge-type--candidate">Candidate</span>
+                            {{else if eq .InquiryType "partnership"}}
+                                <span class="badge-type badge-type--partner">Partnership</span>
+                            {{else if eq .InquiryType "technical"}}
+                                <span class="badge-type badge-type--tech">Technical</span>
+                            {{else}}
+                                <span class="badge-type badge-type--general">General</span>
+                            {{end}}
+                        </div>
+                        <div style="font-weight: 700; color: #1e293b; font-size: 0.88rem; margin-top: 4px; word-wrap: break-word;">
+                            {{.Subject}}
+                        </div>
+                    </td>
+
+                    <!-- Message Preview -->
+                    <td style="padding: 14px 18px; max-width: 320px;">
+                        <div style="font-size: 0.84rem; color: #475569; line-height: 1.45; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word;">
+                            {{.Message}}
+                        </div>
+                    </td>
+
+                    <!-- Status -->
+                    <td style="padding: 14px 18px; white-space: nowrap;">
+                        {{if eq .Status "unread"}}
+                            <span class="status-badge status-badge--unread">
+                                <span class="pulse-dot"></span>
+                                <span>Unread</span>
+                            </span>
+                        {{else if eq .Status "resolved"}}
+                            <span class="status-badge status-badge--resolved">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Resolved</span>
+                            </span>
+                        {{else}}
+                            <span class="status-badge status-badge--read">
+                                <span>Read</span>
+                            </span>
+                        {{end}}
+                    </td>
+
+                    <!-- Actions -->
+                    <td style="padding: 14px 18px; text-align: right; white-space: nowrap; vertical-align: middle;">
+                        <div style="display: inline-flex; align-items: center; gap: 6px;">
+                            <!-- View / Read Modal Trigger -->
+                            <button type="button" 
+                                    class="btn-table-action btn-table-action--view btn-open-inquiry"
+                                    data-id="{{.ID}}"
+                                    data-name="{{.Name}}"
+                                    data-email="{{.Email}}"
+                                    data-type="{{.InquiryType}}"
+                                    data-subject="{{.Subject}}"
+                                    data-message="{{.Message}}"
+                                    data-date="{{formatDate .CreatedAt}}"
+                                    data-ip="{{.IPAddress}}"
+                                    data-status="{{.Status}}"
+                                    title="View Inquiry Message">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span>View</span>
+                            </button>
+
+                            <!-- Quick Status Toggle -->
+                            {{if eq .Status "unread"}}
+                            <form method="POST" action="/admin-lol/inquiries/{{.ID}}/status" style="margin: 0; display: inline;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <input type="hidden" name="status" value="read">
+                                <button type="submit" class="btn-table-action" title="Mark as Read">
+                                    <span>Mark Read</span>
+                                </button>
+                            </form>
+                            {{else if eq .Status "read"}}
+                            <form method="POST" action="/admin-lol/inquiries/{{.ID}}/status" style="margin: 0; display: inline;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <input type="hidden" name="status" value="resolved">
+                                <button type="submit" class="btn-table-action btn-table-action--resolve" title="Mark as Resolved">
+                                    <span>Resolve</span>
+                                </button>
+                            </form>
+                            {{else}}
+                            <form method="POST" action="/admin-lol/inquiries/{{.ID}}/status" style="margin: 0; display: inline;">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <input type="hidden" name="status" value="unread">
+                                <button type="submit" class="btn-table-action" title="Mark as Unread">
+                                    <span>Unread</span>
+                                </button>
+                            </form>
+                            {{end}}
+
+                            <!-- Delete Button -->
+                            <form method="POST" action="/admin-lol/inquiries/{{.ID}}/delete" style="margin: 0; display: inline;" onsubmit="return confirm('Are you sure you want to delete this inquiry permanently?');">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <button type="submit" class="btn-table-action btn-table-action--delete" title="Delete Inquiry">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    {{if gt .Data.TotalPages 1}}
+    <div style="padding: 14px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: #64748b;">
+        <div>Showing Page <strong>{{.Data.Page}}</strong> of <strong>{{.Data.TotalPages}}</strong> ({{.Data.TotalCount}} inquiries)</div>
+        <div style="display: flex; gap: 6px;">
+            {{if gt .Data.Page 1}}
+            <a href="/admin-lol/inquiries?page={{sub .Data.Page 1}}&status={{.Data.StatusFilter}}{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill">&larr; Previous</a>
+            {{end}}
+            {{if lt .Data.Page .Data.TotalPages}}
+            <a href="/admin-lol/inquiries?page={{add .Data.Page 1}}&status={{.Data.StatusFilter}}{{if .Data.SearchQuery}}&q={{.Data.SearchQuery}}{{end}}" class="filter-pill">Next &rarr;</a>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</div>
+
+<!-- Inquiry Reader Modal Dialog -->
+<div id="inquiry-detail-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); z-index: 99999; align-items: center; justify-content: center; padding: 18px;">
+    <div style="background: #ffffff; border-radius: 18px; max-width: 680px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 1px solid #e2e8f0; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+        
+        <!-- Modal Header -->
+        <div style="padding: 18px 24px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+                <span id="modal-category-badge" class="badge-type badge-type--general" style="margin-bottom: 6px; display: inline-block;">General</span>
+                <h3 id="modal-subject" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #0f172a; line-height: 1.3;">Inquiry Subject</h3>
+            </div>
+            <button type="button" onclick="closeInquiryModal()" style="background: none; border: none; cursor: pointer; color: #94a3b8; padding: 4px; border-radius: 6px;" title="Close Modal">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Sender Info Bar -->
+        <div style="padding: 14px 24px; background: #ffffff; border-bottom: 1px solid #f1f5f9; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.85rem;">
+            <div>
+                <div style="font-size: 0.74rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">From</div>
+                <div id="modal-sender-name" style="font-weight: 750; color: #0f172a;">Sender Name</div>
+                <a id="modal-sender-email" href="#" style="color: #0A66C2; text-decoration: none; font-size: 0.82rem;">email@example.com</a>
+            </div>
+            <div>
+                <div style="font-size: 0.74rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Received</div>
+                <div id="modal-date" style="font-weight: 600; color: #334155;">Timestamp</div>
+                <div id="modal-ip" style="font-size: 0.75rem; color: #94a3b8; font-family: monospace;">IP: 127.0.0.1</div>
+            </div>
+        </div>
+
+        <!-- Message Body -->
+        <div style="padding: 22px 24px; overflow-y: auto; flex: 1;">
+            <div style="font-size: 0.74rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px;">Message Content</div>
+            <div id="modal-message" style="font-size: 0.94rem; color: #1e293b; line-height: 1.65; white-space: pre-wrap; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+                Message body...
+            </div>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; gap: 8px;">
+                <form id="modal-resolve-form" method="POST" action="" style="margin: 0; display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <input type="hidden" name="status" value="resolved">
+                    <button type="submit" class="admin-action-btn" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; font-weight: 750; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; cursor: pointer;">
+                        Mark as Resolved
+                    </button>
+                </form>
+                <form id="modal-unread-form" method="POST" action="" style="margin: 0; display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <input type="hidden" name="status" value="unread">
+                    <button type="submit" class="admin-action-btn" style="background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; font-weight: 750; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; cursor: pointer;">
+                        Mark as Unread
+                    </button>
+                </form>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <a id="modal-reply-btn" href="#" class="admin-action-btn" style="background: #0A66C2; color: #ffffff; text-decoration: none; font-weight: 750; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span>Reply via Email</span>
+                </a>
+                <button type="button" onclick="closeInquiryModal()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; font-weight: 700; padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; cursor: pointer;">
+                    Close
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.filter-pill {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s ease;
+}
+.filter-pill:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+.filter-pill--active {
+    background: #0A66C2 !important;
+    color: #ffffff !important;
+    border-color: #0A66C2 !important;
+}
+
+/* Row Highlight for Unread */
+.inquiry-unread-row {
+    background: #fffbeb !important;
+}
+.inquiry-unread-row:hover {
+    background: #fef3c7 !important;
+}
+
+/* Category Badges */
+.badge-type {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.badge-type--general {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.badge-type--employer {
+    background: #eff6ff;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+.badge-type--candidate {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+.badge-type--partner {
+    background: #faf5ff;
+    color: #7e22ce;
+    border: 1px solid #e9d5ff;
+}
+.badge-type--tech {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.76rem;
+    font-weight: 750;
+}
+.status-badge--unread {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+.status-badge--read {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.status-badge--resolved {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d97706;
+    box-shadow: 0 0 6px #d97706;
+}
+
+/* Action Buttons */
+.btn-table-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 9px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+.btn-table-action:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+.btn-table-action--view {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #0284c7;
+}
+.btn-table-action--view:hover {
+    background: #dbeafe;
+    color: #0369a1;
+}
+.btn-table-action--resolve {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #047857;
+}
+.btn-table-action--resolve:hover {
+    background: #d1fae5;
+}
+.btn-table-action--delete {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #e11d48;
+}
+.btn-table-action--delete:hover {
+    background: #fee2e2;
+    color: #be123c;
+}
+</style>
+
+<script>
+function openInquiryModal(id, name, email, type, subject, message, date, ip, status) {
+    document.getElementById("modal-subject").textContent = subject;
+    document.getElementById("modal-sender-name").textContent = name;
+    
+    const emailLink = document.getElementById("modal-sender-email");
+    emailLink.textContent = email;
+    emailLink.href = "mailto:" + email;
+
+    document.getElementById("modal-date").textContent = date;
+    document.getElementById("modal-ip").textContent = ip ? "IP: " + ip : "IP: N/A";
+    document.getElementById("modal-message").textContent = message;
+
+    // Set Category badge
+    const badge = document.getElementById("modal-category-badge");
+    badge.textContent = type;
+    badge.className = "badge-type badge-type--" + (type || "general");
+
+    // Configure forms
+    document.getElementById("modal-resolve-form").action = "/admin-lol/inquiries/" + id + "/status";
+    document.getElementById("modal-unread-form").action = "/admin-lol/inquiries/" + id + "/status";
+    
+    // Configure mailto reply
+    const replyBtn = document.getElementById("modal-reply-btn");
+    const mailtoSubject = encodeURIComponent("Re: " + subject + " - JobyUK.com Support");
+    const mailtoBody = encodeURIComponent("\n\n---\nOriginal Inquiry from " + name + ":\n" + message);
+    replyBtn.href = "mailto:" + email + "?subject=" + mailtoSubject + "&body=" + mailtoBody;
+
+    // Automatically mark as read if it was unread
+    if (status === "unread") {
+        fetch("/admin-lol/inquiries/" + id + "/status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: "csrf_token={{.CSRFToken}}&status=read"
+        }).catch(() => {});
+    }
+
+    const modal = document.getElementById("inquiry-detail-modal");
+    modal.style.display = "flex";
+}
+
+function closeInquiryModal() {
+    const modal = document.getElementById("inquiry-detail-modal");
+    modal.style.display = "none";
+}
+
+// Listen for clicks on inquiry view buttons using dataset
+document.addEventListener("click", function(e) {
+    const btn = e.target.closest(".btn-open-inquiry");
+    if (!btn) return;
+    const d = btn.dataset;
+    openInquiryModal(d.id, d.name, d.email, d.type, d.subject, d.message, d.date, d.ip, d.status);
+});
+
+// Close on backdrop click or ESC
+window.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeInquiryModal();
+});
+document.getElementById("inquiry-detail-modal")?.addEventListener("click", function(e) {
+    if (e.target === this) closeInquiryModal();
+});
+</script>
+{{end}}

@@ -1,0 +1,35 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 20px; padding-bottom: 50px;">
+    {{template "breadcrumbs" .}}
+
+    <header style="margin-bottom: 24px;">
+
+        <h1 style="font-size: 1.75rem; font-weight: 850; color: #0F172A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px;">
+            Privacy Policy
+        </h1>
+        <p style="font-size: 0.85rem; color: #64748B; margin: 0;">
+            UK GDPR & Data Protection Act 2018 Compliant
+        </p>
+    </header>
+
+    <article style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px 18px; font-size: 0.95rem; line-height: 1.7; color: #334155;">
+        <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+            <strong style="color: #065F46; font-size: 0.85rem; display: block; margin-bottom: 4px;">Zero Registration Policy:</strong>
+            <p style="margin: 0; font-size: 0.85rem; color: #064E3B; line-height: 1.5;">We do not ask you to register, create profiles, or store CVs. All applications go straight to the employer.</p>
+        </div>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">1. Information We Collect</h2>
+        <p style="margin: 0 0 16px;">We only process minimal technical telemetry (SHA-256 hashed IP addresses and request logs) for DDoS protection and uptime monitoring.</p>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">2. Direct Employer Applications</h2>
+        <p style="margin: 0 0 16px;">Applying routes you directly to the verified employer's ATS portal. External submissions are governed by the employer's privacy policy.</p>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">3. Data Rights & Contact</h2>
+        <p style="margin: 0 0 20px;">For any data rights or GDPR inquiries, contact our Data Protection Officer:</p>
+
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center;">
+            <a href="mailto:{{getSiteEmail}}" style="color: #059669; font-weight: 750; font-size: 0.9rem;">{{getSiteEmail}}</a>
+        </div>
+    </article>
+</div>
+{{end}}

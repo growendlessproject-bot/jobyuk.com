@@ -1,0 +1,1063 @@
+{{define "content"}}
+<div class="jy-role-mob-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 50px; min-height: 85vh;">
+    <div class="jy-container" style="padding-left: 14px; padding-right: 14px;">
+        {{template "breadcrumbs" .}}
+
+        {{if .Data.Role}}
+        <!-- =========================================================================
+             1. MOBILE ROLE DETAIL VIEW (/job-roles/{slug}/)
+             ========================================================================= -->
+
+        <!-- Mobile Header Card -->
+        <header class="jy-role-mob-detail-hero" aria-label="Job Role Header">
+
+
+            <h1 class="jy-role-detail-title">
+                {{.Data.Role.Name}} <span class="jy-role-title-highlight">Jobs in the UK</span>
+            </h1>
+
+            <p class="jy-role-detail-sub">
+                {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                    Explore <strong style="color: #0F172A;">{{formatSalary .Data.Results.Total}}</strong> active {{.Data.Role.Name}} openings. Apply direct to verified UK employers in 2 minutes.
+                {{else}}
+                    Browse live {{.Data.Role.Name}} vacancies from verified UK employers.
+                {{end}}
+            </p>
+        </header>
+
+        <!-- Sticky Search Wrapper on Scroll (/job-roles/{slug}/) -->
+        <div class="jy-role-sticky-search-wrap" id="jRoleStickySearchWrap">
+            <!-- Modern Unified Mobile Search Bar -->
+            <form action="/jobs/" method="GET" class="jy-role-search-form" id="role-search-form-m">
+                <!-- Main Search Row: Role & Keywords -->
+                <div class="jy-role-single-search-row">
+                    <span class="jy-role-search-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                    <input type="text" id="role-search-q-m" name="q" value="{{.Data.Role.Name}}" placeholder="Job title or keywords..." autocomplete="off" class="jy-role-main-input" aria-label="Search job title" />
+                    <button type="button" class="jy-search-clear-btn" id="role-clear-q-m" style="display: none;" aria-label="Clear job search">✕</button>
+                    <button type="submit" class="jy-role-submit-btn">
+                        <span>Search</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                    <div class="jy-suggest-dropdown" id="suggest-dropdown-role-q-m" style="display: none;"></div>
+                </div>
+
+                <!-- Secondary Location Row -->
+                <div class="jy-role-loc-search-row">
+                    <span class="jy-role-loc-icon" aria-hidden="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </span>
+                    <input type="text" id="role-search-loc-m" name="location" placeholder="Location (e.g. London, Remote, Manchester)..." autocomplete="off" class="jy-role-loc-input" aria-label="Location" />
+                    <button type="button" class="jy-search-clear-btn" id="role-clear-loc-m" style="display: none;" aria-label="Clear location search">✕</button>
+                    <div class="jy-suggest-dropdown" id="suggest-dropdown-role-loc-m" style="display: none;"></div>
+                </div>
+
+                <!-- Quick Filter Tags Rail -->
+                <div class="jy-role-tags-rail" aria-label="Quick filters">
+                    <a href="/jobs/?q={{.Data.Role.Name}}&remote_type=remote" class="jy-role-filter-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <span>Remote UK</span>
+                    </a>
+                    <a href="/jobs/?q={{.Data.Role.Name}}&location=London" class="jy-role-filter-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>London</span>
+                    </a>
+                    <a href="/jobs/?q={{.Data.Role.Name}}&job_type=full_time" class="jy-role-filter-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        <span>Full time</span>
+                    </a>
+                    <a href="/salary-calculator/" class="jy-role-filter-tag jy-role-filter-tag--emerald">
+                        <span>Salary Calc</span>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- WhatsApp In-Feed Alert Banner -->
+        {{template "whatsapp_infeed_card" dict "CustomTitle" (printf "Get %s Alerts on WhatsApp" .Data.Role.Name) "CustomDesc" (printf "Instant direct job alerts for %s vacancies. Free forever." .Data.Role.Name) "Role" .Data.Role.Name}}
+
+        <!-- Mobile Jobs Feed -->
+        <main class="jy-dream-listings" aria-label="{{.Data.Role.Name}} job listings">
+            <div class="listing-jobs">
+                {{range $index, $job := .Data.Results.Jobs}}
+                    {{template "job_card_mobile" $job}}
+                    {{if or (eq $index 3) (eq $index 11)}}
+                        {{template "wfa_incontent" $}}
+                    {{end}}
+                {{else}}
+                    <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 16px; padding: 36px 20px; text-align: center; border: 1.5px solid #EEF2F6;">
+                        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin-bottom: 6px;">No vacancies found for {{$.Data.Role.Name}}</h2>
+                        <p style="color: #64748B; font-size: 0.85rem; margin-bottom: 16px;">Try adjusting keywords or browse other roles.</p>
+                        <a href="/job-roles/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 700; font-size: 0.85rem; padding: 9px 20px; border-radius: 10px; text-decoration: none;">Browse All Roles</a>
+                    </div>
+                {{end}}
+            </div>
+
+            <!-- Load More Jobs & Auto-Scroll Controller -->
+            {{if gt .Data.Results.TotalPages 1}}
+            <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs" style="margin-top: 24px; margin-bottom: 24px;">
+                <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn" style="width: 100%; max-width: 320px; padding: 12px 24px; font-size: 0.88rem;">
+                    <svg class="jy-load-more-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                    <span class="jy-load-more-text">Load More Jobs</span>
+                    <svg class="jy-load-more-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                </button>
+            </div>
+            {{end}}
+
+            <!-- Pagination -->
+            <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 24px;">
+                {{template "pagination" .Data.Results}}
+            </div>
+
+            <!-- UK Hiring Realities & Career Intelligence (Mobile Interactive SEO Accordion) -->
+            <details class="jy-reality-accordion animate-fade-in" id="uk-hiring-guide-m" aria-label="UK Hiring Realities & Career Intelligence">
+                <!-- Summary Header (Compact, always visible, tap to reveal) -->
+                <summary class="jy-reality-summary">
+                    <div class="jy-reality-summary__left">
+                        <div class="jy-reality-summary__icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div class="jy-reality-summary__info">
+                            <div class="jy-reality-summary__badge-row">
+                                <span class="jy-reality-summary__badge">UK Market Guide</span>
+                            </div>
+                            <h2 class="jy-reality-summary__title" style="font-size: 1.05rem;">
+                                What UK Employers Look For in a {{.Data.Role.Name}}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="jy-reality-summary__right">
+                        <div class="jy-reality-summary__btn">
+                            <span>Explore</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-reality-chevron">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </summary>
+
+                <!-- Expandable Body (Fully indexed by Googlebot) -->
+                <div class="jy-reality-body">
+                    <!-- Key Market Signals Strip -->
+                    <div class="jy-reality-facts">
+                        <div class="jy-reality-fact-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                            <span><strong>Delivery:</strong> 83% prioritize shipping track record</span>
+                        </div>
+                        <div class="jy-reality-fact-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span><strong>Direct Apply:</strong> 4.2x faster response rate</span>
+                        </div>
+                    </div>
+
+                    <div class="jy-reality-grid">
+                        <!-- Pillar 1: What you will actually do -->
+                        <div class="jy-reality-card">
+                            <div>
+                                <div class="jy-reality-card__top">
+                                    <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--emerald">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="jy-reality-card__pillar jy-reality-card__pillar--emerald">01 · Reality</span>
+                                </div>
+                                <h3 class="jy-reality-card__title">What you will actually do</h3>
+                                <p class="jy-reality-card__desc">
+                                    Solving real day-to-day problems and delivering work on time. Most UK hiring managers care far more about your practical track record than fancy degree titles or buzzword-stuffed CVs.
+                                </p>
+
+                                <div class="jy-reality-box">
+                                    <div class="jy-reality-box-row jy-reality-box-row--check">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span>Shipping maintainable code to production</span>
+                                    </div>
+                                    <div class="jy-reality-box-row jy-reality-box-row--cross">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <span>Regurgitated leetcode &amp; CV buzzwords</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jy-reality-card__footer">
+                                <div class="jy-reality-badge-bottom">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Track record beats credentialism</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 2: What gets you hired faster -->
+                        <div class="jy-reality-card">
+                            <div>
+                                <div class="jy-reality-card__top">
+                                    <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--blue">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg>
+                                    </div>
+                                    <span class="jy-reality-card__pillar jy-reality-card__pillar--blue">02 · Edge</span>
+                                </div>
+                                <h3 class="jy-reality-card__title">What gets you hired faster</h3>
+                                <p class="jy-reality-card__desc">
+                                    Clear examples of work you've delivered, solid answers to technical or scenario questions, and applying direct to hiring managers before recruiter pipelines get crowded.
+                                </p>
+
+                                <div class="jy-reality-box">
+                                    <div class="jy-reality-box-row jy-reality-box-row--check">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>JobyUK Direct:</strong> Straight to employer ATS review</span>
+                                    </div>
+                                    <div class="jy-reality-box-row jy-reality-box-row--cross">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <span>300+ CV queues in recruiter inboxes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jy-reality-card__footer">
+                                <div class="jy-reality-badge-bottom" style="color: #1D4ED8;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Direct ATS pipeline advantage</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 3: What you actually take home (Featured Financial Conversion Card) -->
+                        <div class="jy-reality-card jy-reality-card--featured">
+                            <div>
+                                <div class="jy-reality-card__top">
+                                    <div class="jy-reality-card__icon-wrap jy-reality-card__icon-wrap--amber">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path>
+                                            <path d="M6 13h10"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="jy-reality-card__pillar jy-reality-card__pillar--amber">03 · Net Pay</span>
+                                </div>
+                                <h3 class="jy-reality-card__title">What you actually take home</h3>
+                                <p class="jy-reality-card__desc">
+                                    Headline salary numbers can be misleading after HMRC takes tax, National Insurance, and pension. Check your real monthly earnings before saying yes.
+                                </p>
+
+                                <!-- Realistic Payslip Mini Preview -->
+                                <div class="jy-reality-payslip">
+                                    <div class="jy-reality-payslip__row">
+                                        <span>Advertised Salary</span>
+                                        <span class="jy-reality-payslip__row--strong">£65,000 / yr</span>
+                                    </div>
+                                    <div class="jy-reality-payslip__row">
+                                        <span>HMRC Tax &amp; NI (est.)</span>
+                                        <span style="color: #DC2626; font-weight: 700;">-£1,532 / mo</span>
+                                    </div>
+                                    <div class="jy-reality-payslip__divider"></div>
+                                    <div class="jy-reality-payslip__net">
+                                        <span>Take-Home:</span>
+                                        <span>~£3,885 / mo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jy-reality-card__footer" style="padding-top: 0; border-top: none;">
+                                <a href="/salary-calculator/" class="jy-reality-cta-btn">
+                                    <span>Check your take-home pay</span>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </a>
+                                <span class="jy-reality-cta-sub">Free UK Salary &amp; Tax Calculator</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Collapse Action -->
+                    <div class="jy-reality-collapse-row">
+                        <button type="button" class="jy-reality-collapse-btn" onclick="document.getElementById('uk-hiring-guide-m').removeAttribute('open'); document.getElementById('uk-hiring-guide-m').scrollIntoView({behavior: 'smooth', block: 'nearest'});">
+                            <span>Collapse Guide</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+            </details>
+        </main>
+
+        {{else}}
+        <!-- =========================================================================
+             2. MOBILE ROLE DIRECTORY INDEX VIEW (/job-roles/)
+             ========================================================================= -->
+
+        <!-- Mobile Hero Header -->
+        <header class="jy-role-mob-index-hero" aria-label="Job Roles Directory Hero">
+            <h1 class="jy-role-index-title">
+                Find UK Jobs by <span class="jy-role-title-highlight">Role</span>
+            </h1>
+            <p class="jy-role-index-sub">
+                Explore verified UK career paths, real salaries, and apply direct to employers without recruiter fees.
+            </p>
+        </header>
+
+        <!-- Sticky Search & A-Z Filter Wrapper on Scroll -->
+        <div class="jy-role-index-sticky-wrap" id="jRoleIndexStickyWrap">
+            <div class="jy-role-index-search-bar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-right: 8px;">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="role-search-input-m" value="{{.Data.Query}}" placeholder="Search roles (e.g. Developer, Nurse)..." class="jy-role-index-search-input" oninput="filterRolesLiveMobile(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();const v=this.value.trim();window.location.href=v?'/job-roles/?q='+encodeURIComponent(v):'/job-roles/';}" autocomplete="off">
+                <button type="button" id="role-search-clear-m" onclick="clearRoleSearchMobile()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: #475569; font-weight: 800; font-size: 11px; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 6px;">✕</button>
+            </div>
+
+            <!-- Horizontal Scrollable A-Z Slider -->
+            <div class="jy-role-az-container">
+                <div class="jy-role-az-label">A-Z Roles:</div>
+                <div class="jy-mob-az-slider">
+                    <a href="/job-roles/" class="jy-mob-az-pill {{if eq .Data.SelectedLetter ""}}active{{end}}">All</a>
+                    {{$selectedLetter := .Data.SelectedLetter}}
+                    {{range .Data.Alphabet}}
+                        <a href="/job-roles/?letter={{.}}" class="jy-mob-az-pill {{if eq $selectedLetter .}}active{{end}}">{{.}}</a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        {{template "whatsapp_context_banner" dict "Title" "Get Verified Role Vacancies on WhatsApp" "Desc" "Instant alerts for your target roles delivered directly on WhatsApp in under 60s." "Role" "Role Alerts"}}
+
+        <!-- Mobile Roles List -->
+        {{template "wfa_incontent" .}}
+        <div id="roles-cards-list-m" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+            {{range .Data.Roles}}
+            <article class="jy-mob-role-card" data-name="{{lower .Name}}" data-slug="{{.Slug}}">
+                <a href="/job-roles/{{.Slug}}/" class="jy-mob-role-card__overlay" aria-label="Explore {{.Name}} jobs"></a>
+                <div class="jy-mob-role-card__inner">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="jy-mob-role-card__icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <h2 class="jy-mob-role-card__title">{{.Name}}</h2>
+                            <span class="jy-mob-role-card__badge">{{.FormattedJobCount}}</span>
+                        </div>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </div>
+            </article>
+            {{else}}
+            <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 16px; padding: 36px 16px; text-align: center; border: 1.5px solid #EEF2F6;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin-bottom: 6px;">No roles found</h3>
+                <p style="color: #64748B; font-size: 0.85rem; margin-bottom: 14px;">Try searching for another role or click 'All'.</p>
+                <a href="/job-roles/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 700; font-size: 0.82rem; padding: 8px 18px; border-radius: 8px; text-decoration: none;">Reset Filter</a>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Mobile Live Search Empty State -->
+        <div id="noRolesLiveEmptyStateMobile" style="display: none; background: #FFFFFF; border-radius: 16px; padding: 32px 16px; text-align: center; border: 1.5px solid #EEF2F6; margin-top: 14px;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: #0B1F1A; margin-bottom: 4px;">No roles matched</h3>
+            <p style="color: #64748B; font-size: 0.85rem; margin-bottom: 12px;">Try searching for "Developer", "Nurse", or "Accountant".</p>
+            <button type="button" onclick="clearRoleSearchMobile()" style="background: #059669; color: #FFFFFF; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;">Reset Search</button>
+        </div>
+
+        <!-- Mobile Load More Roles & Auto-Scroll Controller -->
+        {{if gt .Data.TotalPages 1}}
+        <div class="jy-load-more-wrap" id="load-more-roles-wrap" data-current-page="{{.Data.Page}}" data-total-pages="{{.Data.TotalPages}}" data-type="roles" style="margin-top: 24px; margin-bottom: 24px;">
+            <button type="button" class="jy-load-more-btn" id="load-more-roles-btn" style="width: 100%; max-width: 320px; padding: 12px 24px; font-size: 0.88rem;">
+                <svg class="jy-load-more-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                <span class="jy-load-more-text">Load More Roles</span>
+                <svg class="jy-load-more-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+            </button>
+        </div>
+
+        <noscript>
+            <div style="margin-top: 24px; display: flex; justify-content: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    {{if gt .Data.Page 1}}
+                    <a href="/job-roles/?page={{sub .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-mob-page-btn">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Prev</span>
+                    </a>
+                    {{end}}
+                    <span style="font-size: 0.82rem; font-weight: 700; color: #475569; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px;">
+                        {{.Data.Page}} / {{.Data.TotalPages}}
+                    </span>
+                    {{if lt .Data.Page .Data.TotalPages}}
+                    <a href="/job-roles/?page={{add .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-mob-page-btn">
+                        <span>Next</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+        </noscript>
+        {{end}}
+
+        {{end}}
+
+        {{template "listing_floating_bar" .Data}}
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   Mobile Job Roles Theme Styling
+   ========================================================================= */
+
+/* --- Next-Level Mobile Role Hero & Search System --- */
+.j-role-mob-detail-hero,
+.j-role-mob-index-hero {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F5FBF7 100%);
+    border: 1.5px solid #D1FAE5;
+    border-radius: 20px;
+    padding: 18px 16px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.08), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+}
+.j-role-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.j-role-badge-row::-webkit-scrollbar {
+    display: none;
+}
+.j-role-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 750;
+    color: #065F46;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.j-role-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.25);
+    animation: jRolePulseDot 2s infinite ease-in-out;
+}
+@keyframes jRolePulseDot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.8; }
+}
+.j-role-direct-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 750;
+    color: #047857;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.j-role-detail-title,
+.j-role-index-title {
+    font-size: 1.68rem;
+    font-weight: 850;
+    color: #0F172A;
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    margin: 0 0 6px;
+}
+.j-role-title-highlight {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.j-role-detail-sub,
+.j-role-index-sub {
+    font-size: 0.88rem;
+    color: #64748B;
+    line-height: 1.48;
+    margin: 0;
+}
+
+/* Modern Single-Row Hero Search Bar */
+.j-role-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.j-role-single-search-row {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid #059669;
+    border-radius: 999px;
+    padding: 4px 5px 4px 14px;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.14);
+    box-sizing: border-box;
+    position: relative;
+    transition: box-shadow 0.18s ease;
+}
+.j-role-single-search-row:focus-within {
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.22);
+}
+.j-role-search-icon {
+    color: #059669;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+.j-role-main-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #0F172A;
+    outline: none;
+    height: 36px;
+}
+.j-role-main-input::placeholder {
+    color: #94A3B8;
+    font-size: 14px !important;
+    font-weight: 450;
+}
+.j-role-submit-btn {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 750;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
+    transition: transform 0.15s ease;
+}
+.j-role-submit-btn:active {
+    transform: scale(0.96);
+}
+.j-role-loc-search-row {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    position: relative;
+    transition: border-color 0.18s ease;
+}
+.j-role-loc-search-row:focus-within {
+    border-color: #059669;
+}
+.j-role-loc-icon {
+    color: #64748B;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 7px;
+}
+.j-role-loc-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 16px !important;
+    font-weight: 500;
+    color: #0F172A;
+    outline: none;
+    height: 32px;
+}
+.j-role-loc-input::placeholder {
+    color: #94A3B8;
+    font-size: 13.5px !important;
+}
+
+/* Quick Filter Tags Rail */
+.j-role-tags-rail {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 6px 0 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.j-role-tags-rail::-webkit-scrollbar {
+    display: none;
+}
+.j-role-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 650;
+    color: #475569;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+.j-role-filter-tag:active {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+}
+.j-role-filter-tag--emerald {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+    font-weight: 750;
+}
+
+/* Sticky Search Wrapper on Scroll (/job-roles/{slug}/ & /job-roles/) */
+.j-role-sticky-search-wrap,
+.j-role-index-sticky-wrap {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 68px;
+    z-index: 1020;
+    background: rgba(248, 250, 248, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 6px 0 10px;
+    margin-bottom: 12px;
+    border-radius: 0 0 16px 16px;
+    transition: box-shadow 0.2s ease;
+}
+.j-role-sticky-search-wrap.is-scrolled,
+.j-role-index-sticky-wrap.is-scrolled {
+    box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+}
+.j-role-index-search-bar {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid #059669;
+    border-radius: 999px;
+    padding: 4px 8px 4px 14px;
+    box-shadow: 0 4px 16px -2px rgba(5, 150, 105, 0.12);
+}
+.j-role-index-search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px !important;
+    color: #0F172A;
+    background: transparent;
+    font-family: inherit;
+    font-weight: 600;
+    height: 36px;
+}
+.j-role-index-search-input::placeholder {
+    color: #94A3B8;
+    font-size: 14px !important;
+    font-weight: 450;
+}
+.j-role-az-container {
+    border-top: 1px solid #EEF2F6;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+.j-role-az-label {
+    font-size: 0.72rem;
+    font-weight: 750;
+    color: #64748B;
+    margin-bottom: 6px;
+}
+.j-mob-az-slider {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
+.j-mob-az-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.j-mob-az-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #475569;
+    border: 1.5px solid #CBD5E1;
+    font-size: 0.78rem;
+    font-weight: 750;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.j-mob-az-pill.active {
+    background: #059669 !important;
+    color: #FFFFFF !important;
+    border-color: #059669 !important;
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+.j-mob-role-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.j-mob-role-card:active {
+    transform: scale(0.98);
+    border-color: #059669;
+}
+.j-mob-role-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.j-mob-role-card__inner {
+    padding: 14px 14px;
+}
+.j-mob-role-card__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #ECFDF5;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.j-mob-role-card__title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0B1F1A;
+    line-height: 1.25;
+    margin: 0 0 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.j-mob-role-card__badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+.j-mob-page-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 8px;
+    color: #0F172A;
+    font-weight: 750;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+/* Mobile Suggestion Dropdown styling */
+.j-suggest-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.12);
+    z-index: 1000;
+    overflow: hidden;
+    padding: 6px 0;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.j-suggest-header {
+    padding: 4px 12px 2px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748B;
+}
+.j-suggest-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    cursor: pointer;
+    min-height: 40px;
+    box-sizing: border-box;
+}
+.j-suggest-item * {
+    pointer-events: none !important;
+}
+.j-suggest-item:active {
+    background: #F0FDF4;
+}
+.j-suggest-title {
+    font-size: 0.85rem;
+    font-weight: 650;
+    color: #0F172A;
+}
+.j-suggest-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #059669;
+    background: #ECFDF5;
+    padding: 2px 6px;
+    border-radius: 9999px;
+}
+.j-search-clear-btn {
+    background: #E2E8F0;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    flex-shrink: 0;
+}
+</style>
+
+<script>
+// Mobile live role filtering
+function filterRolesLiveMobile(val) {
+    const q = (val || '').toLowerCase().trim();
+    const clearBtn = document.getElementById('role-search-clear-m');
+    if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
+
+    const cards = document.querySelectorAll('#roles-cards-list-m .j-mob-role-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+        const name = card.getAttribute('data-name') || '';
+        if (!q || name.includes(q)) {
+            card.style.display = 'block';
+            visible++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const empty = document.getElementById('noRolesLiveEmptyStateMobile');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+}
+
+function clearRoleSearchMobile() {
+    const input = document.getElementById('role-search-input-m');
+    if (input) {
+        input.value = '';
+        input.focus();
+    }
+    filterRolesLiveMobile('');
+}
+
+// Mobile autocomplete
+(function() {
+    function initRoleAutocompleteMobile(inputId, clearBtnId, dropdownId, type, formId) {
+        const input = document.getElementById(inputId);
+        const clearBtn = document.getElementById(clearBtnId);
+        const dropdown = document.getElementById(dropdownId);
+        const form = document.getElementById(formId);
+        if (!input || !dropdown) return;
+        if (input.dataset.autocompleteAttached === 'true') return;
+        input.dataset.autocompleteAttached = 'true';
+
+        let debounceTimer = null;
+
+        function fetchRoleSuggestions(q) {
+            const url = '/api/search/suggestions/?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q || '');
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        renderSuggestions(data);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function renderSuggestions(list) {
+            if (!list || list.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            let html = '<div class="jy-suggest-header">Suggestions</div>';
+            list.forEach(item => {
+                html += '<div class="jy-suggest-item" data-val="' + encodeURIComponent(item.value) + '">';
+                html += '  <span class="jy-suggest-title">' + (item.label || item.value) + '</span>';
+                html += '  <span class="jy-suggest-badge">' + (item.count ? item.count + ' jobs' : item.category) + '</span>';
+                html += '</div>';
+            });
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+
+            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+                const selectItemHandler = function(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    const target = e.currentTarget || this;
+                    const rawVal = target.getAttribute('data-val');
+                    if (rawVal) {
+                        chooseRoleItem(decodeURIComponent(rawVal));
+                    }
+                };
+                el.addEventListener('mousedown', selectItemHandler);
+                el.addEventListener('click', selectItemHandler);
+                el.addEventListener('touchend', selectItemHandler);
+            });
+        }
+
+        let lastRoleSelectedTime = 0;
+        function chooseRoleItem(val) {
+            const now = Date.now();
+            if (now - lastRoleSelectedTime < 350) return;
+            lastRoleSelectedTime = now;
+
+            input.value = val;
+            dropdown.style.display = 'none';
+            isOverDropdown = false;
+            if (clearBtn) clearBtn.style.display = 'flex';
+            if (form) {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        dropdown.addEventListener('mousedown', function(e) { e.preventDefault(); });
+
+        let isOverDropdown = false;
+        dropdown.addEventListener('mouseenter', function() { isOverDropdown = true; });
+        dropdown.addEventListener('mouseleave', function() { isOverDropdown = false; });
+        dropdown.addEventListener('touchstart', function() { isOverDropdown = true; }, { passive: true });
+        dropdown.addEventListener('touchend', function() { setTimeout(() => { isOverDropdown = false; }, 300); }, { passive: true });
+
+        input.addEventListener('input', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetchRoleSuggestions(val);
+            }, 100);
+        });
+
+        input.addEventListener('focus', function() {
+            fetchRoleSuggestions(this.value);
+        });
+
+        input.addEventListener('click', function() {
+            if (dropdown.style.display === 'none' || dropdown.innerHTML === '') {
+                fetchRoleSuggestions(this.value);
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!isOverDropdown) {
+                    dropdown.style.display = 'none';
+                }
+            }, 250);
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                input.value = '';
+                clearBtn.style.display = 'none';
+                input.focus();
+            });
+        }
+    }
+
+    function setupRoleSearchAutocompleteMobile() {
+        initRoleAutocompleteMobile('role-search-q-m', 'role-clear-q-m', 'suggest-dropdown-role-q-m', 'job', 'role-search-form-m');
+        initRoleAutocompleteMobile('role-search-loc-m', 'role-clear-loc-m', 'suggest-dropdown-role-loc-m', 'location', 'role-search-form-m');
+    }
+
+    // Sticky Elevation on Scroll for Role Detail & Directory Index Search Wrap
+    function initRoleStickyScroll() {
+        const wrap = document.getElementById('jRoleStickySearchWrap') || document.getElementById('jRoleIndexStickyWrap');
+        if (!wrap) return;
+        const onScroll = function() {
+            if (window.scrollY > 20) {
+                wrap.classList.add('is-scrolled');
+            } else {
+                wrap.classList.remove('is-scrolled');
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setupRoleSearchAutocompleteMobile();
+            initRoleStickyScroll();
+        });
+    } else {
+        setupRoleSearchAutocompleteMobile();
+        initRoleStickyScroll();
+    }
+    window.addEventListener('jobyuk:turbo-load', function() {
+        setupRoleSearchAutocompleteMobile();
+        initRoleStickyScroll();
+    });
+    window.addEventListener('popstate', function() {
+        setTimeout(function() {
+            setupRoleSearchAutocompleteMobile();
+            initRoleStickyScroll();
+        }, 50);
+    });
+})();
+</script>
+{{end}}

@@ -1,0 +1,174 @@
+# ==============================================================================
+# Jobies.co.uk - Comprehensive Git Ignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Environment & Sensitive Credentials (Never Commit Secrets)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.cer
+*.pfx
+*.p12
+*.pub
+*.secret
+*.passwd
+credentials.json
+google-credentials.json
+google-key.json
+*.sql.gz
+*.dump
+
+# ------------------------------------------------------------------------------
+# 2. Go Compiled Binaries & Executables
+# ------------------------------------------------------------------------------
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.prof
+*.out
+jobies
+jobies.exe
+jobies_test
+jobies_test.exe
+jobyuk
+jobyuk.exe
+jobyuk_test
+jobyuk_test.exe
+hirelyuk
+hirelyuk.exe
+hirelyuk_test
+hirelyuk_test.exe
+create_admin
+create_admin.exe
+seed_1000_roles
+seed_1000_roles.exe
+fetch_reed
+fetch_reed.exe
+backfill_logos
+backfill_logos.exe
+
+# Build Output Directories
+bin/
+dist/
+build/
+out/
+
+# Go internal artifacts
+_test/
+_testmain.go
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+# ------------------------------------------------------------------------------
+# 3. Local Databases, In-Memory Caches & Runtime Data
+# ------------------------------------------------------------------------------
+pgdata/
+pgsql/
+redis/
+go/
+data/
+*.rdb
+dump.rdb
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# User Uploads & Generated Media Cache
+web/static/uploads/
+web/static/cache/
+
+# ------------------------------------------------------------------------------
+# 4. Logs, Dumps & Diagnostics
+# ------------------------------------------------------------------------------
+*.log
+logs/
+postgres.log
+desc_output.txt
+debug.txt
+debug.log
+core
+core.*
+*.stackdump
+
+# ------------------------------------------------------------------------------
+# 5. Temporary & Scratch Files
+# ------------------------------------------------------------------------------
+scratch/
+tmp/
+temp/
+temp-*/
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+screenshots/
+*_qa_results.json
+scratch_audit_results.json
+screaming_frog_crawl_export.csv
+
+# ------------------------------------------------------------------------------
+# 6. Node & Frontend Tooling (in case frontend packages are used)
+# ------------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.turbo/
+.parcel-cache/
+
+# ------------------------------------------------------------------------------
+# 7. Operating System Artifacts
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Log.txt
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+# ------------------------------------------------------------------------------
+# 8. IDEs, Editors & Workspaces
+# ------------------------------------------------------------------------------
+.idea/
+.vscode/
+*.code-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swo
+*.swp
+*.sublime-project
+*.sublime-workspace
+.fleet/

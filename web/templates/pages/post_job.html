@@ -1,0 +1,77 @@
+{{define "content"}}
+<div class="container section">
+    {{template "breadcrumbs" .}}
+
+    <div class="resource-page-wrap animate-fade-in">
+        <!-- Hero Header -->
+        <header class="resource-hero">
+            <div class="resource-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span>JobyUK.com for Employers & Recruiters</span>
+            </div>
+            <h1 class="resource-title">Post a Job & Reach Top UK Talent</h1>
+            <p class="resource-subtitle">
+                Connect with active UK job seekers, developers, healthcare professionals, and verified specialists across England, Scotland, Wales, and Northern Ireland.
+            </p>
+        </header>
+
+        <div style="margin: 28px 0 16px;">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #0B1F1A; margin: 0 0 4px; letter-spacing: -0.02em;">Why Post Directly on JobyUK?</h2>
+            <p style="font-size: 0.9rem; color: #64748B; margin: 0;">Connect with high-intent UK talent seeking direct employer relationships.</p>
+        </div>
+        <div class="resource-features-3col">
+            <div class="resource-feature-card">
+                <div class="resource-icon-box theme-tech">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <h3>Targeted UK Candidate Reach</h3>
+                <p>Your vacancy is categorized into dedicated role directories, city hubs, and salary benchmark pages for maximum relevance.</p>
+            </div>
+
+            <div class="resource-feature-card">
+                <div class="resource-icon-box theme-health">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                </div>
+                <h3>Google Jobs & ATS Enhanced</h3>
+                <p>Auto-formatted with schema markup to index into Google Jobs search, boosting candidate application rates effortlessly.</p>
+            </div>
+
+            <div class="resource-feature-card">
+                <div class="resource-icon-box theme-finance">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                </div>
+                <h3>Fast Turnaround & Direct Feeds</h3>
+                <p>Direct linking to your Greenhouse, Lever, Workday, or custom careers portal with zero intermediary candidate capture.</p>
+            </div>
+        </div>
+
+        <!-- Main Submission Inquiry Card -->
+        <div class="resource-card resource-card--center">
+            <div class="resource-section-header resource-section-header--center">
+                <h2>Submit Your Vacancy or ATS Feed</h2>
+            </div>
+            <p class="resource-cta-desc">
+                Send us your job description, ATS careers link, or XML feed details. Our team will review and index your positions promptly.
+            </p>
+
+            <a href="mailto:{{getSiteEmail}}?subject=Employer%20Job%20Posting%20Inquiry%20-%20JobyUK.com" class="resource-employer-btn">
+                <div class="employer-btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <div class="employer-btn-text">
+                    <span class="employer-btn-title">Email Vacancy Details</span>
+                    <span class="employer-btn-email">{{getSiteEmail}}</span>
+                </div>
+                <div class="employer-btn-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+
+            <div class="resource-response-pill">
+                <span class="pulse-dot"></span>
+                <span>Average response time: <strong>under 2 hours</strong> (Mon–Fri UK hours)</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

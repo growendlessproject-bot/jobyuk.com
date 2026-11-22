@@ -1,0 +1,65 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 20px; padding-bottom: 50px;">
+    {{template "breadcrumbs" .}}
+
+    <!-- Mobile Hero -->
+    <header style="margin-bottom: 24px; text-align: left;">
+
+        <h1 style="font-size: 1.75rem; font-weight: 850; color: #0F172A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 10px;">
+            Post a Job & Hire UK Talent Direct
+        </h1>
+        <p style="font-size: 0.92rem; color: #64748B; line-height: 1.5; margin: 0;">
+            Reach 50,000+ monthly UK job hunters across England, Scotland, Wales, and Northern Ireland. Direct ATS applications, 0% recruiter fees.
+        </p>
+    </header>
+
+    <!-- Mobile Action Card -->
+    <div style="background: #FFFFFF; border: 1.5px solid #A7F3D0; border-radius: 18px; padding: 24px 18px; box-shadow: 0 4px 16px rgba(5, 150, 105, 0.08); margin-bottom: 24px;">
+        <div style="font-size: 0.75rem; font-weight: 800; color: #065F46; background: #ECFDF5; display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px;">
+            FAST-TRACK LISTING
+        </div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 8px;">List Your Vacancy</h2>
+        <p style="font-size: 0.85rem; color: #64748B; line-height: 1.5; margin: 0 0 18px;">
+            Email our UK hiring desk with your job description or ATS URL. We verify, format, and publish your role within 2 hours.
+        </p>
+
+        <a href="mailto:{{getSiteEmail}}?subject=Mobile%20Job%20Posting%20Inquiry%20-%20JobyUK.com" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: #FFFFFF; font-weight: 750; font-size: 0.95rem; border-radius: 12px; text-decoration: none; box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>Email Us: {{getSiteEmail}}</span>
+        </a>
+    </div>
+
+    <!-- Mobile Features Stack -->
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div>
+                <strong style="font-size: 0.9rem; color: #0F172A; display: block; margin-bottom: 2px;">Direct ATS Application</strong>
+                <span style="font-size: 0.78rem; color: #64748B;">Candidates apply directly on your site or ATS portal.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #FEF3C7; color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            </div>
+            <div>
+                <strong style="font-size: 0.9rem; color: #0F172A; display: block; margin-bottom: 2px;">Google for Jobs Indexed</strong>
+                <span style="font-size: 0.78rem; color: #64748B;">Direct Apply Schema included for enhanced search presence.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #EEF2FF; color: #4F46E5; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+                <strong style="font-size: 0.9rem; color: #0F172A; display: block; margin-bottom: 2px;">Verified UK Employer Shield</strong>
+                <span style="font-size: 0.78rem; color: #64748B;">Build candidate trust with our official verified badge.</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

@@ -1,0 +1,127 @@
+{{define "content"}}
+<div class="jy-dream-hub" id="jobs-top" style="padding: 12px; padding-bottom: 56px;">
+    {{template "breadcrumbs" .}}
+    {{template "wfa_leaderboard" .}}
+
+    {{if .Data.Industry}}
+    <!-- Industry Detail View Mobile -->
+    <section class="jy-dream-header" aria-label="Industry Job Search Header" style="padding: 20px 16px; margin-bottom: 18px;">
+        <div style="margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+                <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 4px;">
+                    UK Sector
+                </span>
+                <span style="font-size: 0.7rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                    Direct ATS
+                </span>
+            </div>
+            <h1 class="jy-dream-header__title" style="font-size: 1.55rem !important; margin: 0 0 6px; line-height: 1.25;">
+                {{.Data.Industry.Name}} Jobs in the UK
+            </h1>
+            <p class="jy-dream-header__count" style="font-size: 0.86rem; margin: 0;">
+                {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                    <strong>{{formatSalary .Data.Results.Total}}</strong> vacancies in this sector
+                {{else}}
+                    Browse verified opportunities
+                {{end}}
+            </p>
+        </div>
+
+        <form action="/jobs/" method="GET" class="jy-dream-search-form" id="industry-search-m">
+            <div class="jy-dream-search-bar" style="gap: 10px; margin-bottom: 12px;">
+                <div class="jy-dream-input-pill" style="padding: 10px 14px; width: 100%; box-sizing: border-box;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" name="q" placeholder="Keywords in {{.Data.Industry.Name}}" autocomplete="off" style="font-size: 0.88rem;" />
+                </div>
+                <div class="jy-dream-input-pill" style="padding: 10px 14px; width: 100%; box-sizing: border-box;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <input type="text" name="location" placeholder="Location (e.g. London)" autocomplete="off" style="font-size: 0.88rem;" />
+                </div>
+                <button type="submit" class="jy-dream-search-btn" style="width: 100%; padding: 12px; font-size: 14px;">Search Jobs</button>
+            </div>
+
+            <!-- Horizontal Scroll Quick Tag Pills -->
+            <div class="jy-dream-tags" style="overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px;">
+                <a href="/jobs/?industry={{.Data.Industry.Slug}}&job_type=full_time" class="jy-dream-tag" style="flex-shrink: 0;">Full time</a>
+                <a href="/jobs/?industry={{.Data.Industry.Slug}}&remote_type=remote" class="jy-dream-tag" style="flex-shrink: 0;">Remote</a>
+                <a href="/jobs/?industry={{.Data.Industry.Slug}}&remote_type=hybrid" class="jy-dream-tag" style="flex-shrink: 0;">Hybrid</a>
+                <a href="/jobs/?industry={{.Data.Industry.Slug}}&location=London" class="jy-dream-tag" style="flex-shrink: 0;">London</a>
+            </div>
+        </form>
+    </section>
+
+    <!-- Mobile Job Cards Feed -->
+    <main class="jy-dream-listings" aria-label="Job listings list">
+        <div class="jy-card-list stagger">
+            {{range .Data.Results.Jobs}}
+                {{template "job_card_mobile" .}}
+            {{else}}
+                <div style="text-align: center; padding: 48px 16px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px;">
+                    <h2 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin-bottom: 6px;">No live jobs in {{$.Data.Industry.Name}}</h2>
+                    <p style="color: #64748B; font-size: 0.88rem; margin: 0 0 16px;">Check back soon or explore all UK vacancies.</p>
+                    <a href="/jobs/" style="display: inline-flex; padding: 9px 20px; background: #059669; color: #FFFFFF; border-radius: 20px; font-weight: 750; font-size: 0.85rem; text-decoration: none;">Browse All Jobs</a>
+                </div>
+            {{end}}
+        </div>
+
+        <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 24px;">
+            {{template "pagination" .Data.Results}}
+        </div>
+    </main>
+
+    {{else}}
+    <!-- Industry Index View Mobile -->
+    <section class="jy-dream-header" aria-label="Industry Directory Header" style="padding: 24px 16px; margin-bottom: 20px; text-align: center;">
+        <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 9999px;">
+            UK Sector Directory
+        </span>
+        <h1 style="font-size: 1.65rem; font-weight: 850; color: #0B1F1A; margin: 10px 0 6px; line-height: 1.25;">
+            Browse Jobs by Industry
+        </h1>
+        <p style="font-size: 0.88rem; color: #64748B; margin: 0 0 18px; line-height: 1.5;">
+            Explore career opportunities across all major UK sectors.
+        </p>
+
+        <div style="position: relative;">
+            <div style="display: flex; align-items: center; background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 50px; padding: 5px 14px; box-shadow: 0 2px 10px rgba(11, 31, 26, 0.05);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" style="margin-right: 8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search sectors..." style="flex: 1; border: none; outline: none; font-size: 0.88rem; background: transparent; color: #0B1F1A;" autocomplete="off" oninput="filterIndustriesMobile(this.value)">
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Cards Mobile Grid -->
+    <div style="display: flex; flex-direction: column; gap: 12px;" id="industries-grid-m">
+        {{range .Data.Industries}}
+            <a href="/industries/{{.Slug}}/" class="jy-industry-card-m" data-industry-name="{{.Name}}" style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; text-decoration: none; color: #0B1F1A; box-shadow: 0 2px 8px rgba(11, 31, 26, 0.02);">
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
+                    <div style="min-width: 0;">
+                        <div style="font-size: 0.96rem; font-weight: 800; color: #0B1F1A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{.Name}}</div>
+                        <span style="display: inline-block; font-size: 0.75rem; color: #059669; font-weight: 750;">{{.FormattedJobCount}}</span>
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        {{end}}
+    </div>
+
+    <script>
+    function filterIndustriesMobile(query) {
+        var q = (query || '').toLowerCase().trim();
+        var cards = document.querySelectorAll('.j-industry-card-m');
+        cards.forEach(function(card) {
+            var name = (card.getAttribute('data-industry-name') || '').toLowerCase();
+            if (!q || name.indexOf(q) !== -1) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    </script>
+    {{end}}
+</div>
+{{end}}

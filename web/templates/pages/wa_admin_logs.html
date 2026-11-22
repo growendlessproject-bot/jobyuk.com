@@ -1,0 +1,817 @@
+{{define "content"}}
+<style>
+.wa-dash-wrap {
+    max-width: 1240px;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+.wa-header-bar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.04);
+}
+.wa-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.wa-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.22) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.wa-header-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+}
+.wa-header-sub {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0;
+}
+.wa-tabs-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.wa-tabs-bar::-webkit-scrollbar {
+    display: none;
+}
+.wa-tab-btn {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    color: #64748b;
+}
+.wa-tab-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+.wa-tab-btn.active {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+.wa-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    margin-bottom: 24px;
+}
+.wa-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+.wa-table th {
+    text-align: left;
+    padding: 13px 16px;
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    border-bottom: 1px solid #e2e8f0;
+}
+.wa-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    vertical-align: middle;
+}
+.wa-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 9999px;
+}
+.wa-pill-active {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+.wa-pill-offline {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+.wa-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+.wa-dot-green {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+.wa-dot-red {
+    background: #ef4444;
+}
+
+/* Mobile Executive Navigation - Hidden by default on Desktop */
+.wa-ios-admin-nav,
+.wa-ios-page-hero {
+    display: none;
+}
+.wa-logs-mobile-feed {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Global Viewport Containment */
+    html, body {
+        overflow-x: clip !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+
+    .wa-dash-wrap {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 10px 12px 70px 12px !important;
+        box-sizing: border-box !important;
+        overflow-x: clip !important;
+        margin: 0 !important;
+    }
+
+    /* Hide Desktop Header and Desktop Tabs completely on mobile */
+    .wa-header-bar,
+    .wa-tabs-bar {
+        display: none !important;
+    }
+
+    /* Mobile Executive Navigation (Exact wa-client style) */
+    .wa-ios-admin-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-bottom: 12px !important;
+    }
+    .wa-ios-admin-topbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-admin-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    .wa-ios-admin-avatar {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 11px !important;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.22) 100%) !important;
+        border: 1.5px solid rgba(16, 185, 129, 0.3) !important;
+        color: #059669 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+    .wa-ios-admin-name {
+        font-size: 0.88rem !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+        line-height: 1.2 !important;
+    }
+    .wa-ios-admin-meta {
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        font-size: 0.70rem !important;
+        font-weight: 650 !important;
+        color: #64748b !important;
+    }
+    .wa-ios-live-dot {
+        width: 6px !important;
+        height: 6px !important;
+        border-radius: 50% !important;
+        background: #10b981 !important;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.8) !important;
+        animation: waPulse 2s infinite !important;
+    }
+    .wa-ios-logout-pill {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 5px 10px !important;
+        border-radius: 9999px !important;
+        background: #fef2f2 !important;
+        border: 1px solid #fee2e2 !important;
+        color: #dc2626 !important;
+        font-size: 0.72rem !important;
+        font-weight: 750 !important;
+        text-decoration: none !important;
+        transition: all 0.15s ease !important;
+    }
+    .wa-ios-logout-pill:active {
+        transform: scale(0.94) !important;
+        background: #fee2e2 !important;
+    }
+
+    /* 5-Icon Navigation Tabs (Matching wa-client direct row) */
+    .wa-ios-modes-row {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 2px !important;
+        margin-bottom: 12px !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-mode-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 4px !important;
+        cursor: pointer !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        max-width: 20% !important;
+        text-decoration: none !important;
+        position: relative !important;
+        -webkit-tap-highlight-color: transparent !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-mode-circle {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 14px !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #64748b !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        position: relative !important;
+        margin: 0 auto !important;
+        flex-shrink: 0 !important;
+    }
+    .wa-ios-mode-item:active .wa-ios-mode-circle {
+        transform: scale(0.92) !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-circle {
+        border-color: #059669 !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 6px 18px rgba(16, 185, 129, 0.32) !important;
+        transform: translateY(-2px) !important;
+    }
+    .wa-ios-mode-label {
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        color: #64748b !important;
+        transition: color 0.15s ease !important;
+        text-align: center !important;
+        width: 100% !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-label {
+        color: #059669 !important;
+        font-weight: 850 !important;
+    }
+    .wa-ios-mode-dot {
+        width: 4px !important;
+        height: 4px !important;
+        border-radius: 50% !important;
+        background: transparent !important;
+        transition: all 0.2s !important;
+    }
+    .wa-ios-mode-item.active .wa-ios-mode-dot {
+        background: #059669 !important;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    /* Page Hero on Mobile */
+    .wa-ios-page-hero {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-ios-hero-title {
+        font-size: 0.95rem !important;
+        font-weight: 850 !important;
+        color: #0f172a !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+    .wa-ios-hero-sub {
+        font-size: 0.70rem !important;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        margin-top: 2px !important;
+    }
+    .wa-ios-hero-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 11px !important;
+        padding: 7px 13px !important;
+        font-size: 0.76rem !important;
+        font-weight: 750 !important;
+        cursor: pointer !important;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.28) !important;
+        transition: all 0.15s ease !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
+    .wa-ios-hero-btn:active {
+        transform: scale(0.94) !important;
+    }
+
+    /* Table to Mobile Feed Switch */
+    .wa-logs-desktop-table {
+        display: none !important;
+    }
+    .wa-logs-mobile-feed {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 12px 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-log-mobile-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .wa-lmc-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .wa-lmc-phone {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #0f172a;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+    .wa-lmc-name {
+        font-size: 0.74rem;
+        color: #64748b;
+    }
+    .wa-lmc-title {
+        font-size: 0.90rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.25;
+    }
+    .wa-lmc-company {
+        font-size: 0.76rem;
+        color: #475569;
+        font-weight: 600;
+    }
+    .wa-lmc-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 2px;
+    }
+    .wa-lmc-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 2px 7px;
+        font-size: 0.70rem;
+        color: #475569;
+        font-weight: 600;
+    }
+    .wa-lmc-pill-salary {
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        color: #047857;
+        font-weight: 700;
+    }
+    .wa-pagination-mobile {
+        flex-direction: column !important;
+        gap: 10px !important;
+        text-align: center !important;
+        padding: 12px 14px !important;
+    }
+    .wa-pagination-mobile > div {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .wa-pagination-mobile a {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 8px !important;
+        border-radius: 10px !important;
+    }
+}
+</style>
+
+<div class="wa-dash-wrap">
+    <!-- MOBILE EXECUTIVE NAVIGATION (Exact wa-client 5-Icon Navigation) -->
+    <div class="wa-ios-admin-nav">
+        <!-- Top Executive Status Bar -->
+        <div class="wa-ios-admin-topbar">
+            <div class="wa-ios-admin-brand">
+                <div class="wa-ios-admin-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="wa-ios-admin-name">WhatsApp Admin</div>
+                    <div class="wa-ios-admin-meta">
+                        <span class="wa-ios-live-dot"></span>
+                        <span class="wa-ios-live-text">Delivery Logs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="wa-ios-admin-top-actions">
+                <a href="/wa-portal/logout" class="wa-ios-logout-pill" title="Sign Out">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Exit</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5-Icon Navigation Tabs (The Real Direct Mobile Tabs) -->
+        <div class="wa-ios-modes-row">
+            <!-- 1. Overview -->
+            <a href="/wa-portal" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Overview</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 2. Subscribers -->
+            <a href="/wa-portal/subscribers" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Subscribers</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 3. Logs -->
+            <a href="/wa-portal/logs" class="wa-ios-mode-item active">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Logs</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 4. Payments -->
+            <a href="/wa-portal/payment-settings" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Payments</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+
+            <!-- 5. Analytics -->
+            <a href="/wa-portal/analytics" class="wa-ios-mode-item">
+                <div class="wa-ios-mode-circle">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                </div>
+                <span class="wa-ios-mode-label">Analytics</span>
+                <span class="wa-ios-mode-dot"></span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Sub-Hero -->
+    <div class="wa-ios-page-hero">
+        <div>
+            <div class="wa-ios-hero-title">
+                <span>Delivery Logs</span>
+                <span style="font-size: 0.65rem; background: #f1f5f9; color: #475569; padding: 2px 7px; border-radius: 6px; font-weight: 700;">{{.Data.Total}} sent</span>
+            </div>
+            <div class="wa-ios-hero-sub">Page {{.Data.Page}} of {{.Data.TotalPages}}</div>
+        </div>
+        <div>
+            <a href="/wa-portal/logs" class="wa-ios-hero-btn" style="text-decoration: none; padding: 6px 12px; font-size: 0.74rem;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span>Refresh</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header (Desktop Only) -->
+    <div class="wa-header-bar">
+        <div class="wa-header-left">
+            <div class="wa-avatar">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+            </div>
+            <div>
+                <h1 class="wa-header-title">Delivery Logs</h1>
+                <p class="wa-header-sub">Complete log of job alerts and messages sent to subscribers</p>
+            </div>
+        </div>
+
+        <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
+            Showing Page {{.Data.Page}} of {{.Data.TotalPages}} ({{.Data.Total}} Total Records)
+        </div>
+    </div>
+
+    <!-- Tabs Bar (Desktop Only) -->
+    <div class="wa-tabs-bar">
+        <a href="/wa-portal" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>Overview</span>
+        </a>
+        <a href="/wa-portal/subscribers" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Subscribers</span>
+        </a>
+        <a href="/wa-portal/logs" class="wa-tab-btn active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>Delivery Logs</span>
+        </a>
+        <a href="/wa-portal/payment-settings" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+            <span>Payments & Wallets</span>
+        </a>
+        <a href="/wa-portal/analytics" class="wa-tab-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span>Analytics</span>
+        </a>
+    </div>
+
+    <!-- Full Logs Table (Desktop) -->
+    <div class="wa-card" style="padding: 0; overflow: hidden;">
+        <div class="wa-logs-desktop-table">
+            <div style="overflow-x: auto;">
+                <table class="wa-table">
+                    <thead>
+                        <tr>
+                            <th>Recipient</th>
+                            <th>Job Title & Company</th>
+                            <th>Location</th>
+                            <th>Salary</th>
+                            <th>Status</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{if .Data.Logs}}
+                        {{range .Data.Logs}}
+                        <tr>
+                            <td>
+                                <strong style="color: #0f172a; font-size: 0.92rem;">{{.PhoneNumber}}</strong>
+                                {{if .SubscriberName}}<br><span style="font-size: 0.78rem; color: #64748b;">{{.SubscriberName}}</span>{{end}}
+                            </td>
+                            <td>
+                                <strong style="color: #0f172a;">{{.JobTitle}}</strong>
+                                {{if .Company}}<br><span style="font-size: 0.78rem; color: #475569;">{{.Company}}</span>{{end}}
+                            </td>
+                            <td>
+                                <span style="display: inline-flex; align-items: center; gap: 4px; color: #475569;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>{{.Location}}</span>
+                                </span>
+                            </td>
+                            <td><span style="font-weight: 700; color: #059669;">{{.SalaryText}}</span></td>
+                            <td>
+                                {{if eq .Status "sent"}}
+                                <span class="wa-badge-pill wa-pill-active">
+                                    <span class="wa-dot wa-dot-green"></span>
+                                    <span>Delivered</span>
+                                </span>
+                                {{else}}
+                                <span class="wa-badge-pill wa-pill-offline">
+                                    <span class="wa-dot wa-dot-red"></span>
+                                    <span>Failed</span>
+                                </span>
+                                {{if .ErrorMessage}}<br><span style="font-size: 0.72rem; color: #ef4444;">{{.ErrorMessage}}</span>{{end}}
+                                {{end}}
+                            </td>
+                            <td style="font-size: 0.82rem; color: #64748b;">{{formatDate .SentAt}}</td>
+                        </tr>
+                        {{end}}
+                        {{else}}
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 48px; color: #64748b;">
+                                No message delivery logs found yet.
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mobile Logs Card Feed (Mobile Only) -->
+        <div class="wa-logs-mobile-feed">
+            {{if .Data.Logs}}
+            {{range .Data.Logs}}
+            <div class="wa-log-mobile-card">
+                <div class="wa-lmc-top">
+                    <div>
+                        <div class="wa-lmc-phone">{{.PhoneNumber}}</div>
+                        {{if .SubscriberName}}<div class="wa-lmc-name">{{.SubscriberName}}</div>{{end}}
+                    </div>
+                    <div>
+                        {{if eq .Status "sent"}}
+                        <span class="wa-badge-pill wa-pill-active" style="font-size: 0.7rem; padding: 3px 8px;">
+                            <span class="wa-dot wa-dot-green"></span>
+                            <span>Delivered</span>
+                        </span>
+                        {{else}}
+                        <span class="wa-badge-pill wa-pill-offline" style="font-size: 0.7rem; padding: 3px 8px;">
+                            <span class="wa-dot wa-dot-red"></span>
+                            <span>Failed</span>
+                        </span>
+                        {{end}}
+                    </div>
+                </div>
+
+                <div class="wa-lmc-title">{{.JobTitle}}</div>
+                {{if .Company}}<div class="wa-lmc-company">{{.Company}}</div>{{end}}
+
+                <div class="wa-lmc-pills">
+                    {{if .Location}}
+                    <span class="wa-lmc-pill" style="display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>{{.Location}}</span>
+                    </span>
+                    {{end}}
+                    {{if .SalaryText}}
+                    <span class="wa-lmc-pill wa-lmc-pill-salary" style="display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 7c0-5.333-8-5.333-8 0v10h8m-8-5h6m-9 5h12"></path></svg>
+                        <span>{{.SalaryText}}</span>
+                    </span>
+                    {{end}}
+                    <span class="wa-lmc-pill" style="color: #64748b; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>{{formatDate .SentAt}}</span>
+                    </span>
+                </div>
+
+                {{if and (ne .Status "sent") .ErrorMessage}}
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 6px 10px; font-size: 0.72rem; color: #dc2626; margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <span>{{.ErrorMessage}}</span>
+                </div>
+                {{end}}
+            </div>
+            {{end}}
+            {{else}}
+            <div style="text-align: center; padding: 32px 16px; color: #64748b; font-size: 0.85rem;">
+                No message delivery logs found yet.
+            </div>
+            {{end}}
+        </div>
+
+        {{if gt .Data.TotalPages 1}}
+        <div class="wa-pagination-mobile" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-top: 1px solid #f1f5f9; background: #ffffff;">
+            <span style="font-size: 0.82rem; color: #64748b;">Page <strong>{{.Data.Page}}</strong> of <strong>{{.Data.TotalPages}}</strong> ({{.Data.Total}} Total Records)</span>
+            <div style="display: flex; gap: 8px;">
+                {{if gt .Data.Page 1}}
+                <a href="/wa-portal/logs?page={{sub .Data.Page 1}}" class="wa-btn wa-btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 9px; text-decoration: none; border: 1.5px solid #cbd5e1; display: inline-flex; align-items: center; gap: 4px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Previous</span>
+                </a>
+                {{end}}
+                {{if lt .Data.Page .Data.TotalPages}}
+                <a href="/wa-portal/logs?page={{add .Data.Page 1}}" class="wa-btn wa-btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 9px; text-decoration: none; border: 1.5px solid #cbd5e1; display: inline-flex; align-items: center; gap: 4px;">
+                    <span>Next</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}

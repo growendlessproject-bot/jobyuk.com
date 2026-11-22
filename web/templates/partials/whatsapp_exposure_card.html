@@ -1,0 +1,88 @@
+{{define "whatsapp_infeed_card"}}
+{{if whatsappAlertsEnabled}}
+<style>
+@media (max-width: 768px) {
+    .wa-infeed-card {
+        display: none !important;
+    }
+}
+</style>
+<div class="wa-infeed-card" style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 60%, #ecfdf5 100%); border: 1.5px solid #86efac; border-radius: 16px; padding: 20px 22px; margin: 18px 0; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #10b981 0%, #059669 100%);"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px; min-width: 260px; flex: 1;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+            </div>
+            <div>
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                    <span style="font-size: 0.65rem; font-weight: 800; background: #dcfce7; color: #065f46; border: 1px solid #86efac; padding: 1px 6px; border-radius: 4px; text-transform: uppercase;">Direct WhatsApp Alert</span>
+                    <span style="font-size: 0.68rem; color: #64748b;">Instant Dispatch (&lt; 60s)</span>
+                </div>
+                <strong style="font-size: 0.98rem; color: #0f172a; display: block; line-height: 1.3;">
+                    {{if .CustomTitle}}{{.CustomTitle}}{{else}}Get New UK Jobs Dispatched Instantly to Your WhatsApp{{end}}
+                </strong>
+                <span style="font-size: 0.78rem; color: #475569;">
+                    {{if .CustomDesc}}{{.CustomDesc}}{{else}}Be among the first 10 applicants to maximize interview callbacks. Zero email clutter.{{end}}
+                </span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <a href="/whatsapp-alerts/{{if .Role}}?role={{.Role}}{{else if .Params}}{{if .Params.Query}}?role={{.Params.Query}}{{end}}{{end}}" onclick="if(typeof openWhatsAppModal==='function'){openWhatsAppModal({role:'{{if .Role}}{{.Role}}{{else if .Params}}{{if .Params.Query}}{{.Params.Query}}{{end}}{{end}}', source: 'infeed_card', ariaLabel: 'Activate 3-Day Free Trial - In-feed Job Card', placement: 'In-Feed Job Card'});return false;}" class="wa-btn wa-btn-primary" aria-label="Activate 3-Day Free Trial - In-feed Job Card" data-wa-source="infeed_card" data-wa-placement="In-Feed Job Card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; text-decoration: none; padding: 9px 16px; border-radius: 9px; font-weight: 800; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>Start 3-Day Free Trial</span>
+            </a>
+        </div>
+    </div>
+</div>
+{{end}}
+{{end}}
+
+{{define "whatsapp_sidebar_card"}}
+{{if whatsappAlertsEnabled}}
+<div class="ref-sidebar-widget" style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 70%, #ecfdf5 100%); border: 1.5px solid #a7f3d0; border-radius: 16px; padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <div style="width: 32px; height: 32px; border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+        </div>
+        <div>
+            <strong style="font-size: 0.88rem; color: #0f172a; display: block; line-height: 1.2;">Never Miss a Role Like This</strong>
+            <span style="font-size: 0.65rem; color: #059669; font-weight: 700; text-transform: uppercase;">Real-Time WhatsApp Alerts</span>
+        </div>
+    </div>
+    <p style="font-size: 0.76rem; color: #475569; margin: 0 0 12px 0; line-height: 1.4;">
+        Get newly published vacancies matching <strong>{{if .Role}}{{.Role}}{{else if .Job}}{{.Job.Title}}{{else if .Params}}{{if .Params.Query}}{{.Params.Query}}{{else}}matching roles{{end}}{{else}}matching roles{{end}}</strong> in <strong>{{if .Location}}{{.Location}}{{else if .Job}}{{.Job.DisplayLocation}}{{else}}the UK{{end}}</strong> sent directly to your phone.
+    </p>
+    <a href="/whatsapp-alerts/{{if .Role}}?role={{.Role}}{{else if .Job}}?role={{.Job.Title}}&location={{.Job.DisplayLocation}}{{else if .Params}}{{if .Params.Query}}?role={{.Params.Query}}{{end}}{{end}}" onclick="if(typeof openWhatsAppModal==='function'){openWhatsAppModal({role:'{{if .Role}}{{.Role}}{{else if .Job}}{{.Job.Title}}{{end}}',location:'{{if .Location}}{{.Location}}{{else if .Job}}{{.Job.DisplayLocation}}{{end}}', source: 'sidebar_card', ariaLabel: 'Get Alerts on WhatsApp - Job Sidebar Card', placement: 'Job Sidebar Card'});return false;}" class="wa-btn wa-btn-primary" aria-label="Get Alerts on WhatsApp - Job Sidebar Card" data-wa-source="sidebar_card" data-wa-placement="Job Sidebar Card" style="width: 100%; justify-content: center; background: #10b981; color: #ffffff; text-decoration: none; padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px; box-sizing: border-box; cursor: pointer;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Get Alerts on WhatsApp</span>
+    </a>
+</div>
+{{end}}
+{{end}}
+
+{{define "whatsapp_context_banner"}}
+{{if whatsappAlertsEnabled}}
+<div class="wa-context-banner" style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%); border: 1.5px solid #a7f3d0; border-radius: 16px; padding: 18px 22px; margin: 24px 0; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.07); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px; min-width: 260px; flex: 1;">
+        <div style="width: 40px; height: 40px; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+        </div>
+        <div>
+            <strong style="font-size: 0.95rem; color: #0f172a; display: block; line-height: 1.3;">
+                {{if .Title}}{{.Title}}{{else}}Instant Verified UK Job Alerts on WhatsApp{{end}}
+            </strong>
+            <span style="font-size: 0.76rem; color: #475569;">
+                {{if .Desc}}{{.Desc}}{{else}}Skip slow email digests. Receive new vacancies in your chat &lt; 60s of posting.{{end}}
+            </span>
+        </div>
+    </div>
+    <div>
+        <a href="/whatsapp-alerts/{{if .Role}}?role={{.Role}}{{end}}" onclick="if(typeof openWhatsAppModal==='function'){openWhatsAppModal({role:'{{if .Role}}{{.Role}}{{end}}', source: 'context_banner', ariaLabel: 'Start Free Trial - Context Banner', placement: 'Context Banner'});return false;}" class="wa-btn wa-btn-primary" aria-label="Start Free Trial - Context Banner" data-wa-source="context_banner" data-wa-placement="Context Banner" style="background: #10b981; color: #ffffff; text-decoration: none; padding: 8px 15px; border-radius: 9px; font-weight: 800; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.28); cursor: pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>Start Free Trial</span>
+        </a>
+    </div>
+</div>
+{{end}}
+{{end}}

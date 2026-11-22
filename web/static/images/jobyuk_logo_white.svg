@@ -1,0 +1,23 @@
+<svg width="172" height="40" viewBox="0 0 172 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="jobiesWhiteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#156D43" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="jobiesWhiteLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0F26F" />
+      <stop offset="100%" stop-color="#86EFAC" />
+    </linearGradient>
+  </defs>
+  <!-- Favicon Emblem with 'J' & Leaf Accent -->
+  <g transform="translate(0, 2) scale(0.0703125)">
+    <rect x="0" y="0" width="512" height="512" rx="136" fill="url(#jobiesWhiteGrad)" />
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M220 140 H350" stroke-width="48" />
+      <path d="M300 140 V300 C300 360 250 380 200 370 C160 360 140 320 145 280" stroke-width="48" />
+    </g>
+    <circle cx="350" cy="140" r="34" fill="url(#jobiesWhiteLeaf)" stroke="#FFFFFF" stroke-width="12" />
+  </g>
+  <!-- Typography -->
+  <text x="46" y="27" font-family="'Inter', -apple-system, sans-serif" font-size="22" font-weight="800" fill="#FFFFFF" letter-spacing="-0.03em">Joby<tspan fill="#86EFAC" font-weight="800">UK</tspan><tspan fill="#A7C9B8" font-weight="600" font-size="18">.com</tspan></text>
+</svg>

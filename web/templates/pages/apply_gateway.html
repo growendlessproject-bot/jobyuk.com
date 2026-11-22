@@ -1,0 +1,1104 @@
+{{define "content"}}
+<style>
+/* Page Wrapper - JobyUK.com Light Slate */
+.gw-page {
+    background-color: #F8FAFC;
+    min-height: calc(100vh - 140px);
+    padding: 24px 16px 60px;
+    color: #0F172A;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.gw-container {
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+/* Simple Theme-Based Navigation Bar */
+.gw-brand-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.gw-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.gw-back-link:hover {
+    color: #059669;
+}
+
+.gw-trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #0F172A;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.gw-trust-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+/* Top Ad Card */
+.gw-top-ad-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    text-align: center;
+}
+.gw-ad-caption {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: #94A3B8;
+    margin-bottom: 8px;
+}
+.gw-top-ad-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+}
+
+/* Bottom Ad Card */
+.gw-bottom-ad-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 24px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    text-align: center;
+}
+.gw-bottom-ad-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+}
+
+/* Grid Layout */
+.gw-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+@media (max-width: 900px) {
+    .gw-layout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Main Left Card */
+.gw-main-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+@media (max-width: 600px) {
+    .gw-main-card {
+        padding: 20px 16px;
+    }
+}
+
+/* Header */
+.gw-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+}
+.gw-headline {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 6px;
+    line-height: 1.25;
+}
+.gw-subheadline {
+    font-size: 0.9375rem;
+    color: #475569;
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+.gw-subheadline strong {
+    color: #0F172A;
+}
+
+/* Job Preview Box */
+.gw-job-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+}
+.gw-job-logo-wrap {
+    flex-shrink: 0;
+}
+.gw-job-logo-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 4px;
+}
+.gw-job-logo-fallback {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #ECFDF5;
+    color: #059669;
+    font-weight: 800;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #A7F3D0;
+}
+.gw-job-info {
+    flex: 1;
+    min-width: 0;
+}
+.gw-employer-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.gw-employer-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #059669;
+}
+.gw-verified-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #047857;
+    background: #D1FAE5;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.gw-job-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 10px;
+    line-height: 1.35;
+}
+.gw-job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.gw-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #475569;
+    font-weight: 500;
+}
+.gw-meta-tag--salary {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+    font-weight: 600;
+}
+
+/* Live HUD */
+.gw-hud {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.gw-hud-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+@media (max-width: 540px) {
+    .gw-hud-row {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Gauge */
+.gw-counter-wrapper {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+}
+.gw-gauge-svg {
+    transform: rotate(-90deg);
+}
+.gw-gauge-bg {
+    fill: none;
+    stroke: #E2E8F0;
+    stroke-width: 6;
+}
+.gw-gauge-fill {
+    fill: none;
+    stroke: #059669;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+}
+.gw-counter-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.gw-counter-num {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #059669;
+    line-height: 1;
+}
+.gw-counter-unit {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+/* Progress Details */
+.gw-progress-details {
+    flex: 1;
+    min-width: 0;
+}
+.gw-progress-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.gw-status-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #ECFDF5;
+    color: #065F46;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+.gw-secure-note {
+    font-size: 0.75rem;
+    color: #64748B;
+}
+.gw-status-text {
+    font-size: 0.875rem;
+    color: #334155;
+    font-weight: 500;
+    margin-bottom: 10px;
+    min-height: 20px;
+}
+.gw-bar-track {
+    width: 100%;
+    height: 6px;
+    background: #E2E8F0;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+.gw-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #059669, #10B981);
+    border-radius: 9999px;
+    transition: width 0.8s ease;
+}
+
+/* Steps Timeline */
+.gw-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 12px 14px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+}
+@media (max-width: 540px) {
+    .gw-steps {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+.gw-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.gw-step-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #E2E8F0;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.gw-step--active {
+    color: #0F172A;
+    font-weight: 600;
+}
+.gw-step--active .gw-step-icon {
+    background: #059669;
+}
+
+/* CTA Button */
+.gw-cta-section {
+    text-align: center;
+}
+.gw-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #FFFFFF !important;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.gw-cta-button:hover {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+    transform: translateY(-1px);
+}
+.gw-cta-button--ready {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
+}
+.gw-cta-button--ready:hover {
+    background: #064E3B;
+}
+.gw-btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: gwSpin 0.7s linear infinite;
+    margin-right: 10px;
+}
+@keyframes gwSpin {
+    to { transform: rotate(360deg); }
+}
+
+.gw-skip-wrap {
+    margin-top: 14px;
+}
+.gw-skip-link {
+    font-size: 0.8125rem;
+    color: #64748B;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+.gw-skip-link:hover {
+    color: #059669;
+    text-decoration: underline;
+}
+
+/* Sidebar Column */
+.gw-sidebar-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+.gw-sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #F1F5F9;
+}
+.gw-sidebar-badge {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+.gw-sidebar-sponsor {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94A3B8;
+    background: #F1F5F9;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.gw-ad-300x250 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 10px;
+    margin-bottom: 18px;
+}
+
+/* VIP Alert Fallback */
+.gw-vip-box {
+    background: #F0FDF4;
+    border: 1px solid #DCFCE7;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+.gw-vip-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.gw-vip-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #065F46;
+    margin: 0 0 6px;
+}
+.gw-vip-text {
+    font-size: 0.8125rem;
+    color: #047857;
+    margin: 0 0 14px;
+    line-height: 1.4;
+}
+.gw-vip-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 14px;
+    background: #00A68A;
+    color: #FFFFFF !important;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+.gw-vip-btn:hover {
+    background: #008C75;
+}
+
+/* Trust Grid at bottom */
+.gw-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+@media (max-width: 768px) {
+    .gw-trust-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+.gw-trust-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.gw-trust-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.gw-trust-card-text h4 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 4px;
+}
+.gw-trust-card-text p {
+    font-size: 0.8125rem;
+    color: #64748B;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* ==========================================================================
+   Next-Level Mobile Responsiveness & Sticky Bottom CTA Bar
+   ========================================================================== */
+@media (max-width: 768px) {
+    .gw-page {
+        padding: 12px 12px 105px !important;
+    }
+    .gw-nav-bar {
+        margin-bottom: 12px;
+    }
+    .gw-top-ad-card {
+        margin-bottom: 14px;
+        padding: 10px;
+    }
+    .gw-main-card {
+        padding: 18px 16px;
+        border-radius: 14px;
+    }
+    .gw-headline {
+        font-size: 1.25rem;
+    }
+    .gw-subheadline {
+        font-size: 0.8125rem;
+        margin-bottom: 16px;
+    }
+    .gw-job-box {
+        padding: 12px;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .gw-job-logo-img, .gw-job-logo-fallback {
+        width: 44px;
+        height: 44px;
+    }
+    .gw-job-title {
+        font-size: 0.9375rem;
+        margin-bottom: 8px;
+    }
+    .gw-hud {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    .gw-hud-row {
+        gap: 14px;
+        margin-bottom: 16px;
+        flex-direction: row !important;
+        text-align: left !important;
+    }
+    .gw-counter-wrapper {
+        width: 72px;
+        height: 72px;
+    }
+    .gw-counter-num {
+        font-size: 1.45rem;
+    }
+    .gw-steps {
+        grid-template-columns: repeat(3, 1fr) !important;
+        padding: 10px 8px;
+        gap: 4px;
+        font-size: 0.6875rem;
+    }
+    .gw-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 4px;
+    }
+    
+    /* Next-Level Mobile Sticky Bottom Action Bar */
+    .gw-cta-section {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border-top: 1px solid #E2E8F0 !important;
+        box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08) !important;
+        padding: 10px 16px max(12px, env(safe-area-inset-bottom)) !important;
+        margin: 0 !important;
+    }
+    .gw-cta-button {
+        max-width: 500px !important;
+        margin: 0 auto !important;
+        min-height: 48px !important;
+        font-size: 0.9375rem !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 14px rgba(10, 102, 194, 0.3) !important;
+    }
+    .gw-cta-button:active {
+        transform: scale(0.97) !important;
+    }
+    .gw-skip-wrap {
+        margin-top: 6px !important;
+    }
+    .gw-skip-link {
+        font-size: 0.75rem !important;
+    }
+}
+</style>
+{{template "wfa_ad_styles" .}}
+<!-- ==========================================================================
+     JobyUK.com Official ATS Application Gateway (100% Native Light Theme)
+     Matches JobyUK.com Brand Colors: White (#FFF), Slate (#F8FAFC), Blue (#0A66C2), Teal (#00A68A)
+     ========================================================================== -->
+<div class="gw-page">
+    <div class="gw-container">
+        
+        <!-- Simple Theme-Based Navigation & Trust Bar -->
+        <div class="gw-brand-topbar">
+            <a href="/jobs/{{.Data.Job.Slug}}/" class="gw-back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Job Details</span>
+            </a>
+
+            <div class="gw-trust-badge">
+                <span class="gw-trust-dot"></span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00A68A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>Verified Direct ATS Gateway</span>
+            </div>
+        </div>
+
+        <!-- Top Leaderboard Ad Slot (Clean White Card) -->
+        <div class="gw-top-ad-card">
+            <div class="gw-ad-caption">Sponsored Advertisement</div>
+            <div class="gw-top-ad-frame">
+                <div class="wfa-ad-container wfa-ad-leaderboard">
+                    <div data-wfa-ad="wfa_1229_header_leaderboard" data-wfa-size="970x250,970x90,728x90"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="gw-layout-grid">
+            
+            <!-- Left Main Column (Job + Countdown HUD) -->
+            <div class="gw-main-card">
+                
+                <!-- Headline Section -->
+                <div class="gw-card-header">
+                    <div class="gw-status-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Official ATS Transfer</span>
+                    </div>
+                    <h1 class="gw-headline">Connecting to Employer Portal</h1>
+                    <p class="gw-subheadline">
+                        Forwarding your application directly to <strong>{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}the verified employer{{end}}</strong>. 
+                        No recruiters, no middlemen.
+                    </p>
+                </div>
+
+                <!-- Job Preview Box -->
+                <div class="gw-job-box">
+                    <div class="gw-job-logo-wrap">
+                        {{if .Data.Job.CompanyLogoURL}}
+                            <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Employer{{end}} logo" class="gw-job-logo-img">
+                        {{else}}
+                            <div class="gw-job-logo-fallback">{{if .Data.Job.EmployerName}}{{slice .Data.Job.EmployerName 0 1}}{{else}}H{{end}}</div>
+                        {{end}}
+                    </div>
+
+                    <div class="gw-job-info">
+                        <div class="gw-employer-line">
+                            <span class="gw-employer-name">{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Verified UK Employer{{end}}</span>
+                            <span class="gw-verified-tag">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Verified
+                            </span>
+                        </div>
+                        <h2 class="gw-job-title">{{.Data.Job.Title}}</h2>
+
+                        <!-- Metadata Badges -->
+                        <div class="gw-job-meta">
+                            {{if .Data.Job.DisplayLocation}}
+                            <span class="gw-meta-tag">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                {{.Data.Job.DisplayLocation}}
+                            </span>
+                            {{end}}
+
+                            {{if .Data.Job.ContractType}}
+                            <span class="gw-meta-tag">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                                {{.Data.Job.ContractTypeSimple}}
+                            </span>
+                            {{end}}
+
+                            <span class="gw-meta-tag gw-meta-tag--salary">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                                {{.Data.Job.FormattedSalary}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Countdown HUD & Progress -->
+                <div class="gw-hud">
+                    <div class="gw-hud-row">
+                        <!-- Circular Gauge -->
+                        <div class="gw-counter-wrapper">
+                            <svg class="gw-gauge-svg" width="88" height="88" viewBox="0 0 88 88">
+                                <circle class="gw-gauge-bg" cx="44" cy="44" r="38"></circle>
+                                <circle class="gw-gauge-fill" id="gwGaugeFill" cx="44" cy="44" r="38"></circle>
+                            </svg>
+                            <div class="gw-counter-inner">
+                                <span class="gw-counter-num" id="gwCountNum">{{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}}</span>
+                                <span class="gw-counter-unit">SEC</span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Information -->
+                        <div class="gw-progress-details">
+                            <div class="gw-progress-status-row">
+                                <span class="gw-status-label" id="gwStatusBadge">INITIALIZING</span>
+                                <span class="gw-secure-note">TLS 256-Bit Encrypted</span>
+                            </div>
+                            <div class="gw-status-text" id="gwStatusText">Verifying encrypted connection to official employer portal...</div>
+                            <div class="gw-bar-track">
+                                <div class="gw-bar-fill" id="gwBarFill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Steps Timeline -->
+                    <div class="gw-steps">
+                        <div class="gw-step gw-step--active" id="step1">
+                            <span class="gw-step-icon">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            <span class="gw-step-label">Verified ATS Routing</span>
+                        </div>
+                        <div class="gw-step" id="step2">
+                            <span class="gw-step-icon">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            <span class="gw-step-label">Applicant Token Generated</span>
+                        </div>
+                        <div class="gw-step" id="step3">
+                            <span class="gw-step-icon">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            <span class="gw-step-label">Direct Employer Handoff</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Action Area -->
+                    <div class="gw-cta-section">
+                        <a href="{{.Data.DestURL}}" id="gwCtaBtn" class="gw-cta-button" rel="nofollow noopener noreferrer">
+                            <span class="gw-btn-spinner" id="gwSpinner"></span>
+                            <span id="gwBtnText">Transferring to Employer Portal ({{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}}s)...</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="gwBtnArrow" style="display:none; margin-left: 8px;">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+
+                        <div class="gw-skip-wrap">
+                            <a href="{{.Data.DestURL}}" class="gw-skip-link" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px;">
+                                <span>In a hurry? Skip wait & apply now</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column (High-CPM Sidebar Ad & VIP Alerts) -->
+            <div class="gw-sidebar-col">
+                <div class="gw-sidebar-card">
+                    <div class="gw-sidebar-head">
+                        <span class="gw-sidebar-badge">Featured Career Partner</span>
+                        <span class="gw-sidebar-sponsor">Sponsored</span>
+                    </div>
+
+                    <div class="gw-sidebar-body">
+                        <!-- High CPM Ad Slot -->
+                        <div class="gw-ad-300x250">
+                            <div class="wfa-ad-container wfa-ad-halfpage">
+                                <div data-wfa-ad="wfa_1229_sidebar_halfpage" data-wfa-size="300x600,336x280,300x250"></div>
+                            </div>
+                        </div>
+
+                        {{if whatsappAlertsEnabled}}
+                        <!-- Native Fallback & High Engagement VIP Alert -->
+                        <div class="gw-vip-box">
+                            <div class="gw-vip-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00A68A" stroke-width="2.2">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="gw-vip-title">Instant Job Alerts</h3>
+                            <p class="gw-vip-text">Get verified UK roles matched to your profile delivered straight to your WhatsApp.</p>
+                            <a href="/whatsapp-alerts/" class="gw-vip-btn" target="_blank" rel="noopener">
+                                <span>Join Free WhatsApp Alerts</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Trust & Security Strip (3 Clean Cards) -->
+        <div class="gw-trust-grid">
+            <div class="gw-trust-card">
+                <div class="gw-trust-card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div class="gw-trust-card-text">
+                    <h4>100% Free Application</h4>
+                    <p>JobyUK.com will never ask you to pay for applying. Beware of scams requesting upfront recruitment fees.</p>
+                </div>
+            </div>
+
+            <div class="gw-trust-card">
+                <div class="gw-trust-card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A68A" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <div class="gw-trust-card-text">
+                    <h4>Direct ATS Application</h4>
+                    <p>Your session routes straight to the employer's official applicant tracking system without third-party delay.</p>
+                </div>
+            </div>
+
+            <div class="gw-trust-card">
+                <div class="gw-trust-card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <div class="gw-trust-card-text">
+                    <h4>UK GDPR & Privacy Protected</h4>
+                    <p>No tracking cookies or candidate data retained during transfer. Complete privacy and security.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom High-CPM Sponsored Banner Ad Card -->
+        <div class="gw-bottom-ad-card">
+            <div class="gw-ad-caption">Sponsored Advertisement</div>
+            <div class="gw-bottom-ad-frame">
+                <div class="wfa-ad-container wfa-ad-incontent">
+                    <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="728x90,336x280,300x250"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Non-JS Fallback -->
+<noscript>
+    <meta http-equiv="refresh" content="{{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}};url={{.Data.DestURL}}">
+</noscript>
+
+<!-- Interactive Dynamic Logic -->
+<script>
+(function() {
+    var destURL = "{{.Data.DestURL}}";
+    var totalSeconds = {{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}};
+    var current = totalSeconds;
+
+    var numEl = document.getElementById('gwCountNum');
+    var circle = document.getElementById('gwGaugeFill');
+    var barFill = document.getElementById('gwBarFill');
+    var statusText = document.getElementById('gwStatusText');
+    var statusBadge = document.getElementById('gwStatusBadge');
+    var btn = document.getElementById('gwCtaBtn');
+    var btnText = document.getElementById('gwBtnText');
+    var spinner = document.getElementById('gwSpinner');
+    var arrow = document.getElementById('gwBtnArrow');
+    var step2 = document.getElementById('step2');
+    var step3 = document.getElementById('step3');
+
+    // Radius 38 -> Circumference = 2 * PI * 38 ≈ 238.76
+    var circumference = 238.76;
+    if (circle) {
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = 0;
+    }
+
+    var stages = [
+        { badge: "CONNECTING", text: "Verifying secure employer portal handshake..." },
+        { badge: "AUTHENTICATING", text: "Generating verified candidate routing token..." },
+        { badge: "SECURING", text: "Establishing direct applicant connection..." },
+        { badge: "APPROVED", text: "Gateway handshake approved! Handoff ready..." },
+        { badge: "TRANSFERRING", text: "Redirecting to official application portal..." }
+    ];
+
+    function updateView() {
+        if (numEl) numEl.textContent = current;
+
+        var progress = (totalSeconds - current) / totalSeconds;
+        if (barFill) barFill.style.width = (progress * 100) + "%";
+
+        if (circle) {
+            circle.style.strokeDashoffset = circumference * progress;
+        }
+
+        var stageIdx = Math.min(stages.length - 1, Math.floor(progress * stages.length));
+        if (statusBadge) statusBadge.textContent = stages[stageIdx].badge;
+        if (statusText) statusText.textContent = stages[stageIdx].text;
+
+        if (btnText && current > 0) {
+            btnText.textContent = "Transferring to Employer Portal (" + current + "s)...";
+        }
+
+        // Live Step Progression
+        if (current <= Math.floor(totalSeconds * 0.65) && step2) {
+            step2.classList.add('gw-step--active');
+        }
+        if (current <= Math.floor(totalSeconds * 0.25) && step3) {
+            step3.classList.add('gw-step--active');
+        }
+    }
+
+    updateView();
+
+    var timer = setInterval(function() {
+        current--;
+        if (current > 0) {
+            updateView();
+        } else {
+            clearInterval(timer);
+            if (numEl) numEl.textContent = "0";
+            if (barFill) barFill.style.width = "100%";
+            if (circle) circle.style.strokeDashoffset = circumference;
+            if (statusBadge) {
+                statusBadge.textContent = "READY";
+                statusBadge.style.background = "#DCFCE7";
+                statusBadge.style.color = "#15803D";
+            }
+            if (statusText) statusText.textContent = "Transfer complete! Opening official employer portal...";
+
+            if (step2) step2.classList.add('gw-step--active');
+            if (step3) step3.classList.add('gw-step--active');
+
+            if (btn) {
+                btn.classList.add('gw-cta-button--ready');
+            }
+            if (spinner) spinner.style.display = 'none';
+            if (arrow) arrow.style.display = 'inline-block';
+            if (btnText) btnText.textContent = "Opening Official Application Portal...";
+
+            setTimeout(function() {
+                try {
+                    window.location.replace(destURL);
+                } catch(e) {
+                    window.location.href = destURL;
+                }
+            }, 500);
+        }
+    }, 1000);
+})();
+</script>
+
+<!-- ==========================================================================
+     Pure Native Light Theme Stylesheet (Clean, Professional UK Job Board)
+     ========================================================================== -->
+
+{{end}}

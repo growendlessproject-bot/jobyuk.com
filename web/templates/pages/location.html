@@ -1,0 +1,757 @@
+{{define "content"}}
+<div class="jy-dream-hub" id="jobs-top" style="padding-top: 24px; padding-bottom: 72px;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+        {{template "wfa_leaderboard" .}}
+
+        {{if .Data.Location}}
+        <!-- =========================================================================
+             1. LOCATION DETAIL VIEW (/locations/{slug}/) - JobyUK Regional Hub Layout
+             ========================================================================= -->
+        
+        <!-- Header Card: Location Title & Search -->
+        <section class="jy-dream-header" aria-label="Location Job Search Header" style="padding: 36px 40px 32px; margin-bottom: 32px;">
+            <div style="margin-bottom: 24px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 10px; border-radius: 6px;">
+                        UK Regional Hub
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Direct Employer ATS</span>
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem;">
+                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #059669;"></span>
+                        <span>{{if and .Data.Results (gt .Data.Results.Total 0)}}{{formatSalary .Data.Results.Total}} Live Roles{{else}}Verified Vacancies{{end}}</span>
+                    </span>
+                </div>
+
+                <h1 class="jy-dream-header__title" style="margin: 0 0 10px; font-size: 2.75rem !important; font-weight: 850 !important; color: #0B1F1A !important; letter-spacing: -0.025em; line-height: 1.15;">
+                    Jobs in {{.Data.Location.Name}}
+                </h1>
+
+                <p class="jy-dream-header__count" style="margin: 0 0 12px; font-size: 1.05rem; color: #475569; font-weight: 500;">
+                    {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                        Browse <strong style="color: #0F172A; font-weight: 800;">{{formatSalary .Data.Results.Total}}</strong> verified vacancies in {{.Data.Location.Name}} and surrounding commuter areas. Apply direct to employers with upfront pay transparency.
+                    {{else}}
+                        Browse live job opportunities in {{.Data.Location.Name}} from verified UK employers. Apply direct in 2 minutes.
+                    {{end}}
+                </p>
+
+                {{if .Data.IntroText}}
+                <p class="jy-dream-header__intro" style="font-size: 0.95rem; line-height: 1.65; color: #475569; margin: 12px 0 0; max-width: 860px;">
+                    {{.Data.IntroText}}
+                </p>
+                {{end}}
+            </div>
+
+            <!-- Integrated Search Bar -->
+            <form action="/jobs/" method="GET" class="jy-dream-search-form" id="location-search-form">
+                <div class="jy-dream-search-bar">
+                    <!-- Field 1: Keywords -->
+                    <div class="jy-dream-input-pill" style="position: relative;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="loc-search-q" name="q" value="{{if .Data.Params}}{{.Data.Params.Query}}{{end}}" placeholder="Job title or skills in {{.Data.Location.Name}}..." autocomplete="off" aria-label="Search job title or keywords" />
+                        <button type="button" class="jy-search-clear-btn" id="loc-clear-q" style="display: none;" aria-label="Clear search">✕</button>
+                    </div>
+
+                    <!-- Field 2: Location (Pre-filled) -->
+                    <div class="jy-dream-input-pill" style="position: relative;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="loc-search-loc" name="location" value="{{.Data.Location.Name}}" placeholder="City or postcode" autocomplete="off" aria-label="Location" />
+                        <button type="button" class="jy-search-clear-btn" id="loc-clear-loc" style="display: none;" aria-label="Clear location search">✕</button>
+                    </div>
+
+                    <!-- Field 3: Salary -->
+                    <div class="jy-dream-input-pill" style="max-width: 240px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <select name="min_salary" aria-label="Salary range" style="cursor: pointer;">
+                            <option value="">Any salary</option>
+                            <option value="25000">£25,000+ per year</option>
+                            <option value="40000">£40,000+ per year</option>
+                            <option value="60000">£60,000+ per year</option>
+                            <option value="80000">£80,000+ per year</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="jy-dream-search-btn">Search Jobs</button>
+                </div>
+
+                <!-- Quick Filter Tag Pills -->
+                <div class="jy-dream-tags">
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&job_type=full_time" class="jy-dream-tag">Full Time</a>
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&job_type=part_time" class="jy-dream-tag">Part Time</a>
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&remote_type=remote" class="jy-dream-tag">Remote</a>
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&remote_type=hybrid" class="jy-dream-tag">Hybrid</a>
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&min_salary=40000" class="jy-dream-tag">£40k+ Roles</a>
+                    <a href="/jobs/?location={{.Data.Location.Slug}}&easy_apply=true" class="jy-dream-tag">Easy Apply</a>
+                    <a href="/salary-calculator/" class="jy-dream-tag jy-dream-tag--emerald">
+                        <span>Take-Home Pay Calculator</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <!-- 2-Column Layout: Filter Sidebar (Left) & Job Feed (Right) -->
+        <div class="jy-dream-layout">
+            <!-- Left Sticky Filter Sidebar -->
+            <aside class="jy-dream-sidebar" aria-label="Job filters">
+                <div class="jy-dream-sidebar__header">
+                    <h2 class="jy-dream-sidebar__title">Filters</h2>
+                    <a href="/locations/{{.Data.Location.Slug}}/" class="jy-dream-clear-link" title="Reset all filters">Clear all</a>
+                </div>
+
+                <form action="/jobs/" method="GET" id="sidebar-filter-form">
+                    <input type="hidden" name="location" value="{{.Data.Location.Name}}">
+                    {{if .Data.Params.Query}}<input type="hidden" name="q" value="{{.Data.Params.Query}}">{{end}}
+
+                    <!-- Section 1: Work Mode (iOS Toggle Switches) -->
+                    <div>
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">On-site</span>
+                            <input type="checkbox" name="remote_type" value="on_site" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "on_site"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">Remote</span>
+                            <input type="checkbox" name="remote_type" value="remote" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "remote"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">Hybrid</span>
+                            <input type="checkbox" name="remote_type" value="hybrid" class="jy-toggle-input" {{if eq .Data.Params.RemoteType "hybrid"}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+
+                        <label class="jy-toggle-item">
+                            <span class="jy-toggle-label">
+                                <span>Friendly Offers</span>
+                                <span>🇬🇧</span>
+                            </span>
+                            <input type="checkbox" name="easy_apply" value="true" class="jy-toggle-input" {{if .Data.Params.EasyApply}}checked{{end}} onchange="this.form.submit()">
+                            <span class="jy-toggle-switch"></span>
+                        </label>
+                    </div>
+
+                    <!-- Section 2: Jobs you might like -->
+                    <div class="jy-sidebar-sec">
+                        <h3 class="jy-sidebar-sec__title">Jobs you might like</h3>
+                        <div class="jy-sidebar-options">
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="" {{if not .Data.Params.SortBy}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Best Matches</span>
+                                </span>
+                                <span class="jy-sidebar-count">{{if .Data.Results}}{{.Data.Results.Total}}{{else}}100+{{end}}</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="date" {{if eq .Data.Params.SortBy "date"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Most Recent</span>
+                                </span>
+                                <span class="jy-sidebar-count">Live</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="sort" value="salary" {{if eq .Data.Params.SortBy "salary"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Offers with salary</span>
+                                </span>
+                                <span class="jy-sidebar-count">Verified</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Experience -->
+                    <div class="jy-sidebar-sec">
+                        <h3 class="jy-sidebar-sec__title">Experience</h3>
+                        <div class="jy-sidebar-options">
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="entry" {{if eq .Data.Params.ExperienceLevel "entry"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Under 1 year</span>
+                                </span>
+                                <span class="jy-sidebar-count">Entry</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="junior" {{if eq .Data.Params.ExperienceLevel "junior"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>1-2 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">Junior</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="mid" {{if or (eq .Data.Params.ExperienceLevel "mid") (not .Data.Params.ExperienceLevel)}}checked{{end}} onchange="this.form.submit()">
+                                    <span>2-6 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">Mid-level</span>
+                            </label>
+
+                            <label class="jy-sidebar-radio-label">
+                                <span class="jy-sidebar-radio-left">
+                                    <input type="radio" name="experience" value="senior" {{if eq .Data.Params.ExperienceLevel "senior"}}checked{{end}} onchange="this.form.submit()">
+                                    <span>Over 6 years</span>
+                                </span>
+                                <span class="jy-sidebar-count">Senior</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <div style="margin-top: 24px;">
+                    {{template "whatsapp_sidebar_card" dict "Role" (printf "%s Jobs" .Data.Location.Name)}}
+                </div>
+            </aside>
+
+            <!-- Main Job Listings Feed -->
+            <main class="jy-dream-main" aria-label="Jobs in {{.Data.Location.Name}}">
+                {{template "whatsapp_infeed_card" dict "CustomTitle" (printf "Get New Jobs in %s on WhatsApp" .Data.Location.Name) "CustomDesc" (printf "Instant direct job alerts for vacancies in %s & commuter towns. 100%% free." .Data.Location.Name) "Role" (printf "Jobs in %s" .Data.Location.Name)}}
+
+                <div class="jy-card-list stagger">
+                    {{range $index, $job := .Data.Results.Jobs}}
+                        {{template "job_card" $job}}
+                        {{if or (eq $index 3) (eq $index 11)}}
+                        {{template "wfa_incontent" $}}
+                        {{end}}
+                    {{else}}
+                        <div class="empty-state animate-fade-in" style="text-align: center; padding: 60px 20px; background: #FFFFFF; border: 1.5px solid #EEF2F6; border-radius: 20px;">
+                            <div style="width: 64px; height: 64px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <h2 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin-bottom: 8px;">No live jobs currently found in {{$.Data.Location.Name}}</h2>
+                            <p style="color: #64748B; max-width: 440px; margin: 0 auto 20px; font-size: 0.95rem; line-height: 1.5;">Try broadening your search or browse vacancies in nearby regional hubs across the UK.</p>
+                            <a href="/locations/" style="display: inline-flex; align-items: center; gap: 6px; padding: 11px 24px; background: #059669; color: #FFFFFF; border-radius: 25px; font-weight: 750; font-size: 0.92rem; text-decoration: none;">Browse All UK Locations</a>
+                        </div>
+                    {{end}}
+                </div>
+
+                <!-- Load More Jobs & Auto-Scroll Controller -->
+                {{if gt .Data.Results.TotalPages 1}}
+                <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs">
+                    <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn">
+                        <svg class="jy-load-more-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                        <span class="jy-load-more-text">Load More Jobs</span>
+                        <svg class="jy-load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                    </button>
+                </div>
+                {{end}}
+
+                <!-- Pagination -->
+                <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 32px;">
+                    {{template "pagination" .Data.Results}}
+                </div>
+            </main>
+        </div>
+
+        <!-- Clean Regional Market Guide Card -->
+        <section style="margin-top: 48px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px 32px; box-shadow: 0 4px 16px rgba(11, 31, 26, 0.03);" class="animate-fade-in" aria-label="Regional Employment Overview">
+            <div style="margin-bottom: 24px;">
+                <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 6px;">
+                    Regional Career Overview
+                </span>
+                <h2 style="font-size: 1.45rem; font-weight: 850; color: #0B1F1A; margin: 8px 0 0; letter-spacing: -0.015em;">
+                    Working in {{.Data.Location.Name}}: Employment Landscape & Job Market
+                </h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 14px; padding: 22px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 34px; height: 34px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #0B1F1A; margin: 0;">Job Opportunities</h3>
+                    </div>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0;">
+                        {{.Data.Location.Name}} features an active regional economy across technology, healthcare, professional services, retail, and public sector positions with competitive local wage packages.
+                    </p>
+                </div>
+
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 14px; padding: 22px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 34px; height: 34px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #0B1F1A; margin: 0;">Commute & Hybrid Work</h3>
+                    </div>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0;">
+                        Well-served by train lines and motorway links, {{.Data.Location.Name}} workers benefit from high hybrid adoption alongside vibrant central commercial districts and industrial parks.
+                    </p>
+                </div>
+
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 14px; padding: 22px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 34px; height: 34px; border-radius: 8px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #0B1F1A; margin: 0;">Explore Other Hubs</h3>
+                    </div>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0 0 14px;">
+                        Interested in career opportunities in other UK cities? Explore our nationwide regional index.
+                    </p>
+                    <a href="/locations/" style="display: inline-flex; align-items: center; gap: 6px; color: #059669; font-weight: 750; font-size: 0.86rem; text-decoration: none;">
+                        <span>Browse All UK Locations</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        {{template "listing_floating_bar" .Data}}
+
+        {{else}}
+        <!-- =========================================================================
+             2. LOCATION INDEX VIEW (/locations/) - JobyUK Regional Directory
+             ========================================================================= -->
+        
+        <!-- Header Card: Directory Hero -->
+        <header class="jy-dream-header" aria-label="Location Directory Header" style="padding: 40px 44px 36px; margin-bottom: 32px;">
+            <div style="max-width: 840px; margin-bottom: 26px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 9999px;">
+                        UK Regional Employment Hubs
+                    </span>
+                    <span style="font-size: 0.78rem; font-weight: 750; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 9999px;">
+                        {{len .Data.Locations}}+ UK Cities &amp; Regions
+                    </span>
+                </div>
+                <h1 style="font-size: 2.85rem; font-weight: 850; color: #0B1F1A; margin: 0 0 12px; letter-spacing: -0.03em; line-height: 1.15;">
+                    Browse UK Jobs by City &amp; Region
+                </h1>
+                <p style="font-size: 1.1rem; color: #64748B; margin: 0; line-height: 1.6;">
+                    Explore active vacancies across England, Scotland, Wales, and Northern Ireland. Compare hiring hubs, salary benchmarks, and apply straight to employers — zero recruitment spam.
+                </p>
+            </div>
+
+            <!-- Instant Search Bar Card -->
+            <div style="position: relative; max-width: 680px; margin-bottom: 24px;">
+                <div class="jy-hero__search-card" style="width: 100%; box-shadow: 0 8px 24px -4px rgba(15, 81, 50, 0.08);">
+                    <div class="jy-hero__search-field" style="padding-left: 4px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="location-search-input" placeholder="Search cities, towns, or regions (e.g. London, Manchester, Bristol, Leeds)..." class="jy-hero__search-input" autocomplete="off" oninput="filterLocationsLive(this.value)">
+                        <button type="button" id="loc-search-clear" onclick="clearLocationSearch()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: #475569; font-weight: 800; font-size: 11px; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 8px;">✕</button>
+                    </div>
+                    <div class="jy-hero__search-btn-glass">
+                        <button type="button" class="jy-hero__search-btn" onclick="document.getElementById('location-search-input').focus();">Search Cities</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Region Filter Navigation Tabs -->
+            <div style="border-top: 1px solid #EEF2F6; padding-top: 20px;">
+                <div style="font-size: 0.75rem; font-weight: 800; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+                    Filter by Territory:
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;" id="territory-filter-pills">
+                    <button type="button" class="jy-loc-tag-pill is-active" onclick="filterTerritory('', this)">All Hubs ({{len .Data.Locations}})</button>
+                    <button type="button" class="jy-loc-tag-pill" onclick="filterTerritory('city', this)">Major Cities</button>
+                    <button type="button" class="jy-loc-tag-pill" onclick="filterTerritory('england', this)">England</button>
+                    <button type="button" class="jy-loc-tag-pill" onclick="filterTerritory('scotland', this)">Scotland</button>
+                    <button type="button" class="jy-loc-tag-pill" onclick="filterTerritory('wales', this)">Wales</button>
+                    <button type="button" class="jy-loc-tag-pill" onclick="filterTerritory('northern ireland', this)">Northern Ireland</button>
+                </div>
+            </div>
+        </header>
+
+        {{template "whatsapp_context_banner" dict "Title" "Targeting Jobs in a Specific UK City? Get WhatsApp Alerts" "Desc" "Select your preferred UK region and receive verified direct employer vacancies straight to WhatsApp in under 60 seconds." "Role" "Location Alerts"}}
+
+        <!-- Featured Major UK Metros Showcase -->
+        <section style="margin-top: 36px; margin-bottom: 36px;" aria-label="Featured UK Metro Employment Hubs">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+                <div>
+                    <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 6px;">
+                        Top Employment Epicenters
+                    </span>
+                    <h2 style="font-size: 1.55rem; font-weight: 850; color: #0B1F1A; margin: 6px 0 0; letter-spacing: -0.02em;">
+                        Major UK Regional Hubs
+                    </h2>
+                </div>
+                <span style="font-size: 0.88rem; color: #64748B; font-weight: 600;">
+                    Highest volume of direct employer vacancies
+                </span>
+            </div>
+
+            <div class="jy-loc-featured-grid">
+                <!-- London -->
+                <a href="/locations/london/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                Top UK Volume
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">London</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Finance, technology, creative arts, and global corporate headquarters with premier UK compensation packages.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">High Average Pay</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore London Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Manchester -->
+                <a href="/locations/manchester/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                North Powerhouse
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">Manchester</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Digital media, software engineering, ecommerce, and professional services across Greater Manchester.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">Rapid Tech Growth</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore Manchester Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Birmingham -->
+                <a href="/locations/birmingham/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                Midlands Center
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">Birmingham</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Banking hubs, advanced manufacturing, healthcare NHS trusts, and logistics throughout the West Midlands.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">Key Transport Nexus</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore Birmingham Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Leeds -->
+                <a href="/locations/leeds/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                Yorkshire Hub
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">Leeds</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Leading legal &amp; financial center outside London, digital health innovators, and public broadcasting hubs.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">Finance &amp; Law</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore Leeds Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Bristol -->
+                <a href="/locations/bristol/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                South West Leader
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">Bristol</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Aerospace engineering, creative technology, environmental science, and sustainable business enterprises.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">Clean Tech &amp; Aero</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore Bristol Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Scotland -->
+                <a href="/locations/scotland/" class="jy-loc-featured-card">
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                            <div style="width: 48px; height: 48px; border-radius: 14px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                Scotland
+                            </span>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">Scotland Hubs</h3>
+                        <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 16px;">
+                            Edinburgh asset management, Glasgow engineering and fintech, Dundee gaming, and Aberdeen energy sectors.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                        <span style="font-size: 0.78rem; font-weight: 750; color: #059669;">Asset &amp; Energy</span>
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.88rem;">
+                            <span>Explore Scotland Jobs</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Main Directory Locations Grid Section -->
+        <section aria-label="All UK Cities and Regions Directory" style="margin-top: 48px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h2 style="font-size: 1.65rem; font-weight: 850; color: #0B1F1A; margin: 0 0 4px; letter-spacing: -0.02em;">
+                        All UK Locations (A–Z)
+                    </h2>
+                    <p style="font-size: 0.92rem; color: #64748B; margin: 0;" id="locations-count-text">
+                        Showing all {{len .Data.Locations}} active hiring hubs
+                    </p>
+                </div>
+            </div>
+
+            <!-- Locations Grid -->
+            <div id="directory-content" class="animate-fade-in">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;" id="locations-grid">
+                    {{range .Data.Locations}}
+                        <a href="/locations/{{.Slug}}/" class="jy-location-card" data-location-name="{{.Name}}" data-location-level="{{.Level}}" style="display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 24px; text-decoration: none; color: #0B1F1A; transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 14px rgba(11, 31, 26, 0.03);">
+                            <div>
+                                <!-- Header with Pin Icon & Title -->
+                                <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;">
+                                    <div style="width: 44px; height: 44px; border-radius: 12px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                    </div>
+                                    <div style="min-width: 0;">
+                                        <h3 style="font-size: 1.2rem; font-weight: 850; color: #0B1F1A; margin: 0 0 4px; line-height: 1.3;">{{.Name}}</h3>
+                                        <span style="font-size: 0.72rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">{{.Level}}</span>
+                                    </div>
+                                </div>
+                                
+                                <p style="font-size: 0.88rem; color: #64748B; line-height: 1.5; margin: 0 0 18px;">
+                                    Browse active employment openings, verified hiring companies, and local salary benchmarks in {{.Name}}.
+                                </p>
+                            </div>
+                            
+                            <!-- Footer with Live Count Badge and Arrow -->
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+                                <span style="display: inline-flex; align-items: center; gap: 5px; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px;">
+                                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span>
+                                    {{.FormattedJobCount}}
+                                </span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px; color: #0F5132; font-weight: 800; font-size: 0.86rem;">
+                                    <span>View Vacancies</span>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </span>
+                            </div>
+                        </a>
+                    {{end}}
+                </div>
+
+                <!-- Empty State for Search -->
+                <div id="noLocationsFoundState" style="display: none; background: #FFFFFF; border-radius: 20px; padding: 56px 32px; text-align: center; border: 1.5px solid #EEF2F6; margin-top: 20px;">
+                    <div style="width: 60px; height: 60px; border-radius: 16px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <h3 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 8px;">No locations found matching your search</h3>
+                    <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 20px; max-width: 440px; margin-left: auto; margin-right: auto;">Try typing a different city name, region, or postcode.</p>
+                    <button type="button" onclick="clearLocationSearch()" style="background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.9rem; padding: 10px 24px; border-radius: 25px; border: none; cursor: pointer;">
+                        Reset Location Search
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Browse by Location SEO Section -->
+        <section style="margin-top: 56px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 24px; padding: 40px 36px; box-shadow: 0 4px 16px rgba(11, 31, 26, 0.03);" aria-label="Why Search Jobs by Location on JobyUK">
+            <div style="max-width: 720px; margin-bottom: 28px;">
+                <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 6px;">
+                    UK Employment Intelligence
+                </span>
+                <h2 style="font-size: 1.65rem; font-weight: 850; color: #0B1F1A; margin: 8px 0 0; letter-spacing: -0.02em;">
+                    Why Search UK Jobs by City &amp; Region on JobyUK?
+                </h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 16px; padding: 24px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: #0B1F1A; margin: 0 0 8px;">Direct Employer Links Only</h3>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0;">
+                        Every job listed in our city directories links straight to the employer’s official applicant tracking system (ATS). Zero agency spam, zero ghost postings.
+                    </p>
+                </div>
+
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 16px; padding: 24px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: #0B1F1A; margin: 0 0 8px;">Upfront Regional Pay Rates</h3>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0;">
+                        Compare compensation accurately between London weighting, Northern hubs, and Scotland. Real advertised salaries displayed on every listing.
+                    </p>
+                </div>
+
+                <div style="background: #F8FAF9; border: 1px solid #E2E8F0; border-radius: 16px; padding: 24px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: #0B1F1A; margin: 0 0 8px;">Hybrid &amp; Commuter Smart</h3>
+                    <p style="font-size: 0.88rem; color: #64748B; line-height: 1.6; margin: 0;">
+                        Find hybrid roles that require 1–2 days in London, Manchester, or Leeds, alongside completely remote UK vacancies and local on-site opportunities.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <script>
+        function filterLocationsLive(query) {
+            var q = (query || '').toLowerCase().trim();
+            var clearBtn = document.getElementById('loc-search-clear');
+            if (clearBtn) {
+                clearBtn.style.display = q ? 'flex' : 'none';
+            }
+
+            var cards = document.querySelectorAll('.j-location-card');
+            var visibleCount = 0;
+            cards.forEach(function(card) {
+                var name = (card.getAttribute('data-location-name') || '').toLowerCase();
+                var level = (card.getAttribute('data-location-level') || '').toLowerCase();
+                if (!q || name.indexOf(q) !== -1 || level.indexOf(q) !== -1) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            var countText = document.getElementById('locations-count-text');
+            if (countText) {
+                countText.textContent = q ? 'Showing ' + visibleCount + ' matching locations' : 'Showing all ' + cards.length + ' active hiring hubs';
+            }
+
+            var emptyState = document.getElementById('noLocationsFoundState');
+            if (emptyState) {
+                emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
+            }
+        }
+
+        function clearLocationSearch() {
+            var input = document.getElementById('location-search-input');
+            if (input) {
+                input.value = '';
+                filterLocationsLive('');
+                input.focus();
+            }
+        }
+
+        function filterTerritory(territory, btn) {
+            var pills = document.querySelectorAll('#territory-filter-pills .j-loc-tag-pill');
+            pills.forEach(function(p) { p.classList.remove('is-active'); });
+            if (btn) btn.classList.add('is-active');
+
+            var input = document.getElementById('location-search-input');
+            if (input) input.value = '';
+
+            var cards = document.querySelectorAll('.j-location-card');
+            var target = (territory || '').toLowerCase().trim();
+            var visibleCount = 0;
+
+            cards.forEach(function(card) {
+                var name = (card.getAttribute('data-location-name') || '').toLowerCase();
+                var level = (card.getAttribute('data-location-level') || '').toLowerCase();
+                var match = false;
+
+                if (!target) {
+                    match = true;
+                } else if (target === 'city') {
+                    match = (level === 'city' || level === 'metropolitan');
+                } else if (target === 'england') {
+                    match = (level === 'england' || name.indexOf('england') !== -1 || level === 'country');
+                } else if (target === 'scotland') {
+                    match = (name.indexOf('scotland') !== -1 || name.indexOf('edinburgh') !== -1 || name.indexOf('glasgow') !== -1 || name.indexOf('dundee') !== -1 || name.indexOf('aberdeen') !== -1);
+                } else if (target === 'wales') {
+                    match = (name.indexOf('wales') !== -1 || name.indexOf('cardiff') !== -1 || name.indexOf('swansea') !== -1 || name.indexOf('newport') !== -1);
+                } else if (target === 'northern ireland') {
+                    match = (name.indexOf('northern ireland') !== -1 || name.indexOf('belfast') !== -1 || name.indexOf('derry') !== -1);
+                }
+
+                if (match) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            var countText = document.getElementById('locations-count-text');
+            if (countText) {
+                countText.textContent = 'Showing ' + visibleCount + ' locations';
+            }
+
+            var emptyState = document.getElementById('noLocationsFoundState');
+            if (emptyState) {
+                emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
+            }
+        }
+        </script>
+        {{end}}
+    </div>
+</div>
+{{end}}

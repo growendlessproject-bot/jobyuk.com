@@ -1,0 +1,944 @@
+{{define "content"}}<style>
+/* Page Layout */
+.gw-mobile-page {
+    background-color: #F8FAFC;
+    min-height: 100vh;
+    padding: 14px 14px 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #0F172A;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile Top Bar */
+.gw-m-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.gw-m-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    padding: 6px 10px 6px 6px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    transition: all 0.15s ease;
+}
+.gw-m-back:active {
+    background: #F1F5F9;
+    transform: scale(0.97);
+}
+
+/* Mobile Navigation Bar */
+.gw-m-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+/* Mobile Top Header Ad Card */
+.gw-m-top-ad-card {
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    text-align: center;
+}
+.gw-m-ad-caption {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: #94A3B8;
+    margin-bottom: 6px;
+}
+.gw-m-top-ad-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+    background: #F8FAFC;
+    border: 1px dashed #E2E8F0;
+    border-radius: 8px;
+}
+
+.gw-m-secure-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 5px 9px;
+    border-radius: 9999px;
+    font-size: 0.71875rem;
+    font-weight: 700;
+    color: #0F172A;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.gw-m-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+    animation: gwPulse 2s infinite;
+}
+@keyframes gwPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Universal Card */
+.gw-m-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
+}
+
+/* Hero Card */
+.gw-m-transfer-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+.gw-m-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 4px;
+    line-height: 1.3;
+}
+.gw-m-subtitle {
+    font-size: 0.8125rem;
+    color: #64748B;
+    margin: 0 0 16px;
+    line-height: 1.45;
+}
+.gw-m-subtitle strong {
+    color: #0F172A;
+}
+
+/* Employer Box */
+.gw-m-employer-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+.gw-m-logo-wrap {
+    flex-shrink: 0;
+}
+.gw-m-logo-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 2px;
+}
+.gw-m-logo-fallback {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: #ECFDF5;
+    color: #059669;
+    font-weight: 800;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #A7F3D0;
+}
+.gw-m-employer-details {
+    flex: 1;
+    min-width: 0;
+}
+.gw-m-emp-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+.gw-m-emp-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #059669;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.gw-m-verified-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #047857;
+    background: #D1FAE5;
+    padding: 1px 5px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+.gw-m-job-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Chips Strip */
+.gw-m-chips-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.gw-m-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.71875rem;
+    color: #475569;
+    font-weight: 500;
+}
+.gw-m-chip--salary {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+    font-weight: 700;
+}
+
+/* Radar HUD */
+.gw-m-hud-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.gw-m-gauge-box {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+}
+.gw-m-gauge-svg {
+    transform: rotate(-90deg);
+}
+.gw-m-gauge-bg {
+    fill: none;
+    stroke: #E2E8F0;
+    stroke-width: 5;
+}
+.gw-m-gauge-fill {
+    fill: none;
+    stroke: #059669;
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+}
+.gw-m-gauge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.gw-m-gauge-num {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #059669;
+    line-height: 1;
+}
+.gw-m-gauge-unit {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.gw-m-hud-info {
+    flex: 1;
+    min-width: 0;
+}
+.gw-m-status-pill-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.gw-m-badge-status {
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #ECFDF5;
+    color: #065F46;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.gw-m-cipher-label {
+    font-size: 0.6875rem;
+    color: #64748B;
+}
+.gw-m-status-live-msg {
+    font-size: 0.78125rem;
+    color: #334155;
+    font-weight: 500;
+    margin-bottom: 8px;
+    min-height: 18px;
+    line-height: 1.35;
+}
+.gw-m-bar-bg {
+    width: 100%;
+    height: 5px;
+    background: #E2E8F0;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+.gw-m-bar-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #059669, #10B981);
+    border-radius: 9999px;
+    transition: width 0.8s ease;
+}
+
+/* Steps Row */
+.gw-m-steps-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid #F1F5F9;
+}
+.gw-m-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    color: #94A3B8;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.gw-m-step-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #E2E8F0;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.gw-m-step--active {
+    color: #0F172A;
+    font-weight: 600;
+}
+.gw-m-step--active .gw-m-step-check {
+    background: #059669;
+}
+
+/* Ad Card */
+.gw-m-ad-card {
+    padding: 14px;
+}
+.gw-m-ad-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.gw-m-ad-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+.gw-m-ad-sponsor {
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94A3B8;
+    background: #F1F5F9;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.gw-m-ad-slot-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 10px;
+    margin-bottom: 14px;
+}
+
+/* Native Alert Booster */
+.gw-m-native-alert {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+}
+.gw-m-alert-badge {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #065F46;
+    background: #D1FAE5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+.gw-m-alert-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #064E3B;
+    margin: 0 0 4px;
+}
+.gw-m-alert-sub {
+    font-size: 0.75rem;
+    color: #047857;
+    margin: 0 0 10px;
+    line-height: 1.35;
+}
+.gw-m-alert-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #FFFFFF !important;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+    transition: background 0.15s ease;
+}
+.gw-m-alert-cta:active {
+    background: #047857;
+    transform: scale(0.98);
+}
+
+/* Trust Stack */
+.gw-m-trust-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.gw-m-trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.gw-m-trust-icon {
+    font-size: 1.125rem;
+    line-height: 1;
+    padding-top: 2px;
+}
+.gw-m-trust-content strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 2px;
+}
+.gw-m-trust-content p {
+    font-size: 0.71875rem;
+    color: #64748B;
+    margin: 0;
+    line-height: 1.35;
+}
+
+/* Bottom Mobile Ad Card */
+.gw-m-bottom-ad-card {
+    padding: 14px;
+    margin-bottom: 18px;
+}
+.gw-m-bottom-ad-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 10px;
+}
+
+/* Spacer for Sticky Bottom Bar */
+.gw-m-bottom-spacer {
+    height: 100px;
+}
+
+/* ==========================================================================
+   NATIVE MOBILE STICKY BOTTOM BAR (Floating High-Converting Action)
+   ========================================================================== */
+.gw-m-sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid #E2E8F0;
+    box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+    padding: 10px 14px max(12px, env(safe-area-inset-bottom));
+}
+.gw-m-sticky-inner {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.gw-m-cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #FFFFFF !important;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.gw-m-cta-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+}
+.gw-m-cta-btn--ready {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
+}
+
+.gw-m-btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: gwmSpin 0.7s linear infinite;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+@keyframes gwmSpin {
+    to { transform: rotate(360deg); }
+}
+
+.gw-m-skip-row {
+    text-align: center;
+    margin-top: 6px;
+}
+.gw-m-skip-btn {
+    font-size: 0.75rem;
+    color: #64748B;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    padding: 4px 8px;
+}
+.gw-m-skip-btn:active {
+    color: #059669;
+}
+</style>
+
+{{template "wfa_ad_styles" .}}
+<!-- ==========================================================================
+     JobyUK.com Next-Level Native Mobile ATS Application Gateway
+     100% Light Theme | Mobile-First App Feel | Sticky Bottom CTA Bar
+     ========================================================================== -->
+<div class="gw-mobile-page">
+
+    <!-- Simple Theme-Based Mobile Nav & Trust Bar -->
+    <div class="gw-m-topbar">
+        <a href="/jobs/{{.Data.Job.Slug}}/" class="gw-m-back" aria-label="Back to job details">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Job</span>
+        </a>
+
+        <div class="gw-m-secure-pill">
+            <span class="gw-m-pulse"></span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A68A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Verified ATS</span>
+        </div>
+    </div>
+
+    <!-- Mobile Top Header Ad Slot (Restored) -->
+    <div class="gw-m-card gw-m-top-ad-card">
+        <div class="gw-m-ad-caption">Sponsored Advertisement</div>
+        <div class="gw-m-top-ad-frame">
+            <div class="wfa-ad-container wfa-ad-leaderboard">
+                <div data-wfa-ad="wfa_1229_header_leaderboard" data-wfa-size="320x100,300x250,320x50"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Header Hero Card -->
+    <div class="gw-m-card gw-m-hero-card">
+        <div class="gw-m-transfer-pill">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Direct Employer Gateway</span>
+        </div>
+
+        <h1 class="gw-m-title">Connecting to Employer Portal</h1>
+        <p class="gw-m-subtitle">
+            Transferring your application to <strong>{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Verified Employer{{end}}</strong>. 
+            No agency middleman.
+        </p>
+
+        <!-- Employer Snapshot -->
+        <div class="gw-m-employer-box">
+            <div class="gw-m-logo-wrap">
+                {{if .Data.Job.CompanyLogoURL}}
+                    <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Employer{{end}} logo" class="gw-m-logo-img">
+                {{else}}
+                    <div class="gw-m-logo-fallback">{{if .Data.Job.EmployerName}}{{slice .Data.Job.EmployerName 0 1}}{{else}}H{{end}}</div>
+                {{end}}
+            </div>
+
+            <div class="gw-m-employer-details">
+                <div class="gw-m-emp-row">
+                    <span class="gw-m-emp-name">{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Verified UK Employer{{end}}</span>
+                    <span class="gw-m-verified-chip">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Official
+                    </span>
+                </div>
+                <h2 class="gw-m-job-title">{{.Data.Job.Title}}</h2>
+            </div>
+        </div>
+
+        <!-- Chips Row (Horizontal Scroll on Small Screens) -->
+        <div class="gw-m-chips-strip">
+            {{if .Data.Job.DisplayLocation}}
+            <span class="gw-m-chip">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                {{.Data.Job.DisplayLocation}}
+            </span>
+            {{end}}
+
+            {{if .Data.Job.ContractType}}
+            <span class="gw-m-chip">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                {{.Data.Job.ContractTypeSimple}}
+            </span>
+            {{end}}
+
+            <span class="gw-m-chip gw-m-chip--salary">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                {{.Data.Job.FormattedSalary}}
+            </span>
+        </div>
+    </div>
+
+    <!-- Live Transfer Radar HUD -->
+    <div class="gw-m-card gw-m-hud-card">
+        <div class="gw-m-hud-top">
+            <div class="gw-m-gauge-box">
+                <svg class="gw-m-gauge-svg" width="76" height="76" viewBox="0 0 76 76">
+                    <circle class="gw-m-gauge-bg" cx="38" cy="38" r="32"></circle>
+                    <circle class="gw-m-gauge-fill" id="gwmGaugeFill" cx="38" cy="38" r="32"></circle>
+                </svg>
+                <div class="gw-m-gauge-center">
+                    <span class="gw-m-gauge-num" id="gwmCountNum">{{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}}</span>
+                    <span class="gw-m-gauge-unit">SEC</span>
+                </div>
+            </div>
+
+            <div class="gw-m-hud-info">
+                <div class="gw-m-status-pill-row">
+                    <span class="gw-m-badge-status" id="gwmStatusBadge">CONNECTING</span>
+                    <span class="gw-m-cipher-label">TLS 256-Bit</span>
+                </div>
+                <div class="gw-m-status-live-msg" id="gwmStatusText">Verifying secure employer portal link...</div>
+                <div class="gw-m-bar-bg">
+                    <div class="gw-m-bar-progress" id="gwmBarFill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Step Live Security Checklist -->
+        <div class="gw-m-steps-row">
+            <div class="gw-m-step-item gw-m-step--active" id="mStep1">
+                <div class="gw-m-step-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>ATS Handshake</span>
+            </div>
+            <div class="gw-m-step-item" id="mStep2">
+                <div class="gw-m-step-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Routing Token</span>
+            </div>
+            <div class="gw-m-step-item" id="mStep3">
+                <div class="gw-m-step-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Direct Transfer</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile High-CPM Sponsored Zone (300x250) -->
+    <div class="gw-m-card gw-m-ad-card">
+        <div class="gw-m-ad-header">
+            <span class="gw-m-ad-tag">Career Partner</span>
+            <span class="gw-m-ad-sponsor">Sponsored</span>
+        </div>
+        
+        <div class="gw-m-ad-slot-box">
+            <div class="wfa-ad-container wfa-ad-incontent">
+                <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="300x250,336x280"></div>
+            </div>
+        </div>
+
+        {{if whatsappAlertsEnabled}}
+        <!-- High-Converting Fallback Alert -->
+        <div class="gw-m-native-alert">
+            <div class="gw-m-alert-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -1px; margin-right: 4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>VIP Alerts</div>
+            <h3 class="gw-m-alert-title">Get Fast UK Roles via WhatsApp</h3>
+            <p class="gw-m-alert-sub">Never miss top jobs matching your skills. Free real-time alerts.</p>
+            <a href="/whatsapp-alerts/" class="gw-m-alert-cta" target="_blank" rel="noopener">
+                <span>Join Free WhatsApp Alerts</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        </div>
+        {{end}}
+    </div>
+
+    <!-- Candidate Safety Accordion Cards -->
+    <div class="gw-m-trust-stack">
+        <div class="gw-m-trust-item">
+            <div class="gw-m-trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F5132" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg></div>
+            <div class="gw-m-trust-content">
+                <strong>100% Free Application</strong>
+                <p>JobyUK.com will never ask you for fees. Beware of recruiters asking for payment.</p>
+            </div>
+        </div>
+        <div class="gw-m-trust-item">
+            <div class="gw-m-trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F5132" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+            <div class="gw-m-trust-content">
+                <strong>Direct ATS Submission</strong>
+                <p>You apply directly on the employer's official candidate portal.</p>
+            </div>
+        </div>
+        <div class="gw-m-trust-item">
+            <div class="gw-m-trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F5132" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+            <div class="gw-m-trust-content">
+                <strong>UK GDPR & Privacy Protected</strong>
+                <p>Zero candidate tracking or stored resumes during transition.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom High-CPM Mobile Sponsored Banner Card -->
+    <div class="gw-m-card gw-m-bottom-ad-card">
+        <div class="gw-m-ad-header">
+            <span class="gw-m-ad-tag">Featured Career Partner</span>
+            <span class="gw-m-ad-sponsor">Advertisement</span>
+        </div>
+        <div class="gw-m-bottom-ad-frame">
+            <div class="wfa-ad-container wfa-ad-incontent">
+                <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="300x250,320x100,320x50"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Spacing Buffer so content isn't obscured by Sticky Bar -->
+    <div class="gw-m-bottom-spacer"></div>
+
+    <!-- ======================================================================
+         NEXT-LEVEL MOBILE STICKY BOTTOM BAR (Floating High-Converting Action)
+         ====================================================================== -->
+    <div class="gw-m-sticky-bar" id="gwmStickyBar">
+        <div class="gw-m-sticky-inner">
+            <a href="{{.Data.DestURL}}" id="gwmMainBtn" class="gw-m-cta-btn" rel="nofollow noopener noreferrer">
+                <span class="gw-m-btn-spinner" id="gwmSpinner"></span>
+                <span id="gwmBtnText">Transferring to Employer Portal ({{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}}s)...</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" id="gwmArrow" style="display:none; margin-left: 8px;">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+
+            <div class="gw-m-skip-row">
+                <a href="{{.Data.DestURL}}" class="gw-m-skip-btn" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                    <span>In a hurry? Skip wait & apply now</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Non-JS Fallback -->
+<noscript>
+    <meta http-equiv="refresh" content="{{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}};url={{.Data.DestURL}}">
+</noscript>
+
+<!-- Interactive Dynamic Logic -->
+<script>
+(function() {
+    var destURL = "{{.Data.DestURL}}";
+    var totalSeconds = {{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}};
+    var current = totalSeconds;
+
+    var numEl = document.getElementById('gwmCountNum');
+    var circle = document.getElementById('gwmGaugeFill');
+    var barFill = document.getElementById('gwmBarFill');
+    var statusText = document.getElementById('gwmStatusText');
+    var statusBadge = document.getElementById('gwmStatusBadge');
+    var btn = document.getElementById('gwmMainBtn');
+    var btnText = document.getElementById('gwmBtnText');
+    var spinner = document.getElementById('gwmSpinner');
+    var arrow = document.getElementById('gwmArrow');
+    var step2 = document.getElementById('mStep2');
+    var step3 = document.getElementById('mStep3');
+
+    // Radius 32 -> Circumference = 2 * PI * 32 ≈ 201.06
+    var circumference = 201.06;
+    if (circle) {
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = 0;
+    }
+
+    var stages = [
+        { badge: "CONNECTING", text: "Verifying secure employer portal link..." },
+        { badge: "AUTHENTICATING", text: "Generating verified candidate routing token..." },
+        { badge: "SECURING", text: "Establishing candidate handshake..." },
+        { badge: "APPROVED", text: "Handoff verified! Ready to transfer..." },
+        { badge: "TRANSFERRING", text: "Redirecting to official portal..." }
+    ];
+
+    function updateMobileView() {
+        if (numEl) numEl.textContent = current;
+
+        var progress = (totalSeconds - current) / totalSeconds;
+        if (barFill) barFill.style.width = (progress * 100) + "%";
+
+        if (circle) {
+            circle.style.strokeDashoffset = circumference * progress;
+        }
+
+        var stageIdx = Math.min(stages.length - 1, Math.floor(progress * stages.length));
+        if (statusBadge) statusBadge.textContent = stages[stageIdx].badge;
+        if (statusText) statusText.textContent = stages[stageIdx].text;
+
+        if (btnText && current > 0) {
+            btnText.textContent = "Transferring to Employer Portal (" + current + "s)...";
+        }
+
+        // Live Step Progression
+        if (current <= Math.floor(totalSeconds * 0.65) && step2) {
+            step2.classList.add('gw-m-step--active');
+        }
+        if (current <= Math.floor(totalSeconds * 0.25) && step3) {
+            step3.classList.add('gw-m-step--active');
+        }
+    }
+
+    updateMobileView();
+
+    var timer = setInterval(function() {
+        current--;
+        if (current > 0) {
+            updateMobileView();
+        } else {
+            clearInterval(timer);
+            if (numEl) numEl.textContent = "0";
+            if (barFill) barFill.style.width = "100%";
+            if (circle) circle.style.strokeDashoffset = circumference;
+            if (statusBadge) {
+                statusBadge.textContent = "READY";
+                statusBadge.style.background = "#DCFCE7";
+                statusBadge.style.color = "#15803D";
+            }
+            if (statusText) statusText.textContent = "Transfer complete! Opening employer portal...";
+
+            if (step2) step2.classList.add('gw-m-step--active');
+            if (step3) step3.classList.add('gw-m-step--active');
+
+            if (btn) {
+                btn.classList.add('gw-m-cta-btn--ready');
+            }
+            if (spinner) spinner.style.display = 'none';
+            if (arrow) arrow.style.display = 'inline-block';
+            if (btnText) btnText.textContent = "Opening Official Application Portal...";
+
+            setTimeout(function() {
+                try {
+                    window.location.replace(destURL);
+                } catch(e) {
+                    window.location.href = destURL;
+                }
+            }, 500);
+        }
+    }, 1000);
+})();
+</script>
+
+<!-- ==========================================================================
+     High-End Native Mobile Stylesheet (Light, Responsive, App-Like)
+     ========================================================================== -->
+
+{{end}}

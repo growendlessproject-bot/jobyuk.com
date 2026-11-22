@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Jobies Alert Fresh Emerald/Teal Gradient -->
+    <linearGradient id="alertBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="50%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#064E3B" />
+    </linearGradient>
+    <!-- Mint Pulse Badge Gradient -->
+    <linearGradient id="alertBadgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A7F3D0" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <!-- Leaf accent -->
+    <linearGradient id="alertLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0F26F" />
+      <stop offset="100%" stop-color="#86EFAC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Rounded Card -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#alertBgGradient)" />
+
+  <!-- Jobies 'J' Letterform -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 140 H350" stroke-width="44" />
+    <path d="M300 140 V300 C300 360 250 380 200 370 C160 360 140 320 145 280" stroke-width="44" />
+  </g>
+
+  <!-- Leaf accent -->
+  <circle cx="350" cy="140" r="32" fill="url(#alertLeafGrad)" stroke="#FFFFFF" stroke-width="12" />
+
+  <!-- Alert Notification Bell Badge -->
+  <circle cx="130" cy="380" r="42" fill="url(#alertBadgeGradient)" stroke="#FFFFFF" stroke-width="11" />
+
+  <!-- Bell Inside Badge -->
+  <path d="M128 363 C128 361.5 129.3 360.5 130 360.5 C130.7 360.5 132 361.5 132 363" 
+        fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M130 363 C124.5 363 121 367 121 375 L118 385 H142 L139 375 C139 367 135.5 363 130 363 Z" 
+        fill="#FFFFFF" />
+  <circle cx="130" cy="388.5" r="3" fill="#FFFFFF" />
+</svg>

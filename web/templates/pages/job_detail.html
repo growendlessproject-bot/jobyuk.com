@@ -1,0 +1,823 @@
+{{define "content"}}
+<!-- Top Sticky Header Bar (Reveals on Scroll) -->
+<div class="sticky-detail-bar" id="stickyDetailBar">
+    <div class="sticky-detail-bar__inner">
+        <div class="sticky-detail-bar__left">
+            <div class="sticky-detail-bar__company-logo">
+                {{if .Data.Job.CompanyLogoURL}}
+                <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{.Data.Job.EmployerName}} logo - {{.Data.Job.Title}} on JobyUK.com" width="48" height="48" loading="lazy" />
+                {{else}}
+                <div class="sticky-logo-fallback">{{slice .Data.Job.EmployerName 0 1}}</div>
+                {{end}}
+            </div>
+            <div class="sticky-detail-bar__info">
+                <div class="sticky-detail-bar__title">{{.Data.Job.Title}}</div>
+                <div class="sticky-detail-bar__meta">
+                    <span class="sticky-meta-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="sticky-meta-icon">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        {{.Data.Job.DisplayLocation}}
+                    </span>
+                    {{if .Data.Job.ContractType}}
+                    <span class="sticky-detail-bar__separator">•</span>
+                    <span class="sticky-meta-item" style="text-transform: capitalize;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="sticky-meta-icon">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        {{.Data.Job.ContractType}}
+                    </span>
+                    {{end}}
+
+                    <span class="sticky-detail-bar__separator">•</span>
+                    <span class="sticky-detail-bar__salary">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="sticky-meta-icon">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                        </svg>
+                        {{if .Data.Job.FormattedSalary}}
+                            {{.Data.Job.FormattedSalary}}
+                        {{else}}
+                            Competitive salary
+                        {{end}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="sticky-detail-bar__actions">
+            {{if not .Data.IsExpired}}
+            {{if or .Data.Job.ExternalURL .Data.Job.ReedURL}}
+            <a href="/jobs/{{.Data.Job.ID}}/apply/" class="btn-ref-apply" target="_blank" rel="nofollow noopener noreferrer">
+                <span>{{getApplyCtaText}}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
+            {{end}}
+            {{else}}
+            <button class="btn-ref-apply btn-ref-apply--disabled" disabled>Closed</button>
+            {{end}}
+            {{if whatsappAlertsEnabled}}
+            <button type="button" class="btn-ref-icon-only btn-wa-alerts-trigger" onclick="openWhatsAppModal({role: '{{.Data.Job.Title}}', location: '{{.Data.Job.DisplayLocation}}'})" title="Get WhatsApp Alerts for this Role" style="border-color: #a7f3d0; background: #f0fdf4;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+            </button>
+            {{end}}
+            <button class="btn-ref-icon-only btn-share-job" title="Share Job">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="job-detail-page section">
+    <div class="container">
+        {{template "wfa_leaderboard" .}}
+
+        <!-- Breadcrumbs & Nav Bar -->
+        <div class="job-detail-nav">
+            <a href="/jobs/" class="job-back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Job Search</span>
+            </a>
+            <div class="job-breadcrumbs-wrap">
+                {{template "breadcrumbs" .}}
+            </div>
+        </div>
+
+        {{if .Data.IsExpired}}
+        <div class="job-expired-banner">
+            <div class="job-expired-banner__icon-wrap">
+                <svg class="job-expired-banner__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="job-expired-banner__content">
+                <strong>Listing Closed:</strong> This opportunity has expired and is no longer accepting submissions.
+            </div>
+        </div>
+        {{end}}
+
+        <!-- Reference Main Header Area -->
+        <div class="ref-job-header">
+            <div class="ref-job-header__left">
+                <!-- Company Name & Logo & New Badge -->
+                <div class="ref-job-header__company-row">
+                    {{if .Data.Job.CompanySlug}}
+                        <a href="/companies/{{.Data.Job.CompanySlug}}/" class="ref-job-header__logo-link" title="View {{.Data.Job.EmployerName}} company profile">
+                            <div class="ref-job-header__logo-small">
+                                {{if .Data.Job.CompanyLogoURL}}
+                                    <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{.Data.Job.EmployerName}} official brand logo - {{.Data.Job.Title}}" width="48" height="48" loading="lazy" />
+                                {{else}}
+                                    <div class="ref-logo-fallback-small-row">{{slice .Data.Job.EmployerName 0 1}}</div>
+                                {{end}}
+                            </div>
+                        </a>
+                        <a href="/companies/{{.Data.Job.CompanySlug}}/" class="ref-job-header__company-name" title="View {{.Data.Job.EmployerName}} company profile">{{.Data.Job.EmployerName}}</a>
+                    {{else}}
+                        <div class="ref-job-header__logo-small">
+                            {{if .Data.Job.CompanyLogoURL}}
+                                <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{.Data.Job.EmployerName}} official brand logo - {{.Data.Job.Title}}" width="48" height="48" loading="lazy" />
+                            {{else}}
+                                <div class="ref-logo-fallback-small-row">{{slice .Data.Job.EmployerName 0 1}}</div>
+                            {{end}}
+                        </div>
+                        <span class="ref-job-header__company-name">{{.Data.Job.EmployerName}}</span>
+                    {{end}}
+                </div>
+
+                <!-- Job Title -->
+                <h1 class="ref-job-header__title">
+                    {{.Data.Job.Title}}
+                </h1>
+
+                {{if or .Data.Job.IsNew .Data.Job.IsEasyApply}}
+                <div class="ref-job-header__tags">
+                    {{if .Data.Job.IsNew}}
+                    <span class="ref-tag ref-tag--new">New</span>
+                    {{end}}
+                    {{if .Data.Job.IsEasyApply}}
+                    <span class="ref-tag ref-tag--easy-apply">
+                        <svg class="ref-tag__icon--lightning" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Easy Apply
+                    </span>
+                    {{end}}
+                </div>
+                {{end}}
+
+                <!-- Subtitle Row (Location, Worktype, Contract, Type, and Applications) -->
+                <div class="ref-job-header__subtitle-row">
+                    <span class="ref-job-header__subtitle-item ref-subtitle-item--location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ref-subtitle-icon">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        {{.Data.Job.DisplayLocation}}
+                    </span>
+                    <span class="ref-job-header__subtitle-item {{if .Data.Job.IsRemote}}ref-subtitle-item--remote{{else}}ref-subtitle-item--onsite{{end}}">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ref-subtitle-icon">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        {{if .Data.Job.IsRemote}}Remote{{else}}On-site{{end}}
+                    </span>
+                    {{if .Data.Job.ContractType}}
+                    <span class="ref-job-header__subtitle-item ref-subtitle-item--contract">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ref-subtitle-icon">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        <span style="text-transform: capitalize;">{{.Data.Job.ContractType}}</span>
+                    </span>
+                    {{end}}
+
+                    <span class="ref-job-header__subtitle-item ref-subtitle-item--apps">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ref-subtitle-icon">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        {{.Data.Job.ApplicationsCount}} Applications
+                    </span>
+                </div>
+
+                <!-- Meta Lists (Salary, Type, Time) -->
+                <div class="ref-job-header__meta-list">
+                    {{if .Data.Job.FormattedSalary}}
+                        <div class="ref-meta-item ref-meta-item--salary">
+                            <span class="ref-meta-icon ref-meta-icon--salary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span class="ref-meta-value">{{.Data.Job.FormattedSalary}}</span>
+                        </div>
+                    {{else}}
+                        <div class="ref-meta-item ref-meta-item--salary">
+                            <span class="ref-meta-icon ref-meta-icon--salary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span class="ref-meta-value">Competitive salary</span>
+                        </div>
+                    {{end}}
+
+                    <div class="ref-meta-item ref-meta-item--type">
+                        <span class="ref-meta-icon ref-meta-icon--type">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </span>
+                        <span class="ref-meta-value">{{if eq .Data.Job.JobType "part_time"}}Part-time{{else if eq .Data.Job.JobType "contract"}}Contract{{else}}Full-time{{end}}</span>
+                    </div>
+
+                    <div class="ref-meta-item ref-meta-item--time">
+                        <span class="ref-meta-icon ref-meta-icon--time">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </span>
+                        <span class="ref-meta-value">Posted {{formatDateOnly .Data.Job.DatePosted}}</span>
+                    </div>
+
+                    {{if .Data.Job.ExpirationDate}}
+                    <div class="ref-meta-item ref-meta-item--expiry">
+                        <span class="ref-meta-icon ref-meta-icon--expiry">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </span>
+                        <span class="ref-meta-value">Expires {{formatDateOnly .Data.Job.ExpirationDate}}</span>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Top Actions Right Side -->
+            <div class="ref-job-header__right">
+                <div class="ref-action-buttons">
+                    {{if not .Data.IsExpired}}
+                    {{if or .Data.Job.ExternalURL .Data.Job.ReedURL}}
+                    <a href="/jobs/{{.Data.Job.ID}}/apply/" class="btn-ref-apply btn-ref-apply--large" target="_blank"
+                        rel="nofollow noopener noreferrer">
+                        <span>{{getApplyCtaText}}</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                    {{end}}
+                    {{else}}
+                    <button class="btn-ref-apply btn-ref-apply--large btn-ref-apply--disabled" disabled>Closed</button>
+                    {{end}}
+
+                    {{if whatsappAlertsEnabled}}
+                    <button type="button" class="btn-ref-icon-only btn-ref-icon-only--large btn-wa-alerts-trigger" onclick="openWhatsAppModal({role: '{{.Data.Job.Title}}', location: '{{.Data.Job.DisplayLocation}}'})" title="Get WhatsApp Alerts for this Role" style="border-color: #a7f3d0; background: #f0fdf4;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+                    </button>
+                    {{end}}
+
+                    <button class="btn-ref-icon-only btn-ref-icon-only--large btn-share-job" title="Share Job">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Split Grid Layout -->
+        <div class="detail-layout">
+            <!-- Left Main Column (Job Description) -->
+            <main class="job-detail-main">
+                <div class="ref-desc-card">
+                    <h2 class="ref-desc-title">Job description</h2>
+                    {{template "wfa_incontent" .}}
+                    <div class="job-detail-body" id="jobDetailBody">
+                        {{.Data.Job.Description | safeHTML}}
+                    </div>
+
+                    {{template "wfa_incontent" .}}
+
+                    {{template "whatsapp_context_banner" dict "Title" (printf "Get %s Jobs on WhatsApp" .Data.Job.Title) "Desc" (printf "Instant real-time dispatch of newly opened %s positions in %s." .Data.Job.Title .Data.Job.DisplayLocation) "Role" .Data.Job.Title}}
+
+                    <!-- Clean Report CTA -->
+                    {{if and (not .Data.IsExpired) (not .Data.IsBlacklisted)}}
+                    <div class="job-detail-report-cta" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 8px; color: #475569; font-size: 0.85rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #b91c1c;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <span>Is there something wrong with this job listing? Let us know.</span>
+                        </div>
+                        <button type="button" class="btn btn--outline" id="btn-report-job" data-already-reported="{{if .Data.AlreadyReported}}true{{else}}false{{end}}" style="color: #b91c1c; border-color: #fecaca; background: #fff5f5; font-weight: 700; font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s;">Report this job</button>
+                    </div>
+                    {{end}}
+                </div>
+            </main>
+
+            <!-- Right Column (Sidebar Widgets) -->
+            <aside class="detail-layout__sidebar">
+
+                {{template "whatsapp_sidebar_card" .Data}}
+
+                <div class="ref-sidebar-widget" id="similarJobsSection">
+                    <h2 class="ref-sidebar-title">Similar Jobs</h2>
+                    <div class="ref-similar-list">
+                        {{range .Data.SimilarJobs}}
+                        <div class="ref-sim-card">
+                            <div class="ref-sim-card__header">
+                                {{if .CompanySlug}}
+                                    <a href="/companies/{{.CompanySlug}}/" class="ref-sim-card__logo-link" title="View {{.EmployerName}} company profile">
+                                        <div class="ref-sim-card__logo">
+                                            {{if .CompanyLogoURL}}
+                                            <img src="{{.CompanyLogoURL}}" alt="{{.EmployerName}} logo" width="38" height="38" loading="lazy" />
+                                            {{else}}
+                                            <div class="ref-logo-fallback-small">{{slice .EmployerName 0 1}}</div>
+                                            {{end}}
+                                        </div>
+                                    </a>
+                                    <div class="ref-sim-card__employer-info">
+                                        <a href="/companies/{{.CompanySlug}}/" class="ref-sim-card__employer-name" title="View {{.EmployerName}} company profile">{{.EmployerName}}</a>
+                                    </div>
+                                {{else}}
+                                    <div class="ref-sim-card__logo">
+                                        {{if .CompanyLogoURL}}
+                                        <img src="{{.CompanyLogoURL}}" alt="{{.EmployerName}} logo" width="38" height="38" loading="lazy" />
+                                        {{else}}
+                                        <div class="ref-logo-fallback-small">{{slice .EmployerName 0 1}}</div>
+                                        {{end}}
+                                    </div>
+                                    <div class="ref-sim-card__employer-info">
+                                        <div class="ref-sim-card__employer-name">{{.EmployerName}}</div>
+                                    </div>
+                                {{end}}
+                                <button class="ref-sim-card__bookmark" title="Bookmark Job">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <h3 class="ref-sim-card__title">
+                                <a href="/jobs/{{.Slug}}/" style="color: inherit; text-decoration: none;">{{.Title}}</a>
+                            </h3>
+                            <div class="ref-sim-card__meta-row">
+                                <div class="ref-sim-card__location">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>{{.DisplayLocation}}</span>
+                                </div>
+                                {{if .FormattedSalary}}
+                                <div class="ref-sim-card__salary">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                    <span>{{.FormattedSalary}}</span>
+                                </div>
+                                {{end}}
+                            </div>
+                            <div class="ref-sim-card__time">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>{{.TimeAgo}}</span>
+                            </div>
+                            <a href="/jobs/{{.Slug}}/" class="btn-ref-view-details">View Job Details</a>
+                        </div>
+                        {{else}}
+                        <p class="ref-sidebar-empty">No similar active jobs at the moment.</p>
+                        {{end}}
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Sticky Bottom Action Bar (Apply on Left + Alerts + Details + Share on Right) -->
+<style>
+.mobile-job-bottom-bar .btn-mobile-action,
+.mobile-job-bottom-bar .btn-mobile-specs,
+.mobile-job-bottom-bar .btn-mobile-share,
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts,
+.mobile-job-bottom-bar .btn-mobile-google-pref {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    width: 52px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #334155 !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    outline: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts {
+    background: #ecfdf5 !important;
+    border: 1.5px solid #a7f3d0 !important;
+    color: #065f46 !important;
+}
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts span {
+    color: #065f46 !important;
+    font-size: 0.65rem !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+}
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts svg {
+    display: block !important;
+    flex-shrink: 0 !important;
+    filter: drop-shadow(0 1px 2px rgba(37, 211, 102, 0.25)) !important;
+}
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts:hover {
+    background: #d1fae5 !important;
+    border-color: #6ee7b7 !important;
+}
+.mobile-job-bottom-bar .btn-mobile-action:active,
+.mobile-job-bottom-bar .btn-mobile-specs:active,
+.mobile-job-bottom-bar .btn-mobile-share:active {
+    background: #e2e8f0 !important;
+    transform: scale(0.96) !important;
+}
+.mobile-job-bottom-bar .btn-mobile-whatsapp-alerts:active {
+    background: #a7f3d0 !important;
+    transform: scale(0.96) !important;
+}
+</style>
+<div class="mobile-job-bottom-bar" id="mobileJobBottomBar">
+    <div class="mobile-job-bottom-bar__inner">
+        <!-- 1. Main Apply CTA on Left -->
+        {{if not .Data.IsExpired}}
+            {{if or .Data.Job.ExternalURL .Data.Job.ReedURL}}
+            <a href="/jobs/{{.Data.Job.ID}}/apply/" class="btn-mobile-apply" target="_blank" rel="nofollow noopener noreferrer">
+                <span>{{getApplyCtaText}}</span>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
+            {{else}}
+            <a href="/jobs/" class="btn-mobile-apply">
+                <span>View Jobs</span>
+            </a>
+            {{end}}
+        {{else}}
+        <button class="btn-mobile-apply btn-mobile-apply--disabled" disabled>Opportunity Closed</button>
+        {{end}}
+
+        {{if whatsappAlertsEnabled}}
+        <!-- 1. WhatsApp Alerts Button -->
+        <button type="button" 
+           onclick="openWhatsAppModal({role: '{{.Data.Job.Title}}', location: '{{.Data.Job.DisplayLocation}}'})"
+           class="btn-mobile-action btn-mobile-whatsapp-alerts btn-mobile-google-pref" 
+           id="mobile-btn-wa-pref"
+           aria-label="WhatsApp Alerts" 
+           title="WhatsApp Alerts">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+            <span>Alerts</span>
+        </button>
+        {{end}}
+
+        <!-- 2. Job Details Button -->
+        <button type="button" class="btn-mobile-action btn-mobile-specs" id="btn-open-specs-sheet" aria-label="Job Details" title="View Job Details">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Details</span>
+        </button>
+
+        <!-- 3. Share Button -->
+        <button type="button" class="btn-mobile-action btn-mobile-share" id="btn-open-share-sheet" aria-label="Share Job" title="Share Job">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>Share</span>
+        </button>
+    </div>
+</div>
+
+<!-- Mobile Quick Specs Bottom Sheet (Slides up from bottom) -->
+<div class="mobile-bottom-sheet" id="job-specs-sheet" aria-hidden="true">
+    <div class="mobile-bottom-sheet__backdrop" id="specs-sheet-backdrop"></div>
+    <div class="mobile-bottom-sheet__card">
+        <div class="mobile-bottom-sheet__handle-bar">
+            <span class="mobile-bottom-sheet__handle"></span>
+        </div>
+        <div class="mobile-bottom-sheet__header">
+            <div class="mobile-bottom-sheet__title-group">
+                <h3 class="mobile-bottom-sheet__title">Job Details & Requirements</h3>
+                <div class="mobile-bottom-sheet__job-info">
+                    <span class="mobile-sheet-company">{{.Data.Job.EmployerName}}</span>
+                    <span class="mobile-sheet-job-title">— {{.Data.Job.Title}}</span>
+                </div>
+            </div>
+            <button type="button" class="mobile-bottom-sheet__close" id="specs-sheet-close" aria-label="Close Details">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="mobile-bottom-sheet__body">
+            <div class="specs-grid">
+                <!-- Company & Role Cards -->
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--company">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Hiring Company</span>
+                        <strong class="specs-card__value">{{.Data.Job.EmployerName}}</strong>
+                    </div>
+                </div>
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--role">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Job Position</span>
+                        <strong class="specs-card__value">{{.Data.Job.Title}}</strong>
+                    </div>
+                </div>
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--salary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Salary & Compensation</span>
+                        <strong class="specs-card__value">{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else}}Competitive salary{{end}}</strong>
+                    </div>
+                </div>
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--type">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Employment Type</span>
+                        <strong class="specs-card__value">{{if eq .Data.Job.JobType "part_time"}}Part-time{{else if eq .Data.Job.JobType "contract"}}Contract{{else}}Full-time{{end}}</strong>
+                    </div>
+                </div>
+
+                {{if .Data.Job.ContractType}}
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--contract">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Contract Basis</span>
+                        <strong class="specs-card__value" style="text-transform: capitalize;">{{.Data.Job.ContractType}}</strong>
+                    </div>
+                </div>
+                {{end}}
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--location">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Location & Work Model</span>
+                        <strong class="specs-card__value">{{.Data.Job.DisplayLocation}} • {{if .Data.Job.IsRemote}}Remote{{else}}On-site{{end}}</strong>
+                    </div>
+                </div>
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--apps">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Applications</span>
+                        <strong class="specs-card__value">{{.Data.Job.ApplicationsCount}} candidates applied</strong>
+                    </div>
+                </div>
+
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--date">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Date Posted</span>
+                        <strong class="specs-card__value">Posted {{formatDateOnly .Data.Job.DatePosted}}</strong>
+                    </div>
+                </div>
+
+                {{if .Data.Job.ExpirationDate}}
+                <div class="specs-card">
+                    <div class="specs-card__icon specs-card__icon--expiry">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <div class="specs-card__content">
+                        <span class="specs-card__label">Application Deadline</span>
+                        <strong class="specs-card__value">Expires {{formatDateOnly .Data.Job.ExpirationDate}}</strong>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        <!-- Sticky Bottom Area inside Details Sheet -->
+        <div class="mobile-bottom-sheet__footer" style="display: flex !important; flex-direction: column !important; gap: 10px !important; padding: 14px 18px 20px !important;">
+            {{if whatsappAlertsEnabled}}
+            <button type="button" onclick="var s=document.getElementById('job-specs-sheet');if(s){s.classList.remove('mobile-bottom-sheet--open');document.body.style.overflow='';}openWhatsAppModal({role: '{{.Data.Job.Title}}', location: '{{.Data.Job.DisplayLocation}}'});" class="sheet-sticky-whatsapp-bar" style="margin: 0 !important; width: 100%; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1.5px solid #a7f3d0; padding: 10px 14px; border-radius: 12px; cursor: pointer; text-decoration: none;">
+                <div style="display: flex; align-items: center; gap: 9px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+                    <span style="font-size: 0.84rem; font-weight: 750; color: #065f46;">Instant Alerts on WhatsApp</span>
+                </div>
+                <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.70rem; font-weight: 800; background: #10b981; color: #ffffff; padding: 3px 8px; border-radius: 6px;">
+                    <span>3-Day Free</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+            </button>
+            {{end}}
+            {{if not .Data.IsExpired}}
+                {{if or .Data.Job.ExternalURL .Data.Job.ReedURL}}
+                <a href="/jobs/{{.Data.Job.ID}}/apply/" class="btn-mobile-apply btn-mobile-apply--full" target="_blank" rel="nofollow noopener noreferrer" style="margin: 0 !important;">
+                    <span>{{getApplyCtaText}}</span>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+                {{end}}
+            {{end}}
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Share Bottom Sheet (Slides up from bottom) -->
+<div class="mobile-bottom-sheet" id="job-share-sheet" aria-hidden="true">
+    <div class="mobile-bottom-sheet__backdrop" id="share-sheet-backdrop"></div>
+    <div class="mobile-bottom-sheet__card">
+        <div class="mobile-bottom-sheet__handle-bar">
+            <span class="mobile-bottom-sheet__handle"></span>
+        </div>
+        <div class="mobile-bottom-sheet__header">
+            <div class="mobile-bottom-sheet__title-group">
+                <h3 class="mobile-bottom-sheet__title">Share this Opportunity</h3>
+                <div class="mobile-bottom-sheet__job-info">
+                    <span class="mobile-sheet-company">{{.Data.Job.EmployerName}}</span>
+                    <span class="mobile-sheet-job-title">— {{.Data.Job.Title}}</span>
+                </div>
+            </div>
+            <button type="button" class="mobile-bottom-sheet__close" id="share-sheet-close" aria-label="Close Share">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="mobile-bottom-sheet__body">
+            {{if whatsappAlertsEnabled}}
+            <!-- Google Instant Job Alerts Simple Row inside Share Sheet -->
+            <!-- WhatsApp Alerts Row inside Share Sheet -->
+            <button type="button" onclick="var s=document.getElementById('job-share-sheet');if(s){s.classList.remove('mobile-bottom-sheet--open');document.body.style.overflow='';}openWhatsAppModal({role: '{{.Data.Job.Title}}', location: '{{.Data.Job.DisplayLocation}}'});" class="share-sheet-whatsapp-row" style="width: 100%; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1.5px solid #a7f3d0; padding: 11px 14px; border-radius: 12px; margin-bottom: 14px; cursor: pointer; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+                    <div>
+                        <strong style="font-size: 0.84rem; color: #065f46; display: block;">Send Similar Roles to WhatsApp</strong>
+                        <span style="font-size: 0.72rem; color: #475569;">Get notified when roles like this open</span>
+                    </div>
+                </div>
+                <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.70rem; font-weight: 800; background: #10b981; color: #ffffff; padding: 3px 8px; border-radius: 6px;">
+                    <span>3-Day Free</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+            </button>
+            {{end}}
+
+            <div class="share-grid">
+                <a href="#" class="share-grid__item share-grid__item--whatsapp" id="share-btn-whatsapp" target="_blank" rel="noopener noreferrer">
+                    <div class="share-grid__icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/>
+                            <path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/>
+                        </svg>
+                    </div>
+                    <span>WhatsApp</span>
+                </a>
+
+                <a href="#" class="share-grid__item share-grid__item--linkedin" id="share-btn-linkedin" target="_blank" rel="noopener noreferrer">
+                    <div class="share-grid__icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/></svg>
+                    </div>
+                    <span>LinkedIn</span>
+                </a>
+
+                <a href="#" class="share-grid__item share-grid__item--x" id="share-btn-x" target="_blank" rel="noopener noreferrer">
+                    <div class="share-grid__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <span>X</span>
+                </a>
+
+                <a href="#" class="share-grid__item share-grid__item--facebook" id="share-btn-facebook" target="_blank" rel="noopener noreferrer">
+                    <div class="share-grid__icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#1877F2"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                    </div>
+                    <span>Facebook</span>
+                </a>
+
+                <a href="#" class="share-grid__item share-grid__item--telegram" id="share-btn-telegram" target="_blank" rel="noopener noreferrer">
+                    <div class="share-grid__icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#24A1DE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                    </div>
+                    <span>Telegram</span>
+                </a>
+
+                <a href="#" class="share-grid__item share-grid__item--email" id="share-btn-email">
+                    <div class="share-grid__icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#475569"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <span>Email</span>
+                </a>
+            </div>
+
+            <!-- Copy Link Box -->
+            <div class="share-copy-box">
+                <div class="share-copy-input" id="share-link-input">https://JobyUK.com.co.uk/jobs/...</div>
+                <button type="button" class="btn-copy-share-link" id="btn-copy-share-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span id="copy-btn-text">Copy Link</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Job Modal Overlay -->
+<div id="report-job-modal" class="custom-modal-overlay" style="display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease;">
+    <!-- Modal Backdrop -->
+    <div class="custom-modal-backdrop" style="position: absolute; inset: 0; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); cursor: pointer; pointer-events: auto;"></div>
+    
+    <!-- Modal content card -->
+    <div class="custom-modal" style="position: relative; z-index: 10; background: #ffffff; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); max-width: 480px; width: 90%; transform: scale(0.95); transition: transform 0.25s ease; padding: 24px; border: 1px solid #f1f5f9; pointer-events: auto !important;">
+        <div class="custom-modal__header" style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div class="custom-modal__icon-wrap" style="width: 40px; height: 40px; border-radius: 8px; background: #fff5f5; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h2 class="custom-modal__title" style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #0f172a;">Report Job Listing</h2>
+        </div>
+        <form id="report-job-form" method="POST" action="/jobs/{{.Data.Job.ID}}/report/">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <div class="custom-modal__body" style="margin-bottom: 20px;">
+                <p style="margin: 0 0 12px; color: #475569; font-size: 0.9rem; line-height: 1.5;">Please specify why you are reporting this job listing. Our team will investigate it.</p>
+                
+                <div style="margin-bottom: 14px;">
+                    <label for="report-reason" style="display: block; font-size: 0.8rem; font-weight: 600; color: #334155; margin-bottom: 6px;">Reason for Report <span style="color: #ef4444;">*</span></label>
+                    <select name="reason" id="report-reason" required style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #0f172a; outline: none; transition: border-color 0.2s;">
+                        <option value="">-- Select a reason --</option>
+                        <option value="Fake or scam job">Fake or scam job / Fraudulent</option>
+                        <option value="Incorrect details or salary">Incorrect details or salary info</option>
+                        <option value="Discriminatory content">Discriminatory or offensive content</option>
+                        <option value="Link is broken / doesn't work">Broken or misleading link</option>
+                        <option value="Expired or filled already">Expired or already filled</option>
+                        <option value="Other">Other reason (please describe below)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="report-details" style="display: block; font-size: 0.8rem; font-weight: 600; color: #334155; margin-bottom: 6px;">Additional Details (Optional)</label>
+                    <textarea name="details" id="report-details" rows="3" placeholder="Provide any details that can help us verify this report..." style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #0f172a; resize: none; outline: none; transition: border-color 0.2s;"></textarea>
+                </div>
+            </div>
+            <div class="custom-modal__footer" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+                <button type="button" class="btn btn--outline" id="report-modal-cancel" style="border: 1px solid #cbd5e1; background: #fff; color: #475569; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Cancel</button>
+                <button type="submit" class="btn btn--primary" style="background: var(--color-primary, #0a66c2); color: #fff; padding: 6px 16px; border-radius: 6px; cursor: pointer; border: none; font-size: 0.85rem; font-weight: 600;">Submit Report</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{end}}

@@ -1,0 +1,39 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 20px; padding-bottom: 50px;">
+    {{template "breadcrumbs" .}}
+
+    <header style="margin-bottom: 24px;">
+
+        <h1 style="font-size: 1.75rem; font-weight: 850; color: #0F172A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px;">
+            Terms of Service
+        </h1>
+        <p style="font-size: 0.85rem; color: #64748B; margin: 0;">
+            Last updated: October 2026 • Governed by UK Law
+        </p>
+    </header>
+
+    <article style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px 18px; font-size: 0.95rem; line-height: 1.7; color: #334155;">
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+            <strong style="color: #059669; font-size: 0.85rem; display: block; margin-bottom: 4px;">Quick Summary:</strong>
+            <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">JobyUK.com is a free UK job index connecting you directly to verified employer hiring portals with zero fees.</p>
+        </div>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">1. Terms Acceptance</h2>
+        <p style="margin: 0 0 16px;">By using JobyUK.com, you agree to these Terms. If you do not agree, please do not use this site.</p>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">2. Free Candidate Access</h2>
+        <p style="margin: 0 0 16px;">We never charge candidates. Applications route directly to the employer's official ATS.</p>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">3. Disclaimer</h2>
+        <p style="margin: 0 0 16px;">Vacancies are indexed from verified sources. We routinely remove expired roles but cannot guarantee vacancy availability at all times.</p>
+
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 8px;">4. Governing Law</h2>
+        <p style="margin: 0 0 20px;">Governed under the laws of England and Wales.</p>
+
+        <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; padding: 14px; text-align: center;">
+            <p style="margin: 0 0 8px; font-size: 0.85rem; color: #065F46; font-weight: 600;">Questions? Contact our legal team:</p>
+            <a href="mailto:{{getSiteEmail}}" style="color: #059669; font-weight: 750; font-size: 0.9rem;">{{getSiteEmail}}</a>
+        </div>
+    </article>
+</div>
+{{end}}

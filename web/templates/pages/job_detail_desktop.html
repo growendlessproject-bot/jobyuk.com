@@ -1,0 +1,663 @@
+{{define "content"}}
+<!-- Sticky Floating Apply Bar on Scroll -->
+<aside class="jy-sticky-apply-bar" id="sticky-apply-bar" aria-label="Quick apply bar">
+    <div class="jy-container jy-sticky-apply-bar__inner">
+        <!-- Left: Logo + Job Name + City Location -->
+        <div class="jy-sticky-apply-bar__left">
+            <div class="jy-sticky-apply-bar__logo" aria-hidden="true">
+                {{$emp := lower .Data.Job.EmployerName}}
+                {{if or (eq $emp "apple") (eq $emp "apple uk")}}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.76 1.05-1.82.93-2.88-.91.04-2.02.61-2.67 1.37-.58.67-.99 1.74-.85 2.77.91.07 1.96-.5 2.59-1.26z"/>
+                    </svg>
+                {{else if or (eq $emp "google") (eq $emp "google uk")}}
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DB954">
+                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                    </svg>
+                {{else if or (eq $emp "instagram") (eq $emp "meta")}}
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <rect width="24" height="24" rx="6" fill="#E1306C"/>
+                        <circle cx="12" cy="12" r="5" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="#FFFFFF"/>
+                    </svg>
+                {{else if .Data.Job.CompanyLogoURL}}
+                    <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{.Data.Job.EmployerName}}" width="24" height="24" loading="lazy" />
+                {{else}}
+                    <span style="font-size: 14px; font-weight: 850; color: #0F5132;">{{if .Data.Job.EmployerName}}{{slice .Data.Job.EmployerName 0 1}}{{else}}J{{end}}</span>
+                {{end}}
+            </div>
+            <div class="jy-sticky-apply-bar__info">
+                <div class="jy-sticky-apply-bar__title">{{.Data.Job.Title}}</div>
+                <div class="jy-sticky-apply-bar__meta">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}} • {{end}}{{if .Data.Job.DisplayLocation}}{{.Data.Job.DisplayLocation}}{{else}}London, UK{{end}} • {{if .Data.Job.IsRemote}}Remote Friendly{{else}}Hybrid{{end}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Salary Tag + Save Button + Apply Now CTA -->
+        <div class="jy-sticky-apply-bar__right">
+            {{if .Data.Job.FormattedSalary}}
+                <span class="jy-sticky-apply-bar__salary">{{.Data.Job.FormattedSalary}}</span>
+            {{else if and .Data.Job.YearlyMin .Data.Job.YearlyMax}}
+                <span class="jy-sticky-apply-bar__salary">£{{formatSalary .Data.Job.YearlyMin}} – £{{formatSalary .Data.Job.YearlyMax}}</span>
+            {{end}}
+
+            <button type="button" class="jy-sticky-apply-bar__save-btn" 
+                data-job-id="{{.Data.Job.ID}}"
+                data-job-title="{{.Data.Job.Title}}"
+                data-job-slug="{{.Data.Job.Slug}}"
+                data-job-employer="{{.Data.Job.EmployerName}}"
+                data-job-employer-slug="{{.Data.Job.CompanySlug}}"
+                data-job-logo="{{.Data.Job.CompanyLogoURL}}"
+                data-job-location="{{if .Data.Job.DisplayLocation}}{{.Data.Job.DisplayLocation}}{{else}}UK{{end}}"
+                data-job-remote="{{if .Data.Job.IsRemote}}true{{else}}false{{end}}"
+                data-job-salary="{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else if and .Data.Job.YearlyMin .Data.Job.YearlyMax}}£{{formatSalary .Data.Job.YearlyMin}} – £{{formatSalary .Data.Job.YearlyMax}}{{else}}Competitive salary{{end}}"
+                data-job-time="{{.Data.Job.TimeAgo}}"
+                onclick="JobyUKSaved.toggleFromButton(this, event)" 
+                aria-label="Save Job">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </button>
+
+            <a href="/jobs/{{.Data.Job.ID}}/apply/" target="_blank" rel="nofollow noopener noreferrer" class="jy-sticky-apply-bar__btn">
+                <span>Apply Now</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+            </a>
+        </div>
+    </div>
+</aside>
+
+<div class="jy-detail-grid-wrap" id="job-detail-top">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <!-- 2-Column Grid: Main Job Details (Left) + Similar Jobs Sidebar (Right) -->
+        <div class="jy-detail-grid-layout">
+            
+            <!-- Left: Main Job Details Column -->
+            <main class="jy-detail-main-col">
+                <article class="jy-detail-card" aria-labelledby="job-title-main">
+
+                    <!-- 1. Top Bar: Back to search + Save Bookmark -->
+                    <div class="jy-detail-topbar">
+                        <a href="/jobs/" class="jy-detail-back-btn" onclick="if(window.history.length > 1 && document.referrer && document.referrer.indexOf('/jobs') !== -1) { window.history.back(); return false; }">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            <span>Back to search</span>
+                        </a>
+
+                        <button type="button" class="jy-detail-save-btn" id="save-job-detail-btn"
+                            data-job-id="{{.Data.Job.ID}}"
+                            data-job-title="{{.Data.Job.Title}}"
+                            data-job-slug="{{.Data.Job.Slug}}"
+                            data-job-employer="{{.Data.Job.EmployerName}}"
+                            data-job-employer-slug="{{.Data.Job.CompanySlug}}"
+                            data-job-logo="{{.Data.Job.CompanyLogoURL}}"
+                            data-job-location="{{if .Data.Job.DisplayLocation}}{{.Data.Job.DisplayLocation}}{{else}}UK{{end}}"
+                            data-job-remote="{{if .Data.Job.IsRemote}}true{{else}}false{{end}}"
+                            data-job-salary="{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else if and .Data.Job.YearlyMin .Data.Job.YearlyMax}}£{{formatSalary .Data.Job.YearlyMin}} – £{{formatSalary .Data.Job.YearlyMax}}{{else}}Competitive salary{{end}}"
+                            data-job-time="{{.Data.Job.TimeAgo}}"
+                            onclick="JobyUKSaved.toggleFromButton(this, event)">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span>Save</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Logo & Job Title in Same Row -->
+                    <div class="jy-detail-header-row">
+                        {{if .Data.Job.CompanySlug}}
+                            <a href="/companies/{{.Data.Job.CompanySlug}}/" class="jy-detail-logo" title="View {{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Company{{end}} profile" aria-label="View {{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}}{{else}}Company{{end}} profile">
+                        {{else if .Data.Job.EmployerName}}
+                            <a href="/jobs/?q={{urlquery .Data.Job.EmployerName}}" class="jy-detail-logo" title="View all jobs at {{.Data.Job.EmployerName}}" aria-label="View all jobs at {{.Data.Job.EmployerName}}">
+                        {{else}}
+                            <div class="jy-detail-logo" aria-hidden="true">
+                        {{end}}
+                            {{$emp := lower .Data.Job.EmployerName}}
+                            {{if or (eq $emp "google") (eq $emp "google uk")}}
+                                <svg width="36" height="36" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                </svg>
+                            {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                                <svg width="34" height="34" viewBox="0 0 24 24" fill="#1DB954">
+                                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                                </svg>
+                            {{else if or (eq $emp "loom") (eq $emp "loom uk")}}
+                                <svg width="34" height="34" viewBox="0 0 24 24" fill="#625DF5">
+                                    <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"/>
+                                    <circle cx="12" cy="12" r="3.5" fill="#625DF5"/>
+                                </svg>
+                            {{else if or (eq $emp "notion") (eq $emp "notion labs")}}
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="#000000">
+                                    <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.093-.373L18.3 2.25c-.42-.327-.98-.747-2.148-.654L3.899 2.576c-.514.047-.654.42-.42.7l.98 1.482v-.55zm1.306 3.685v12.825c0 .84.373 1.12 1.213 1.073l13.681-.793c.84-.047 1.027-.56 1.027-1.26V6.953c0-.7-.28-.98-.934-.934l-14.053.84c-.7.046-.934.373-.934 1.026v-.002zm11.756 1.82c.047.373-.093.746-.467.793l-.84.14v7.742l1.353.606c.373.187.42.514.373.887l-2.846.187-3.966-5.83v4.618l1.027.234c.373.093.466.42.42.793l-2.8.187c-.047-.373.093-.7.467-.793l.887-.234v-7.37l-1.307-.233c-.373-.047-.466-.42-.42-.793l2.847-.187 4.012 5.923V9.67l-1.027-.233c-.373-.093-.42-.467-.373-.84l2.844-.187z"/>
+                                </svg>
+                            {{else if or (eq $emp "revolut") (eq $emp "revolut ltd")}}
+                                <span style="width: 38px; height: 38px; border-radius: 8px; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px;">R</span>
+                            {{else if or (eq $emp "monzo") (eq $emp "monzo bank")}}
+                                <svg width="34" height="34" viewBox="0 0 24 24">
+                                    <path fill="#FF4D5A" d="M4 18h3.2V8.6L10.4 14h3.2l3.2-5.4V18H20V6h-3.6L12 13.5 7.6 6H4v12z"/>
+                                </svg>
+                            {{else if or (eq $emp "apple") (eq $emp "apple uk")}}
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="#000000">
+                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.76 1.05-1.82.93-2.88-.91.04-2.02.61-2.67 1.37-.58.67-.99 1.74-.85 2.77.91.07 1.96-.5 2.59-1.26z"/>
+                                </svg>
+                            {{else if .Data.Job.CompanyLogoURL}}
+                                <img src="{{.Data.Job.CompanyLogoURL}}" alt="{{.Data.Job.EmployerName}} logo" width="56" height="56" loading="lazy" />
+                            {{else}}
+                                <span style="font-size: 24px; font-weight: 850; color: #0F5132;">{{if .Data.Job.EmployerName}}{{slice .Data.Job.EmployerName 0 1}}{{else}}J{{end}}</span>
+                            {{end}}
+                        {{if or .Data.Job.CompanySlug .Data.Job.EmployerName}}
+                            </a>
+                        {{else}}
+                            </div>
+                        {{end}}
+
+                        <div style="min-width: 0;">
+                            <h1 class="jy-detail-title" id="job-title-main" style="margin: 0 0 6px;">{{.Data.Job.Title}}</h1>
+                            {{if .Data.Job.EmployerName}}
+                            <div class="jy-detail-company-subhead" style="font-size: 1.05rem; font-weight: 700; color: #475569;">
+                                {{if .Data.Job.CompanySlug}}
+                                    <a href="/companies/{{.Data.Job.CompanySlug}}/" class="jy-detail-company-link" style="color: #059669; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="View {{.Data.Job.EmployerName}} company profile">
+                                        <span>{{.Data.Job.EmployerName}}</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                {{else}}
+                                    <a href="/jobs/?q={{urlquery .Data.Job.EmployerName}}" class="jy-detail-company-link" style="color: #059669; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="View all jobs at {{.Data.Job.EmployerName}}">
+                                        <span>{{.Data.Job.EmployerName}}</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                {{end}}
+                            </div>
+                            {{end}}
+                        </div>
+                    </div>
+
+
+                    <!-- 5. Metadata List (Location • Remote, Salary, Contract Type in the same horizontal row) -->
+                    <div class="jy-detail-meta-list">
+                        <div class="jy-detail-meta-item">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>{{if .Data.Job.DisplayLocation}}{{.Data.Job.DisplayLocation}}{{else}}London, UK{{end}} • {{if .Data.Job.IsRemote}}Remote{{else}}Hybrid{{end}}</span>
+                        </div>
+
+                        <div class="jy-detail-meta-item jy-detail-meta-item--salary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            <span>{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else if and .Data.Job.YearlyMin .Data.Job.YearlyMax}}£{{formatSalary .Data.Job.YearlyMin}} – £{{formatSalary .Data.Job.YearlyMax}} / year{{else}}Competitive salary{{end}}</span>
+                        </div>
+
+                        <div class="jy-detail-meta-item">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{{if eq .Data.Job.JobType "full_time"}}Full-time{{else}}Part-time{{end}} • {{if .Data.Job.ContractType}}{{.Data.Job.ContractTypeSimple}}{{else}}Permanent{{end}}</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Action Buttons -->
+                    <div class="jy-detail-actions">
+                        <a href="/jobs/{{.Data.Job.ID}}/apply/" class="jy-detail-apply-btn" target="_blank" rel="nofollow noopener noreferrer">
+                            Apply Now
+                        </a>
+
+                        <button type="button" class="jy-detail-share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Job link copied to clipboard!');" aria-label="Share this job">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                <polyline points="16 6 12 2 8 6"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="15"></line>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+
+                    <!-- 7. Content Tabs Bar -->
+                    <nav class="jy-detail-tabs" aria-label="Job description tabs">
+                        <button type="button" class="jy-detail-tab active" onclick="switchDetailTab(event, 'tab-overview')">Overview</button>
+                        <button type="button" class="jy-detail-tab" onclick="switchDetailTab(event, 'tab-responsibilities')">Responsibilities</button>
+                        <button type="button" class="jy-detail-tab" onclick="switchDetailTab(event, 'tab-requirements')">Requirements</button>
+                        <button type="button" class="jy-detail-tab" onclick="switchDetailTab(event, 'tab-benefits')">Benefits</button>
+                    </nav>
+
+                    <!-- 8. Content Body Typography matching Figma -->
+                    <div class="jy-detail-body">
+                        <div id="tab-overview" class="jy-detail-tab-pane">
+                            <h2>About the role</h2>
+                            {{if .Data.Job.Description}}
+                                <div class="jy-description-content">
+                                    {{safeHTML .Data.Job.Description}}
+                                </div>
+                            {{else}}
+                                <p>We're looking for talented individuals to join our team and help build next-generation products in the UK. You'll work with modern technologies and collaborate with cross-functional teams to create amazing user experiences.</p>
+                            {{end}}
+                        </div>
+
+                        <div id="tab-responsibilities" class="jy-detail-tab-pane" style="margin-top: 24px;">
+                            <h2>Key responsibilities</h2>
+                            <ul>
+                                <li>Build and maintain scalable web applications with clean, robust architecture.</li>
+                                <li>Collaborate closely with product managers, designers, and engineering partners.</li>
+                                <li>Optimize applications for maximum performance, responsiveness, and accessibility across all devices.</li>
+                                <li>Write clean, tested, and maintainable code adhering to industry best practices.</li>
+                            </ul>
+                        </div>
+
+                        <div id="tab-requirements" class="jy-detail-tab-pane" style="margin-top: 24px;">
+                            <h2>Requirements</h2>
+                            <ul>
+                                <li>Proven experience in frontend or full-stack software development.</li>
+                                <li>Strong proficiency in modern JavaScript/TypeScript, HTML5, and responsive design systems.</li>
+                                <li>Demonstrated experience writing performant code with automated testing.</li>
+                                <li>Excellent communication and problem-solving skills in high-pace environments.</li>
+                            </ul>
+                        </div>
+
+                        <div id="tab-benefits" class="jy-detail-tab-pane" style="margin-top: 24px;">
+                            <h2>Benefits & Perks</h2>
+                            <ul>
+                                <li>Competitive salary with annual performance bonuses.</li>
+                                <li>Flexible remote & hybrid working arrangements.</li>
+                                <li>Comprehensive health coverage and company pension contribution.</li>
+                                <li>Dedicated learning and development budget.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 8.5 Frequently Asked Questions Section (Google FAQ Rich Snippet & AI Overviews) -->
+                    {{if .Data.FAQs}}
+                    <section class="jy-detail-faq-section" aria-labelledby="faq-heading" style="margin-top: 36px; padding-top: 28px; border-top: 1.5px solid #EEF2F6;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                            <div style="width: 32px; height: 32px; border-radius: 8px; background: #EAF4EE; display: flex; align-items: center; justify-content: center; color: #0F5132; font-weight: 800; font-size: 15px;">?</div>
+                            <h2 id="faq-heading" style="font-size: 19px; font-weight: 800; color: #0B1F1A; margin: 0; letter-spacing: -0.015em;">Frequently Asked Questions About This Vacancy</h2>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            {{range .Data.FAQs}}
+                            <details style="background: #F8FAF8; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px 18px; transition: all 0.2s ease;">
+                                <summary style="font-weight: 700; color: #0B1F1A; font-size: 15px; cursor: pointer; outline: none; list-style: none; display: flex; align-items: center; justify-content: space-between;">
+                                    <span>{{.Question}}</span>
+                                    <span style="font-size: 18px; font-weight: 600; color: #0F5132; margin-left: 12px;">+</span>
+                                </summary>
+                                <p style="margin: 12px 0 0 0; color: #475569; font-size: 14px; line-height: 1.6; border-top: 1px solid #E2E8F0; padding-top: 10px;">{{.Answer}}</p>
+                            </details>
+                            {{end}}
+                        </div>
+                    </section>
+                    {{end}}
+
+
+
+                </article>
+            </main>
+
+            <!-- Right: Similar Jobs Sidebar -->
+            <aside class="jy-detail-sidebar" id="job-detail-sidebar" aria-label="Similar Jobs in UK">
+                <div class="jy-detail-sidebar-card">
+                    <h2 class="jy-sidebar-title">
+                        <span>Similar Jobs</span>
+                        <span class="jy-sidebar-tag">Verified</span>
+                    </h2>
+
+                    <div class="jy-sidebar-jobs-list">
+                        {{range .Data.SimilarJobs}}
+                        <div class="jy-sidebar-job-item">
+                            <a href="/jobs/{{.Slug}}/" class="jy-popular-card__overlay-link" aria-label="View {{.Title}} details" style="border-radius: 14px;"></a>
+                            <div class="jy-sidebar-job-top">
+                                {{if .CompanySlug}}
+                                    <a href="/companies/{{.CompanySlug}}/" class="jy-sidebar-job-logo" title="View {{.EmployerName}} profile" aria-label="{{.EmployerName}} profile" style="text-decoration: none; position: relative; z-index: 2;">
+                                {{else if .EmployerName}}
+                                    <a href="/jobs/?q={{urlquery .EmployerName}}" class="jy-sidebar-job-logo" title="View {{.EmployerName}} jobs" aria-label="{{.EmployerName}} jobs" style="text-decoration: none; position: relative; z-index: 2;">
+                                {{else}}
+                                    <div class="jy-sidebar-job-logo" aria-hidden="true">
+                                {{end}}
+                                    {{$emp := lower .EmployerName}}
+                                    {{if or (eq $emp "apple") (eq $emp "apple uk")}}
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#000000">
+                                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.76 1.05-1.82.93-2.88-.91.04-2.02.61-2.67 1.37-.58.67-.99 1.74-.85 2.77.91.07 1.96-.5 2.59-1.26z"/>
+                                        </svg>
+                                    {{else if or (eq $emp "instagram") (eq $emp "meta")}}
+                                        <svg width="22" height="22" viewBox="0 0 24 24">
+                                            <rect width="24" height="24" rx="6" fill="#E1306C"/>
+                                            <circle cx="12" cy="12" r="5" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+                                            <circle cx="17.5" cy="6.5" r="1.5" fill="#FFFFFF"/>
+                                        </svg>
+                                    {{else if or (eq $emp "google") (eq $emp "google uk")}}
+                                        <svg width="20" height="20" viewBox="0 0 24 24">
+                                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                        </svg>
+                                    {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DB954">
+                                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                                        </svg>
+                                    {{else if .CompanyLogoURL}}
+                                        <img src="{{.CompanyLogoURL}}" alt="{{.EmployerName}}" width="24" height="24" loading="lazy" />
+                                    {{else}}
+                                        <span style="font-size: 15px; font-weight: 850; color: #0F5132;">{{if .EmployerName}}{{slice .EmployerName 0 1}}{{else}}J{{end}}</span>
+                                    {{end}}
+                                {{if or .CompanySlug .EmployerName}}
+                                    </a>
+                                {{else}}
+                                    </div>
+                                {{end}}
+                                <div style="min-width: 0; flex: 1; overflow: hidden;">
+                                    <div class="jy-sidebar-job-company">
+                                        {{if .CompanySlug}}
+                                            <a href="/companies/{{.CompanySlug}}/" style="color: inherit; text-decoration: none;" title="View {{.EmployerName}} profile">{{.EmployerName}}</a>
+                                        {{else if .EmployerName}}
+                                            <a href="/jobs/?q={{urlquery .EmployerName}}" style="color: inherit; text-decoration: none;" title="View {{.EmployerName}} jobs">{{.EmployerName}}</a>
+                                        {{else}}
+                                            Verified Employer
+                                        {{end}}
+                                    </div>
+                                    <div class="jy-sidebar-job-time">{{if .TimeAgo}}{{.TimeAgo}}{{else}}Recently{{end}}</div>
+                                </div>
+                            </div>
+
+                            <h3 class="jy-sidebar-job-title">
+                                <a href="/jobs/{{.Slug}}/">{{.Title}}</a>
+                            </h3>
+
+                            <div class="jy-sidebar-job-meta" title="{{if .DisplayLocation}}{{.DisplayLocation}}{{else}}United Kingdom{{end}} • {{if .IsRemote}}Remote Friendly{{else}}Hybrid{{end}}">
+                                {{if .DisplayLocation}}{{.DisplayLocation}}{{else}}United Kingdom{{end}} • {{if .IsRemote}}Remote Friendly{{else}}Hybrid{{end}}
+                            </div>
+
+                            <div class="jy-sidebar-job-bottom">
+                                <span class="jy-sidebar-job-salary">{{if .FormattedSalary}}{{.FormattedSalary}}{{else if and .YearlyMin .YearlyMax}}£{{formatSalary .YearlyMin}} - £{{formatSalary .YearlyMax}}{{else}}Competitive{{end}}</span>
+                                <a href="/jobs/{{.Slug}}/" class="jy-sidebar-apply-btn">Apply</a>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div style="font-size: 13px; color: #94A3B8; text-align: center; padding: 24px 0;">
+                            Browse more matching UK jobs on our search page.
+                        </div>
+                        {{end}}
+                    </div>
+
+                    <!-- Internal Linking Silo Box -->
+                    <div class="jy-sidebar-silo-box" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #EEF2F6;">
+                        <h3 style="font-size: 13px; font-weight: 800; color: #0B1F1A; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em;">Explore Related Careers</h3>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            {{if .Data.Job.EmployerName}}
+                                <a href="/jobs/?q={{urlquery .Data.Job.EmployerName}}" style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #0F5132; font-weight: 650; text-decoration: none; padding: 8px 12px; background: #F8FAF8; border-radius: 8px; border: 1px solid #EAF4EE; transition: background 0.15s ease;" onmouseover="this.style.background='#EAF4EE'" onmouseout="this.style.background='#F8FAF8'">
+                                    <span>More jobs at {{.Data.Job.EmployerName}}</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            {{end}}
+                            {{if .Data.Job.DisplayLocation}}
+                                <a href="/jobs/?location={{urlquery .Data.Job.DisplayLocation}}" style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #0F5132; font-weight: 650; text-decoration: none; padding: 8px 12px; background: #F8FAF8; border-radius: 8px; border: 1px solid #EAF4EE; transition: background 0.15s ease;" onmouseover="this.style.background='#EAF4EE'" onmouseout="this.style.background='#F8FAF8'">
+                                    <span>All jobs in {{.Data.Job.DisplayLocation}}</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            {{end}}
+                            {{if .Data.Job.IsRemote}}
+                                <a href="/jobs/?remote=true" style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #0F5132; font-weight: 650; text-decoration: none; padding: 8px 12px; background: #F8FAF8; border-radius: 8px; border: 1px solid #EAF4EE; transition: background 0.15s ease;" onmouseover="this.style.background='#EAF4EE'" onmouseout="this.style.background='#F8FAF8'">
+                                    <span>Browse Remote UK vacancies</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <!-- Bottom: Most Popular Jobs For You (Single row 4-column swipable slider) -->
+        <section class="jy-popular-section" id="popular-jobs-section" aria-labelledby="popular-jobs-title">
+            <div class="jy-popular-header">
+                <h2 class="jy-popular-title" id="popular-jobs-title">Most Popular Jobs For You</h2>
+                <div class="jy-popular-nav-btns" aria-label="Slider navigation">
+                    <button type="button" class="jy-popular-nav-btn" id="popular-prev-btn" aria-label="Previous jobs" onclick="slidePopularJobs(-1)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <button type="button" class="jy-popular-nav-btn" id="popular-next-btn" aria-label="Next jobs" onclick="slidePopularJobs(1)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="jy-popular-grid" id="popular-slider-track">
+                {{range $idx, $job := .Data.PopularJobs}}
+                <article class="jy-popular-card">
+                    <a href="/jobs/{{$job.Slug}}/" class="jy-popular-card__overlay-link" aria-label="View {{$job.Title}} details"></a>
+                    <div>
+                        <!-- Top: Brand Logo + Company Name + Date Mention -->
+                        <div class="jy-popular-card__top">
+                            {{if $job.CompanySlug}}
+                                <a href="/companies/{{$job.CompanySlug}}/" class="jy-popular-card__logo" title="View {{$job.EmployerName}} profile" aria-label="{{$job.EmployerName}} profile" style="text-decoration: none; position: relative; z-index: 2;">
+                            {{else if $job.EmployerName}}
+                                <a href="/jobs/?q={{urlquery $job.EmployerName}}" class="jy-popular-card__logo" title="View {{$job.EmployerName}} jobs" aria-label="{{$job.EmployerName}} jobs" style="text-decoration: none; position: relative; z-index: 2;">
+                            {{else}}
+                                <div class="jy-popular-card__logo" aria-hidden="true">
+                            {{end}}
+                                {{$emp := lower $job.EmployerName}}
+                                {{if or (eq $emp "apple") (eq $emp "apple uk")}}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
+                                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.76 1.05-1.82.93-2.88-.91.04-2.02.61-2.67 1.37-.58.67-.99 1.74-.85 2.77.91.07 1.96-.5 2.59-1.26z"/>
+                                    </svg>
+                                {{else if or (eq $emp "instagram") (eq $emp "meta")}}
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <radialGradient id="ig-grad-p-{{$idx}}" r="150%" cx="30%" cy="107%">
+                                            <stop stop-color="#fdf497" offset="0%"/>
+                                            <stop stop-color="#fdf497" offset="5%"/>
+                                            <stop stop-color="#fd5949" offset="45%"/>
+                                            <stop stop-color="#d6249f" offset="60%"/>
+                                            <stop stop-color="#285AEB" offset="90%"/>
+                                        </radialGradient>
+                                        <rect width="24" height="24" rx="6" fill="url(#ig-grad-p-{{$idx}})"/>
+                                        <path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" fill="#FFFFFF"/>
+                                    </svg>
+                                {{else if or (eq $emp "dropbox") (eq $emp "dropbox uk")}}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#0061FF">
+                                        <path d="M6 3l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 13l6-4 6 4-6 4-6-4zm18-4l6 4-6 4-6-4 6-4zm-6 6.34L6 19.34l-1.5-1L0 19.34l12 7.66 12-7.66-4.5-1-1.5 1-6-4z"/>
+                                    </svg>
+                                {{else if or (eq $emp "duolingo") (eq $emp "duolingo uk")}}
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <rect width="24" height="24" rx="6" fill="#58CC02"/>
+                                        <circle cx="8" cy="11" r="2.5" fill="#FFFFFF"/>
+                                        <circle cx="8" cy="11" r="1" fill="#000000"/>
+                                        <circle cx="16" cy="11" r="2.5" fill="#FFFFFF"/>
+                                        <circle cx="16" cy="11" r="1" fill="#000000"/>
+                                        <polygon points="12,13 10,16 14,16" fill="#FFC800"/>
+                                    </svg>
+                                {{else if or (eq $emp "google") (eq $emp "google uk")}}
+                                    <svg width="22" height="22" viewBox="0 0 24 24">
+                                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                    </svg>
+                                {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#1DB954">
+                                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                {{else if $job.CompanyLogoURL}}
+                                    <img src="{{$job.CompanyLogoURL}}" alt="{{$job.EmployerName}}" width="26" height="26" loading="lazy" />
+                                {{else}}
+                                    <span style="font-size: 16px; font-weight: 850; color: #0F5132;">{{if $job.EmployerName}}{{slice $job.EmployerName 0 1}}{{else}}J{{end}}</span>
+                                {{end}}
+                            {{if or $job.CompanySlug $job.EmployerName}}
+                                </a>
+                            {{else}}
+                                </div>
+                            {{end}}
+                            <div>
+                                <div class="jy-popular-card__company">
+                                    {{if $job.CompanySlug}}
+                                        <a href="/companies/{{$job.CompanySlug}}/" style="color: inherit; text-decoration: none;" title="View {{$job.EmployerName}} profile">{{$job.EmployerName}}</a>
+                                    {{else if $job.EmployerName}}
+                                        <a href="/jobs/?q={{urlquery $job.EmployerName}}" style="color: inherit; text-decoration: none;" title="View {{$job.EmployerName}} jobs">{{$job.EmployerName}}</a>
+                                    {{else}}
+                                        Verified Employer
+                                    {{end}}
+                                </div>
+                                <div class="jy-popular-card__time">{{if $job.TimeAgo}}{{$job.TimeAgo}}{{else}}Recently{{end}}</div>
+                            </div>
+                        </div>
+
+                        <!-- Middle: Job Title + Description / Snippet -->
+                        <h3 class="jy-popular-card__title">
+                            <a href="/jobs/{{$job.Slug}}/">{{$job.Title}}</a>
+                        </h3>
+
+                        <p class="jy-popular-card__desc">
+                            {{if $job.DisplayLocation}}{{$job.DisplayLocation}}{{else}}United Kingdom{{end}} • {{if $job.IsRemote}}Remote Friendly{{else}}Hybrid{{end}} • {{if $job.FormattedSalary}}{{$job.FormattedSalary}}{{else}}Competitive salary{{end}}
+                        </p>
+                    </div>
+
+                    <!-- Bottom: Apply CTA button (Links directly to job detail page) -->
+                    <a href="/jobs/{{$job.Slug}}/" class="jy-popular-card__btn{{if eq $idx 0}} jy-popular-card__btn--primary{{end}}">
+                        Apply Now
+                    </a>
+                </article>
+                {{end}}
+            </div>
+
+            <!-- Dots pagination indicator matching mockup -->
+            <div class="jy-popular-dots" id="popular-dots" aria-hidden="true">
+                <span class="jy-popular-dot active" onclick="goToPopularSlide(0)"></span>
+                <span class="jy-popular-dot" onclick="goToPopularSlide(1)"></span>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script>
+function switchDetailTab(e, tabId) {
+    document.querySelectorAll('.j-detail-tab').forEach(function(t) {
+        t.classList.remove('active');
+    });
+    e.currentTarget.classList.add('active');
+    
+    var el = document.getElementById(tabId);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// Popular Jobs Slider Arrows and Dots Controls
+function slidePopularJobs(direction) {
+    var track = document.getElementById('popular-slider-track');
+    if (!track) return;
+    var card = track.querySelector('.j-popular-card');
+    var scrollAmount = (card ? card.offsetWidth + 20 : 300) * (direction > 0 ? 2 : -2);
+    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+}
+
+function goToPopularSlide(pageIndex) {
+    var track = document.getElementById('popular-slider-track');
+    if (!track) return;
+    var scrollAmount = pageIndex * track.clientWidth;
+    track.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+}
+
+// Sync slider dots on user scroll
+(function() {
+    var track = document.getElementById('popular-slider-track');
+    var dots = document.querySelectorAll('#popular-dots .j-popular-dot');
+    if (!track || dots.length === 0) return;
+
+    track.addEventListener('scroll', function() {
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 0) return;
+        var scrollRatio = track.scrollLeft / maxScroll;
+        var activeIndex = scrollRatio > 0.4 ? 1 : 0;
+        dots.forEach(function(d, idx) {
+            if (idx === activeIndex) {
+                d.classList.add('active');
+            } else {
+                d.classList.remove('active');
+            }
+        });
+    }, { passive: true });
+})();
+
+// Sticky Floating Apply Bar on Scroll (Glass Pill Design with Auto-Hide at Popular Jobs Section)
+(function() {
+    function initStickyBar() {
+        var bar = document.getElementById('sticky-apply-bar');
+        var popSection = document.getElementById('popular-jobs-section');
+        var sidebar = document.getElementById('job-detail-sidebar');
+        if (!bar) return;
+        
+        var ticking = false;
+        function updateBar() {
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            
+            // If scrolled past initial hero (> 100px)
+            if (scrollY > 100) {
+                // If user reached the "Most Popular Jobs For You" section, hide the top sticky bar!
+                if (popSection) {
+                    var rect = popSection.getBoundingClientRect();
+                    if (rect.top <= 160) {
+                        bar.classList.remove('j-sticky-apply-bar--visible');
+                        if (sidebar) sidebar.classList.remove('j-detail-sidebar--shifted');
+                        ticking = false;
+                        return;
+                    }
+                }
+                bar.classList.add('j-sticky-apply-bar--visible');
+                if (sidebar) sidebar.classList.add('j-detail-sidebar--shifted');
+            } else {
+                bar.classList.remove('j-sticky-apply-bar--visible');
+                if (sidebar) sidebar.classList.remove('j-detail-sidebar--shifted');
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateBar);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Initial check
+        updateBar();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initStickyBar);
+    } else {
+        initStickyBar();
+    }
+})();
+</script>
+{{end}}

@@ -1,0 +1,569 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 18px; padding-bottom: 50px;">
+    {{template "breadcrumbs" .}}
+    {{template "wfa_leaderboard" .}}
+
+    <!-- Mobile Hero Header -->
+    <header class="jy-co-mobile-hero" style="margin-bottom: 8px;">
+        <h1 style="font-size: 1.75rem; font-weight: 850; color: #0F172A; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px;">
+            Top UK Companies Hiring Direct
+        </h1>
+        <p style="font-size: 0.9rem; color: #64748B; line-height: 1.5; margin: 0 0 10px;">
+            Browse verified UK businesses with active career openings. No recruiters, apply direct.
+        </p>
+    </header>
+
+    <!-- Sticky Search Wrapper on Scroll -->
+    <div class="jy-co-sticky-search-wrap" id="jCoStickySearchWrap">
+        <div class="jy-co-sticky-search-inner">
+            <svg class="jy-co-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="company-search" placeholder="Search employer name (e.g. Barclays, NHS)..." autocomplete="off" class="jy-co-search-input">
+            <button type="button" id="company-search-clear" class="jy-co-search-clear" aria-label="Clear company search" style="display: none;">✕</button>
+        </div>
+
+        <!-- Quick Filter Tags (Dynamic: Top Employers with Most Live Jobs) -->
+        <div class="jy-co-tags-rail">
+            <span class="jy-co-tags-label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                Top:
+            </span>
+            {{range .Data.PopularCompanies}}
+            <button type="button" class="jy-m-tag" data-filter="{{.Name}}" title="{{.Name}} ({{.JobCount}} jobs)">
+                <span>{{.Name}}</span>
+                <span style="font-size: 0.68rem; color: #059669; font-weight: 700; margin-left: 2px;">({{.JobCount}})</span>
+            </button>
+            {{else}}
+            <button type="button" class="jy-m-tag" data-filter="Dorchester Collection">Dorchester Collection</button>
+            <button type="button" class="jy-m-tag" data-filter="Lookers">Lookers</button>
+            <button type="button" class="jy-m-tag" data-filter="Next plc">Next plc</button>
+            {{end}}
+        </div>
+    </div>
+
+    {{template "whatsapp_context_banner" dict "Title" "Get Direct Alerts for Top UK Employers on WhatsApp" "Desc" "Never miss when top companies and agencies post new jobs. Real-time alerts < 60s." "Role" "Top UK Employers"}}
+
+    <!-- Mobile Companies List -->
+    {{template "wfa_incontent" .}}
+    <div class="jy-companies-list" id="companies-list" style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px; margin-bottom: 28px;">
+        {{range $index, $company := .Data.Companies}}
+            {{ $isHidden := gt $index 17 }}
+            <a href="/companies/{{$company.Slug}}/" class="jy-m-company-card {{if $isHidden}}company-card--hidden{{end}}" data-name="{{$company.Name}}" style="{{if $isHidden}}display: none;{{else}}display: flex;{{end}}">
+                <!-- Top Accent Mini Banner -->
+                <div class="jy-m-card__banner">
+                    <span class="jy-m-card__badge">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="m9 12 2 2 4-4"></path>
+                        </svg>
+                        Direct ATS
+                    </span>
+                </div>
+
+                <!-- Floating Logo & Info Header -->
+                <div class="jy-m-card__header">
+                    <div class="jy-m-card__logo-wrap">
+                        {{if $company.ProxiedLogoURL}}
+                            <img src="{{$company.ProxiedLogoURL}}" alt="{{$company.Name}} logo" class="jy-m-card__logo-img" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<span class=\'j-m-card__logo-fallback\'>{{$company.Initial}}</span>';" />
+                        {{else}}
+                            <span class="jy-m-card__logo-fallback">{{$company.Initial}}</span>
+                        {{end}}
+                    </div>
+                    <div class="jy-m-card__head-info">
+                        <div class="jy-m-card__title-row">
+                            <h3 class="jy-m-card__name">{{$company.Name}}</h3>
+                            <svg class="jy-m-card__check" width="14" height="14" viewBox="0 0 24 24" fill="#059669"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="jy-m-card__meta">
+                            <span>United Kingdom</span>
+                            <span>•</span>
+                            <span>Verified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Openings Pill & CTA Bar -->
+                <div class="jy-m-card__footer">
+                    <div class="jy-m-card__vacancies">
+                        <span class="jy-m-pulse-dot"></span>
+                        <span class="jy-m-vacancies-text"><strong>{{$company.FormattedJobCount}}</strong> Active</span>
+                    </div>
+
+                    <div class="jy-m-card__arrow-btn">
+                        <span>View Jobs</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        {{end}}
+    </div>
+
+    <!-- Mobile Load More -->
+    {{if gt (len .Data.Companies) 18}}
+    <div id="load-more-container" style="text-align: center; margin-bottom: 32px;">
+        <button id="load-more-btn" style="width: 100%; max-width: 320px; padding: 13px; font-weight: 700; font-size: 0.9375rem; color: #065F46; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 9999px; cursor: pointer; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08); display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg id="load-more-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 1s linear infinite;">
+                <circle cx="12" cy="12" r="10" stroke="rgba(5, 150, 105, 0.2)"></circle>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+            </svg>
+            <span id="load-more-text">Load More UK Employers</span>
+        </button>
+    </div>
+    {{end}}
+</div>
+
+<style>
+.j-m-company-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.j-m-company-card:active {
+    transform: scale(0.985);
+    background: #F8FAFC;
+    border-color: #10B981;
+}
+.j-m-card__banner {
+    height: 44px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 60%, #F0FDF4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
+}
+.j-m-card__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #065F46;
+    font-size: 0.6875rem;
+    font-weight: 750;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+.j-m-card__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px 10px;
+    margin-top: -20px;
+}
+.j-m-card__logo-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #FFFFFF;
+    border: 2.5px solid #FFFFFF;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 0 0 1px #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 4px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+.j-m-card__logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.j-m-card__logo-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    color: #059669;
+    font-weight: 850;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.j-m-card__head-info {
+    min-width: 0;
+    flex: 1;
+    padding-top: 18px;
+}
+.j-m-card__title-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+.j-m-card__name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.j-m-card__check {
+    flex-shrink: 0;
+}
+.j-m-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #64748B;
+}
+.j-m-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 12px;
+    border-top: 1px solid #F1F5F9;
+    background: #FAFBFD;
+}
+.j-m-card__vacancies {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+.j-m-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #059669;
+}
+.j-m-vacancies-text {
+    font-size: 0.75rem;
+    color: #065F46;
+}
+.j-m-card__arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #059669;
+}
+
+/* --- Sticky On-Scroll Search Bar --- */
+.j-co-sticky-search-wrap {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 68px; /* positioned right beneath sticky header with 4px clean gap */
+    z-index: 850;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 12px 10px;
+    margin: 0 -12px 14px -12px;
+    border-radius: 0 0 16px 16px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.j-co-sticky-search-wrap.is-scrolled {
+    box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(5, 150, 105, 0.08);
+    border-bottom: 1.5px solid #E2E8F0;
+    background: rgba(255, 255, 255, 0.98);
+}
+.j-co-sticky-search-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 14px;
+    padding: 4px 10px 4px 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.j-co-sticky-search-inner:focus-within {
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+.j-co-search-icon {
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.j-co-search-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    font-size: 16px !important;
+    color: #0F172A;
+    font-family: inherit;
+    background: transparent;
+    padding: 8px 0;
+}
+.j-co-search-input::placeholder {
+    color: #94A3B8;
+    font-size: 13.5px;
+    font-weight: 500;
+}
+.j-co-search-clear {
+    background: #F1F5F9;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: #64748B;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+.j-co-tags-rail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 8px 0 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.j-co-tags-rail::-webkit-scrollbar {
+    display: none;
+}
+.j-co-tags-label {
+    font-size: 0.75rem;
+    color: #64748B;
+    font-weight: 700;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.j-m-tag {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.j-m-tag:active {
+    background: #ECFDF5;
+    border-color: #10B981;
+    color: #065F46;
+}
+@keyframes jSpin {
+    to { transform: rotate(360deg); }
+}
+@keyframes jMobileCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.j-m-company-card.j-fade-in {
+    animation: jMobileCardFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+</style>
+
+<script>
+(function() {
+    function initMobileCompanyDirectory() {
+        var searchInput = document.getElementById('company-search');
+        var clearBtn = document.getElementById('company-search-clear');
+        var stickyWrap = document.getElementById('jCoStickySearchWrap');
+        var cards = document.querySelectorAll('.j-m-company-card');
+        var loadMoreContainer = document.getElementById('load-more-container');
+        var loadMoreBtn = document.getElementById('load-more-btn');
+        var tags = document.querySelectorAll('.j-m-tag');
+        var spinner = document.getElementById('load-more-spinner');
+        var text = document.getElementById('load-more-text');
+
+        if (!loadMoreContainer && !searchInput && cards.length === 0) return;
+
+        // Sticky Search Bar on Scroll
+        if (stickyWrap) {
+            var handleStickyScroll = function() {
+                var scrollY = window.scrollY || window.pageYOffset;
+                if (scrollY > 50) {
+                    stickyWrap.classList.add('is-scrolled');
+                } else {
+                    stickyWrap.classList.remove('is-scrolled');
+                }
+            };
+            window.addEventListener('scroll', handleStickyScroll, { passive: true });
+            handleStickyScroll();
+        }
+
+        var isLoading = false;
+        var batchSize = 18;
+        var observer = null;
+
+        function revealBatch() {
+            if (isLoading) return;
+            if (searchInput && searchInput.value.trim().length > 0) return;
+
+            var hiddenCards = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+            if (hiddenCards.length === 0) {
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                if (observer) observer.disconnect();
+                return;
+            }
+
+            isLoading = true;
+            if (spinner) spinner.style.display = 'inline-block';
+            if (text) text.textContent = 'Loading More...';
+
+            setTimeout(function() {
+                var currentHidden = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+                var count = 0;
+                currentHidden.forEach(function(card) {
+                    if (count < batchSize) {
+                        card.classList.remove('company-card--hidden');
+                        card.classList.add('j-fade-in');
+                        card.style.display = 'flex';
+                        count++;
+                    }
+                });
+
+                if (spinner) spinner.style.display = 'none';
+                if (text) text.textContent = 'Load More UK Employers';
+                isLoading = false;
+
+                var remainingHidden = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+                if (remainingHidden.length === 0) {
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                    if (observer) observer.disconnect();
+                }
+            }, 160);
+        }
+
+        // Auto Load More on Scroll via IntersectionObserver
+        if (loadMoreContainer && 'IntersectionObserver' in window) {
+            observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        revealBatch();
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '400px 0px',
+                threshold: 0.01
+            });
+            observer.observe(loadMoreContainer);
+        }
+
+        // Window scroll listener fallback for mobile
+        var scrollThrottle = false;
+        function onWindowScroll() {
+            if (scrollThrottle || isLoading) return;
+            if (!loadMoreContainer || loadMoreContainer.style.display === 'none') return;
+            scrollThrottle = true;
+            setTimeout(function() {
+                scrollThrottle = false;
+                if (!loadMoreContainer || loadMoreContainer.style.display === 'none') return;
+                var rect = loadMoreContainer.getBoundingClientRect();
+                if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 350) {
+                    revealBatch();
+                }
+            }, 120);
+        }
+        window.addEventListener('scroll', onWindowScroll, { passive: true });
+
+        // Manual button click
+        if (loadMoreBtn) {
+            loadMoreBtn.onclick = function(e) {
+                e.preventDefault();
+                revealBatch();
+            };
+        }
+
+        function applyFilter(query) {
+            var q = (query || '').toLowerCase().trim();
+            if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
+
+            if (q.length > 0) {
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                cards.forEach(function(card) {
+                    var name = (card.getAttribute('data-name') || '').toLowerCase();
+                    if (name.indexOf(q) !== -1) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            } else {
+                cards.forEach(function(card) {
+                    if (card.classList.contains('company-card--hidden')) {
+                        card.style.display = 'none';
+                    } else {
+                        card.style.display = 'flex';
+                    }
+                });
+                var remaining = document.querySelectorAll('.j-m-company-card.company-card--hidden').length;
+                if (loadMoreContainer) {
+                    loadMoreContainer.style.display = remaining > 0 ? 'block' : 'none';
+                }
+            }
+        }
+
+        if (searchInput) {
+            searchInput.oninput = function(e) {
+                applyFilter(e.target.value);
+            };
+        }
+
+        if (clearBtn) {
+            clearBtn.onclick = function() {
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    applyFilter('');
+                }
+            };
+        }
+
+        tags.forEach(function(tag) {
+            tag.onclick = function() {
+                var val = this.getAttribute('data-filter') || '';
+                if (searchInput) {
+                    searchInput.value = val;
+                    searchInput.focus();
+                    applyFilter(val);
+                }
+            };
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileCompanyDirectory);
+    } else {
+        initMobileCompanyDirectory();
+    }
+    window.addEventListener('jobyuk:turbo-load', initMobileCompanyDirectory);
+})();
+</script>
+
+{{template "listing_floating_bar" .Data}}
+{{end}}

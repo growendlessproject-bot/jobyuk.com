@@ -1,0 +1,189 @@
+{{define "content"}}
+<!-- Top Sticky Company Bar on Scroll -->
+<div class="sticky-company-bar" id="stickyCompanyBar">
+    <div class="sticky-company-bar__inner">
+        <div class="sticky-company-bar__logo">
+            {{if .Data.Company.ProxiedLogoURL}}
+                <img src="{{.Data.Company.ProxiedLogoURL}}" alt="{{.Data.Company.Name}} official brand logo" width="34" height="34" loading="lazy" />
+            {{else}}
+                <span class="sticky-company-logo__fallback">{{slice .Data.Company.Name 0 1}}</span>
+            {{end}}
+        </div>
+        <div class="sticky-company-bar__info">
+            <div class="sticky-company-bar__title">{{.Data.Company.Name}}</div>
+            <div class="sticky-company-bar__meta">
+                <span class="company-badge-verified">Verified</span>
+                <span class="sticky-company-bar__separator">•</span>
+                <span class="sticky-company-bar__jobs">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    {{.Data.Company.FormattedJobCount}} hiring
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container section">
+    {{template "wfa_leaderboard" .}}
+    {{template "breadcrumbs" .}}
+
+    <!-- Company Detail Header Banner (Single Row Mobile & Desktop) -->
+    <div class="company-detail-header">
+        <div class="company-detail-header__inner">
+            <!-- Brand Logo -->
+            <div class="company-header-logo">
+                {{if .Data.Company.ProxiedLogoURL}}
+                    <img src="{{.Data.Company.ProxiedLogoURL}}" alt="{{.Data.Company.Name}} official brand logo" width="54" height="54" loading="lazy" />
+                {{else}}
+                    <span class="company-header-logo__fallback">{{slice .Data.Company.Name 0 1}}</span>
+                {{end}}
+            </div>
+
+            <!-- Profile Info -->
+            <div class="company-header-info">
+                <h1 class="company-header-info__title">{{.Data.Company.Name}}</h1>
+                <div class="company-header-info__meta">
+                    <span class="company-badge-verified">
+                        Verified Employer
+                    </span>
+                    <span class="company-badge-jobs">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        {{.Data.Company.FormattedJobCount}} hiring in UK
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout Grid -->
+    <div class="listing-layout">
+        <!-- Sidebar or About Column -->
+        <aside class="listing-layout__sidebar" style="background: var(--color-bg-card, #ffffff); border: 1px solid var(--color-border, #e2e8f0); border-radius: 16px; padding: 24px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02); height: fit-content;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: var(--space-4); color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; text-transform: capitalize;">
+                About {{.Data.Company.Name}}
+            </h3>
+            
+            <p style="font-size: 0.95rem; line-height: 1.6; color: #475569; margin-bottom: var(--space-6);">
+                {{if .Data.Company.Description}}
+                    {{.Data.Company.Description}}
+                {{else}}
+                    Explore active job vacancies, employment contracts, and remote opportunities at {{.Data.Company.Name}}. Apply online today.
+                {{end}}
+            </p>
+
+            {{if .Data.Company.WebsiteURL}}
+                <a href="{{.Data.Company.WebsiteURL}}" target="_blank" rel="noopener noreferrer" class="btn btn--outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Visit Company Website</span>
+                </a>
+            {{end}}
+
+            <div style="margin-top: 24px;">
+                {{template "whatsapp_sidebar_card" dict "Role" .Data.Company.Name}}
+            </div>
+        </aside>
+
+        <!-- Main Vacancies Column -->
+        <div class="listing-layout__main">
+            {{template "whatsapp_infeed_card" dict "CustomTitle" (printf "Track %s Openings on WhatsApp" .Data.Company.Name) "CustomDesc" (printf "Be the first to receive newly published jobs at %s straight to your WhatsApp." .Data.Company.Name) "Role" .Data.Company.Name}}
+
+            <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: var(--space-6); color: #0f172a; text-transform: capitalize;">
+                Current Openings at {{.Data.Company.Name}}
+            </h2>
+
+            <div class="listing-jobs" style="margin-bottom: var(--space-8);">
+                {{range $index, $job := .Data.Results.Jobs}}
+                    {{template "job_card" $job}}
+                    {{if eq $index 3}}
+                    {{template "wfa_incontent" $}}
+                    {{end}}
+                {{else}}
+                    <div class="empty-state">
+                        <h2 class="empty-state__title">No active vacancies</h2>
+                        <p class="empty-state__text">{{.Data.Company.Name}} is not currently hiring active positions on JobyUK.com. Check back soon or explore similar employers below.</p>
+                        <a href="/jobs/" class="btn btn--primary">Browse All UK Jobs</a>
+                    </div>
+
+                    {{if .Data.RelatedCompanies}}
+                    <div style="margin-top: var(--space-8);">
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: var(--space-6); color: #0f172a;">Explore Similar Employers Hiring Now</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+                            {{range .Data.RelatedCompanies}}
+                            <a href="/companies/{{.Slug}}/" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--color-bg-card, #fff); border: 1px solid var(--color-border, #e2e8f0); border-radius: 12px; text-decoration: none; color: inherit; transition: box-shadow 0.2s, border-color 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(10,102,194,0.1)';this.style.borderColor='#0A66C2'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e2e8f0'">
+                                {{if .ProxiedLogoURL}}
+                                    <img src="{{.ProxiedLogoURL}}" alt="{{.Name}} logo" width="36" height="36" loading="lazy" style="border-radius: 8px; object-fit: contain;" />
+                                {{else}}
+                                    <span style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #0A66C2, #00D4AA); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">{{slice .Name 0 1}}</span>
+                                {{end}}
+                                <div style="min-width: 0;">
+                                    <div style="font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{.Name}}</div>
+                                    <div style="font-size: 0.8rem; color: #64748b;">{{.FormattedJobCount}}</div>
+                                </div>
+                            </a>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                {{end}}
+            </div>
+
+            <!-- Pagination & Mode Wrappers -->
+            <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: var(--space-8);">
+                {{template "pagination" .Data.Results}}
+            </div>
+
+            <div class="infinite-mode-wrap" id="infinite-mode-wrap" style="display: none; margin-top: 32px; text-align: center;">
+                <div id="infinite-scroll-container" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-total-jobs="{{.Data.Results.Total}}">
+                    {{if lt .Data.Results.Page .Data.Results.TotalPages}}
+                        <button type="button" id="load-more-jobs-btn" class="btn btn--outline btn--lg load-more-btn" style="min-width: 220px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; border-radius: 30px; padding: 12px 28px; background: #fff; border: 2px solid #0A66C2; color: #0A66C2; cursor: pointer; transition: all 0.25 ease; box-shadow: 0 4px 12px rgba(10, 102, 194, 0.08);">
+                            <span class="load-more-spinner" style="display:none; width: 18px; height: 18px; border: 2.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite;"></span>
+                            <span class="load-more-text">Load More Jobs</span>
+                            <svg class="load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                        </button>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clean & Simple Company Insights Guide -->
+    <section class="clean-guide-section animate-fade-in">
+        <div class="clean-guide-header">
+            <span class="clean-guide-tag">Employer Overview</span>
+            <h2 class="clean-guide-title">
+                About {{.Data.Company.Name}} & UK Hiring Overview
+            </h2>
+        </div>
+        <div class="clean-guide-grid">
+            <div class="clean-guide-col">
+                <h3 class="clean-guide-heading">Direct ATS Application</h3>
+                <p class="clean-guide-text">
+                    When applying to {{.Data.Company.Name}} through JobyUK.com, candidates are routed directly to the verified employer portal or Applicant Tracking System (ATS), ensuring authentic submission without third-party delay.
+                </p>
+            </div>
+            <div class="clean-guide-col">
+                <h3 class="clean-guide-heading">Workplace Opportunities</h3>
+                <p class="clean-guide-text">
+                    {{.Data.Company.Name}} is committed to competitive remuneration, structured career development, and modern UK employment standards across technical and operational roles.
+                </p>
+            </div>
+            <div class="clean-guide-col">
+                <h3 class="clean-guide-heading">Explore More Companies</h3>
+                <p class="clean-guide-text">
+                    Looking for vacancies with other top UK employers? Explore our comprehensive directory of verified employers.
+                </p>
+                <a href="/companies/" class="clean-guide-link">
+                    <span>Browse UK Employers</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{template "listing_floating_bar" dict "Role" .Data.Company.Name "TotalPages" .Data.Results.TotalPages}}
+</div>
+{{end}}

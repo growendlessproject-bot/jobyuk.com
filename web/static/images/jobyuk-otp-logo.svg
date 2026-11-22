@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Jobies OTP Deep Emerald Security Gradient -->
+    <linearGradient id="otpBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F5132" />
+      <stop offset="50%" stop-color="#065F46" />
+      <stop offset="100%" stop-color="#0B1F1A" />
+    </linearGradient>
+    <!-- Amber/Gold Security Badge Gradient -->
+    <linearGradient id="otpBadgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <!-- Leaf accent -->
+    <linearGradient id="otpLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0F26F" />
+      <stop offset="100%" stop-color="#86EFAC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Rounded Card -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#otpBgGradient)" />
+
+  <!-- Jobies 'J' Letterform -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 140 H350" stroke-width="44" />
+    <path d="M300 140 V300 C300 360 250 380 200 370 C160 360 140 320 145 280" stroke-width="44" />
+  </g>
+
+  <!-- Leaf accent -->
+  <circle cx="350" cy="140" r="32" fill="url(#otpLeafGrad)" stroke="#FFFFFF" stroke-width="12" />
+
+  <!-- OTP Security Lock Badge -->
+  <circle cx="130" cy="380" r="42" fill="url(#otpBadgeGradient)" stroke="#FFFFFF" stroke-width="11" />
+  
+  <!-- Padlock Inside Badge -->
+  <path d="M122 373 V366 C122 361.5 125.5 358 130 358 C134.5 358 138 361.5 138 366 V373" 
+        fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" />
+  <rect x="117" y="372" width="26" height="20" rx="4.5" fill="#FFFFFF" />
+  <circle cx="130" cy="380" r="2.5" fill="#B45309" />
+  <rect x="128.5" y="380" width="3" height="6" rx="1" fill="#B45309" />
+</svg>

@@ -1,0 +1,563 @@
+{{define "content"}}
+<!-- Hero Search Section -->
+<section class="hero section--hero">
+    <div class="container">
+        <h1 class="hero__title">
+            Find your next career in
+            <span class="hero__rotator">
+                <span class="hero__rotator-word active">the United Kingdom</span>
+                <span class="hero__rotator-word">London</span>
+                <span class="hero__rotator-word">Manchester</span>
+                <span class="hero__rotator-word">Birmingham</span>
+                <span class="hero__rotator-word">Scotland</span>
+                <span class="hero__rotator-word">Wales</span>
+                <span class="hero__rotator-word">15,000+ Live Jobs</span>
+                <span class="hero__rotator-word">Northern Ireland</span>
+                <span class="hero__rotator-word">Leeds & Bristol</span>
+            </span>
+        </h1>
+        <p class="hero__subtitle">
+            Search thousands of live UK vacancies across every sector — from tech and finance to healthcare and retail. Apply directly to employers, no middlemen.
+        </p>
+
+        {{template "search_bar" .}}
+
+        <div class="search-popular">
+            <span class="search-popular__label">Popular:</span>
+            <a href="/job-roles/software-developer/" class="search-popular__tag">Software Developer</a>
+            <a href="/job-roles/data-analyst/" class="search-popular__tag">Data Analyst</a>
+            <a href="/job-roles/project-manager/" class="search-popular__tag">Project Manager</a>
+            <a href="/locations/england/london/" class="search-popular__tag">London</a>
+            <a href="/remote-jobs/" class="search-popular__tag">Remote</a>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Section (Company Logos Grid) -->
+<section class="section section--trusted-by">
+    <div class="container text-center">
+        <div class="trusted-by__header">
+            <h2 class="trusted-by__title">
+                Trusted by leading UK employers
+            </h2>
+        </div>
+        
+        <!-- Slider Container -->
+        <div class="trusted-by__slider-container">
+            <div class="trusted-by__slider" id="brand-slider">
+                
+                <!-- Slide 1: Original Logos (12 logos) -->
+                <div class="trusted-by__slide">
+                    <div class="trusted-by__grid">
+                        <div class="brand-logo-card" title="Gojek">
+                            <svg viewBox="0 0 110 32" height="28" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="16" cy="16" r="12" fill="none" stroke="#00AA13" stroke-width="5"/>
+                                <circle cx="16" cy="16" r="4.5" fill="#00AA13"/>
+                                <text x="36" y="22" font-family="'Inter', -apple-system, sans-serif" font-weight="800" font-size="18" fill="#000000" letter-spacing="-0.5px">gojek</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Grab">
+                            <svg viewBox="0 0 100 32" height="28" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8 C6 8 2 12 2 18 C2 24 6 28 12 28 C16 28 19 25 20 22 L15 22 C14.5 23.5 13.5 24.5 12 24.5 C9.5 24.5 7.5 22 7.5 18 C7.5 14 9.5 11.5 12 11.5 C14 11.5 15.5 13 16 15 L21 15 C20 10.5 16.5 8 12 8 Z" fill="#00B140"/>
+                                <text x="24" y="23" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#00B140" letter-spacing="-0.5px">Grab</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Uber">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#000000" letter-spacing="-1px">Uber</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Airtable">
+                            <svg viewBox="0 0 120 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 5 L3 10 L13 15 L23 10 Z" fill="#FCB400"/>
+                                <path d="M3 12 L13 17 L13 27 L3 22 Z" fill="#18BFEF"/>
+                                <path d="M15 17 L25 12 L25 22 L15 27 Z" fill="#F82855"/>
+                                <text x="32" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#1E293B" letter-spacing="-0.3px">Airtable</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Barclays">
+                            <svg viewBox="0 0 120 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="2,8 10,4 18,8 14,16 18,24 10,28 2,24 6,16" fill="#00AEEF"/>
+                                <text x="24" y="21" font-family="'Inter', sans-serif" font-weight="800" font-size="15" fill="#00AEEF" letter-spacing="0.5px">BARCLAYS</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Slack">
+                            <svg viewBox="0 0 100 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(0, 4) scale(0.8)">
+                                    <path d="M6 15 A3 3 0 0 1 9 12 L15 12 A3 3 0 0 1 15 18 L9 18 A3 3 0 0 1 6 15 Z" fill="#E01E5A"/>
+                                    <path d="M12 6 A3 3 0 0 1 15 3 A3 3 0 0 1 18 6 L18 12 L12 12 Z" fill="#E01E5A"/>
+                                    <path d="M15 24 A3 3 0 0 1 12 27 L6 27 A3 3 0 0 1 6 21 L12 21 Z" fill="#2EB67D"/>
+                                    <path d="M24 15 A3 3 0 0 1 21 18 L15 18 L15 12 L21 12 A3 3 0 0 1 24 15 Z" fill="#ECB22E"/>
+                                    <path d="M18 24 A3 3 0 0 1 15 27 A3 3 0 0 1 12 24 L12 18 L18 18 Z" fill="#36C5F0"/>
+                                </g>
+                                <text x="32" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#1D1C1D" letter-spacing="-0.5px">slack</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Monzo">
+                            <svg viewBox="0 0 100 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 24 V10 L10 18 L16 10 V24" fill="none" stroke="#FF4D5A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="26" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="18" fill="#14233C" letter-spacing="-0.5px">monzo</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Quora">
+                            <svg viewBox="0 0 100 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="Georgia, serif" font-weight="700" font-size="23" fill="#B92B27" letter-spacing="-0.5px">Quora</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Spotify">
+                            <svg viewBox="0 0 110 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="14" cy="16" r="12" fill="#1DB954"/>
+                                <path d="M7 12 C11 10.5 17 11 21 13.5 M8 16 C11.5 14.8 16.5 15.2 20 17.2 M9 20 C11.8 19 15.5 19.3 18.5 20.8" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                                <text x="34" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#191414" letter-spacing="-0.5px">Spotify</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Lyft">
+                            <svg viewBox="0 0 80 32" height="28" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="900" font-size="24" fill="#FF00BF" letter-spacing="-1px">lyft</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="HSBC">
+                            <svg viewBox="0 0 110 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="2,16 10,8 18,16 10,24" fill="#DB0011"/>
+                                <polygon points="10,8 26,8 18,16" fill="#DB0011"/>
+                                <polygon points="18,16 26,24 10,24" fill="#DB0011"/>
+                                <polygon points="18,16 26,8 34,16 26,24" fill="#DB0011"/>
+                                <text x="40" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#000000">HSBC</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Tesco">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="20" font-family="sans-serif" font-weight="900" font-size="20" fill="#EE1C25" letter-spacing="-0.5px">TESCO</text>
+                                <rect x="0" y="24" width="65" height="3.5" fill="#00539F"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Tech Leaders (12 logos) -->
+                <div class="trusted-by__slide">
+                    <div class="trusted-by__grid">
+                        <div class="brand-logo-card" title="Google">
+                            <svg viewBox="0 0 110 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="700" font-size="22" fill="#4285F4">G<tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan></text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Microsoft">
+                            <svg viewBox="0 0 120 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(0, 6) scale(0.65)">
+                                    <rect x="0" y="0" width="14" height="14" fill="#F25022"/>
+                                    <rect x="16" y="0" width="14" height="14" fill="#7FBA00"/>
+                                    <rect x="0" y="16" width="14" height="14" fill="#00A4EF"/>
+                                    <rect x="16" y="16" width="14" height="14" fill="#FFB900"/>
+                                </g>
+                                <text x="28" y="21" font-family="'Inter', sans-serif" font-weight="600" font-size="16" fill="#737373">Microsoft</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Apple">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 24 C10.5 24 9.5 23 8.5 21.5 C7 19.5 6.5 16 7.5 13.5 C8.5 11 11 9.5 13 9.5 C14.5 9.5 15.5 10.5 16.5 10.5 C17 10.5 18 9.5 19.5 9.5 C21 9.5 23 10.5 24 12 C20.5 14 20.5 18.5 24 20 C23 22 21.5 24 20 24 C19 24 18.5 23.5 17.5 23.5 C16.5 23.5 16 24 15 24 Z M18 8.5 C19 7 19 5 18.5 3 C16.8 3.2 15 5 14 6.5 C13 7.8 13 9.8 13.8 11.5 C15.5 11.2 17.2 9.8 18 8.5 Z" fill="#000000"/>
+                                <text x="32" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#000000">Apple</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Amazon">
+                            <svg viewBox="0 0 110 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="18" fill="#000000">amazon</text>
+                                <path d="M12 22 Q32 30 65 22" fill="none" stroke="#FF9900" stroke-width="2.5" stroke-linecap="round"/>
+                                <polygon points="65,22 58,19 60,25" fill="#FF9900"/>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Meta">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 11 C13 11 11 13.5 11 16 C11 18.5 13 21 16 21 C19 21 21 18.5 21 16 C21 13.5 19 11 16 11 Z M16 24 C10.5 24 6 19.5 6 16 C6 12.5 10.5 8 16 8 C20.5 8 23.5 11.5 25.5 13 C27.5 11.5 30.5 8 35 8 C40.5 8 45 12.5 45 16 C45 19.5 40.5 24 35 24 C30.5 24 27.5 20.5 25.5 19 C23.5 20.5 20.5 24 16 24 Z" fill="none" stroke="#0064E0" stroke-width="3"/>
+                                <text x="52" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#1C1E21">Meta</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Netflix">
+                            <svg viewBox="0 0 100 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="900" font-size="22" fill="#E50914" letter-spacing="-1px">NETFLIX</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Airbnb">
+                            <svg viewBox="0 0 110 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 6 C12 6 10 9 7 14 C5.5 16.5 4 19 4 21.5 C4 24.5 6 26.5 9.5 26.5 Q12 26.5 14 24.5 Q16 26.5 18.5 26.5 C22 26.5 24 24.5 24 21.5 C24 19 22.5 16.5 21 14 C18 9 16 6 14 6 Z M14 22 C12.5 22 11.5 21 11.5 19.5 C11.5 18 12.5 17 14 17 C15.5 17 16.5 18 16.5 19.5 C16.5 21 15.5 22 14 22 Z" fill="none" stroke="#FF5A5F" stroke-width="2.5"/>
+                                <text x="32" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="18" fill="#FF5A5F" letter-spacing="-0.5px">airbnb</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Figma">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(0, 4) scale(0.75)">
+                                    <path d="M4 6 A4 4 0 0 1 8 2 L12 2 L12 10 L8 10 A4 4 0 0 1 4 6 Z" fill="#F24E1E"/>
+                                    <path d="M12 2 A4 4 0 0 1 16 6 A4 4 0 0 1 12 10 Z" fill="#A259FF"/>
+                                    <path d="M4 14 A4 4 0 0 1 8 10 L12 10 L12 18 L8 18 A4 4 0 0 1 4 14 Z" fill="#0ACF83"/>
+                                    <path d="M12 10 L16 10 L16 18 L12 18 Z" fill="#1ABC9C"/>
+                                    <path d="M8 26 A4 4 0 0 1 4 22 A4 4 0 0 1 8 18 L12 18 L12 22 A4 4 0 0 1 8 26 Z" fill="#19BCFE"/>
+                                </g>
+                                <text x="24" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#2C2C2C">Figma</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Stripe">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="800" font-size="24" fill="#635BFF" letter-spacing="-0.5px">stripe</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Zoom">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="800" font-size="24" fill="#2D8CFF" letter-spacing="-1px">zoom</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="GitHub">
+                            <svg viewBox="0 0 110 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2 C6.5 2 2 6.5 2 12 C2 16.4 4.8 20.2 8.8 21.5 C9.3 21.6 9.5 21.3 9.5 21 C9.5 20.8 9.5 20 9.5 19.2 C6.7 19.8 6.1 17.8 6.1 17.8 C5.7 16.7 5 16.4 5 16.4 C4.1 15.8 5.1 15.8 5.1 15.8 C6.1 15.9 6.6 16.9 6.6 16.9 C7.5 18.5 9 18 9.6 17.7 C9.7 17 10 16.5 10.3 16.2 C8.1 15.9 5.8 15.1 5.8 11.2 C5.8 10.1 6.2 9.2 6.9 8.5 C6.8 8.2 6.4 7.2 7 6 C7 6 7.8 5.7 9.7 7 C10.5 6.8 11.3 6.7 12.1 6.7 C12.9 6.7 13.7 6.8 14.5 7 C16.4 5.7 17.2 6 17.2 6 C17.8 7.2 17.4 8.2 17.3 8.5 C18 9.2 18.4 10.1 18.4 11.2 C18.4 15.1 16.1 15.9 13.9 16.1 C14.3 16.5 14.6 17.2 14.6 18.3 C14.6 19.9 14.6 20.8 14.6 21 C14.6 21.3 14.8 21.6 15.3 21.5 C19.3 20.2 22 16.4 22 12 C22 6.5 17.5 2 12 2 Z" fill="#24292E"/>
+                                <text x="28" y="21" font-family="'Inter', sans-serif" font-weight="700" font-size="17" fill="#24292E" letter-spacing="-0.3px">GitHub</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="LinkedIn">
+                            <svg viewBox="0 0 110 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="6" width="20" height="20" rx="3" fill="#0A66C2"/>
+                                <text x="7" y="21" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#FFFFFF">in</text>
+                                <text x="28" y="21" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#0A66C2">Linked</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Growth & Corporate (12 logos) -->
+                <div class="trusted-by__slide">
+                    <div class="trusted-by__grid">
+                        <div class="brand-logo-card" title="TikTok">
+                            <svg viewBox="0 0 110 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#000000">TikTok</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Tesla">
+                            <svg viewBox="0 0 90 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="22" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#E82127" letter-spacing="1px">TESLA</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Adobe">
+                            <svg viewBox="0 0 110 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="2,6 18,6 10,26" fill="#FF0000"/>
+                                <polygon points="10,14 15,26 5,26" fill="#FFFFFF"/>
+                                <text x="26" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="17" fill="#FF0000">Adobe</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Reddit">
+                            <svg viewBox="0 0 100 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="16" cy="16" r="12" fill="#FF4500"/>
+                                <circle cx="11" cy="15" r="2" fill="#FFFFFF"/>
+                                <circle cx="21" cy="15" r="2" fill="#FFFFFF"/>
+                                <path d="M11 20 Q16 24 21 20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                                <text x="34" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="18" fill="#FF4500" letter-spacing="-0.5px">reddit</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Intel">
+                            <svg viewBox="0 0 90 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="22" fill="#0071C5" italic="true">intel</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Oracle">
+                            <svg viewBox="0 0 110 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#F80000" letter-spacing="-0.5px">ORACLE</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Salesforce">
+                            <svg viewBox="0 0 120 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 24 C8 24 5 21 5 17 C5 13 8 10 12 10 C13 7 16 5 20 5 C25 5 29 8 30 11 C31 10 33 10 34 10 C37 10 39 12 39 15 C41 15 43 17 43 20 C43 22 41 24 39 24 Z" fill="#00A1E0"/>
+                                <text x="48" y="22" font-family="'Inter', sans-serif" font-weight="700" font-size="14" fill="#00A1E0">salesforce</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="IBM">
+                            <svg viewBox="0 0 80 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <text x="0" y="23" font-family="'Inter', sans-serif" font-weight="900" font-size="26" fill="#006699" letter-spacing="1px">IBM</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Cisco">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="#00BCEB">
+                                    <rect x="5" y="8" width="2" height="10"/>
+                                    <rect x="10" y="4" width="2" height="14"/>
+                                    <rect x="15" y="6" width="2" height="12"/>
+                                    <rect x="20" y="2" width="2" height="16"/>
+                                    <rect x="25" y="6" width="2" height="12"/>
+                                    <rect x="30" y="4" width="2" height="14"/>
+                                    <rect x="35" y="8" width="2" height="10"/>
+                                </g>
+                                <text x="44" y="21" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#00BCEB">CISCO</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Nike">
+                            <svg viewBox="0 0 80 32" height="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 14 Q22 8 45 22 Q24 20 4 14" fill="#000000"/>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="Starbucks">
+                            <svg viewBox="0 0 120 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="16" cy="16" r="12" fill="#00704A"/>
+                                <text x="34" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="14" fill="#00704A" letter-spacing="0.5px">STARBUCKS</text>
+                            </svg>
+                        </div>
+                        <div class="brand-logo-card" title="BP">
+                            <svg viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="12,4 16,10 22,6 20,12 26,12 20,14 22,20 16,16 12,22 12,16 6,20 8,14 2,12 8,12 6,6 12,10" fill="#00B140"/>
+                                <polygon points="12,8 14,12 18,10 17,13 21,13 17,14 18,18 14,15 12,19 12,15 10,18 11,14 7,13 11,13 10,9 12,11" fill="#FFCC00"/>
+                                <text x="32" y="22" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#00B140">bp</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Promo Section -->
+<section class="section section--features-promo" style="padding-top: 0; padding-bottom: var(--space-12);">
+    <div class="container text-center">
+        <h2 class="features-promo__title" style="font-size: 1.75rem; color: #0F172A; margin-bottom: 8px;">Advance Your Career with JobyUK.com</h2>
+        <p class="features-promo__subtitle" style="font-size: 0.95rem; color: #475569; max-width: 650px; margin: 0 auto 32px;">Browse live vacancies, explore over 2,300 career paths, see who's hiring, and check what you should be earning.</p>
+        
+        <div class="features-promo__grid">
+            <!-- Step 1: Find & Apply -->
+            <a href="/jobs/" class="features-promo__item">
+                <div class="features-promo__icon-wrap">
+                    <svg class="features-promo__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <span class="features-promo__item-title">Find & Apply to Jobs</span>
+            </a>
+
+            <!-- Step 2: Explore Job Roles -->
+            <a href="/job-roles/" class="features-promo__item">
+                <div class="features-promo__icon-wrap">
+                    <svg class="features-promo__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                </div>
+                <span class="features-promo__item-title">Explore 2,300+ Roles</span>
+            </a>
+
+            <!-- Step 3: Top Employers -->
+            <a href="/companies/" class="features-promo__item">
+                <div class="features-promo__icon-wrap">
+                    <svg class="features-promo__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <span class="features-promo__item-title">Top UK Employers</span>
+            </a>
+
+            <!-- Step 4: Compare Salaries -->
+            <a href="/salaries/" class="features-promo__item">
+                <div class="features-promo__icon-wrap">
+                    <svg class="features-promo__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <span class="features-promo__item-title">Compare UK Salaries</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Jobs Section -->
+<section class="section section--latest-jobs" style="background: #ffffff; padding: 48px 0 24px;">
+    <div class="container">
+        <div class="section-header flex flex--between" style="margin-bottom: 28px;">
+            <div>
+                <h2 class="section-header__title" style="font-size: 1.65rem; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Latest Job Openings</h2>
+                <p class="section-header__subtitle" style="font-size: 0.9rem; color: #64748b; margin: 0;">Recently added UK job postings. Apply today.</p>
+            </div>
+            <a href="/jobs/" class="section-header__link jy-link-emerald" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: #059669; text-decoration: none;">
+                <span>View All Jobs</span>
+                <svg class="jy-arrow-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+        </div>
+
+        <div class="listing-jobs">
+            <!-- Dynamic backend items loop -->
+            {{range $index, $job := .Data.LatestJobs}}
+                {{template "job_card" $job}}
+
+                {{if eq $index 2}}
+                    <!-- INLINE WEEKLY JOB ALERT BANNER (AFTER 3 JOBS) -->
+                    <div class="weekly-alert-banner">
+                        <span class="weekly-alert__badge">WEEKLY JOB ALERT</span>
+                        <h3 class="weekly-alert__title">Get fresh UK jobs in your inbox every week</h3>
+                        <p class="weekly-alert__subtitle">We'll send you the latest openings that match your interests, straight to your inbox every Monday morning.</p>
+                        <form class="weekly-alert__form" id="weekly-alert-form">
+                            <select class="weekly-alert__select" id="alert-category" aria-label="Filter by job category">
+                                <option>All categories</option>
+                                <option>Web Development</option>
+                                <option>UI/UX Design</option>
+                                <option>Product Management</option>
+                            </select>
+                            <select class="weekly-alert__select" id="alert-location" aria-label="Filter by UK location">
+                                <option>All UK locations</option>
+                                <option>London</option>
+                                <option>Manchester</option>
+                                <option>Remote UK</option>
+                            </select>
+                            <input type="email" class="weekly-alert__input" id="alert-email" aria-label="Your email address" placeholder="Email address..." required>
+                            <button type="submit" class="weekly-alert__btn">Subscribe</button>
+                        </form>
+                        <div class="weekly-alert__success" id="weekly-alert-success" style="display: none;">
+                            <div class="weekly-alert__success-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <h4 class="weekly-alert__success-title">Subscription Confirmed!</h4>
+                            <p class="weekly-alert__success-text" id="weekly-alert-success-text"></p>
+                        </div>
+                    </div>
+                {{end}}
+            {{end}}
+        </div>
+
+        <!-- Go to all jobs center button -->
+        <div class="go-all-jobs-wrap">
+            <a href="/jobs/" class="btn-go-all-jobs">Go to all jobs</a>
+        </div>
+    </div>
+</section>
+
+<!-- Browse Jobs Tabbed Section (Positioned After Latest Job Openings) -->
+<section class="section section--browse-tabs">
+    <div class="container">
+        <!-- Tabs Header -->
+        <div class="browse-tabs__header">
+            <button class="browse-tab-btn browse-tab-btn--active" data-tab-target="#tab-industries">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                </svg>
+                <span>Jobs by Industry</span>
+            </button>
+            <button class="browse-tab-btn" data-tab-target="#tab-locations">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Jobs by Location</span>
+            </button>
+            <button class="browse-tab-btn" data-tab-target="#tab-roles">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <span>Popular Jobs</span>
+            </button>
+            <button class="browse-tab-btn" data-tab-target="#tab-companies">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                <span>Jobs by Company</span>
+            </button>
+        </div>
+
+        <!-- Tabs Content Panels -->
+        <div class="browse-tabs__content">
+            
+            <!-- Panel 1: Industries -->
+            <div class="browse-tab-panel browse-tab-panel--active" id="tab-industries">
+                <div class="browse-tab-panel__grid">
+                    {{range .Data.Industries}}
+                        <a href="/industries/{{.Slug}}/" class="browse-tab-link">{{.Name}}</a>
+                    {{else}}
+                        <p class="text-muted">No industries found.</p>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Panel 2: Locations -->
+            <div class="browse-tab-panel" id="tab-locations">
+                <div class="browse-tab-panel__grid">
+                    {{range .Data.Locations}}
+                        <a href="/locations/{{.Slug}}/" class="browse-tab-link">{{.Name}}</a>
+                    {{else}}
+                        <p class="text-muted">No locations found.</p>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Panel 3: Popular Jobs -->
+            <div class="browse-tab-panel" id="tab-roles">
+                <div class="browse-tab-panel__grid">
+                    {{range .Data.TopRoles}}
+                        <a href="/job-roles/{{.Slug}}/" class="browse-tab-link">{{.Name}}</a>
+                    {{else}}
+                        <p class="text-muted">No popular roles found.</p>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Panel 4: Companies -->
+            <div class="browse-tab-panel" id="tab-companies">
+                <div class="browse-tab-panel__grid">
+                    {{range .Data.TopCompanies}}
+                        <a href="/companies/{{.Slug}}/" class="browse-tab-link">{{.Name}}</a>
+                    {{else}}
+                        <p class="text-muted">No companies found.</p>
+                    {{end}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Insights / Blog Section -->
+<section class="section section--insights">
+    <div class="container">
+        <div class="insights-header">
+            <div>
+                <h2 class="insights-header__title">{{getInsightsTitle}}</h2>
+                <p class="insights-header__subtitle">{{getInsightsSubtitle}}</p>
+            </div>
+            <a href="/career-advice/" class="btn-blog-header">Read more on our blog</a>
+        </div>
+
+        <div class="insights-grid">
+            <!-- Article Card 1 -->
+            <a href="/career-advice/cv/how-to-write-a-perfect-cv/" class="insight-card">
+                <div class="insight-card__image-wrap">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=350&q=80" alt="Career tips - How to Write a Perfect CV" class="insight-card__image" width="600" height="350" loading="lazy">
+                </div>
+                <span class="insight-card__category">CV Tips</span>
+                <h3 class="insight-card__title">How to Write a Perfect CV: Essential UK Guide & ATS Framework</h3>
+                <span class="insight-card__date">Updated for 2026</span>
+            </a>
+
+            <!-- Article Card 2 -->
+            <a href="/career-advice/interviews/most-common-interview-questions/" class="insight-card">
+                <div class="insight-card__image-wrap">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=350&q=80" alt="Career advancement - Top Interview Questions" class="insight-card__image" width="600" height="350" loading="lazy">
+                </div>
+                <span class="insight-card__category">Interview Tips</span>
+                <h3 class="insight-card__title">20 Most Common UK Job Interview Questions & Model Answers</h3>
+                <span class="insight-card__date">Updated for 2026</span>
+            </a>
+
+            <!-- Article Card 3 -->
+            <a href="/career-advice/job-search/negotiating-job-offers-uk/" class="insight-card">
+                <div class="insight-card__image-wrap">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&h=350&q=80" alt="Salary negotiation guide" class="insight-card__image" width="600" height="350" loading="lazy">
+                </div>
+                <span class="insight-card__category">Salary Guides</span>
+                <h3 class="insight-card__title">How to Negotiate Job Offers & Salary Packages in the UK</h3>
+                <span class="insight-card__date">Updated for 2026</span>
+            </a>
+        </div>
+
+        <!-- Bottom Hiring Banner -->
+        <div class="hiring-promo-banner">
+            <h3 class="hiring-promo__title">{{getHiringTitle}}</h3>
+            <a href="{{getHiringCtaLink}}" class="btn-hiring-cta">{{getHiringCtaText}}</a>
+        </div>
+    </div>
+</section>
+
+
+{{end}}

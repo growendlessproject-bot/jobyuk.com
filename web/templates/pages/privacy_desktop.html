@@ -1,0 +1,54 @@
+{{define "content"}}
+<div style="background: #F8FAF8; padding-top: 24px; padding-bottom: 64px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <div style="max-width: 860px; margin: 0 auto;">
+
+    <header style="text-align: center; margin-bottom: 40px;">
+
+        <h1 style="font-size: 2.75rem; font-weight: 800; color: #0F172A; line-height: 1.15; letter-spacing: -0.03em; margin: 0 0 12px;">
+            {{if and .Data .Data.CustomH1}}{{.Data.CustomH1}}{{else}}Privacy Policy{{end}}
+        </h1>
+        <p style="font-size: 1rem; color: #64748B; margin: 0;">
+            Effective Date: October 2026 • Fully Compliant with UK GDPR & Data Protection Act 2018
+        </p>
+    </header>
+
+    <article style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 24px; padding: 44px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05); font-size: 1.05rem; line-height: 1.8; color: #334155;">
+        <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 16px; padding: 22px; margin-bottom: 36px;">
+            <div style="font-size: 0.8125rem; font-weight: 800; color: #065F46; text-transform: uppercase; margin-bottom: 6px;">Zero Candidate Tracking Guarantee</div>
+            <p style="margin: 0; font-size: 0.95rem; color: #064E3B; line-height: 1.6;">
+                JobyUK.com operates on a strict zero-registration model. We do not require you to create an account, upload CVs to our database, or supply personal identity information to browse or apply for vacancies.
+            </p>
+        </div>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">1. UK GDPR Compliance</h2>
+        <p>
+            We strictly adhere to the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. Because candidate registration is non-mandatory, we do not store, profile, or sell candidate PII (Personally Identifiable Information).
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">2. Technical Data & Anonymized Logs</h2>
+        <p>
+            To defend against automated bot abuse and ensure server uptime, our systems process minimal anonymized technical telemetry:
+        </p>
+        <ul style="padding-left: 22px; margin-bottom: 24px;">
+            <li style="margin-bottom: 8px;"><strong>Cryptographic IP Hashing:</strong> Client IP addresses are irreversibly hashed (SHA-256 with rotating salt) in memory for rate-limiting. Plain IP addresses are never permanently retained.</li>
+            <li style="margin-bottom: 8px;"><strong>Security Cookies:</strong> We only deploy essential, non-marketing security cookies (CSRF verification tokens).</li>
+            <li style="margin-bottom: 8px;"><strong>Server Diagnostics:</strong> Request duration, HTTP status codes, and browser user-agent headers are logged anonymously for performance optimization.</li>
+        </ul>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">3. Direct Employer Applications</h2>
+        <p>
+            When you click "Apply Direct", you are routed seamlessly to the authentic applicant tracking system (ATS) or internal career portal of the hiring organization. Once on the employer's portal, any personal data or CV you provide is governed exclusively by the employer's individual privacy policy.
+        </p>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-top: 32px; margin-bottom: 12px;">4. Your Data Subject Rights</h2>
+        <p>
+            Under UK GDPR, you have the right to request information about any personal data we process, request rectification, or request erasure. For inquiries regarding data protection, please contact our Data Protection Officer at <a href="mailto:{{getSiteEmail}}" style="color: #059669; font-weight: 700; text-decoration: underline;">{{getSiteEmail}}</a>.
+        </p>
+    </article>
+        </div>
+    </div>
+</div>
+{{end}}

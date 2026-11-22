@@ -1,0 +1,16 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="rotate(-15 60 60)">
+    <path d="M15 55L95 20L65 95L52 68L15 55Z" fill="url(#plane_grad)" filter="drop-shadow(0 12px 20px rgba(15, 81, 50, 0.2))"/>
+    <path d="M95 20L52 68L65 95L95 20Z" fill="#0A3C24" opacity="0.25"/>
+    <path d="M52 68L40 85L48 72L52 68Z" fill="#0F5132" opacity="0.4"/>
+    <circle cx="28" cy="85" r="3" fill="#C0F26F"/>
+    <circle cx="18" cy="98" r="2" fill="#587260" opacity="0.5"/>
+    <circle cx="10" cy="108" r="1.5" fill="#587260" opacity="0.3"/>
+  </g>
+  <defs>
+    <linearGradient id="plane_grad" x1="15" y1="20" x2="95" y2="95" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C0F26F"/>
+      <stop offset="1" stop-color="#0F5132"/>
+    </linearGradient>
+  </defs>
+</svg>

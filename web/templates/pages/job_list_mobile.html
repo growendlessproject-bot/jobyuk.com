@@ -1,0 +1,730 @@
+{{define "content"}}
+<div class="jy-dream-hub" id="jobs-top" style="padding-left: 12px; padding-right: 12px; padding-top: 12px;">
+    {{template "breadcrumbs" .}}
+
+    <!-- 1. Next-Gen Mobile Hero: Let's find your Dream Job! -->
+    <section class="jy-jobs-mob-hero" aria-label="Job Search Header">
+        <div class="jy-jobs-mob-hero-content">
+            <!-- Title & Subtitle -->
+            <h1 class="jy-jobs-mob-hero-title">
+                Find Your Next<br>
+                <span class="jy-jobs-mob-highlight">Dream Career</span>
+            </h1>
+            <p class="jy-jobs-mob-hero-sub">
+                Apply directly to verified employers across London, Manchester &amp; Remote UK.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sticky Search Wrapper on Scroll (/jobs/) -->
+    <div class="jy-jobs-sticky-search-wrap" id="jJobsStickySearchWrap">
+        <!-- Unified Search Form -->
+        <form action="/jobs/" method="GET" class="jy-jobs-mob-form" id="dream-search-form-m">
+            <!-- Row 1: Single-Row Role/Keyword Search Bar -->
+            <div class="jy-jobs-single-search-row">
+                <span class="jy-jobs-search-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="dream-search-q-m" name="q" value="{{if .Data.Params}}{{.Data.Params.Query}}{{end}}" class="jy-jobs-main-input" placeholder="Job title, keywords, or skills..." autocomplete="off" aria-label="Search job title or keywords" />
+                <button type="button" class="jy-search-clear-btn" id="dream-clear-q-m" style="display: none; margin-right: 6px;" aria-label="Clear job search">✕</button>
+                <button type="submit" class="jy-jobs-submit-btn">
+                    <span>Search</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <!-- Suggestions Dropdown Mobile -->
+                <div class="jy-suggest-dropdown" id="suggest-dropdown-q-m" style="display: none;"></div>
+            </div>
+
+            <!-- Row 2: Location Compact Pill -->
+            <div class="jy-jobs-loc-search-row">
+                <span class="jy-jobs-loc-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </span>
+                <input type="text" id="dream-search-loc-m" name="location" value="{{if .Data.Params}}{{.Data.Params.Location}}{{end}}" class="jy-jobs-loc-input" placeholder="Location (e.g. London, Remote, Manchester)..." autocomplete="off" aria-label="Location" />
+                <button type="button" class="jy-search-clear-btn" id="dream-clear-loc-m" style="display: none; margin-right: 4px;" aria-label="Clear location search">✕</button>
+                <!-- Location Suggestions Dropdown Mobile -->
+                <div class="jy-suggest-dropdown" id="suggest-dropdown-loc-m" style="display: none;"></div>
+            </div>
+
+            <!-- Active Filter Tags indicator if filters applied -->
+            {{if or (and .Data.Params .Data.Params.Query) (and .Data.Params .Data.Params.Location) (and .Data.Params .Data.Params.RemoteType) (and .Data.Params .Data.Params.JobType)}}
+            <div class="jy-jobs-active-filter-strip">
+                <span class="jy-jobs-active-filter-label">Filtered by:</span>
+                {{if .Data.Params.Query}}
+                <span class="jy-jobs-filter-chip">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span>&ldquo;{{.Data.Params.Query}}&rdquo;</span>
+                </span>
+                {{end}}
+                {{if .Data.Params.Location}}
+                <span class="jy-jobs-filter-chip jy-jobs-filter-chip--loc">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>{{.Data.Params.Location}}</span>
+                </span>
+                {{end}}
+                {{if .Data.Params.RemoteType}}
+                <span class="jy-jobs-filter-chip">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>Remote</span>
+                </span>
+                {{end}}
+                {{if .Data.Params.JobType}}
+                <span class="jy-jobs-filter-chip">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>{{.Data.Params.JobType}}</span>
+                </span>
+                {{end}}
+                <a href="/jobs/" class="jy-jobs-clear-chip" title="Clear all filters">✕ Clear</a>
+            </div>
+            {{end}}
+
+            <!-- Horizontal Quick Filter Pills with Crisp SVG Icons -->
+            <div class="jy-jobs-pills-rail" aria-label="Quick filters">
+                <a href="/jobs/" class="jy-jobs-pill{{if and (not .Data.Params.RemoteType) (not .Data.Params.Query) (not .Data.Params.JobType) (not .Data.Params.Location)}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                    <span>All Jobs</span>
+                </a>
+                <a href="/jobs/?remote_type=remote" class="jy-jobs-pill{{if eq .Data.Params.RemoteType "remote"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span>Remote UK</span>
+                </a>
+                <a href="/jobs/?location=London" class="jy-jobs-pill{{if eq .Data.Params.Location "London"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span>London</span>
+                </a>
+                <a href="/jobs/?q=Developer" class="jy-jobs-pill{{if eq .Data.Params.Query "Developer"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>Tech &amp; Dev</span>
+                </a>
+                <a href="/jobs/?job_type=full_time" class="jy-jobs-pill{{if eq .Data.Params.JobType "full_time"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    <span>Full-time</span>
+                </a>
+                <a href="/jobs/?min_salary=40000" class="jy-jobs-pill{{if eq .Data.Params.MinSalary 40000.0}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><path d="M14.5 9a2.5 2.5 0 0 0-5 0v6a2.5 2.5 0 0 0 5 0"/><path d="M8 12h6"/></svg>
+                    <span>£40k+</span>
+                </a>
+                <a href="/jobs/?q=Marketing" class="jy-jobs-pill{{if eq .Data.Params.Query "Marketing"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M23 6l-9.5 9.5-5-5L1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    <span>Marketing</span>
+                </a>
+                <a href="/jobs/?q=Healthcare" class="jy-jobs-pill{{if eq .Data.Params.Query "Healthcare"}} is-active{{end}}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                    <span>Healthcare</span>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Mobile Listings Feed -->
+    <main class="jy-dream-listings" aria-label="Job listings list">
+        <div class="listing-jobs">
+            {{range $index, $job := .Data.Results.Jobs}}
+                {{template "job_card_mobile" $job}}
+            {{else}}
+                <div class="empty-state" style="background: #FFFFFF; border-radius: 20px; padding: 30px 20px; text-align: center; border: 1px solid #EEF2F6;">
+                    <h2 style="font-size: 18px; font-weight: 800; color: #0B1F1A; margin-bottom: 6px;">No vacancies found</h2>
+                    <p style="color: #64748B; font-size: 13.5px; margin-bottom: 16px;">Try searching for other terms or view all jobs.</p>
+                    <a href="/jobs/" class="jy-dream-apply-cta" style="padding: 9px 20px; font-size: 13px;">View All Vacancies</a>
+                </div>
+            {{end}}
+        </div>
+
+        <!-- Load More Jobs & Auto-Scroll Controller -->
+        {{if gt .Data.Results.TotalPages 1}}
+        <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs" style="margin-top: 24px; margin-bottom: 24px;">
+            <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn" style="width: 100%; max-width: 320px; padding: 12px 24px; font-size: 0.88rem;">
+                <svg class="jy-load-more-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                <span class="jy-load-more-text">Load More Jobs</span>
+                <svg class="jy-load-more-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+            </button>
+        </div>
+        {{end}}
+
+        <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 24px;">
+            {{template "pagination" .Data.Results}}
+        </div>
+    </main>
+
+    {{template "listing_floating_bar" .Data}}
+</div>
+
+<style>
+/* Sticky Search Wrapper on Scroll (/jobs/) */
+.j-jobs-sticky-search-wrap {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 68px;
+    z-index: 1020;
+    background: rgba(248, 250, 248, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 6px 0 10px 0;
+    margin-bottom: 14px;
+    border-radius: 0 0 16px 16px;
+    transition: box-shadow 0.2s ease;
+}
+.j-jobs-sticky-search-wrap.is-scrolled {
+    box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+}
+
+/* Next-Gen Mobile Hero for /jobs/ */
+.j-jobs-mob-hero {
+    background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 45%, #FFFFFF 100%);
+    border: 1.5px solid rgba(167, 243, 208, 0.6);
+    border-radius: 24px;
+    padding: 20px 16px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 30px -10px rgba(5, 150, 105, 0.12);
+}
+.j-jobs-live-badge {
+    display: none !important;
+}
+.j-jobs-mob-hero-title {
+    font-size: 25px !important;
+    font-weight: 900 !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.03em !important;
+    color: #0F172A !important;
+    margin: 0 0 6px !important;
+}
+.j-jobs-mob-highlight {
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.j-jobs-mob-hero-sub {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    color: #64748B !important;
+    margin: 0 0 14px !important;
+    font-weight: 450 !important;
+}
+.j-jobs-mob-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.j-jobs-single-search-row {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid #059669;
+    border-radius: 999px;
+    padding: 4px 5px 4px 13px;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.14);
+    box-sizing: border-box;
+    position: relative;
+    transition: box-shadow 0.18s ease;
+}
+.j-jobs-single-search-row:focus-within {
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.22);
+}
+.j-jobs-search-icon {
+    color: #059669;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+.j-jobs-main-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 12.5px !important;
+    font-weight: 600;
+    color: #0F172A;
+    outline: none;
+    height: 34px;
+}
+.j-jobs-main-input::placeholder {
+    color: #94A3B8;
+    font-weight: 450;
+    font-size: 12.5px !important;
+}
+.j-jobs-submit-btn {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-weight: 750;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
+}
+.j-jobs-loc-search-row {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    padding: 3px 12px;
+    box-sizing: border-box;
+    position: relative;
+    transition: border-color 0.18s ease;
+}
+.j-jobs-loc-search-row:focus-within {
+    border-color: #059669;
+}
+.j-jobs-loc-icon {
+    color: #64748B;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 7px;
+}
+.j-jobs-loc-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 12px !important;
+    font-weight: 500;
+    color: #0F172A;
+    outline: none;
+    height: 28px;
+}
+.j-jobs-loc-input::placeholder {
+    color: #94A3B8;
+    font-size: 12px !important;
+}
+.j-jobs-pills-rail {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 6px 0 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.j-jobs-pills-rail::-webkit-scrollbar {
+    display: none;
+}
+.j-jobs-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 650;
+    color: #475569;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+.j-jobs-pill:hover, .j-jobs-pill.is-active {
+    background: #059669;
+    color: #FFFFFF;
+    border-color: #059669;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.28);
+}
+.j-jobs-active-filter-strip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 6px 2px 2px;
+    font-size: 12px;
+}
+.j-jobs-active-filter-label {
+    color: #64748B;
+    font-weight: 600;
+}
+.j-jobs-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 11.5px;
+    line-height: 1;
+}
+.j-jobs-filter-chip svg {
+    color: #059669;
+    flex-shrink: 0;
+}
+.j-jobs-filter-chip--loc svg {
+    color: #059669;
+}
+.j-jobs-clear-chip {
+    color: #DC2626;
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 11.5px;
+    margin-left: 4px;
+}
+
+/* Suggestion Dropdown styling Mobile & Stacking Context Elevation */
+.j-dream-input-pill {
+    position: relative !important;
+}
+.j-dream-input-pill:focus-within {
+    z-index: 1050 !important;
+}
+.j-suggest-dropdown {
+    position: absolute !important;
+    top: calc(100% + 6px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #EEF2F6 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 14px 32px -4px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 81, 50, 0.08) !important;
+    z-index: 1060 !important;
+    overflow: hidden !important;
+    padding: 6px 0 !important;
+    max-height: 320px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    animation: jSuggestFadeIn 0.16s ease !important;
+}
+@keyframes jSuggestFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.j-suggest-header {
+    padding: 6px 14px 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.j-suggest-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    min-height: 44px;
+    box-sizing: border-box;
+    user-select: none;
+}
+.j-suggest-item * {
+    pointer-events: none !important;
+}
+.j-suggest-item:active, .j-suggest-item.is-selected {
+    background: #F0FDF4;
+}
+.j-suggest-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.j-suggest-icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #ECFDF5;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.j-suggest-title {
+    font-size: 0.88rem;
+    font-weight: 650;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.j-suggest-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #059669;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.j-search-clear-btn {
+    background: #E2E8F0;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+</style>
+
+<script>
+(function() {
+    function initAutocompleteMobile(inputId, clearBtnId, dropdownId, type, formId) {
+        const input = document.getElementById(inputId);
+        const clearBtn = document.getElementById(clearBtnId);
+        const dropdown = document.getElementById(dropdownId);
+        const form = document.getElementById(formId);
+        if (!input || !dropdown) return;
+        if (input.dataset.autocompleteAttached === 'true') return;
+        input.dataset.autocompleteAttached = 'true';
+
+        let debounceTimer = null;
+
+        const defaultJobs = [
+            { value: "Software Developer", label: "Software Developer", category: "Popular Role", icon: "role" },
+            { value: "UI/UX Designer", label: "UI/UX Designer", category: "Popular Role", icon: "role" },
+            { value: "Project Manager", label: "Project Manager", category: "Popular Role", icon: "role" },
+            { value: "Data Analyst", label: "Data Analyst", category: "Popular Role", icon: "role" },
+            { value: "Registered Nurse", label: "Registered Nurse", category: "Popular Role", icon: "role" },
+            { value: "Accountant", label: "Accountant", category: "Popular Role", icon: "role" }
+        ];
+
+        const defaultLocations = [
+            { value: "Remote", label: "Remote (Work From Home UK)", category: "Workplace", icon: "remote" },
+            { value: "London", label: "London, UK", category: "City", icon: "location" },
+            { value: "Manchester", label: "Manchester, UK", category: "City", icon: "location" },
+            { value: "Birmingham", label: "Birmingham, UK", category: "City", icon: "location" },
+            { value: "Leeds", label: "Leeds, UK", category: "City", icon: "location" },
+            { value: "Glasgow", label: "Glasgow, UK", category: "City", icon: "location" }
+        ];
+
+        function render(list, query) {
+            if (!list || list.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            const headerLabel = query ? 'Suggestions' : (type === 'location' ? 'Popular Locations' : 'Popular Roles');
+            let html = '<div class="jy-suggest-header"><span>' + headerLabel + '</span><span>Instant</span></div>';
+
+            list.forEach((item, idx) => {
+                let iconSvg = '';
+                if (item.icon === 'location') {
+                    iconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+                } else if (item.icon === 'remote') {
+                    iconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>';
+                } else if (item.icon === 'company') {
+                    iconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>';
+                } else {
+                    iconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
+                }
+
+                const badgeText = item.count ? (item.count + ' jobs') : item.category;
+
+                let displayLabel = item.label || item.value;
+                if (query && query.trim()) {
+                    const reg = new RegExp('(' + query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                    displayLabel = displayLabel.replace(reg, '<strong style="color: #059669;">$1</strong>');
+                }
+
+                html += '<div class="jy-suggest-item" data-val="' + encodeURIComponent(item.value) + '">';
+                html += '  <div class="jy-suggest-left">';
+                html += '    <div class="jy-suggest-icon-wrap">' + iconSvg + '</div>';
+                html += '    <span class="jy-suggest-title">' + displayLabel + '</span>';
+                html += '  </div>';
+                html += '  <span class="jy-suggest-badge">' + badgeText + '</span>';
+                html += '</div>';
+            });
+
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+
+            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+                const selectItemHandler = function(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    const target = e.currentTarget || this;
+                    const rawVal = target.getAttribute('data-val');
+                    if (rawVal) {
+                        chooseItem(decodeURIComponent(rawVal));
+                    }
+                };
+                el.addEventListener('mousedown', selectItemHandler);
+                el.addEventListener('click', selectItemHandler);
+                el.addEventListener('touchend', selectItemHandler);
+            });
+        }
+
+        let lastSelectedTime = 0;
+        function chooseItem(val) {
+            const now = Date.now();
+            if (now - lastSelectedTime < 350) return;
+            lastSelectedTime = now;
+
+            input.value = val;
+            dropdown.style.display = 'none';
+            isOverDropdown = false;
+            if (clearBtn) clearBtn.style.display = 'flex';
+            if (form) {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        function fetchSuggestions(q) {
+            const url = '/api/search/suggestions/?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q || '');
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        render(data, q);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function showSuggestions(val) {
+            val = val || '';
+            const base = type === 'location' ? defaultLocations : defaultJobs;
+            const qTrim = val.toLowerCase().trim();
+            const localMatches = qTrim ? base.filter(x => x.label.toLowerCase().includes(qTrim) || x.value.toLowerCase().includes(qTrim)) : base;
+            render(localMatches, val);
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetchSuggestions(val);
+            }, 100);
+        }
+
+        // Prevent input blur when tapping inside dropdown
+        dropdown.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+        });
+
+        let isOverDropdown = false;
+        dropdown.addEventListener('mouseenter', function() { isOverDropdown = true; });
+        dropdown.addEventListener('mouseleave', function() { isOverDropdown = false; });
+        dropdown.addEventListener('touchstart', function() { isOverDropdown = true; }, { passive: true });
+        dropdown.addEventListener('touchend', function() { setTimeout(() => { isOverDropdown = false; }, 300); }, { passive: true });
+
+        input.addEventListener('input', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('focus', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('click', function() {
+            if (dropdown.style.display === 'none' || dropdown.innerHTML === '') {
+                showSuggestions(this.value);
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!isOverDropdown) {
+                    dropdown.style.display = 'none';
+                }
+            }, 250);
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                input.value = '';
+                clearBtn.style.display = 'none';
+                input.focus();
+                showSuggestions('');
+            });
+        }
+    }
+
+    function setupJobSearchAutocompleteMobile() {
+        initAutocompleteMobile('dream-search-q-m', 'dream-clear-q-m', 'suggest-dropdown-q-m', 'job', 'dream-search-form-m');
+        initAutocompleteMobile('dream-search-loc-m', 'dream-clear-loc-m', 'suggest-dropdown-loc-m', 'location', 'dream-search-form-m');
+    }
+
+    window.setupJobSearchAutocompleteMobile = setupJobSearchAutocompleteMobile;
+
+    // Sticky Elevation on Scroll for Jobs Search Wrap
+    function initJobsStickyScroll() {
+        const wrap = document.getElementById('jJobsStickySearchWrap');
+        if (!wrap) return;
+        const onScroll = function() {
+            if (window.scrollY > 20) {
+                wrap.classList.add('is-scrolled');
+            } else {
+                wrap.classList.remove('is-scrolled');
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setupJobSearchAutocompleteMobile();
+            initJobsStickyScroll();
+        });
+    } else {
+        setupJobSearchAutocompleteMobile();
+        initJobsStickyScroll();
+    }
+    window.addEventListener('jobyuk:turbo-load', function() {
+        setupJobSearchAutocompleteMobile();
+        initJobsStickyScroll();
+    });
+    window.addEventListener('popstate', function() {
+        setTimeout(function() {
+            setupJobSearchAutocompleteMobile();
+            initJobsStickyScroll();
+        }, 50);
+    });
+})();
+</script>
+{{end}}

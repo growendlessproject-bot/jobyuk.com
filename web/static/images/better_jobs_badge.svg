@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 130" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap');
+      .badge-text {
+        font-family: 'Caveat', cursive;
+        font-size: 27px;
+        font-weight: 700;
+        fill: #144D37;
+        letter-spacing: -0.3px;
+      }
+    </style>
+  </defs>
+  
+  <!-- Text line 1 -->
+  <text x="12" y="32" class="badge-text" transform="rotate(-5, 12, 32)">Better Jobs</text>
+  
+  <!-- Text line 2 -->
+  <text x="5" y="66" class="badge-text" transform="rotate(-5, 5, 66)">Brighten Future</text>
+  
+  <!-- Little 4-pointed sparkle star -->
+  <g transform="translate(162, 54) scale(0.9)">
+    <path d="M6 0 C6 3 9 6 12 6 C9 6 6 9 6 12 C6 9 3 6 0 6 C3 6 6 3 6 0 Z" fill="#256B50" />
+    <circle cx="6" cy="6" r="1.5" fill="#C4F25B" />
+  </g>
+  <circle cx="152" cy="62" r="2.5" fill="#256B50" />
+
+  <!-- Curved hand-drawn arrow pointing down-right -->
+  <path d="M 88 78 C 84 94 96 112 126 110" 
+        stroke="#18563F" 
+        stroke-width="2.6" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none" />
+  <!-- Arrow head -->
+  <path d="M 115 102 L 128 110 L 117 119" 
+        stroke="#18563F" 
+        stroke-width="2.6" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none" />
+</svg>

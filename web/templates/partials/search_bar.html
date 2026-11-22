@@ -1,0 +1,382 @@
+{{define "search_bar"}}
+<div class="search-bar {{if .Data.Results}}search-bar--with-filters{{end}}">
+    <div class="search-bar__top">
+        <form action="/jobs/" method="GET" class="search-bar__form" role="search" autocomplete="off">
+        <input type="hidden" name="type" id="hidden-contract-type" value="{{if .Data.Params}}{{.Data.Params.ContractType}}{{end}}">
+        <input type="hidden" name="job_type" id="hidden-job-type" value="{{if .Data.Params}}{{.Data.Params.JobType}}{{end}}">
+        <input type="hidden" name="min_salary" id="hidden-min-salary" value="{{if and .Data.Params (gt .Data.Params.MinSalary 0.0)}}{{.Data.Params.MinSalary}}{{end}}">
+        <input type="hidden" name="max_salary" id="hidden-max-salary" value="{{if and .Data.Params (gt .Data.Params.MaxSalary 0.0)}}{{.Data.Params.MaxSalary}}{{end}}">
+        <!-- Job Title Search Field -->
+        <div class="search-bar__field search-bar__field--query" id="query-field">
+            <svg class="search-bar__field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" id="query-input" name="q" placeholder="Job title, keywords, or company" class="search-bar__input" aria-label="Search jobs" value="{{if .Data.Params}}{{.Data.Params.Query}}{{end}}" autocomplete="off">
+            
+            <!-- Suggestions Dropdown -->
+            <div class="search-dropdown" id="query-dropdown" style="display: none;">
+                <div class="search-dropdown__header">Search suggestions</div>
+                <ul class="search-dropdown__list">
+                    <li class="search-dropdown__item" data-value="full-time">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>full-time</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="part-time">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>part-time</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="hiring immediately">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>hiring immediately</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="remote">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>remote</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="urgently hiring">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>urgently hiring</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="entry level">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>entry level</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="remote work from home">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>remote work from home</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="work from home">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>work from home</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="server">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>server</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="walmart">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>walmart</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Vertical Divider -->
+        <div class="search-bar__divider"></div>
+
+        <!-- Location Search Field -->
+        <div class="search-bar__field search-bar__field--location" id="location-field">
+            <svg class="search-bar__field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <input type="text" id="location-input" name="location" placeholder="City, region, or post code" class="search-bar__input" aria-label="Location" value="{{if .Data.Params}}{{.Data.Params.Location}}{{end}}" autocomplete="off">
+            
+            <!-- City Suggestions Dropdown -->
+            <div class="search-dropdown" id="location-dropdown" style="display: none;">
+                <ul class="search-dropdown__list">
+                    <li class="search-dropdown__item" data-value="London, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>London, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Manchester, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Manchester, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Birmingham, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Birmingham, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Leeds, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Leeds, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Glasgow, Scotland">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Glasgow, Scotland</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Sheffield, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Sheffield, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Bradford, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Bradford, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Liverpool, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Liverpool, England</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Edinburgh, Scotland">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Edinburgh, Scotland</span>
+                    </li>
+                    <li class="search-dropdown__item" data-value="Bristol, England">
+                        <svg class="search-dropdown__item-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        <span>Bristol, England</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Search Button -->
+        <button type="submit" class="search-bar__btn" aria-label="Search jobs">
+            <svg class="search-bar__btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Search</span>
+        </button>
+    </form>
+
+    {{if .Data.Results}}
+    <!-- Search Bar Actions (Filter Toggle + Clear Button) -->
+    <div class="search-bar__actions-group" style="display: flex; align-items: center; gap: 8px;">
+        <!-- Search Bar Filter Toggle Button (Restored original filter icon) -->
+        <button type="button" class="search-bar__filter-btn" id="search-bar-filter-toggle-btn" aria-label="Toggle Filters" title="Toggle Search Filters">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <span class="filter-count-badge" id="filter-count-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Next-Level Glowing Clear Active Filters Button -->
+        <button type="button" class="search-bar__clear-btn" id="search-bar-clear-all-btn" style="display: none;" title="Reset all active filters">
+            <span class="search-bar__clear-icon-wrap">
+                <svg class="search-bar__clear-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </span>
+            <span class="search-bar__clear-text">Clear</span>
+        </button>
+    </div>
+    {{end}}
+    </div>
+
+    {{if .Data.Results}}
+    <!-- Horizontal Filter Bar -->
+    <div class="filter-bar filter-bar--no-viewed">
+        <div class="filter-bar__container">
+            <span class="filter-bar__label">filters:</span>
+            
+            <!-- Salary Filter Dropdown -->
+            <div class="filter-dropdown" id="dropdown-salary">
+                <button type="button" class="filter-dropdown__btn">
+                    <span>Salary</span>
+                    <svg class="filter-dropdown__arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="filter-dropdown__menu">
+                    <div class="filter-dropdown__salary-range">
+                        <div>
+                            <label for="salary-min" style="font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Min (£)</label>
+                            <input type="number" id="salary-min" placeholder="e.g. 30000" class="filter-dropdown__input" style="width: 100%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 6px;" value="{{if and .Data.Params (gt .Data.Params.MinSalary 0.0)}}{{.Data.Params.MinSalary}}{{end}}">
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <label for="salary-max" style="font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Max (£)</label>
+                            <input type="number" id="salary-max" placeholder="e.g. 80000" class="filter-dropdown__input" style="width: 100%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 6px;" value="{{if and .Data.Params (gt .Data.Params.MaxSalary 0.0)}}{{.Data.Params.MaxSalary}}{{end}}">
+                        </div>
+                    </div>
+                    <button type="button" class="filter-dropdown__apply-btn" id="apply-salary-btn" style="width: 100%; background: #0F5132; color: white; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 8px;">Apply</button>
+                </div>
+            </div>
+
+            <!-- Job Types Filter Dropdown -->
+            <div class="filter-dropdown" id="dropdown-jobtypes">
+                <button type="button" class="filter-dropdown__btn">
+                    <span>Job Types</span>
+                    <svg class="filter-dropdown__arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="filter-dropdown__menu">
+                    <div class="filter-dropdown__title" style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px;">Contract Type</div>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="contract_type_opt" value="" aria-label="All Contract Types" {{if not .Data.Params.ContractType}}checked{{end}}>
+                        <span>All Types</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="contract_type_opt" value="permanent" aria-label="Permanent Contract" {{if eq .Data.Params.ContractType "permanent"}}checked{{end}}>
+                        <span>Permanent</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="contract_type_opt" value="contract" aria-label="Contract Basis" {{if eq .Data.Params.ContractType "contract"}}checked{{end}}>
+                        <span>Contract</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="contract_type_opt" value="temporary" aria-label="Temporary Contract" {{if eq .Data.Params.ContractType "temporary"}}checked{{end}}>
+                        <span>Temporary</span>
+                    </label>
+                    
+                    <div class="filter-dropdown__divider" style="height: 1px; background: #e2e8f0; margin: 12px 0;"></div>
+                    
+                    <div class="filter-dropdown__title" style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px;">Hours</div>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="job_type_opt" value="" aria-label="All Hours" {{if not .Data.Params.JobType}}checked{{end}}>
+                        <span>All Hours</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="job_type_opt" value="full_time" aria-label="Full Time Hours" {{if eq .Data.Params.JobType "full_time"}}checked{{end}}>
+                        <span>Full Time</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="job_type_opt" value="part_time" aria-label="Part Time Hours" {{if eq .Data.Params.JobType "part_time"}}checked{{end}}>
+                        <span>Part Time</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Location Filter Dropdown -->
+            <div class="filter-dropdown" id="dropdown-location">
+                <button type="button" class="filter-dropdown__btn">
+                    <span>Location</span>
+                    <svg class="filter-dropdown__arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="filter-dropdown__menu">
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="location_opt" value="" aria-label="All UK Locations" {{if not .Data.Params.Location}}checked{{end}}>
+                        <span>All UK Locations</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="location_opt" value="London" aria-label="London Jobs" {{if eq .Data.Params.Location "London"}}checked{{end}}>
+                        <span>London</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="location_opt" value="Manchester" aria-label="Manchester Jobs" {{if eq .Data.Params.Location "Manchester"}}checked{{end}}>
+                        <span>Manchester</span>
+                    </label>
+                    <label class="filter-dropdown__option" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #334155; cursor: pointer;">
+                        <input type="radio" name="location_opt" value="Birmingham" aria-label="Birmingham Jobs" {{if eq .Data.Params.Location "Birmingham"}}checked{{end}}>
+                        <span>Birmingham</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Easily Apply Toggle Switch -->
+            <div class="easy-apply-toggle-container">
+                <span class="easy-apply-toggle-label">Easily apply</span>
+                <label class="easy-apply-switch">
+                    <input type="checkbox" id="easy-apply-toggle-checkbox" aria-label="Filter easily apply jobs only" {{if .Data.Params.EasyApply}}checked{{end}}>
+                    <span class="easy-apply-slider"></span>
+                </label>
+            </div>
+
+            <!-- View Tabs Segmented Control (Hidden by default until viewed jobs > 0) -->
+            <div class="view-segment-wrapper" id="view-tabs-wrapper" style="display: none; align-items: center;">
+                <div class="filter-bar__divider-vertical" style="width: 1.5px; height: 24px; background: #e2e8f0; margin: 0 10px; align-self: center;"></div>
+                <span class="filter-bar__label">view:</span>
+                <div class="view-segment-control">
+                    <button class="view-segment-btn view-segment-btn--active" id="tab-all-jobs" type="button">
+                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="display: inline-block; vertical-align: middle;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span style="display: inline-block; vertical-align: middle;">All Openings</span>
+                    </button>
+                    <div class="view-segment-divider"></div>
+                    <button class="view-segment-btn" id="tab-viewed-jobs" type="button" style="position: relative;">
+                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="display: inline-block; vertical-align: middle;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span style="display: inline-block; vertical-align: middle;">Viewed Jobs</span>
+                        <span class="view-segment-badge" id="viewed-tab-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{end}}
+</div>
+
+<!-- Viewed History Pane (hidden by default, outside search-bar to prevent sticky scroll traps) -->
+<div id="viewed-jobs-history-pane" class="viewed-history-pane" style="display: none; margin-top: var(--space-6); margin-bottom: var(--space-8);">
+    <div class="viewed-history__header">
+        <h3 class="viewed-history__title">Your Visited Search History</h3>
+        <button type="button" class="viewed-history__clear-btn" id="vh-clear-btn" title="Clear Visited History">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+            <span>Clear History</span>
+        </button>
+    </div>
+    <div class="viewed-history__list" id="viewed-history-list"></div>
+</div>
+
+<!-- Beautiful Custom Confirmation Modal -->
+<div id="clear-history-modal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <div class="custom-modal__header">
+            <div class="custom-modal__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h2 class="custom-modal__title">Clear History?</h2>
+        </div>
+        <div class="custom-modal__body">
+            <p>Are you sure you want to clear your visited jobs search history? This action cannot be undone.</p>
+        </div>
+        <div class="custom-modal__footer">
+            <button type="button" class="custom-modal__btn custom-modal__btn--cancel" id="confirm-modal-cancel">Cancel</button>
+            <button type="button" class="custom-modal__btn custom-modal__btn--confirm" id="confirm-modal-yes">Yes, Clear</button>
+        </div>
+    </div>
+</div>
+{{end}}

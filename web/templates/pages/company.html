@@ -1,0 +1,74 @@
+{{define "content"}}
+<div class="container section">
+    {{template "breadcrumbs" .}}
+
+    {{if .Data.Company}}
+        <!-- Company Detail View -->
+        <div class="listing-header flex flex--between" style="align-items: flex-start; margin-bottom: var(--space-8);">
+            <div class="flex flex--center" style="gap: var(--space-4); text-align: left;">
+                <div class="job-detail__company-logo" style="width: 72px; height: 72px; font-size: var(--font-size-3xl);">
+                    {{if .Data.Company.ProxiedLogoURL}}
+                        <img src="{{.Data.Company.ProxiedLogoURL}}" alt="{{.Data.Company.Name}} logo">
+                    {{else}}
+                        {{.Data.Company.Initial}}
+                    {{end}}
+                </div>
+                <div>
+                    <h1 style="margin-bottom: var(--space-1); font-size: var(--font-size-3xl);">{{.Data.Company.Name}}</h1>
+                    <p class="text-secondary" style="margin-bottom: 0;">{{.Data.Company.FormattedJobCount}} active vacancies</p>
+                </div>
+            </div>
+            {{if .Data.Company.WebsiteURL}}
+                <a href="{{.Data.Company.WebsiteURL}}" class="btn btn--outline" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px;">
+                    <span>Visit Website</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            {{end}}
+        </div>
+
+        {{if .Data.Company.Description}}
+            <div class="related-links" style="background: var(--color-bg-elevated); margin-bottom: var(--space-8);">
+                <h3 class="related-links__title">About {{.Data.Company.Name}}</h3>
+                <p class="text-secondary" style="line-height: var(--line-height-relaxed); margin-bottom: 0;">{{.Data.Company.Description}}</p>
+            </div>
+        {{end}}
+
+        <h2 style="margin-bottom: var(--space-6);">Active Positions</h2>
+        <div class="listing-jobs stagger">
+            {{range .Data.Jobs}}
+                {{template "job_card" .}}
+            {{else}}
+                <div class="empty-state" style="text-align: center; padding: var(--space-12) 0;">
+                    <div class="empty-state__icon-box theme-tech" style="width: 64px; height: 64px; border-radius: var(--radius-xl, 16px); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-4); color: var(--color-primary, #0A66C2); background: rgba(10, 102, 194, 0.08);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h2 class="empty-state__title">No active vacancies</h2>
+                    <p class="empty-state__text">There are currently no active job postings for {{$.Data.Company.Name}}.</p>
+                </div>
+            {{end}}
+        </div>
+    {{else}}
+        <!-- Company Index View -->
+        <h1 class="text-center" style="margin-bottom: var(--space-8);">Featured Employers</h1>
+        <div class="grid grid--3">
+            {{range .Data}}
+                <a href="/companies/{{.Slug}}/" class="company-card animate-fade-in">
+                    <div class="company-card__logo">
+                        {{if .ProxiedLogoURL}}
+                            <img src="{{.ProxiedLogoURL}}" alt="{{.Name}} logo" loading="lazy">
+                        {{else}}
+                            {{.Initial}}
+                        {{end}}
+                    </div>
+                    <div class="company-card__info">
+                        <div class="company-card__name">{{.Name}}</div>
+                        <div class="company-card__jobs">{{.FormattedJobCount}}</div>
+                    </div>
+                </a>
+            {{else}}
+                <p class="text-center text-muted">No employers found.</p>
+            {{end}}
+        </div>
+    {{end}}
+</div>
+{{end}}

@@ -1,0 +1,947 @@
+{{define "admin_content"}}
+<div class="admin-settings-container" style="max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+
+    <!-- Status Banners -->
+        {{if .Data.AdblockSaved}}
+    <div style="background: {{if eq .Data.AdblockStatus "enabled"}}#ecfdf5; border: 1px solid #10b981; color: #047857;{{else}}#fff7ed; border: 1px solid #f97316; color: #c2410c;{{end}} padding: 14px 18px; border-radius: 14px; font-size: 0.92rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span><strong>Anti-Adblock Enforcement Wall updated!</strong> Wall is now <strong>{{if eq .Data.AdblockStatus "enabled"}}ACTIVE & ENFORCED (Ad-blockers blocked){{else}}DISABLED (Free browsing with ad-blocker allowed){{end}}</strong>.</span>
+        </div>
+        <a href="/" target="_blank" style="background: {{if eq .Data.AdblockStatus "enabled"}}#047857{{else}}#ea580c{{end}}; color: white; padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <span>Preview Live Site</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+    </div>
+    {{end}}
+{{if .Data.Saved}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Site settings, Google Analytics ID & SEO Metadata published live across the site!</span>
+    </div>
+    {{end}}
+
+    {{if .Data.IndexingSaved}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Google Indexing API Service Account activated successfully! Real-time search indexing is now LIVE.</span>
+    </div>
+    {{end}}
+
+    {{if .Data.IndexNowSubmitted}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>IndexNow submission complete! Up to 1,000 fresh active jobs submitted directly to Microsoft Bing, Yahoo, Yandex, and Seznam.</span>
+    </div>
+    {{end}}
+    {{if .Data.AutoIndexerStarted}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        <span>Google Fast-Track Auto-Indexer started! Pinging up to 150 fresh active jobs directly to Google Indexing API in background with polite pacing.</span>
+    </div>
+    {{end}}
+    {{if .Data.IndexingTestSuccess}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Test URL (https://jobyuk.com/) successfully submitted to Google Indexing API with status 200 OK!</span>
+    </div>
+    {{end}}
+
+    {{if .Data.IndexingError}}
+    <div style="background: #fef2f2; border: 1px solid #ef4444; color: #b91c1c; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>Error: {{.Data.IndexingError}}</span>
+    </div>
+    {{end}}
+
+    {{if .Data.LinkChecked}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Link Health & Expiry Bot cycle started! Broken/dead 404 links are being automatically expired and live links extended.</span>
+    </div>
+    {{end}}
+
+    {{if .Data.Synced}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        <span>Reed API Sync triggered successfully! Fresh jobs will appear shortly.</span>
+    </div>
+    {{end}}
+
+    {{if .Data.CacheCleared}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Redis search cache and page caches cleared successfully.</span>
+    </div>
+    {{end}}
+
+    {{if .Data.SitemapRebuilt}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>Sitemap rebuilt successfully. Search engine bots will crawl the fresh index.</span>
+    </div>
+    {{end}}
+
+    {{if .Data.AdsSaved}}
+    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #047857; padding: 14px 18px; border-radius: 14px; font-size: 0.92rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.08);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>ads.txt updated successfully!</strong> The updated ad specifications are now being served live.</span>
+        </div>
+        <a href="/ads.txt" target="_blank" style="background: #047857; color: white; padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <span>View jobyuk.com/ads.txt</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+    </div>
+    {{end}}
+
+    {{if .Data.AdsDeleted}}
+    <div style="background: #fff7ed; border: 1px solid #f97316; color: #c2410c; padding: 14px 18px; border-radius: 14px; font-size: 0.92rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 5px rgba(249, 115, 22, 0.08);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <span><strong>ads.txt cleared / deleted.</strong> jobyuk.com/ads.txt is now empty.</span>
+        </div>
+        <a href="/ads.txt" target="_blank" style="background: #ea580c; color: white; padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <span>Check jobyuk.com/ads.txt</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+    </div>
+    {{end}}
+
+    <!-- Site Configuration & Settings Form -->
+    <div class="admin-settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>Site Identity, Analytics, SEO & Social Handles</span>
+        </h3>
+
+        <form method="POST" action="/admin-lol/settings/site" style="display: flex; flex-direction: column; gap: 20px;">
+            <input type="hidden" name="anti_adblock_present" value="1">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+            <!-- Tracking & Monetization -->
+            <div class="admin-settings-row-2">
+                <!-- Google Analytics (GA4) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 6px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                        <span>Google Analytics (GA4) ID</span>
+                    </label>
+                    <input type="text" name="google_analytics_id" value="{{.Data.Settings.GoogleAnalyticsID}}" placeholder="e.g. G-XXXXXXXXXX" class="admin-input-control" style="font-family: monospace; font-weight: 700;">
+                    <span style="font-size: 0.76rem; color: #64748b; margin-top: 4px; display: block;">Loads and configures gtag.js tracking across all pages.</span>
+                </div>
+
+                <!-- Google AdSense -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 6px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        <span>Google AdSense ID</span>
+                    </label>
+                    <input type="text" name="adsense_publisher_id" value="{{.Data.Settings.AdSensePublisherID}}" placeholder="e.g. ca-pub-1234567890123456" class="admin-input-control" style="font-family: monospace; font-weight: 700;">
+                    <span style="font-size: 0.76rem; color: #64748b; margin-top: 4px; display: block;">Injects google-adsense-account metadata scripts.</span>
+                </div>
+            </div>
+
+            <!-- Global SEO & Meta Data -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>Default SEO & Meta Data</span>
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    <div>
+                        <label class="admin-label-title">Default Website Meta Title <span style="color: #ef4444;">*</span></label>
+                        <input type="text" name="default_meta_title" value="{{.Data.Settings.DefaultMetaTitle}}" placeholder="JobyUK.com - Direct UK Job Search & Career Platform" class="admin-input-control" required>
+                    </div>
+
+                    <div>
+                        <label class="admin-label-title">Default Website Meta Description</label>
+                        <textarea name="default_meta_desc" rows="2" class="admin-textarea-control">{{.Data.Settings.DefaultMetaDesc}}</textarea>
+                    </div>
+
+                    <div class="admin-settings-row-2">
+                        <div>
+                            <label class="admin-label-title">Meta Keywords</label>
+                            <input type="text" name="default_meta_keywords" value="{{.Data.Settings.DefaultMetaKeywords}}" placeholder="jobs UK, UK careers, employment, vacancies" class="admin-input-control">
+                        </div>
+                        <div>
+                            <label class="admin-label-title">Social Share OG Image URL</label>
+                            <input type="text" name="default_og_image" value="{{.Data.Settings.DefaultOGImage}}" placeholder="/static/images/og-image.jpg" class="admin-input-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Email -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <label class="admin-label-title" style="display: flex; align-items: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span>Public Contact / Support Email Address</span>
+                </label>
+                <input type="email" name="contact_email" value="{{.Data.Settings.ContactEmail}}" placeholder="contact@jobyuk.com" class="admin-input-control" required>
+            </div>
+
+            <!-- Social Handles Grid -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Social Media Handles</span>
+                </h4>
+                <div class="admin-social-grid">
+                    <div>
+                        <label class="admin-label-title">LinkedIn URL</label>
+                        <input type="url" name="social_linkedin" value="{{.Data.Settings.SocialLinkedIn}}" placeholder="https://linkedin.com/company/JobyUK.com" class="admin-input-control">
+                    </div>
+                    <div>
+                        <label class="admin-label-title">Twitter / X URL</label>
+                        <input type="url" name="social_twitter" value="{{.Data.Settings.SocialTwitter}}" placeholder="https://twitter.com/JobyUK.com" class="admin-input-control">
+                    </div>
+                    <div>
+                        <label class="admin-label-title">Pinterest URL</label>
+                        <input type="url" name="social_pinterest" value="{{.Data.Settings.SocialPinterest}}" placeholder="https://pinterest.com/JobyUK.com" class="admin-input-control">
+                    </div>
+                    <div>
+                        <label class="admin-label-title">Facebook URL</label>
+                        <input type="url" name="social_facebook" value="{{.Data.Settings.SocialFacebook}}" placeholder="https://facebook.com/JobyUK.com" class="admin-input-control">
+                    </div>
+                    <div>
+                        <label class="admin-label-title">Instagram URL</label>
+                        <input type="url" name="social_instagram" value="{{.Data.Settings.SocialInstagram}}" placeholder="https://instagram.com/JobyUK.com" class="admin-input-control">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homepage Dynamic Insights Section -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    <span>Homepage Insights Section</span>
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label class="admin-label-title">Section Title <span style="color: #ef4444;">*</span></label>
+                        <input type="text" name="insights_title" value="{{.Data.Settings.InsightsTitle}}" placeholder="Explore Web Design and Development Insights" class="admin-input-control" required>
+                    </div>
+                    <div>
+                        <label class="admin-label-title">Section Subtitle</label>
+                        <textarea name="insights_subtitle" rows="2" class="admin-textarea-control">{{.Data.Settings.InsightsSubtitle}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homepage Promo Banner -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span>Homepage Hiring Promo Banner</span>
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label class="admin-label-title">Banner Headline <span style="color: #ef4444;">*</span></label>
+                        <input type="text" name="hiring_title" value="{{.Data.Settings.HiringTitle}}" placeholder="Hiring? Connect with Top Professionals" class="admin-input-control" required>
+                    </div>
+                    <div class="admin-settings-row-2">
+                        <div>
+                            <label class="admin-label-title">CTA Button Text <span style="color: #ef4444;">*</span></label>
+                            <input type="text" name="hiring_cta_text" value="{{.Data.Settings.HiringCtaText}}" placeholder="Take the first step" class="admin-input-control" required>
+                        </div>
+                        <div>
+                            <label class="admin-label-title">CTA Button Link URL <span style="color: #ef4444;">*</span></label>
+                            <input type="text" name="hiring_cta_link" value="{{.Data.Settings.HiringCtaLink}}" placeholder="/employers/post-job/" class="admin-input-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Job Apply CTA Button Settings -->
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 18px;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Global Job Apply Button (CTA Text)</span>
+                </h4>
+                <div>
+                    <label class="admin-label-title">Apply Button Text <span style="color: #ef4444;">*</span></label>
+                    <input type="text" name="apply_cta_text" value="{{if .Data.Settings.ApplyCtaText}}{{.Data.Settings.ApplyCtaText}}{{else}}Apply for this role{{end}}" placeholder="e.g. Apply for this role" class="admin-input-control" required>
+                    <span style="font-size: 0.76rem; color: #64748b; margin-top: 4px; display: block;">This CTA text will appear uniformly across all job detail pages, sticky mobile action bars, and modal drawers.</span>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="padding-top: 10px; border-top: 1px solid #e2e8f0;">
+                <button type="submit" class="admin-settings-submit-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <span>Save & Publish Site Settings</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ads.txt Management Card -->
+    <div id="ads-txt-card" class="admin-settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; display: flex; align-items: center; justify-content: center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;">
+                        ads.txt Management (Google AdSense & Ad Networks)
+                    </h3>
+                    <span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">
+                        Publicly served at <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #0284c7; font-weight: 700;">jobyuk.com/ads.txt</code>
+                    </span>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                {{if .Data.Settings.AdsTxt}}
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; font-size: 0.8rem; font-weight: 800; padding: 5px 12px; border-radius: 9999px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                    Active & Serving Live
+                </span>
+                {{else}}
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; font-size: 0.8rem; font-weight: 800; padding: 5px 12px; border-radius: 9999px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #f97316; display: inline-block;"></span>
+                    Empty / No Records
+                </span>
+                {{end}}
+
+                <a href="/ads.txt" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.84rem; font-weight: 700; color: #0284c7; background: #f0f9ff; border: 1px solid #bae6fd; padding: 6px 14px; border-radius: 10px; text-decoration: none; transition: all 0.15s ease;">
+                    <span>Open Live /ads.txt</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+            </div>
+        </div>
+
+        <p style="font-size: 0.88rem; color: #475569; margin-top: 0; margin-bottom: 14px; line-height: 1.5;">
+            Manage the content of your site's <code style="font-weight: 700; color: #0f172a;">ads.txt</code> file. Authorized Digital Sellers (ads.txt) verifies authorized advertising networks like Google AdSense to prevent ad fraud and monetize job pages.
+        </p>
+
+        <form method="POST" action="/admin-lol/settings/ads-txt" id="adsTxtForm" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="action" id="adsTxtAction" value="save">
+
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                    <label for="ads_txt_area" class="admin-label-title" style="margin-bottom: 0;">
+                        ads.txt Records (One per line)
+                    </label>
+
+                    <button type="button" onclick="autoFillGoogleAdSense()" style="display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 5px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>Auto-Fill Google AdSense Line</span>
+                    </button>
+                </div>
+
+                <textarea id="ads_txt_area" name="ads_txt" rows="7" class="admin-textarea-control" style="font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.88rem; line-height: 1.6; background: #0f172a; color: #38bdf8; border: 1.5px solid #334155; border-radius: 10px; padding: 14px; width: 100%; box-sizing: border-box; resize: vertical;" placeholder="google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0">{{.Data.Settings.AdsTxt}}</textarea>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; flex-wrap: wrap; gap: 8px;">
+                    <span style="font-size: 0.76rem; color: #64748b;">
+                        Standard IAB Format: <code>&lt;Domain&gt;, &lt;Publisher ID&gt;, &lt;DIRECT|RESELLER&gt;, &lt;Certification Authority ID&gt;</code>
+                    </span>
+                    <span id="ads-line-counter" style="font-size: 0.76rem; font-weight: 700; color: #64748b;"></span>
+                </div>
+            </div>
+
+            <!-- Action Buttons: Save & Update vs Delete / Clear -->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 16px; flex-wrap: wrap; gap: 12px;">
+                <button type="button" onclick="confirmDeleteAdsTxt()" class="admin-op-btn" style="background: #fef2f2; border: 1.5px solid #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.86rem; padding: 10px 18px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.15s ease;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    <span>Delete / Clear ads.txt</span>
+                </button>
+
+                <button type="submit" onclick="document.getElementById('adsTxtAction').value='save';" class="admin-settings-submit-btn" style="background: #0f172a; margin: 0; padding: 10px 22px; font-size: 0.88rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <span>Save & Update ads.txt</span>
+                </button>
+            </div>
+        </form>
+
+        <script>
+        function updateAdsLineCount() {
+            const area = document.getElementById('ads_txt_area');
+            const counter = document.getElementById('ads-line-counter');
+            if (!area || !counter) return;
+            const lines = area.value.split('\n').filter(l => l.trim().length > 0 && !l.trim().startsWith('#'));
+            counter.textContent = lines.length + ' active ad rule' + (lines.length === 1 ? '' : 's');
+        }
+        document.getElementById('ads_txt_area')?.addEventListener('input', updateAdsLineCount);
+        updateAdsLineCount();
+
+        function autoFillGoogleAdSense() {
+            const area = document.getElementById('ads_txt_area');
+            if (!area) return;
+            let pubId = "{{.Data.Settings.AdSensePublisherID}}";
+            if (!pubId || pubId.trim() === "") {
+                const input = document.querySelector('input[name="adsense_publisher_id"]');
+                if (input && input.value.trim() !== "") {
+                    pubId = input.value.trim();
+                }
+            }
+            if (!pubId || pubId.trim() === "") {
+                pubId = prompt("Enter your Google AdSense Publisher ID (e.g. pub-1234567890123456 or ca-pub-1234567890123456):");
+            }
+            if (!pubId || pubId.trim() === "") return;
+            pubId = pubId.trim().replace(/^ca-/, "");
+            if (!pubId.startsWith("pub-")) {
+                pubId = "pub-" + pubId;
+            }
+            const line = "google.com, " + pubId + ", DIRECT, f08c47fec0942fa0";
+            if (area.value.includes(pubId)) {
+                alert("Publisher record for " + pubId + " is already present in ads.txt!");
+                return;
+            }
+            if (area.value.trim() === "") {
+                area.value = line + "\n";
+            } else {
+                area.value = area.value.trim() + "\n" + line + "\n";
+            }
+            updateAdsLineCount();
+        }
+
+        function confirmDeleteAdsTxt() {
+            if (confirm("Are you sure you want to clear/delete the ads.txt content?\n\nThis will completely remove all ad network records from jobyuk.com/ads.txt.")) {
+                document.getElementById('adsTxtAction').value = 'delete';
+                document.getElementById('adsTxtForm').submit();
+            }
+        }
+        </script>
+    </div>
+
+    <!-- Anti-Adblock Enforcement Wall Dedicated Control Card -->
+    <div id="anti-adblock-card" class="admin-settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #ebf9d4 0%, #d8f5a8 100%); border: 1.5px solid #c0f26f; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(15, 81, 50, 0.1);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f5132" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;">
+                        Anti-Adblock Enforcement Wall (Dynamic Control)
+                    </h3>
+                    <span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">
+                        Enterprise Wall protecting Google AdSense and direct employer ad impressions
+                    </span>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span id="aab-card-badge" style="display: inline-flex; align-items: center; gap: 6px; {{if .Data.Settings.AntiAdblockEnabled}}background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857;{{else}}background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569;{{end}} font-size: 0.82rem; font-weight: 800; padding: 6px 14px; border-radius: 9999px; transition: all 0.2s ease;">
+                    <span id="aab-card-dot" style="width: 8px; height: 8px; border-radius: 50%; {{if .Data.Settings.AntiAdblockEnabled}}background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);{{else}}background: #94a3b8;{{end}} display: inline-block;"></span>
+                    <span id="aab-card-status-text">{{if .Data.Settings.AntiAdblockEnabled}}Active & Enforced{{else}}Disabled / Permissive{{end}}</span>
+                </span>
+            </div>
+        </div>
+
+        <p style="font-size: 0.88rem; color: #475569; margin-top: 0; margin-bottom: 18px; line-height: 1.55;">
+            Toggle the JobyUK anti-adblock wall ON or OFF instantly. When <strong>ON</strong>, visitors with adblockers (uBlock Origin, AdBlock Plus, Brave Shield, AdGuard, DNS blockers) on desktop will see a frosted blur lockdown and the branded Emerald/Lime modal asking them to pause their blocker or whitelist JobyUK. When <strong>OFF</strong>, the detection scripts and wall are completely bypassed.
+        </p>
+
+        <!-- Dynamic Control Toggle Bar -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 0.94rem; font-weight: 800; color: #0f172a;">Instant Wall State Switch</span>
+                <span id="aab-desc-text" style="font-size: 0.8rem; color: #64748b;">
+                    {{if .Data.Settings.AntiAdblockEnabled}}
+                    Currently enforcing ad-blocker restrictions across all desktop public pages.
+                    {{else}}
+                    Currently in permissive mode: visitors with adblockers can browse freely without any modal.
+                    {{end}}
+                </span>
+            </div>
+
+            <!-- Instant Toggle Form with AJAX support -->
+            <form id="antiAdblockToggleForm" method="POST" action="/admin-lol/settings/anti-adblock/toggle" style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                <input type="hidden" name="state" id="aabToggleState" value="{{if .Data.Settings.AntiAdblockEnabled}}disable{{else}}enable{{end}}">
+
+                <button type="button" id="aabMasterBtn" onclick="toggleAntiAdblockLive(event)" style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 800; padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; border: none; {{if .Data.Settings.AntiAdblockEnabled}}background: #fef2f2; border: 1.5px solid #fecaca; color: #b91c1c;{{else}}background: #0f5132; border: 1.5px solid #0f5132; color: #ffffff; box-shadow: 0 4px 12px rgba(15, 81, 50, 0.25);{{end}}">
+                    {{if .Data.Settings.AntiAdblockEnabled}}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                    <span>Turn OFF Anti-Adblock Wall</span>
+                    {{else}}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Turn ON Anti-Adblock Wall</span>
+                    {{end}}
+                </button>
+            </form>
+        </div>
+
+        <!-- Capability Pills Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.84rem; color: #0f172a; margin-bottom: 4px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Multi-Engine Adblock Trap</span>
+                </div>
+                <span style="font-size: 0.76rem; color: #64748b; line-height: 1.4; display: block;">
+                    Traps CSS bait elements, decoy ad containers, Google AdSense script blocking, and network DNS blocks.
+                </span>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.84rem; color: #0f172a; margin-bottom: 4px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                    <span>Desktop Focused Experience</span>
+                </div>
+                <span style="font-size: 0.76rem; color: #64748b; line-height: 1.4; display: block;">
+                    Zero false positives on mobile or low-bandwidth users; applies cleanly to desktop workstations.
+                </span>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.84rem; color: #0f172a; margin-bottom: 4px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    <span>Brand Aligned Theme</span>
+                </div>
+                <span style="font-size: 0.76rem; color: #64748b; line-height: 1.4; display: block;">
+                    Styled with JobyUK signature Emerald (#0F5132) and Spring Lime (#C0F26F) for high conversion whitelist rate.
+                </span>
+            </div>
+        </div>
+
+        <script>
+        function toggleAntiAdblockLive(e) {
+            e.preventDefault();
+            const form = document.getElementById('antiAdblockToggleForm');
+            const stateInput = document.getElementById('aabToggleState');
+            const masterBtn = document.getElementById('aabMasterBtn');
+            const badge = document.getElementById('aab-card-badge');
+            const dot = document.getElementById('aab-card-dot');
+            const statusText = document.getElementById('aab-card-status-text');
+            const descText = document.getElementById('aab-desc-text');
+            const siteCheckbox = document.getElementById('anti_adblock_checkbox');
+            const siteLabel = document.getElementById('aab-checkbox-label');
+
+            masterBtn.disabled = true;
+            masterBtn.style.opacity = '0.6';
+
+            const formData = new FormData(form);
+
+            fetch('/admin-lol/settings/anti-adblock/toggle', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                masterBtn.disabled = false;
+                masterBtn.style.opacity = '1';
+
+                if (data && data.success) {
+                    const isEnabled = data.anti_adblock_enabled;
+                    stateInput.value = isEnabled ? 'disable' : 'enable';
+
+                    if (isEnabled) {
+                        badge.style.background = '#ecfdf5';
+                        badge.style.borderColor = '#a7f3d0';
+                        badge.style.color = '#047857';
+                        dot.style.background = '#10b981';
+                        dot.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.25)';
+                        statusText.textContent = 'Active & Enforced';
+                        descText.textContent = 'Currently enforcing ad-blocker restrictions across all desktop public pages.';
+
+                        masterBtn.style.background = '#fef2f2';
+                        masterBtn.style.border = '1.5px solid #fecaca';
+                        masterBtn.style.color = '#b91c1c';
+                        masterBtn.style.boxShadow = 'none';
+                        masterBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg><span>Turn OFF Anti-Adblock Wall</span>';
+
+                        if (siteCheckbox) siteCheckbox.checked = true;
+                        if (siteLabel) {
+                            siteLabel.textContent = 'ON (Enforced)';
+                            siteLabel.style.color = '#047857';
+                        }
+                    } else {
+                        badge.style.background = '#f1f5f9';
+                        badge.style.borderColor = '#cbd5e1';
+                        badge.style.color = '#475569';
+                        dot.style.background = '#94a3b8';
+                        dot.style.boxShadow = 'none';
+                        statusText.textContent = 'Disabled / Permissive';
+                        descText.textContent = 'Currently in permissive mode: visitors with adblockers can browse freely without any modal.';
+
+                        masterBtn.style.background = '#0f5132';
+                        masterBtn.style.border = '1.5px solid #0f5132';
+                        masterBtn.style.color = '#ffffff';
+                        masterBtn.style.boxShadow = '0 4px 12px rgba(15, 81, 50, 0.25)';
+                        masterBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Turn ON Anti-Adblock Wall</span>';
+
+                        if (siteCheckbox) siteCheckbox.checked = false;
+                        if (siteLabel) {
+                            siteLabel.textContent = 'OFF (Disabled)';
+                            siteLabel.style.color = '#64748b';
+                        }
+                    }
+                } else {
+                    form.submit();
+                }
+            })
+            .catch(err => {
+                form.submit();
+            });
+        }
+
+        document.getElementById('anti_adblock_checkbox')?.addEventListener('change', function(e) {
+            const label = document.getElementById('aab-checkbox-label');
+            if (label) {
+                if (e.target.checked) {
+                    label.textContent = 'ON (Enforced)';
+                    label.style.color = '#047857';
+                } else {
+                    label.textContent = 'OFF (Disabled)';
+                    label.style.color = '#64748b';
+                }
+            }
+        });
+        </script>
+    </div>
+    <!-- Google Indexing API Configuration Card -->
+    <div class="admin-settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span>Google Indexing API (Real-Time Search Engine Indexer)</span>
+            </h3>
+
+            <div>
+                {{if .Data.IndexingEnabled}}
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 9999px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                    Active & Indexing Live
+                </span>
+                {{else}}
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 9999px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #f97316; display: inline-block;"></span>
+                    Not Configured
+                </span>
+                {{end}}
+            </div>
+        </div>
+
+        {{if .Data.IndexingEnabled}}
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <span style="font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Connected Google Service Account</span>
+                <span style="font-family: monospace; font-weight: 700; font-size: 0.88rem; color: #0f172a;">{{.Data.IndexingEmail}}</span>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <form method="POST" action="/admin-lol/settings/google-auto-index" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark" style="background: #10b981; color: #ffffff;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        <span>Run Auto-Indexer (150 Fresh Jobs)</span>
+                    </button>
+                </form>
+
+                <form method="POST" action="/admin-lol/settings/google-indexing-test" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark" style="background: #0284c7;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        <span>Send Live Test Ping</span>
+                    </button>
+                </form>
+            </div>
+        {{end}}
+
+        <p style="font-size: 0.88rem; color: #475569; margin-top: 0; margin-bottom: 16px; line-height: 1.5;">
+            Upload or paste your Google Cloud Service Account JSON key below. When active, every new job posted or expired automatically notifies Google Indexing API for rapid 15-minute search indexing.
+        </p>
+
+        <form method="POST" action="/admin-lol/settings/google-indexing?csrf_token={{.CSRFToken}}" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+            <div>
+                <label class="admin-label-title">Option A: Paste Google Service Account JSON Content</label>
+                <textarea id="google-json-area" name="credentials_json" rows="6" placeholder='{"type": "service_account", "project_id": "...", "private_key": "...", "client_email": "..."}' class="admin-textarea-control" style="font-family: monospace; font-size: 0.82rem;"></textarea>
+            </div>
+
+            <div>
+                <label class="admin-label-title">Option B: Or Upload .json Key File Directly</label>
+                <input type="file" id="google-json-file" name="credentials_file" accept=".json,application/json" onchange="loadGoogleJSONFile(this)" style="font-size: 0.88rem; color: #475569; padding: 6px 0;">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+                <button type="submit" class="admin-settings-submit-btn" style="background: #1e293b;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Save & Activate Google Indexing</span>
+                </button>
+            </div>
+        </form>
+
+        <script>
+        function loadGoogleJSONFile(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const area = document.getElementById('google-json-area');
+                    if (area) {
+                        area.value = e.target.result;
+                    }
+                };
+                reader.readAsText(input.files[0]);
+            }
+        }
+        </script>
+    </div>
+
+    <!-- Developer Operations & Maintenance Controls -->
+    <div class="admin-settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>Developer Operations & Maintenance</span>
+        </h3>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Control: Fast-Track Auto-Indexer -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">Google Fast-Track Auto-Indexer</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Runs daily in background. Automatically submits up to 150 freshest unindexed jobs to Google Indexing API for rapid 2-hour indexing.</span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/google-auto-index" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark" style="background: #10b981; color: #ffffff;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        <span>Index 150 Jobs Now</span>
+                    </button>
+                </form>
+            </div>
+            <!-- Control: IndexNow (Bing & Yahoo) -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">IndexNow Instant Push (Bing & Yahoo)</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Submits up to 1,000 fresh active jobs directly to Microsoft Bing, Yahoo, Yandex, and Seznam indexers in 1 single shot. Key: <code>{{.Data.IndexNowKey}}</code></span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/indexnow" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark" style="background: #0284c7; color: #ffffff;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        <span>Push 1,000 Jobs to Bing</span>
+                    </button>
+                </form>
+            </div>
+            <!-- Control 1 -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">Sync Reed API Jobs</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Triggers a backfill fetcher request to import latest jobs from Reed portal.</span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/sync" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                        <span>Sync Now</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Link Health Bot Control -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">Smart Link Health & Expiry Bot</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Scans active ATS links. Automatically expires 404/closed links with instant Google Indexing deletion, and automatically extends valid/live links beyond 30 days.</span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/link-check" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--dark" style="background: #2563eb; color: #ffffff;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        <span>Check Links Now</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Control 2 -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">Purge Memory Cache</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Flushes Redis cache database. Forces queries to run live from Postgres.</span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/cache-clear" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--danger">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        <span>Flush Cache</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Control 3 -->
+            <div class="admin-dev-op-row">
+                <div class="admin-dev-op-info">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 0.92rem; display: block; margin-bottom: 2px;">Rebuild XML Sitemap</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Forces sitemaps to rebuild cache directly from database tables.</span>
+                </div>
+                <form method="POST" action="/admin-lol/settings/sitemap-rebuild" style="margin: 0;">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="admin-op-btn admin-op-btn--outline">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <span>Rebuild</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.admin-settings-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.admin-social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.admin-label-title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #334155;
+    margin-bottom: 6px;
+}
+.admin-input-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #0f172a;
+    background: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+}
+.admin-textarea-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #0f172a;
+    background: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+}
+.admin-input-control:focus,
+.admin-textarea-control:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+.admin-settings-submit-btn {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s ease;
+}
+.admin-settings-submit-btn:hover {
+    background: #0369a1;
+}
+.admin-dev-op-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    gap: 12px;
+}
+.admin-dev-op-info {
+    flex: 1;
+}
+.admin-op-btn {
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    border: none;
+}
+.admin-op-btn--dark {
+    background: #1e293b;
+    color: #ffffff;
+}
+.admin-op-btn--danger {
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #ef4444;
+}
+.admin-op-btn--outline {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #0f172a;
+}
+@media (max-width: 767px) {
+    .admin-settings-card {
+        padding: 20px 16px !important;
+    }
+    .admin-settings-row-2 {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    .admin-settings-submit-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    .admin-dev-op-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .admin-dev-op-row form,
+    .admin-op-btn {
+        width: 100% !important;
+    }
+}
+.aab-toggle-switch {
+    user-select: none;
+}
+.aab-toggle-slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: #cbd5e1;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+.aab-toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+input[name="anti_adblock_enabled"]:checked + .aab-toggle-slider {
+    background: #0f5132;
+}
+input[name="anti_adblock_enabled"]:checked + .aab-toggle-slider::after {
+    transform: translateX(20px);
+}
+</style>
+{{end}}

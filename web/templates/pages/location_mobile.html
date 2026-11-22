@@ -1,0 +1,263 @@
+{{define "content"}}
+<div class="jy-dream-hub" id="jobs-top" style="padding: 12px; padding-bottom: 56px;">
+    {{template "breadcrumbs" .}}
+    {{template "wfa_leaderboard" .}}
+
+    {{if .Data.Location}}
+    <!-- =========================================================================
+         1. LOCATION DETAIL VIEW MOBILE (/locations/{slug}/)
+         ========================================================================= -->
+    
+    <!-- Next-Gen Mobile Hero -->
+    <section class="jy-jobs-mob-hero" aria-label="Location Job Search Header" style="margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;">
+            <span style="font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 4px;">
+                UK Regional Hub
+            </span>
+            <span style="font-size: 0.68rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                Direct Employer ATS
+            </span>
+            <span style="font-size: 0.68rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                {{if and .Data.Results (gt .Data.Results.Total 0)}}{{formatSalary .Data.Results.Total}} Vacancies{{else}}Verified{{end}}
+            </span>
+        </div>
+
+        <h1 class="jy-jobs-mob-hero-title" style="font-size: 1.85rem !important; line-height: 1.2; margin: 0 0 8px; font-weight: 850; color: #0B1F1A;">
+            Jobs in {{.Data.Location.Name}}
+        </h1>
+
+        <p class="jy-jobs-mob-hero-sub" style="font-size: 0.88rem; line-height: 1.5; color: #475569; margin: 0 0 10px;">
+            {{if and .Data.Results (gt .Data.Results.Total 0)}}
+                Browse <strong style="color: #0F172A; font-weight: 800;">{{formatSalary .Data.Results.Total}}</strong> live opportunities in {{.Data.Location.Name}} with real pay shown. Apply direct to employers.
+            {{else}}
+                Browse live job vacancies in {{.Data.Location.Name}} from verified UK employers.
+            {{end}}
+        </p>
+
+        {{if .Data.IntroText}}
+        <div style="font-size: 0.84rem; line-height: 1.55; color: #64748B; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; margin-top: 10px;">
+            {{.Data.IntroText}}
+        </div>
+        {{end}}
+    </section>
+
+    <!-- Sticky Search Wrapper on Scroll (/locations/{slug}/) -->
+    <div class="jy-jobs-sticky-search-wrap" id="jJobsStickySearchWrap">
+        <form action="/jobs/" method="GET" class="jy-jobs-mob-form" id="loc-search-m">
+            <!-- Row 1: Single-Row Role/Keyword Search Bar -->
+            <div class="jy-jobs-single-search-row">
+                <span class="jy-jobs-search-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="loc-search-q-m" name="q" value="{{if .Data.Params}}{{.Data.Params.Query}}{{end}}" class="jy-jobs-main-input" placeholder="Job title or skills in {{.Data.Location.Name}}..." autocomplete="off" aria-label="Search job title or keywords" />
+                <button type="button" class="jy-search-clear-btn" id="loc-clear-q-m" style="display: none; margin-right: 6px;" aria-label="Clear job search">✕</button>
+                <button type="submit" class="jy-jobs-submit-btn">
+                    <span>Search</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+
+            <!-- Row 2: Location Compact Pill (Pre-filled) -->
+            <div class="jy-jobs-loc-search-row">
+                <span class="jy-jobs-loc-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </span>
+                <input type="text" id="loc-search-loc-m" name="location" value="{{.Data.Location.Name}}" class="jy-jobs-loc-input" placeholder="Location" autocomplete="off" aria-label="Location" />
+            </div>
+
+            <!-- Horizontal Quick Filter Pills -->
+            <div class="jy-jobs-pills-rail" aria-label="Quick filters">
+                <a href="/locations/{{.Data.Location.Slug}}/" class="jy-jobs-pill is-active">
+                    <span>All {{.Data.Location.Name}}</span>
+                </a>
+                <a href="/jobs/?location={{.Data.Location.Slug}}&job_type=full_time" class="jy-jobs-pill">
+                    <span>Full-time</span>
+                </a>
+                <a href="/jobs/?location={{.Data.Location.Slug}}&remote_type=remote" class="jy-jobs-pill">
+                    <span>Remote</span>
+                </a>
+                <a href="/jobs/?location={{.Data.Location.Slug}}&remote_type=hybrid" class="jy-jobs-pill">
+                    <span>Hybrid</span>
+                </a>
+                <a href="/jobs/?location={{.Data.Location.Slug}}&min_salary=40000" class="jy-jobs-pill">
+                    <span>£40k+ Roles</span>
+                </a>
+                <a href="/salary-calculator/" class="jy-jobs-pill">
+                    <span>Take-Home Pay</span>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Mobile Job Listings Feed -->
+    <main class="jy-dream-listings" aria-label="Jobs in {{.Data.Location.Name}}">
+        <div class="listing-jobs">
+            {{range $index, $job := .Data.Results.Jobs}}
+                {{template "job_card_mobile" $job}}
+                {{if or (eq $index 3) (eq $index 11)}}
+                    {{template "wfa_incontent" $}}
+                {{end}}
+            {{else}}
+                <div class="empty-state" style="background: #FFFFFF; border-radius: 20px; padding: 36px 20px; text-align: center; border: 1.5px solid #EEF2F6;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <h2 style="font-size: 1.2rem; font-weight: 850; color: #0B1F1A; margin-bottom: 6px;">No current vacancies in {{$.Data.Location.Name}}</h2>
+                    <p style="color: #64748B; font-size: 0.88rem; margin: 0 0 16px;">Try searching nearby towns or explore all UK locations.</p>
+                    <a href="/locations/" class="jy-dream-apply-cta" style="padding: 10px 22px; font-size: 0.88rem; border-radius: 20px; display: inline-block;">Browse All Locations</a>
+                </div>
+            {{end}}
+        </div>
+
+        <!-- Load More Jobs & Auto-Scroll Controller -->
+        {{if gt .Data.Results.TotalPages 1}}
+        <div class="jy-load-more-wrap" id="load-more-jobs-wrap" data-current-page="{{.Data.Results.Page}}" data-total-pages="{{.Data.Results.TotalPages}}" data-type="jobs" style="margin-top: 24px; margin-bottom: 24px;">
+            <button type="button" class="jy-load-more-btn" id="load-more-jobs-btn" style="width: 100%; max-width: 320px; padding: 12px 24px; font-size: 0.88rem;">
+                <svg class="jy-load-more-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                <span class="jy-load-more-text">Load More Jobs</span>
+                <svg class="jy-load-more-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+            </button>
+        </div>
+        {{end}}
+
+        <div class="pagination-mode-wrap" id="pagination-mode-wrap" style="margin-top: 24px;">
+            {{template "pagination" .Data.Results}}
+        </div>
+    </main>
+
+    {{template "listing_floating_bar" .Data}}
+
+    {{else}}
+    <!-- =========================================================================
+         2. LOCATION INDEX VIEW MOBILE (/locations/)
+         ========================================================================= -->
+    
+    <!-- Next-Gen Mobile Hero -->
+    <section class="jy-jobs-mob-hero" aria-label="Location Directory Header" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+            <span style="font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                UK Regional Directory
+            </span>
+            <span style="font-size: 0.68rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
+                {{len .Data.Locations}}+ Cities
+            </span>
+        </div>
+
+        <h1 class="jy-jobs-mob-hero-title" style="font-size: 1.85rem !important; line-height: 1.2; margin: 0 0 8px; font-weight: 850; color: #0B1F1A;">
+            Jobs by UK City &amp; Region
+        </h1>
+
+        <p class="jy-jobs-mob-hero-sub" style="font-size: 0.88rem; line-height: 1.5; color: #475569; margin: 0 0 16px;">
+            Explore active openings across England, Scotland, Wales &amp; Northern Ireland with direct ATS application links.
+        </p>
+
+        <!-- Search Input with Clear Button -->
+        <div style="position: relative;">
+            <div style="display: flex; align-items: center; background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 50px; padding: 8px 14px; box-shadow: 0 4px 12px rgba(11, 31, 26, 0.05);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" style="margin-right: 8px; flex-shrink: 0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <input type="text" id="loc-search-input-m" placeholder="Search cities (e.g. London, Leeds, Bristol)..." style="flex: 1; border: none; outline: none; font-size: 0.92rem; background: transparent; color: #0B1F1A; font-weight: 600;" autocomplete="off" oninput="filterLocationsMobile(this.value)">
+                <button type="button" id="loc-clear-btn-m" onclick="clearLocationMobileSearch()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: #475569; font-weight: 800; font-size: 11px; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 6px;">✕</button>
+            </div>
+        </div>
+
+        <!-- Major Hubs Quick Rail -->
+        <div style="display: flex; gap: 6px; overflow-x: auto; padding-top: 14px; padding-bottom: 2px;" class="hide-scrollbar">
+            <a href="/locations/london/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #A7F3D0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 800; color: #065F46; flex-shrink: 0;">
+                <span style="width: 5px; height: 5px; border-radius: 50%; background: #059669;"></span>
+                London
+            </a>
+            <a href="/locations/manchester/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 750; color: #475569; flex-shrink: 0;">
+                Manchester
+            </a>
+            <a href="/locations/birmingham/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 750; color: #475569; flex-shrink: 0;">
+                Birmingham
+            </a>
+            <a href="/locations/leeds/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 750; color: #475569; flex-shrink: 0;">
+                Leeds
+            </a>
+            <a href="/locations/bristol/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 750; color: #475569; flex-shrink: 0;">
+                Bristol
+            </a>
+            <a href="/locations/scotland/" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; text-decoration: none; font-size: 0.78rem; font-weight: 750; color: #475569; flex-shrink: 0;">
+                Scotland
+            </a>
+        </div>
+    </section>
+
+    <!-- Location Cards Mobile Stack -->
+    <div style="display: flex; flex-direction: column; gap: 10px;" id="locations-grid-m">
+        {{range .Data.Locations}}
+            <a href="/locations/{{.Slug}}/" class="jy-location-card-m" data-location-name="{{.Name}}" data-location-level="{{.Level}}" style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 14px 16px; text-decoration: none; color: #0B1F1A; box-shadow: 0 2px 8px rgba(11, 31, 26, 0.03); transition: all 0.15s ease;">
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div style="min-width: 0;">
+                        <div style="font-size: 1.02rem; font-weight: 850; color: #0B1F1A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{.Name}}</div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin-top: 3px;">
+                            <span style="font-size: 0.74rem; color: #065F46; font-weight: 800; background: #ECFDF5; padding: 1px 6px; border-radius: 4px;">{{.FormattedJobCount}}</span>
+                            <span style="font-size: 0.68rem; color: #64748B; background: #F1F5F9; padding: 1px 6px; border-radius: 4px; text-transform: uppercase;">{{.Level}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; color: #059669;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </a>
+        {{end}}
+    </div>
+
+    <!-- Empty Search State Mobile -->
+    <div id="noLocationsMobileEmpty" style="display: none; background: #FFFFFF; border-radius: 16px; padding: 36px 16px; text-align: center; border: 1.5px solid #EEF2F6; margin-top: 16px;">
+        <h3 style="font-size: 1.15rem; font-weight: 850; color: #0B1F1A; margin-bottom: 4px;">No matching locations</h3>
+        <p style="color: #64748B; font-size: 0.88rem; margin: 0 0 12px;">Try typing a different city or region name.</p>
+        <button type="button" onclick="clearLocationMobileSearch()" style="background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.82rem; padding: 8px 18px; border-radius: 20px; border: none; cursor: pointer;">
+            Clear Search
+        </button>
+    </div>
+
+    <script>
+    function filterLocationsMobile(query) {
+        var q = (query || '').toLowerCase().trim();
+        var clearBtn = document.getElementById('loc-clear-btn-m');
+        if (clearBtn) {
+            clearBtn.style.display = q ? 'flex' : 'none';
+        }
+
+        var cards = document.querySelectorAll('.j-location-card-m');
+        var visibleCount = 0;
+        cards.forEach(function(card) {
+            var name = (card.getAttribute('data-location-name') || '').toLowerCase();
+            var level = (card.getAttribute('data-location-level') || '').toLowerCase();
+            if (!q || name.indexOf(q) !== -1 || level.indexOf(q) !== -1) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        var emptyState = document.getElementById('noLocationsMobileEmpty');
+        if (emptyState) {
+            emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
+        }
+    }
+
+    function clearLocationMobileSearch() {
+        var input = document.getElementById('loc-search-input-m');
+        if (input) {
+            input.value = '';
+            filterLocationsMobile('');
+            input.focus();
+        }
+    }
+    </script>
+    {{end}}
+</div>
+{{end}}

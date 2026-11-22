@@ -1,0 +1,176 @@
+{{define "content"}}
+<div class="jy-404-wrapper animate-fade-in">
+    <!-- Ambient Emerald Glow -->
+    <div class="jy-404-bg-glow" aria-hidden="true"></div>
+
+    <div class="jy-404-content">
+        <!-- Status Badge -->
+        <div class="jy-404-badge">
+            <span class="jy-404-pulse-dot" aria-hidden="true"></span>
+            <span>Error 404 • Opportunity Not Found</span>
+        </div>
+
+        <!-- Floating 404 Emblem with Radar Discovery Compass -->
+        <div class="jy-404-visual" aria-hidden="true">
+            <span class="jy-404-digit">4</span>
+            <div class="jy-404-compass-box">
+                <div class="jy-404-compass-ring"></div>
+                <div class="jy-404-compass-core">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <circle cx="11" cy="11" r="2.5" fill="#10B981"></circle>
+                    </svg>
+                </div>
+            </div>
+            <span class="jy-404-digit">4</span>
+        </div>
+
+        <!-- Headings -->
+        <h1 class="jy-404-title">Looking for a Job or Page?</h1>
+        <p class="jy-404-desc">
+            The role or page you're searching for may have expired, been filled by an employer, or moved. Let's get your UK job hunt back on track!
+        </p>
+
+        <!-- Search Box -->
+        <div class="jy-404-search-wrap">
+            <form action="/jobs/" method="GET" class="jy-404-search-form" role="search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-right: 10px;" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" name="q" class="jy-404-search-input" placeholder="Search by job title, skill, company or UK city..." autocomplete="off" autofocus>
+                <button type="submit" class="jy-404-search-btn">
+                    <span>Search Jobs</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Quick Search Tags -->
+        <div class="jy-404-tags-wrap">
+            <span class="jy-404-tags-label">Popular searches:</span>
+            <a href="/locations/england/london/" class="jy-404-tag-pill">London Jobs</a>
+            <a href="/jobs/?q=remote" class="jy-404-tag-pill">Remote / WFH</a>
+            <a href="/jobs/?q=part-time" class="jy-404-tag-pill">Part-Time</a>
+            <a href="/locations/england/manchester/" class="jy-404-tag-pill">Manchester</a>
+            <a href="/jobs/?q=nhs" class="jy-404-tag-pill">NHS Jobs</a>
+            <a href="/jobs/?q=software+engineer" class="jy-404-tag-pill">Software Engineer</a>
+            <a href="/jobs/?q=admin" class="jy-404-tag-pill">Admin</a>
+        </div>
+
+        <!-- Pathways Section (2x2 Grid) -->
+        <div class="jy-404-pathways-box">
+            <div class="jy-404-pathways-header">
+                <span class="jy-404-pathways-tag">Recommended Pathways</span>
+                <h2 class="jy-404-pathways-title">Explore Popular UK Career Destinations</h2>
+            </div>
+
+            <div class="jy-404-grid">
+                <!-- Card 1: Job Roles Directory -->
+                <a href="/job-roles/" class="jy-404-card">
+                    <div class="jy-404-card__icon jy-404-card__icon--emerald">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <div class="jy-404-card__body">
+                        <div class="jy-404-card__title">
+                            <span>Browse 2,400+ Job Roles</span>
+                            <span style="font-size: 0.72rem; color: #059669; background: #ECFDF5; padding: 2px 8px; border-radius: 6px; font-weight: 700;">A–Z</span>
+                        </div>
+                        <div class="jy-404-card__desc">Explore daily responsibilities, qualifications, and career trajectories across UK industries.</div>
+                        <div class="jy-404-card__action">
+                            <span>Explore Roles</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 2: Take-Home Pay Calculator -->
+                <a href="/salary-calculator/" class="jy-404-card">
+                    <div class="jy-404-card__icon jy-404-card__icon--purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="16" y1="14" x2="16" y2="18"></line>
+                            <path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path>
+                            <path d="M8 14h.01"></path><path d="M12 14h.01"></path>
+                            <path d="M8 18h.01"></path><path d="M12 18h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="jy-404-card__body">
+                        <div class="jy-404-card__title">
+                            <span>Take-Home Pay Calculator</span>
+                            <span style="font-size: 0.72rem; color: #7C3AED; background: #F5F3FF; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Free</span>
+                        </div>
+                        <div class="jy-404-card__desc">Calculate your real monthly net pay after UK Income Tax, National Insurance & pension deductions.</div>
+                        <div class="jy-404-card__action" style="color: #7C3AED;">
+                            <span>Calculate Pay</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 3: UK Salary Directory -->
+                <a href="/salaries/" class="jy-404-card">
+                    <div class="jy-404-card__icon jy-404-card__icon--amber">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <div class="jy-404-card__body">
+                        <div class="jy-404-card__title">
+                            <span>UK Salary Benchmarks</span>
+                            <span style="font-size: 0.72rem; color: #D97706; background: #FEF3C7; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Live</span>
+                        </div>
+                        <div class="jy-404-card__desc">Benchmark your earnings against median market rates, entry-level to senior percentiles across cities.</div>
+                        <div class="jy-404-card__action" style="color: #D97706;">
+                            <span>View Salaries</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 4: Top UK Employers -->
+                <a href="/companies/" class="jy-404-card">
+                    <div class="jy-404-card__icon jy-404-card__icon--blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18"></path>
+                            <path d="M5 21V7l8-4v18"></path>
+                            <path d="M19 21V11l-6-4"></path>
+                            <path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path>
+                        </svg>
+                    </div>
+                    <div class="jy-404-card__body">
+                        <div class="jy-404-card__title">
+                            <span>Top UK Employers</span>
+                            <span style="font-size: 0.72rem; color: #2563EB; background: #EFF6FF; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Verified</span>
+                        </div>
+                        <div class="jy-404-card__desc">Find company profiles, culture reviews, office locations and current vacancies hiring right now.</div>
+                        <div class="jy-404-card__action" style="color: #2563EB;">
+                            <span>Browse Companies</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Primary Actions -->
+        <div class="jy-404-ctas">
+            <a href="/" class="jy-404-btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Return to Homepage</span>
+            </a>
+            <a href="/jobs/" class="jy-404-btn-secondary">
+                <span>Browse All UK Jobs</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </div>
+</div>
+{{end}}

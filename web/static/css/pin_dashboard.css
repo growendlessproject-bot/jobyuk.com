@@ -1,0 +1,816 @@
+.pin-dash-page-wrap {
+    max-width: 1200px;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+}
+
+/* User Header */
+.pin-user-header {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.04);
+}
+.pin-user-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.pin-user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(230,0,35,0.08) 0%, rgba(230,0,35,0.18) 100%);
+    border: 1px solid rgba(230,0,35,0.2);
+    color: #e60023;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pin-user-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pin-code-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 7px 12px;
+    border-radius: 10px;
+}
+.pin-logout-btn {
+    padding: 7px 14px;
+    background: #ffffff;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.pin-logout-btn:hover {
+    border-color: #fca5a5;
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+/* Tabs Bar */
+.pin-dash-tabs-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.pin-dash-tabs-bar::-webkit-scrollbar {
+    display: none;
+}
+.pin-tab-btn {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+    background: #f1f5f9;
+    color: #475569;
+}
+.pin-tab-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+.pin-tab-btn.active {
+    background: #e60023;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(230,0,35,0.25);
+}
+.pin-tab-btn.active-dark {
+    background: #0f172a;
+    color: #ffffff;
+}
+.pin-tab-badge {
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(0, 0, 0, 0.08);
+    color: inherit;
+}
+.pin-tab-btn.active .pin-tab-badge {
+    background: #ffffff;
+    color: #e60023;
+}
+.pin-tab-btn.active-dark .pin-tab-badge {
+    background: #334155;
+    color: #ffffff;
+}
+
+/* Quota Card */
+.pin-quota-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+
+/* Task Card & Subcomponents */
+.pin-task-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.04);
+}
+.pin-task-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pin-step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, rgba(230,0,35,0.08) 0%, rgba(230,0,35,0.16) 100%);
+    color: #e60023;
+    border: 1.5px solid rgba(230,0,35,0.25);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.pin-reserved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #059669;
+    font-weight: 800;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+.pin-job-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+}
+.pin-desc-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+.pin-btn-copy-desc {
+    padding: 5px 12px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+.pin-btn-toggle-desc {
+    padding: 5px 10px;
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.pin-badges-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 14px 18px;
+}
+.pin-job-badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+.pin-job-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1e293b;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.pin-job-badge.remote {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #047857;
+}
+.pin-btn-copy-details {
+    padding: 7px 14px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+/* Job Link Copy Box */
+.pin-job-link-box {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 26px;
+}
+.pin-job-link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.pin-target-url {
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0A66C2;
+    word-break: break-all;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    flex: 1;
+    min-width: 240px;
+}
+.pin-job-link-actions {
+    display: flex;
+    gap: 8px;
+}
+.pin-btn-copy-link {
+    padding: 10px 16px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.pin-btn-open-link {
+    padding: 10px 14px;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+/* Form & Inputs */
+.pin-submit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.pin-url-input {
+    width: 100%;
+    height: 50px;
+    padding: 12px 16px 12px 42px;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    outline: none;
+    background: #ffffff;
+    color: #0f172a;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+.pin-submit-btn {
+    height: 48px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.96rem;
+    font-weight: 800;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+/* History Card & Table */
+.pin-history-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+.pin-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pin-history-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+.pin-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+.pin-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 540px;
+}
+.pin-history-table th {
+    padding: 12px 16px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+.pin-history-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+.pin-history-row {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s;
+}
+.pin-history-row:hover {
+    background: #f8fafc;
+}
+.pin-job-link-title {
+    font-weight: 800;
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    display: inline-block;
+}
+.pin-job-link-title:hover {
+    color: #0284c7;
+}
+.pin-table-loc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+}
+.pin-row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+.pin-btn-view-pin {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: rgba(230,0,35,0.08);
+    color: #e60023;
+    border: 1px solid rgba(230,0,35,0.25);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.pin-btn-view-pin:hover {
+    background: rgba(230,0,35,0.15);
+}
+.pin-btn-edit-pin {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Schedule Tab Cards */
+.pin-schedule-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.03);
+}
+.pin-schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.pin-schedule-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.pin-schedule-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+}
+.pin-schedule-desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    max-width: 520px;
+    line-height: 1.5;
+}
+.pin-clocks-wrap {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.pin-clock-box {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    min-width: 180px;
+}
+.pin-clock-box.highlight {
+    border-color: #cbd5e1;
+}
+.pin-clock-time {
+    font-family: monospace;
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: 0.04em;
+}
+.pin-clock-date {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 2px;
+    font-weight: 600;
+}
+.pin-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+.pin-slot-card {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    transition: all 0.2s;
+}
+.pin-slot-card.prime {
+    background: #fffafa;
+    border-color: #fecaca;
+}
+.pin-trends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+/* Image Meta Studio */
+.pin-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+.pin-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 28px 16px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pin-meta-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    color: #0f172a;
+    outline: none;
+    box-sizing: border-box;
+}
+.pin-meta-input:focus {
+    border-color: #e60023;
+}
+.pin-btn-field-copy {
+    padding: 2px 8px;
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.pin-meta-btn-copy {
+    width: 100%;
+    height: 46px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.pin-meta-btn-download {
+    width: 100%;
+    height: 42px;
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.pin-btn-copy-all {
+    width: 100%;
+    padding: 10px;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+/* Mobile Breakpoint Optimizations (< 768px) */
+@media (max-width: 767px) {
+    .pin-dash-page-wrap {
+        width: 100% !important;
+        padding: 12px 10px 60px !important;
+    }
+    .pin-user-header {
+        padding: 14px 12px !important;
+        border-radius: 16px !important;
+        gap: 12px !important;
+    }
+    .pin-user-header-left {
+        width: 100% !important;
+    }
+    .pin-user-header-right {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    .pin-code-badge {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.78rem !important;
+        padding: 6px 10px !important;
+    }
+    .pin-logout-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+    }
+    .pin-dash-tabs-bar {
+        margin-bottom: 18px !important;
+        gap: 6px !important;
+    }
+    .pin-tab-btn {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
+    }
+    .pin-quota-card {
+        padding: 14px 14px !important;
+        border-radius: 14px !important;
+        margin-bottom: 18px !important;
+    }
+    .pin-task-card {
+        padding: 16px 14px !important;
+        border-radius: 16px !important;
+    }
+    .pin-job-title {
+        font-size: 1.2rem !important;
+    }
+    .pin-desc-box {
+        padding: 12px 14px !important;
+        margin-bottom: 16px !important;
+    }
+    .pin-badges-card {
+        padding: 12px 14px !important;
+        margin-bottom: 18px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .pin-btn-copy-details {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    .pin-job-link-box {
+        padding: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    .pin-job-link-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .pin-target-url {
+        min-width: 100% !important;
+        font-size: 0.82rem !important;
+    }
+    .pin-job-link-actions {
+        width: 100% !important;
+    }
+    .pin-btn-copy-link,
+    .pin-btn-open-link {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.84rem !important;
+        padding: 9px 12px !important;
+    }
+    .pin-url-input {
+        height: 46px !important;
+        font-size: 0.86rem !important;
+    }
+    .pin-submit-btn {
+        height: 46px !important;
+        font-size: 0.9rem !important;
+    }
+    .pin-history-card {
+        padding: 16px 12px !important;
+        border-radius: 16px !important;
+    }
+    .pin-schedule-card {
+        padding: 16px 14px !important;
+        border-radius: 16px !important;
+    }
+    .pin-schedule-title {
+        font-size: 1.15rem !important;
+    }
+    .pin-clocks-wrap {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .pin-clock-box {
+        min-width: 0 !important;
+        padding: 10px 12px !important;
+    }
+    .pin-clock-time {
+        font-size: 1.15rem !important;
+    }
+    .pin-slots-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .pin-slot-card {
+        padding: 10px 12px !important;
+    }
+    .pin-trends-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .pin-meta-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+}

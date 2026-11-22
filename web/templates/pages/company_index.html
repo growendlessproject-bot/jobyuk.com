@@ -1,0 +1,240 @@
+{{define "content"}}
+<div class="container section">
+    {{template "wfa_leaderboard" .}}
+    {{template "breadcrumbs" .}}
+
+    <div class="listing-header" style="margin-bottom: 12px;">
+        <div>
+            <h1 class="listing-header__title" style="margin-bottom: 4px; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;">Browse Top Employers</h1>
+            <p class="listing-header__count" style="font-size: 0.88rem; color: var(--color-text-muted, #64748b); margin: 0;">
+                Discover career opportunities at leading UK businesses and recruitment agencies.
+            </p>
+        </div>
+    </div>
+
+    <!-- Client-side Search / Filtering for Companies -->
+    <div class="glass-companies-sticky-header animate-fade-in">
+        <form id="company-search-form" class="directory-search" style="margin-bottom: 0; width: 100%; max-width: 580px; margin-left: auto; margin-right: auto;" onsubmit="event.preventDefault();">
+            <svg class="directory-search__icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="company-search" placeholder="Company name (e.g. Barclays, Google)..." class="directory-search__input" autocomplete="off">
+            <button type="button" class="directory-search__btn" style="pointer-events: none;">Search</button>
+        </form>
+    </div>
+
+    {{template "whatsapp_context_banner" dict "Title" "Get Direct Alerts for Top UK Employers on WhatsApp" "Desc" "Never miss when top companies and agencies post new jobs. Real-time alerts < 60s." "Role" "Top UK Employers"}}
+
+    <!-- Companies Grid -->
+    {{template "wfa_incontent" .}}
+    <div style="margin: 28px 0 16px;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #0B1F1A; margin: 0 0 4px; letter-spacing: -0.02em;">Featured UK Employers</h2>
+        <p style="font-size: 0.9rem; color: #64748B; margin: 0;">Explore verified direct-hiring companies across the UK with open vacancies.</p>
+    </div>
+    <div class="companies-grid" id="companies-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: var(--space-6);">
+        {{range $index, $company := .Data.Companies}}
+            {{ $isHidden := gt $index 17 }}
+            <a href="/companies/{{$company.Slug}}/" class="company-card {{if $isHidden}}company-card--hidden{{end}}" data-name="{{$company.Name}}" style="{{if $isHidden}}display: none;{{else}}display: flex;{{end}} align-items: center; gap: 14px; padding: 14px 16px; background: var(--color-bg-card, #ffffff); border: 1px solid var(--color-border, #e2e8f0); border-radius: 14px; text-decoration: none; color: inherit; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);">
+                <div class="company-card__logo" style="width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: transparent; border: none; flex-shrink: 0; box-shadow: none;">
+                    {{if $company.ProxiedLogoURL}}
+                        <img src="{{$company.ProxiedLogoURL}}" alt="{{$company.Name}} logo" style="width: 100%; height: 100%; object-fit: contain;" loading="lazy" />
+                    {{else}}
+                        <span style="font-weight: 800; color: var(--color-primary, #0a66c2); font-size: 1.25rem; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(10, 102, 194, 0.08); border-radius: 10px;">{{$company.Initial}}</span>
+                    {{end}}
+                </div>
+                <div style="min-width: 0; flex: 1;">
+                    <h3 class="company-card__name" style="font-size: 1rem; font-weight: 750; color: #0f172a; margin: 0 0 3px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-transform: capitalize;">{{$company.Name}}</h3>
+                    <span class="company-card__jobs-count" style="font-size: 0.78rem; font-weight: 600; color: var(--color-primary, #0a66c2); background: var(--color-primary-bg, rgba(10, 102, 194, 0.06)); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(10, 102, 194, 0.15);">
+                        {{$company.FormattedJobCount}}
+                    </span>
+                </div>
+            </a>
+        {{else}}
+            <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: var(--space-12) 0;">
+                <div class="empty-state__icon-box theme-tech" style="width: 64px; height: 64px; border-radius: var(--radius-xl, 16px); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-4); color: var(--color-primary, #0A66C2); background: rgba(10, 102, 194, 0.08);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <h2 class="empty-state__title">No companies found</h2>
+                <p class="empty-state__text">Please check back later as we index more active UK job listings.</p>
+            </div>
+        {{end}}
+    </div>
+
+    <!-- Load More CTA Button -->
+    {{if gt (len .Data.Companies) 18}}
+    <div id="load-more-container" style="text-align: center; margin-top: var(--space-8); margin-bottom: var(--space-12);">
+        <button id="load-more-btn" class="btn btn--outline" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 32px; font-weight: 700; border-radius: 9999px; cursor: pointer; transition: all 0.2s ease;">
+            <!-- Loading Spinner SVG -->
+            <svg id="load-more-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: spin 1s linear infinite;">
+                <circle cx="12" cy="12" r="10" stroke="rgba(10, 102, 194, 0.2)"></circle>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+            </svg>
+            <span id="load-more-text">Load More Companies</span>
+        </button>
+    </div>
+    {{end}}
+</div>
+
+<style>
+.company-card:hover {
+    border-color: var(--color-primary, #0a66c2);
+    box-shadow: 0 10px 25px -5px rgba(10, 102, 194, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.01);
+    transform: translateY(-2px);
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.company-card.j-fade-in {
+    animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+</style>
+
+<script>
+(function() {
+    function initFallbackCompanyDirectory() {
+        var searchInput = document.getElementById('company-search');
+        var cards = document.querySelectorAll('.company-card');
+        var loadMoreContainer = document.getElementById('load-more-container');
+        var loadMoreBtn = document.getElementById('load-more-btn');
+        var spinner = document.getElementById('load-more-spinner');
+        var text = document.getElementById('load-more-text');
+
+        if (!loadMoreContainer && !searchInput && cards.length === 0) return;
+
+        var isLoading = false;
+        var batchSize = 18;
+        var observer = null;
+
+        function revealBatch() {
+            if (isLoading) return;
+            if (searchInput && searchInput.value.trim().length > 0) return;
+
+            var hiddenCards = document.querySelectorAll('.company-card.company-card--hidden');
+            if (hiddenCards.length === 0) {
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                if (observer) observer.disconnect();
+                return;
+            }
+
+            isLoading = true;
+            if (spinner) spinner.style.display = 'inline-block';
+            if (text) text.textContent = 'Loading More...';
+
+            setTimeout(function() {
+                var currentHidden = document.querySelectorAll('.company-card.company-card--hidden');
+                var count = 0;
+                currentHidden.forEach(function(card) {
+                    if (count < batchSize) {
+                        card.classList.remove('company-card--hidden');
+                        card.classList.add('j-fade-in');
+                        card.style.display = 'flex';
+                        count++;
+                    }
+                });
+
+                if (spinner) spinner.style.display = 'none';
+                if (text) text.textContent = 'Load More Companies';
+                isLoading = false;
+
+                var remainingHidden = document.querySelectorAll('.company-card.company-card--hidden');
+                if (remainingHidden.length === 0) {
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                    if (observer) observer.disconnect();
+                }
+            }, 160);
+        }
+
+        if (loadMoreContainer && 'IntersectionObserver' in window) {
+            observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        revealBatch();
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '400px 0px',
+                threshold: 0.01
+            });
+            observer.observe(loadMoreContainer);
+        }
+
+        var scrollThrottle = false;
+        function onWindowScroll() {
+            if (scrollThrottle || isLoading) return;
+            if (!loadMoreContainer || loadMoreContainer.style.display === 'none') return;
+            scrollThrottle = true;
+            setTimeout(function() {
+                scrollThrottle = false;
+                if (!loadMoreContainer || loadMoreContainer.style.display === 'none') return;
+                var rect = loadMoreContainer.getBoundingClientRect();
+                if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 350) {
+                    revealBatch();
+                }
+            }, 120);
+        }
+        window.addEventListener('scroll', onWindowScroll, { passive: true });
+
+        if (loadMoreBtn) {
+            loadMoreBtn.onclick = function(e) {
+                e.preventDefault();
+                revealBatch();
+            };
+        }
+
+        function applyFilter(query) {
+            var q = (query || '').toLowerCase().trim();
+            if (q.length > 0) {
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                cards.forEach(function(card) {
+                    var name = (card.getAttribute('data-name') || '').toLowerCase();
+                    if (name.indexOf(q) !== -1) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            } else {
+                cards.forEach(function(card) {
+                    if (card.classList.contains('company-card--hidden')) {
+                        card.style.display = 'none';
+                    } else {
+                        card.style.display = 'flex';
+                    }
+                });
+                var remaining = document.querySelectorAll('.company-card.company-card--hidden').length;
+                if (loadMoreContainer) {
+                    loadMoreContainer.style.display = remaining > 0 ? 'block' : 'none';
+                }
+            }
+        }
+
+        if (searchInput) {
+            searchInput.oninput = function(e) {
+                applyFilter(e.target.value);
+            };
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFallbackCompanyDirectory);
+    } else {
+        initFallbackCompanyDirectory();
+    }
+    window.addEventListener('jobyuk:turbo-load', initFallbackCompanyDirectory);
+})();
+</script>
+
+{{template "listing_floating_bar" .Data}}
+{{end}}

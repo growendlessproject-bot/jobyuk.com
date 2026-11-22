@@ -1,0 +1,15 @@
+-- Migration 017: Add dedicated WhatsApp quad-gateway status and channel routing columns
+ALTER TABLE whatsapp_gateway_settings
+    ADD COLUMN IF NOT EXISTS otp_connected BOOLEAN NOT NULL DEFAULT FALSE,
+    ADD COLUMN IF NOT EXISTS otp_phone VARCHAR(50) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS otp_name VARCHAR(100) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS otp_last_connected_at TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS billing_connected BOOLEAN NOT NULL DEFAULT FALSE,
+    ADD COLUMN IF NOT EXISTS billing_phone VARCHAR(50) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS billing_name VARCHAR(100) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS billing_last_connected_at TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS routing_mode VARCHAR(30) NOT NULL DEFAULT 'dual',
+    ADD COLUMN IF NOT EXISTS alerts_device VARCHAR(20) NOT NULL DEFAULT 'alerts',
+    ADD COLUMN IF NOT EXISTS support_device VARCHAR(20) NOT NULL DEFAULT 'support',
+    ADD COLUMN IF NOT EXISTS otp_device VARCHAR(20) NOT NULL DEFAULT 'otp',
+    ADD COLUMN IF NOT EXISTS billing_device VARCHAR(20) NOT NULL DEFAULT 'billing';

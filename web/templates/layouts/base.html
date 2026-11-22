@@ -1,0 +1,321 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function() {
+        var _noop = function() {};
+        try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+                Object.defineProperty(Window.prototype, '__chromium_devtools_metrics_reporter', {
+                    get: function() { return _noop; },
+                    set: function() {},
+                    configurable: true
+                });
+            }
+            Object.defineProperty(window, '__chromium_devtools_metrics_reporter', {
+                get: function() { return _noop; },
+                set: function() {},
+                configurable: true
+            });
+        } catch(e) {
+            window.__chromium_devtools_metrics_reporter = _noop;
+        }
+
+        // Intercept and suppress Chrome DevTools internal telemetry errors from logging to console
+        window.addEventListener('error', function(e) {
+            if (e && e.message && e.message.indexOf('__chromium_devtools_metrics_reporter') !== -1) {
+                if (e.preventDefault) e.preventDefault();
+                if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+                return true;
+            }
+        }, true);
+    })();
+    </script>
+    <title>{{if .Title}}{{.Title}}{{else}}{{getDefaultMetaTitle}}{{end}}</title>
+    {{if .Description}}<meta name="description" content="{{.Description}}">{{else if getDefaultMetaDesc}}<meta name="description" content="{{getDefaultMetaDesc}}">{{end}}
+    {{if .Canonical}}<link rel="canonical" href="{{.Canonical}}">{{end}}
+    {{if .PrevURL}}<link rel="prev" href="{{.PrevURL}}">{{end}}
+    {{if .NextURL}}<link rel="next" href="{{.NextURL}}">{{end}}
+    <meta name="robots" content="{{if .Robots}}{{.Robots}}{{else}}index, follow{{end}}, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Google AdSense Verification Meta (Required for Site Approval) -->
+    {{$adsenseID := getAdSensePublisherID}}
+    {{if $adsenseID}}
+    <meta name="google-adsense-account" content="{{$adsenseID}}">
+    {{end}}
+
+    <!-- Open Graph for Google Discover & Social Grounding -->
+    <meta property="og:type" content="{{if .OGType}}{{.OGType}}{{else}}website{{end}}">
+    <meta property="og:title" content="{{if .OGTitle}}{{.OGTitle}}{{else if .Title}}{{.Title}}{{else}}{{getDefaultMetaTitle}}{{end}}">
+    {{if .OGDesc}}<meta property="og:description" content="{{.OGDesc}}">{{else if .Description}}<meta property="og:description" content="{{.Description}}">{{else if getDefaultMetaDesc}}<meta property="og:description" content="{{getDefaultMetaDesc}}">{{end}}
+    {{if .OGImage}}<meta property="og:image" content="{{.OGImage}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{if .OGTitle}}{{.OGTitle}}{{else}}{{.Title}}{{end}}">
+    {{else if getDefaultOGImage}}
+    <meta property="og:image" content="{{getDefaultOGImage}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {{end}}
+    {{if .Canonical}}<meta property="og:url" content="{{.Canonical}}">{{end}}
+    <meta property="og:site_name" content="JobyUK.com">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{if .OGTitle}}{{.OGTitle}}{{else if .Title}}{{.Title}}{{else}}{{getDefaultMetaTitle}}{{end}}">
+    {{if .OGDesc}}<meta name="twitter:description" content="{{.OGDesc}}">{{else if .Description}}<meta name="twitter:description" content="{{.Description}}">{{else if getDefaultMetaDesc}}<meta name="twitter:description" content="{{getDefaultMetaDesc}}">{{end}}
+    {{if .OGImage}}<meta name="twitter:image" content="{{.OGImage}}">{{else if getDefaultOGImage}}<meta name="twitter:image" content="{{getDefaultOGImage}}">{{end}}
+
+    <!-- Favicon & Touch Icons (Google Search Standards & JobyUK Emerald Theme) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=jobyuk3">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=jobyuk3">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png?v=jobyuk3">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png?v=jobyuk3">
+    <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png?v=jobyuk3">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicon-96x96.png?v=jobyuk3">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/images/icon-192.png?v=jobyuk3">
+    <link rel="icon" type="image/svg+xml" href="/static/images/logo.svg?v=jobyuk3">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png?v=jobyuk3">
+    <link rel="manifest" href="/site.webmanifest?v=jobyuk3" crossorigin="use-credentials">
+
+    <!-- Stylesheets (Complete Consolidated Bundle - All Styles Intact) -->
+    {{if .IsMobile}}
+    <link rel="preload" href="{{asset "/static/css/bundle_mobile.min.css"}}" as="style">
+    <link rel="stylesheet" href="{{asset "/static/css/bundle_mobile.min.css"}}">
+    {{else}}
+    <link rel="preload" href="{{asset "/static/css/bundle.min.css"}}" as="style">
+    <link rel="stylesheet" href="{{asset "/static/css/bundle.min.css"}}">
+    {{end}}
+    <link rel="preload" href="{{asset "/static/css/jobyuk_figma.css"}}" as="style">
+    <link rel="stylesheet" href="{{asset "/static/css/jobyuk_figma.css"}}">
+
+    <!-- Fonts (High-performance Direct Load with Font-Display Swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+
+    <!-- Preconnect to external image & ad servers for ultra-fast ad delivery -->
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+    <link rel="dns-prefetch" href="https://securepubads.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://tpc.googlesyndication.com">
+
+    <!-- Structured Data -->
+    {{if .Schema}}{{.Schema}}{{end}}
+
+    {{if and (or .Breadcrumbs (eq .ActiveNav "jobs")) (or (eq .ActiveNav "jobs") (eq .ActiveNav "roles") (eq .ActiveNav "locations") (eq .ActiveNav "companies") (eq .ActiveNav "salaries") (eq .ActiveNav "resources"))}}
+    <!-- WeForAds Header Integration (Active on Content & Listing Pages; Excluded on all Portals & Home) -->
+    <style id="wfa-watermark-blocker">
+    /* Strictly suppress and hide WeForAds watermark logo, badges, branding & images */
+    .wfa-badge-wrap,
+    .wfa-badge-outer,
+    .wfa-badge,
+    .wfa-badge-lbl,
+    [data-wfa-branded],
+    [class*="wfa-bs-"],
+    .wfa-badge-wrap *,
+    img[src*="weforadssmalllogo"],
+    img[src*="weforads"],
+    img[src*="revwala"],
+    a[href*="weforads.com"],
+    a[href*="weforads"],
+    #wfa-anc-ad-label,
+    #wfa-anc-hdr,
+    #wfa-anc-ftr {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        height: 0 !important;
+        width: 0 !important;
+        max-height: 0 !important;
+        max-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 0 !important;
+        overflow: hidden !important;
+    }
+    </style>
+    <script>
+    (function() {
+        // Neutralize runtime injected styles from ad networks that set 'overflow-x:hidden!important' on body,
+        // which forces modern mobile browsers (WebKit/Blink) to create an inner scroll container and double scroll.
+        function sanitizeAdStyles(node) {
+            try {
+                if (node && node.tagName === 'STYLE' && typeof node.textContent === 'string' && (node.textContent.indexOf('overflow-x:hidden!important') !== -1 || node.textContent.indexOf('overflow-x: hidden') !== -1)) {
+                    node.textContent = node.textContent.replace(/html\s*,\s*body\s*\{[^}]*overflow-x:[^}]+}/gi, '/* wfa-body-scroll-sanitized */');
+                }
+            } catch(e) {}
+        }
+        function removeWeForAdsWatermarks() {
+            try {
+                var badges = document.querySelectorAll('.wfa-badge-wrap, .wfa-badge-outer, .wfa-badge, [data-wfa-branded], [class*="wfa-bs-"], img[src*="weforadssmalllogo"], img[src*="weforads"], img[src*="revwala"], a[href*="weforads"]');
+                for (var i = 0; i < badges.length; i++) {
+                    badges[i].remove();
+                }
+            } catch(e) {}
+        }
+        if (typeof MutationObserver !== 'undefined') {
+            var wfaObserver = new MutationObserver(function(mutations) {
+                for (var i = 0; i < mutations.length; i++) {
+                    var added = mutations[i].addedNodes;
+                    if (!added) continue;
+                    for (var j = 0; j < added.length; j++) {
+                        sanitizeAdStyles(added[j]);
+                    }
+                }
+                removeWeForAdsWatermarks();
+            });
+            wfaObserver.observe(document.documentElement, { childList: true, subtree: true });
+        }
+        function runSanitizeAll() {
+            try {
+                var styles = document.head ? document.head.querySelectorAll('style') : [];
+                for (var i = 0; i < styles.length; i++) {
+                    sanitizeAdStyles(styles[i]);
+                }
+                removeWeForAdsWatermarks();
+            } catch(e) {}
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runSanitizeAll);
+        } else {
+            runSanitizeAll();
+        }
+        setInterval(removeWeForAdsWatermarks, 800);
+    })();
+    </script>
+    <script async data-no-minify="1" data-no-optimize="1" data-cfasync="false" src="https://weforads.com/tag/wfa_29e5426c722af368f69c10e6229184f9.js" onerror="window.__wfaBlocked=true;"></script>
+    {{end}}
+
+    <!-- Scroll Safety & Single Scrollbar Guard: Clean horizontal clip without nested body scroll container -->
+    <style id="jy-anti-freeze-fix">
+        html {
+            overflow-x: clip;
+            -webkit-overflow-scrolling: touch;
+        }
+        html body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.j-drawer-open):not(.jy-interstitial-open),
+        :root body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.j-drawer-open):not(.jy-interstitial-open) {
+            min-height: 100vh;
+            overflow: visible !important;
+            overflow-x: visible !important;
+            overflow-y: visible !important;
+            max-width: 100% !important;
+            -webkit-overflow-scrolling: auto !important;
+        }
+        body.j-drawer-open,
+        body.jy-interstitial-open {
+            overflow: hidden !important;
+        }
+        .header, .j-header-sticky-wrap {
+            position: -webkit-sticky !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+        }
+        #main-content {
+            position: relative;
+            z-index: 1;
+        }
+        .mobile-bottom-sheet:not(.mobile-bottom-sheet--open) .mobile-bottom-sheet__body {
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+<body>
+    {{template "header" .}}
+    {{template "search_modal" .}}
+    {{template "whatsapp_modal" .}}
+    {{if showWhatsAppChannelFAB .ActiveNav .Canonical .Title}}
+    {{template "whatsapp_channel_fab" .}}
+    {{end}}
+    {{template "rewarded_interstitial" .}}
+
+    <main id="main-content">
+        {{template "content" .}}
+    </main>
+    
+    {{template "footer" .}}
+    {{if antiAdblockEnabled}}
+    {{template "anti_adblock" .}}
+    {{end}}
+
+    <!-- Anchor Ad Container to eliminate 'defineSlot called without DIV' warning & enable anchor delivery -->
+    <div id="jy-site-anchor" style="display:none;"></div>
+
+    <script src="{{asset "/static/js/app.min.js"}}" defer></script>
+    <script src="{{asset "/static/js/jobyuk_turbo.js"}}" defer></script>
+    <script src="{{asset "/static/js/jobyuk_infinite_loader.js"}}" defer></script>
+
+    {{$gaID := getGoogleAnalyticsID}}
+    {{$adsenseID := getAdSensePublisherID}}
+    {{if or $gaID $adsenseID}}
+    <script>
+    (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
+
+        // Skip GA/AdSense tracking on internal tool pages (Pinterest dashboard, admin, wa-portal, wa-client)
+        var path = window.location.pathname;
+        var skipPaths = ['/pin-', '/admin-lol', '/wa-portal', '/my-alerts', '/wa-client'];
+        var isInternal = skipPaths.some(function(p) { return path.indexOf(p) === 0; });
+
+        {{if $gaID}}
+        if (!isInternal) {
+            function loadGA() {
+                var gascript = document.createElement('script');
+                gascript.async = true;
+                gascript.src = 'https://www.googletagmanager.com/gtag/js?id={{$gaID}}';
+                document.head.appendChild(gascript);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '{{$gaID}}');
+            }
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadGA, { timeout: 1500 });
+            } else {
+                setTimeout(loadGA, 500);
+            }
+        }
+        {{end}}
+
+        // Reliable load for AdSense (runs on idle or first interaction, non-blocking)
+        {{if $adsenseID}}
+        if (!isInternal) {
+            var adsLoaded = false;
+            function loadAds() {
+                if (adsLoaded) return;
+                adsLoaded = true;
+                var adscript = document.createElement('script');
+                adscript.async = true;
+                adscript.crossOrigin = 'anonymous';
+                adscript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{$adsenseID}}';
+                document.head.appendChild(adscript);
+            }
+            var events = ['touchstart', 'scroll', 'keydown', 'click'];
+            function triggerAds() {
+                events.forEach(function(e) { window.removeEventListener(e, triggerAds); });
+                loadAds();
+            }
+            events.forEach(function(e) { window.addEventListener(e, triggerAds, { passive: true }); });
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadAds, { timeout: 2500 });
+            } else {
+                setTimeout(loadAds, 1200);
+            }
+        }
+        {{end}}
+    })();
+    </script>
+    {{end}}
+</body>
+</html>
+{{end}}
+

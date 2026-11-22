@@ -1,0 +1,3259 @@
+{{define "content"}}
+<style>
+/* ==========================================================================
+   JobyUK.com Premium WhatsApp Alerts — Executive Light Design System
+   ========================================================================== */
+
+:root {
+    --wa-emerald: #10b981;
+    --wa-emerald-dark: #059669;
+    --wa-emerald-light: #ecfdf5;
+    --wa-emerald-border: #a7f3d0;
+    --wa-wa-green: #25D366;
+    --wa-slate-900: #0f172a;
+    --wa-slate-800: #1e293b;
+    --wa-slate-700: #334155;
+    --wa-slate-600: #475569;
+    --wa-slate-500: #64748b;
+    --wa-slate-200: #e2e8f0;
+    --wa-slate-100: #f1f5f9;
+    --wa-slate-50: #f8fafc;
+}
+
+.wa-landing {
+    max-width: 1200px;
+    width: calc(100% - 36px);
+    margin: 0 auto;
+    padding: 24px 0 80px 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--wa-slate-900);
+    overflow-x: hidden;
+}
+
+.wa-landing * {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Hero Split Section
+   -------------------------------------------------------------------------- */
+.wa-hero-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 72px;
+    width: 100%;
+    min-width: 0;
+}
+
+.wa-hero-split > div {
+    min-width: 0;
+    width: 100%;
+}
+
+@media (max-width: 960px) {
+    .wa-hero-split {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+        margin-bottom: 40px;
+    }
+}
+
+/* Left Hero Content */
+.wa-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid var(--wa-emerald-border);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 0.76rem;
+    font-weight: 750;
+    color: var(--wa-emerald-dark);
+    letter-spacing: 0.03em;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.06);
+}
+
+.wa-live-ping {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--wa-emerald);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: waPulseRadar 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes waPulseRadar {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.wa-hero-heading {
+    font-size: 2.75rem;
+    font-weight: 850;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    color: var(--wa-slate-900);
+    margin: 0 0 18px 0;
+}
+
+.wa-hero-heading em {
+    font-style: normal;
+    background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wa-hero-desc {
+    font-size: 1.05rem;
+    color: var(--wa-slate-600);
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+    max-width: 560px;
+}
+
+/* Realistic WhatsApp Message Preview Bubble */
+.wa-chat-preview {
+    background: #ffffff;
+    border: 1px solid var(--wa-slate-200);
+    border-radius: 20px;
+    padding: 20px 22px;
+    box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.08), 0 4px 14px rgba(0,0,0,0.02);
+    position: relative;
+    max-width: 500px;
+    margin-bottom: 26px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-chat-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 6px 18px rgba(0,0,0,0.04);
+}
+
+.wa-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--wa-slate-100);
+}
+
+.wa-chat-sender {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wa-chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(18, 140, 126, 0.4);
+    flex-shrink: 0;
+}
+
+.wa-chat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wa-chat-sender-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.94rem;
+    font-weight: 800;
+    color: var(--wa-slate-900);
+    line-height: 1.2;
+}
+
+.wa-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.wa-chat-sender-sub {
+    font-size: 0.73rem;
+    color: var(--wa-slate-500);
+    font-weight: 550;
+    letter-spacing: 0.01em;
+}
+
+.wa-chat-timestamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--wa-emerald-dark);
+    font-weight: 750;
+    background: var(--wa-emerald-light);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.wa-timestamp-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: waPulseRadar 2s infinite ease-in-out;
+}
+
+.wa-bubble-wrap {
+    position: relative;
+}
+
+.wa-bubble-content {
+    background: #e7fce9;
+    border: 1px solid #bbf7d0;
+    border-radius: 4px 18px 18px 18px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.wa-bubble-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.wa-bubble-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.69rem;
+    font-weight: 800;
+    color: #065f46;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 3px 9px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+/* Dots navigation for job switcher */
+.wa-bubble-dots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wa-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a7f3d0;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wa-dot--active {
+    background: #059669;
+    width: 18px;
+    border-radius: 999px;
+}
+
+/* Slider Track */
+.wa-bubble-slider-wrap {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    position: relative;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.wa-bubble-slider-track {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    box-sizing: border-box;
+}
+
+.wa-bubble-slide {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.wa-bubble-job-title {
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: var(--wa-slate-900);
+    margin: 0 0 10px 0;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+}
+
+.wa-bubble-job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.wa-bubble-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.80rem;
+    font-weight: 650;
+    color: var(--wa-slate-800);
+    background: #ffffff;
+    border: 1px solid #c7eed8;
+    padding: 5px 11px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.wa-bubble-pill.wa-pill-salary {
+    color: #047857;
+    font-weight: 800;
+}
+
+.wa-bubble-apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #00a884;
+    color: #ffffff !important;
+    font-size: 0.84rem;
+    font-weight: 800;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0, 168, 132, 0.32);
+    transition: all 0.15s ease;
+}
+
+.wa-bubble-apply-btn:hover {
+    background: #028e70;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 168, 132, 0.4);
+    color: #ffffff !important;
+}
+
+.wa-bubble-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(16, 185, 129, 0.25);
+}
+
+.wa-live-swipe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #065f46;
+}
+
+.wa-swipe-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: waPulseRadar 2s infinite ease-in-out;
+}
+
+.wa-bubble-receipt {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    font-size: 0.70rem;
+    color: #64748b;
+    font-weight: 550;
+}
+
+.wa-double-check {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Guarantee Circular Tick Badges (Strict Single Row) */
+.wa-form-footer-guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--wa-slate-100);
+    width: 100%;
+}
+
+.wa-guarantee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.wa-tick-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+    flex-shrink: 0;
+}
+
+.wa-guarantee-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--wa-slate-700);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.wa-guarantee-dot {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .wa-form-footer-guarantee {
+        gap: 5px;
+        justify-content: space-between;
+    }
+    .wa-guarantee-item {
+        gap: 4px;
+    }
+    .wa-tick-circle {
+        width: 15px;
+        height: 15px;
+    }
+    .wa-tick-circle svg {
+        width: 9px;
+        height: 9px;
+    }
+    .wa-guarantee-label {
+        font-size: 0.69rem;
+        letter-spacing: -0.02em;
+    }
+    .wa-guarantee-dot {
+        font-size: 0.65rem;
+    }
+}
+
+/* Candidate Social Proof */
+.wa-social-proof {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wa-avatars {
+    display: flex;
+    margin-left: 6px;
+}
+
+.wa-avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    margin-left: -8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wa-proof-text {
+    font-size: 0.8rem;
+    color: var(--wa-slate-600);
+    line-height: 1.35;
+}
+
+.wa-proof-text strong {
+    color: var(--wa-slate-900);
+}
+
+/* --------------------------------------------------------------------------
+   Right Form Card: Executive Onboarding Box
+   -------------------------------------------------------------------------- */
+.wa-form-card {
+    background: #ffffff;
+    border: 1.5px solid var(--wa-slate-200);
+    border-radius: 24px;
+    padding: 34px 30px;
+    box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(0,0,0,0.02);
+    position: relative;
+}
+
+.wa-form-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 24px 24px 0 0;
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.wa-form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--wa-slate-100);
+}
+
+.wa-form-badge-icon {
+    width: 54px;
+    height: 54px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #25D366;
+    flex-shrink: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.wa-form-heading {
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: var(--wa-slate-900);
+    margin: 0;
+}
+
+.wa-form-subheading {
+    font-size: 0.78rem;
+    color: var(--wa-slate-500);
+    margin: 3px 0 0 0;
+}
+
+/* Form Fields */
+.wa-field {
+    margin-bottom: 16px;
+}
+
+.wa-field-label {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 750;
+    color: var(--wa-slate-700);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+}
+
+.wa-field-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.wa-field-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--wa-slate-400, #94a3b8);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.wa-input-control {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1.5px solid var(--wa-slate-200);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--wa-slate-900);
+    background: var(--wa-slate-50);
+    outline: none;
+    transition: all 0.15s ease;
+    font-family: inherit;
+}
+
+.wa-input-control:focus {
+    background: #ffffff;
+    border-color: var(--wa-emerald);
+    box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.12);
+}
+
+/* Quick Chips (Strict Single Row) */
+.wa-pills-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 6px;
+    margin-top: 8px;
+    padding-bottom: 2px;
+}
+
+.wa-pills-row::-webkit-scrollbar {
+    display: none;
+}
+
+.wa-pill-choice {
+    font-size: 0.72rem;
+    font-weight: 650;
+    background: var(--wa-slate-100);
+    color: var(--wa-slate-600);
+    border: 1px solid var(--wa-slate-200);
+    padding: 3px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.wa-pill-choice:hover {
+    background: var(--wa-slate-200);
+    color: var(--wa-slate-900);
+}
+
+@media (max-width: 768px) {
+    .wa-landing {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 16px 16px 60px 16px !important;
+        overflow-x: hidden !important;
+    }
+    .wa-hero-split {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 22px !important;
+        margin-bottom: 30px !important;
+    }
+    .wa-hero-heading {
+        font-size: 1.85rem !important;
+        line-height: 1.2 !important;
+        letter-spacing: -0.025em !important;
+        margin: 0 0 12px 0 !important;
+        word-break: break-word !important;
+    }
+    .wa-hero-desc {
+        font-size: 0.92rem !important;
+        line-height: 1.5 !important;
+        margin: 0 0 18px 0 !important;
+        max-width: 100% !important;
+    }
+    .wa-chat-preview {
+        max-width: 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px 12px !important;
+        margin-bottom: 18px !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-wrap {
+        min-width: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-content {
+        padding: 12px 12px 8px 12px !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-slider-wrap {
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-slider-track {
+        min-width: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-slide {
+        min-width: 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-bubble-job-title {
+        font-size: 1.05rem !important;
+        margin: 0 0 8px 0 !important;
+    }
+    .wa-bubble-job-meta {
+        gap: 6px !important;
+        margin-bottom: 12px !important;
+    }
+    .wa-bubble-pill {
+        font-size: 0.74rem !important;
+        padding: 4px 8px !important;
+    }
+    .wa-bubble-apply-btn {
+        padding: 9px 12px !important;
+        font-size: 0.82rem !important;
+    }
+    .wa-social-proof {
+        margin-bottom: 6px !important;
+    }
+
+    /* Mobile Form: NOT IN A CARD! Full-width natural clean fields */
+    .wa-form-card {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+    .wa-form-card::before {
+        display: none !important;
+    }
+    .wa-form-header {
+        display: none !important;
+    }
+    .wa-field {
+        margin-bottom: 13px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+    .wa-field-label {
+        font-size: 0.82rem !important;
+        margin-bottom: 5px !important;
+    }
+    .wa-input-control {
+        background: #ffffff !important;
+        font-size: 0.92rem !important;
+        padding: 13px 14px 13px 40px !important;
+        border-radius: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .wa-btn-submit {
+        padding: 14px 18px !important;
+        font-size: 0.95rem !important;
+        border-radius: 12px !important;
+        margin-top: 4px !important;
+        width: 100% !important;
+    }
+    .wa-form-footer-guarantee {
+        margin-top: 14px !important;
+        padding-top: 12px !important;
+        gap: 4px !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    .wa-guarantee-label {
+        font-size: 0.69rem !important;
+    }
+}
+
+/* Primary Button */
+.wa-btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    font-weight: 850;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.32);
+    transition: all 0.15s ease;
+    margin-top: 6px;
+}
+
+.wa-btn-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+/* Verification State */
+.wa-verify-view {
+    text-align: center;
+    padding: 16px 0 8px 0;
+}
+
+.wa-verify-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--wa-emerald-light);
+    border: 2px solid var(--wa-emerald);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+    color: var(--wa-emerald-dark);
+}
+
+.wa-pin-boxes {
+    margin: 20px 0;
+}
+
+.wa-pin-input-field {
+    width: 210px;
+    height: 48px;
+    text-align: center;
+    font-size: 1.55rem;
+    letter-spacing: 0.32em;
+    font-family: monospace;
+    font-weight: 800;
+    border: 2px solid var(--wa-slate-200);
+    border-radius: 12px;
+    outline: none;
+    color: var(--wa-slate-900);
+    transition: border-color 0.15s;
+}
+
+.wa-pin-input-field:focus {
+    border-color: var(--wa-emerald);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   Bento Grid: 4 Core Advantages
+   -------------------------------------------------------------------------- */
+.wa-bento-section {
+    margin: 80px 0;
+}
+
+.wa-bento-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 40px auto;
+}
+
+.wa-bento-title {
+    font-size: 1.85rem;
+    font-weight: 850;
+    color: var(--wa-slate-900);
+    letter-spacing: -0.025em;
+    margin: 0 0 8px 0;
+}
+
+.wa-bento-desc {
+    font-size: 0.95rem;
+    color: var(--wa-slate-600);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.wa-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 860px) {
+    .wa-bento-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wa-bento-card {
+    background: #ffffff;
+    border: 1px solid var(--wa-slate-200);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wa-bento-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px rgba(0,0,0,0.06);
+    border-color: #cbd5e1;
+}
+
+.wa-bento-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--wa-emerald-light);
+    color: var(--wa-emerald-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.wa-bento-heading {
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: var(--wa-slate-900);
+    margin: 0 0 8px 0;
+}
+
+.wa-bento-body {
+    font-size: 0.84rem;
+    color: var(--wa-slate-600);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ==========================================================================
+   VIP Membership Plans: Ultra-Premium App-Grade Paywall (Figma / iOS Aesthetic)
+   ========================================================================== */
+.wa-vip-section {
+    margin: 54px auto 36px auto;
+    max-width: 1140px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.wa-vip-eyebrow-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.wa-vip-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: rgba(16, 185, 129, 0.09);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 9999px;
+    font-size: 0.74rem;
+    font-weight: 750;
+    color: #047857;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+}
+
+.wa-vip-pill-icon {
+    width: 12px;
+    height: 12px;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.wa-vip-title {
+    font-size: 2.35rem;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    margin: 0 0 12px 0;
+}
+
+.wa-vip-gradient-text {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.wa-vip-desc {
+    font-size: 0.96rem;
+    color: #64748b;
+    max-width: 620px;
+    margin: 0 auto 34px auto;
+    line-height: 1.5;
+}
+
+/* --- DESKTOP VIEW: Full 3-Card Side-by-Side Pricing Grid --- */
+.wa-vip-desktop-wrap {
+    display: block;
+    width: 100%;
+}
+
+.wa-vip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.wa-tier-card {
+    background: #ffffff;
+    border: 1.5px solid var(--wa-slate-200);
+    border-radius: 22px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+    position: relative;
+    transition: all 0.2s ease;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.wa-tier-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px -10px rgba(0,0,0,0.08);
+}
+
+.wa-tier-card.featured {
+    border-color: var(--wa-emerald);
+    box-shadow: 0 16px 40px -10px rgba(16, 185, 129, 0.18);
+}
+
+.wa-tier-ribbon {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--wa-emerald);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.wa-tier-name {
+    font-size: 1.2rem;
+    font-weight: 850;
+    color: var(--wa-slate-900);
+    margin: 0 0 6px 0;
+}
+
+.wa-tier-desc {
+    font-size: 0.8rem;
+    color: var(--wa-slate-500);
+    margin: 0 0 18px 0;
+    line-height: 1.4;
+}
+
+.wa-tier-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--wa-slate-100);
+}
+
+.wa-tier-amount {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: var(--wa-slate-900);
+    letter-spacing: -0.03em;
+}
+
+.wa-tier-cycle {
+    font-size: 0.82rem;
+    color: var(--wa-slate-500);
+    font-weight: 650;
+}
+
+.wa-tier-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    flex: 1;
+}
+
+.wa-tier-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.wa-tier-feature-item svg {
+    color: var(--wa-emerald);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.wa-tier-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 0;
+    text-align: center;
+    border-radius: 999px;
+    font-size: 0.90rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.wa-tier-btn.primary {
+    background: var(--wa-emerald);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.wa-tier-btn.primary:hover {
+    background: var(--wa-emerald-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+}
+
+.wa-tier-btn.secondary {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.wa-tier-btn.secondary:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+
+/* --- MOBILE VIEW: Capsule Segmented Paywall --- */
+.wa-vip-mobile-wrap {
+    display: none;
+    width: 100%;
+}
+
+.wa-vip-capsule-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 24px;
+}
+
+.wa-vip-capsule-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: #eef2f6;
+    border-radius: 9999px;
+    padding: 5px;
+    gap: 4px;
+    box-sizing: border-box;
+}
+
+.wa-vip-tab-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 9999px;
+    padding: 11px 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.wa-tab-popular-badge {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.58rem;
+    font-weight: 850;
+    padding: 1px 7px;
+    border-radius: 9999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    border: 1.5px solid #ffffff;
+    white-space: nowrap;
+    pointer-events: none;
+    line-height: 1.2;
+    z-index: 2;
+}
+
+.wa-vip-tab-btn:not(.active) .wa-tab-popular-badge {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.wa-vip-tab-btn:hover {
+    color: #0f172a;
+}
+
+.wa-vip-tab-btn.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.32);
+}
+
+.wa-vip-panels-wrap {
+    width: 100%;
+    display: block;
+}
+
+.wa-vip-panel {
+    display: none;
+    animation: waCardFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.wa-vip-panel.active {
+    display: block;
+}
+
+@media (min-width: 861px) {
+    .wa-vip-desktop-wrap {
+        display: block !important;
+    }
+    .wa-vip-mobile-wrap {
+        display: none !important;
+    }
+}
+
+@media (max-width: 860px) {
+    .wa-vip-desktop-wrap {
+        display: none !important;
+    }
+    .wa-vip-mobile-wrap {
+        display: block !important;
+    }
+    .wa-vip-section {
+        max-width: 520px;
+        padding: 0 16px;
+        margin: 44px auto 30px auto;
+    }
+    .wa-vip-title {
+        font-size: 1.85rem;
+    }
+    .wa-vip-desc {
+        max-width: 420px;
+        font-size: 0.90rem;
+        margin: 0 auto 24px auto;
+    }
+}
+
+@keyframes waCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wa-vip-paywall-card {
+    background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.13) 0%, rgba(255, 255, 255, 0) 65%), #ffffff;
+    border: 2px solid rgba(16, 185, 129, 0.38);
+    border-radius: 26px;
+    padding: 22px 20px 18px 20px;
+    box-shadow: 0 20px 48px -12px rgba(16, 185, 129, 0.16), 0 4px 16px rgba(0, 0, 0, 0.02);
+    text-align: left;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.wa-paywall-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.wa-paywall-price-cluster {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.wa-paywall-price {
+    font-size: 2.0rem;
+    font-weight: 850;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.wa-paywall-period {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.wa-paywall-was-price {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-decoration: line-through;
+    margin-left: 2px;
+}
+
+.wa-paywall-save-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    background: #ecfdf5;
+    border: 1px solid rgba(16, 185, 129, 0.32);
+    border-radius: 9999px;
+    color: #047857;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.wa-paywall-save-pill.wa-pill-neutral {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.wa-paywall-subtitle {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Divider with centered Features text */
+.wa-paywall-features-sep {
+    display: flex;
+    align-items: center;
+    margin: 16px 0 13px 0;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+}
+
+.wa-paywall-features-sep::before,
+.wa-paywall-features-sep::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.wa-paywall-features-sep span {
+    padding: 0 12px;
+}
+
+/* Minimalist Outline Icon Feature Rows */
+.wa-paywall-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.wa-paywall-feature-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.80rem;
+    font-weight: 550;
+    color: #334155;
+    line-height: 1.35;
+}
+
+.wa-paywall-feature-icon {
+    width: 17px;
+    height: 17px;
+    color: #0f172a;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wa-paywall-feature-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: #0f172a;
+    stroke-width: 1.75;
+}
+
+/* Obsidian Capsule CTA Button (Apple / MindBloom+ style) */
+.wa-paywall-cta-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.90rem;
+    font-weight: 750;
+    padding: 13px 18px;
+    border-radius: 9999px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.24);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+}
+
+.wa-cta-save-tag {
+    display: inline-flex;
+    align-items: center;
+    background: #10b981;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 850;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+}
+
+.wa-paywall-cta-btn:hover {
+    background: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.32);
+}
+
+.wa-paywall-cta-btn:active {
+    transform: scale(0.985);
+}
+
+.wa-paywall-guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    font-size: 0.70rem;
+    font-weight: 550;
+    color: #64748b;
+    margin-top: 11px;
+    text-align: center;
+}
+
+.wa-guarantee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    color: #64748b;
+}
+
+.wa-guarantee-icon {
+    width: 12px;
+    height: 12px;
+    color: #059669;
+    stroke: #059669;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wa-paywall-guarantee .wa-dot {
+    color: #cbd5e1;
+    font-size: 0.65rem;
+    line-height: 1;
+    user-select: none;
+}
+
+@media (max-width: 480px) {
+    .wa-vip-section {
+        margin: 32px auto 24px auto;
+        padding: 0 12px;
+        max-width: 100%;
+    }
+    .wa-vip-eyebrow-wrap {
+        margin-bottom: 10px;
+    }
+    .wa-vip-pill-badge {
+        font-size: 0.69rem;
+        padding: 4px 11px;
+        gap: 5px;
+    }
+    .wa-vip-pill-icon {
+        width: 11px;
+        height: 11px;
+    }
+    .wa-vip-title {
+        font-size: 1.70rem;
+    }
+    .wa-vip-desc {
+        font-size: 0.82rem;
+        margin-bottom: 16px;
+    }
+    .wa-vip-capsule-bar {
+        width: 100%;
+        padding: 4px;
+        gap: 2px;
+    }
+    .wa-vip-tab-btn {
+        flex: 1 1 0;
+        padding: 9px 4px;
+        font-size: 0.82rem;
+    }
+    .wa-tab-popular-badge {
+        font-size: 0.54rem;
+        padding: 1px 6px;
+        top: -8px;
+    }
+    .wa-vip-paywall-card {
+        padding: 18px 14px 14px 14px;
+        border-radius: 20px;
+    }
+    .wa-paywall-price-row {
+        gap: 6px;
+    }
+    .wa-paywall-price {
+        font-size: 1.75rem;
+    }
+    .wa-paywall-period {
+        font-size: 0.78rem;
+    }
+    .wa-paywall-was-price {
+        font-size: 0.85rem;
+    }
+    .wa-paywall-save-pill {
+        font-size: 0.66rem;
+        padding: 2px 7px;
+    }
+    .wa-paywall-subtitle {
+        font-size: 0.72rem;
+        line-height: 1.35;
+    }
+    .wa-paywall-features-sep {
+        margin: 13px 0 10px 0;
+        font-size: 0.68rem;
+    }
+    .wa-paywall-features-list {
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    .wa-paywall-feature-row {
+        font-size: 0.74rem;
+        font-weight: 500;
+        gap: 8px;
+    }
+    .wa-paywall-feature-icon {
+        width: 15px;
+        height: 15px;
+    }
+    .wa-paywall-feature-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+    .wa-paywall-cta-btn {
+        font-size: 0.84rem;
+        padding: 11px 12px;
+        gap: 6px;
+    }
+    .wa-cta-save-tag {
+        font-size: 0.62rem;
+        padding: 1px 5px;
+    }
+    .wa-paywall-guarantee {
+        font-size: 0.66rem;
+        gap: 3px 6px;
+        margin-top: 9px;
+    }
+    .wa-guarantee-icon {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   FAQ Accordion
+   -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   FAQ Accordion
+   -------------------------------------------------------------------------- */
+.wa-faq-section {
+    margin: 70px auto 30px auto;
+    max-width: 760px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.wa-faq-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.wa-faq-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: rgba(16, 185, 129, 0.09);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 9999px;
+    font-size: 0.74rem;
+    font-weight: 750;
+    color: #047857;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+}
+
+.wa-faq-title {
+    font-size: 1.85rem;
+    font-weight: 850;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+    margin: 0 0 8px 0;
+}
+
+.wa-faq-desc {
+    font-size: 0.92rem;
+    color: #64748b;
+    margin: 0 auto;
+    max-width: 520px;
+    line-height: 1.5;
+}
+
+.wa-faq-item {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.wa-faq-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.wa-faq-item.active {
+    border-color: rgba(16, 185, 129, 0.45);
+    box-shadow: 0 8px 24px -4px rgba(16, 185, 129, 0.12);
+}
+
+.wa-faq-trigger {
+    padding: 18px 22px;
+    font-weight: 750;
+    font-size: 0.96rem;
+    color: #0f172a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: background 0.18s ease;
+    gap: 14px;
+}
+
+.wa-faq-trigger:hover {
+    background: #f8fafc;
+}
+
+.wa-faq-trigger svg {
+    color: #64748b;
+    transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease;
+    flex-shrink: 0;
+}
+
+.wa-faq-item.active .wa-faq-trigger svg {
+    transform: rotate(180deg);
+    color: #059669;
+}
+
+.wa-faq-content {
+    display: none;
+    padding: 12px 22px 20px 22px;
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.65;
+    border-top: 1px solid #f1f5f9;
+    background: #ffffff;
+}
+
+.wa-faq-item.active .wa-faq-content {
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .wa-faq-section {
+        margin: 44px auto 20px auto;
+        padding: 0 12px;
+    }
+    .wa-faq-header {
+        margin-bottom: 22px;
+    }
+    .wa-faq-title {
+        font-size: 1.45rem;
+    }
+    .wa-faq-desc {
+        font-size: 0.82rem;
+    }
+    .wa-faq-trigger {
+        padding: 14px 16px;
+        font-size: 0.88rem;
+        gap: 10px;
+    }
+    .wa-faq-content {
+        padding: 10px 16px 16px 16px;
+        font-size: 0.82rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   SEO Topical Hub: Verified UK Opportunities (Home-Page Tabbed Pattern)
+   -------------------------------------------------------------------------- */
+.wa-seo-hub-section {
+    margin: 64px auto 30px auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    max-width: 1140px;
+    box-shadow: none;
+}
+
+.wa-seo-hub-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.wa-seo-hub-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wa-emerald-dark);
+    background: var(--wa-emerald-light);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.wa-seo-hub-title {
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: var(--wa-slate-900);
+    letter-spacing: -0.02em;
+    margin: 0 0 6px 0;
+}
+
+.wa-seo-hub-sub {
+    font-size: 0.88rem;
+    color: var(--wa-slate-600);
+    margin: 0;
+}
+
+/* Tab Header matching Home Page browse-tabs */
+.wa-browse-tabs-header-wrap {
+    position: relative;
+    margin-top: 24px;
+    margin-bottom: 26px;
+}
+
+.wa-browse-tabs-header {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    border-bottom: 2px solid var(--wa-slate-200);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.wa-browse-tabs-header::-webkit-scrollbar {
+    display: none;
+}
+
+.wa-browse-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--wa-slate-600);
+    padding: 14px 4px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    font-family: inherit;
+}
+
+.wa-browse-tab-btn svg {
+    color: var(--wa-slate-400);
+    transition: color 0.18s ease;
+}
+
+.wa-browse-tab-btn:hover {
+    color: var(--wa-slate-900);
+}
+
+.wa-browse-tab-btn:hover svg {
+    color: var(--wa-emerald);
+}
+
+.wa-browse-tab-btn--active {
+    color: var(--wa-slate-900) !important;
+    border-bottom-color: var(--wa-emerald) !important;
+    font-weight: 800;
+}
+
+.wa-browse-tab-btn--active svg {
+    color: var(--wa-emerald) !important;
+}
+
+/* Tab Panels */
+.wa-browse-tab-panel {
+    display: none;
+}
+
+.wa-browse-tab-panel--active {
+    display: block;
+    animation: waFadeIn 0.2s ease-out;
+}
+
+@keyframes waFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.wa-browse-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+@media (min-width: 640px) {
+    .wa-browse-panel-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 18px;
+    }
+}
+
+@media (min-width: 960px) {
+    .wa-browse-panel-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px 20px;
+    }
+}
+
+.wa-browse-tab-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border: 1.5px solid #f1f5f9;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+
+.wa-browse-link-name {
+    font-size: 0.88rem;
+    font-weight: 650;
+    color: var(--wa-slate-800);
+    line-height: 1.35;
+}
+
+.wa-browse-link-icon {
+    color: var(--wa-slate-400);
+    transition: transform 0.18s ease, color 0.18s ease;
+    flex-shrink: 0;
+}
+
+.wa-browse-tab-link:hover {
+    background: var(--wa-emerald-light);
+    border-color: #a7f3d0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+}
+
+.wa-browse-tab-link:hover .wa-browse-link-name {
+    color: var(--wa-emerald-dark);
+}
+
+.wa-browse-tab-link:hover .wa-browse-link-icon {
+    color: var(--wa-emerald);
+    transform: translateX(3px);
+}
+
+.wa-browse-panel-cta {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--wa-slate-100);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wa-browse-view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 750;
+    color: var(--wa-emerald-dark);
+    background: var(--wa-emerald-light);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 9px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.wa-browse-view-all-btn:hover {
+    background: var(--wa-emerald);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.32);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .wa-seo-hub-section {
+        padding: 24px 16px;
+        margin: 40px auto 20px auto;
+        background: #ffffff;
+        border: 1px solid var(--wa-slate-200);
+        border-radius: 20px;
+        box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04);
+    }
+    .wa-seo-hub-title {
+        font-size: 1.2rem;
+    }
+    .wa-browse-tabs-header {
+        gap: 16px;
+    }
+    .wa-browse-tab-btn {
+        font-size: 0.88rem;
+        padding: 12px 2px;
+    }
+    .wa-browse-panel-cta {
+        justify-content: center;
+    }
+    .wa-browse-view-all-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+
+<div class="wa-landing">
+    <!-- Breadcrumbs -->
+    {{template "breadcrumbs" .}}
+
+    <!-- Split Hero Section -->
+    <div class="wa-hero-split">
+        <!-- Left: Realistic Value & Messaging -->
+        <div>
+            <h1 class="wa-hero-heading">
+                The fastest way to apply to <em>new UK roles</em>.
+            </h1>
+
+            <p class="wa-hero-desc">
+                When top UK employers post a vacancy, our gateway delivers verified alerts directly to your WhatsApp in under 60 seconds. Apply before hundreds of candidates crowd the queue.
+            </p>
+
+            <!-- Ultra-realistic WhatsApp Chat Preview Card with Auto-Swiping Job Alerts -->
+            <div class="wa-chat-preview" id="waChatPreviewBox" aria-label="WhatsApp Job Dispatch Sample">
+                <div class="wa-chat-header">
+                    <div class="wa-chat-sender">
+                        <div class="wa-chat-avatar" style="background: transparent; padding: 0;">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+                        </div>
+                        <div class="wa-chat-meta">
+                            <div class="wa-chat-sender-name">
+                                <span>JobyUK.com Jobs</span>
+                                <span class="wa-verified-badge" title="Official Verified Gateway">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="10" fill="#0ea5e9"/>
+                                        <polyline points="8 12 11 15 16 9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="wa-chat-sender-sub">Official Verified Gateway</span>
+                        </div>
+                    </div>
+                    <span class="wa-chat-timestamp">
+                        <span class="wa-timestamp-dot"></span>
+                        <span>Live Dispatch</span>
+                    </span>
+                </div>
+
+                <div class="wa-bubble-wrap">
+                    <div class="wa-bubble-content">
+                        <!-- Top status bar with role badge & navigation dots -->
+                        <div class="wa-bubble-top-bar">
+                            <div class="wa-bubble-tag">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span id="waSlideTag">Verified Role • Published 42s ago</span>
+                            </div>
+                            <div class="wa-bubble-dots" id="waBubbleDots">
+                                <button type="button" class="wa-dot wa-dot--active" data-slide="0" aria-label="Job 1"></button>
+                                <button type="button" class="wa-dot" data-slide="1" aria-label="Job 2"></button>
+                                <button type="button" class="wa-dot" data-slide="2" aria-label="Job 3"></button>
+                                <button type="button" class="wa-dot" data-slide="3" aria-label="Job 4"></button>
+                                <button type="button" class="wa-dot" data-slide="4" aria-label="Job 5"></button>
+                            </div>
+                        </div>
+
+                        <!-- Swipeable Slider Container -->
+                        <div class="wa-bubble-slider-wrap" id="waBubbleSliderWrap">
+                            <div class="wa-bubble-slider-track" id="waBubbleSliderTrack">
+                                <!-- Slide 1: Software Engineer -->
+                                <div class="wa-bubble-slide" data-tag="Verified Role • Published 42s ago" data-time="10:42 AM">
+                                    <div class="wa-bubble-job-title">Senior Software Engineer</div>
+                                    <div class="wa-bubble-job-meta">
+                                        <span class="wa-bubble-pill">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>London, UK (Hybrid)</span>
+                                        </span>
+                                        <span class="wa-bubble-pill wa-pill-salary">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            <span>£70,000 - £85,000</span>
+                                        </span>
+                                    </div>
+                                    <a href="/jobs/?q=Software+Engineer" class="wa-bubble-apply-btn">
+                                        <span>Review & 1-Click Apply</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Slide 2: NHS Nurse -->
+                                <div class="wa-bubble-slide" data-tag="NHS Urgent Hire • Published 1m ago" data-time="10:41 AM">
+                                    <div class="wa-bubble-job-title">NHS Registered Nurse (Band 7)</div>
+                                    <div class="wa-bubble-job-meta">
+                                        <span class="wa-bubble-pill">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>Manchester & Salford</span>
+                                        </span>
+                                        <span class="wa-bubble-pill wa-pill-salary">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            <span>£44,000 - £51,000</span>
+                                        </span>
+                                    </div>
+                                    <a href="/jobs/?q=Nurse" class="wa-bubble-apply-btn">
+                                        <span>Review & 1-Click Apply</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Slide 3: Project Manager -->
+                                <div class="wa-bubble-slide" data-tag="High Priority • Published 2m ago" data-time="10:40 AM">
+                                    <div class="wa-bubble-job-title">Project & Operations Manager</div>
+                                    <div class="wa-bubble-job-meta">
+                                        <span class="wa-bubble-pill">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>Birmingham (Hybrid)</span>
+                                        </span>
+                                        <span class="wa-bubble-pill wa-pill-salary">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            <span>£58,000 - £68,000</span>
+                                        </span>
+                                    </div>
+                                    <a href="/jobs/?q=Project+Manager" class="wa-bubble-apply-btn">
+                                        <span>Review & 1-Click Apply</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Slide 4: Finance & Accounting -->
+                                <div class="wa-bubble-slide" data-tag="Verified Vacancy • Published 3m ago" data-time="10:39 AM">
+                                    <div class="wa-bubble-job-title">Financial Analyst & Modeller</div>
+                                    <div class="wa-bubble-job-meta">
+                                        <span class="wa-bubble-pill">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>Leeds & Yorkshire</span>
+                                        </span>
+                                        <span class="wa-bubble-pill wa-pill-salary">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            <span>£52,000 - £65,000</span>
+                                        </span>
+                                    </div>
+                                    <a href="/jobs/?q=Accountant" class="wa-bubble-apply-btn">
+                                        <span>Review & 1-Click Apply</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Slide 5: Data Analyst / AI -->
+                                <div class="wa-bubble-slide" data-tag="Remote Dispatch • Published 4m ago" data-time="10:38 AM">
+                                    <div class="wa-bubble-job-title">Data Scientist & AI Specialist</div>
+                                    <div class="wa-bubble-job-meta">
+                                        <span class="wa-bubble-pill">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>Fully Remote UK</span>
+                                        </span>
+                                        <span class="wa-bubble-pill wa-pill-salary">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            <span>£65,000 - £82,000</span>
+                                        </span>
+                                    </div>
+                                    <a href="/jobs/?q=Data+Analyst" class="wa-bubble-apply-btn">
+                                        <span>Review & 1-Click Apply</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom receipt row with auto-swiping live counter -->
+                        <div class="wa-bubble-footer-row">
+                            <div class="wa-live-swipe-hint">
+                                <span class="wa-swipe-pulse"></span>
+                                <span id="waSlideCounter">Role 1 of 5 • Auto-rotating</span>
+                            </div>
+                            <div class="wa-bubble-receipt">
+                                <span id="waSlideTime">10:42 AM</span>
+                                <span class="wa-double-check" title="Delivered & Read">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="2 12 7 17 17 6"></polyline>
+                                        <polyline points="8 12 13 17 23 6"></polyline>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="wa-social-proof">
+                <div class="wa-avatars">
+                    <div class="wa-avatar-circle" style="background: #0284c7;">JD</div>
+                    <div class="wa-avatar-circle" style="background: #10b981;">SM</div>
+                    <div class="wa-avatar-circle" style="background: #f59e0b;">AL</div>
+                    <div class="wa-avatar-circle" style="background: #6366f1;">RK</div>
+                </div>
+                <div class="wa-proof-text">
+                    Joined by <strong>14,800+ UK candidates</strong> receiving instant alerts across London, Manchester & nationwide.
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Executive Onboarding Card -->
+        <div>
+            <div class="wa-form-card" id="waTrialCard">
+                <div class="wa-form-header">
+                    <div class="wa-form-badge-icon" style="background: transparent; padding: 0;">
+                        <svg width="52" height="52" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/><path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/></svg>
+                    </div>
+                    <div>
+                        <h2 class="wa-form-heading">Activate Free WhatsApp Alerts</h2>
+                        <p class="wa-form-subheading">Instant 3-day access (2–3 alerts daily) • No card required</p>
+                    </div>
+                </div>
+
+                <!-- Main Form -->
+                <form id="waLandingTrialForm" onsubmit="handleLandingTrialSubmit(event)">
+                    <div class="wa-field">
+                        <label class="wa-field-label">Full Name</label>
+                        <div class="wa-field-input-wrap">
+                            <span class="wa-field-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </span>
+                            <input type="text" id="landingName" name="full_name" placeholder="e.g. Sarah Jenkins" required class="wa-input-control">
+                        </div>
+                    </div>
+
+                    <div class="wa-field">
+                        <label class="wa-field-label">WhatsApp Number</label>
+                        <div class="wa-field-input-wrap">
+                            <span class="wa-field-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </span>
+                            <input type="tel" id="landingPhone" name="phone" placeholder="e.g. +44 7123 456789" required class="wa-input-control" style="font-family: monospace;">
+                        </div>
+                    </div>
+
+                    <div class="wa-field">
+                        <label class="wa-field-label">Target Role or Sector</label>
+                        <div class="wa-field-input-wrap">
+                            <span class="wa-field-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </span>
+                            <input type="text" id="landingKeywords" name="keywords" placeholder="e.g. Software Engineer, Nurse, Finance" value="{{if .Data.InitialRole}}{{.Data.InitialRole}}{{end}}" required class="wa-input-control">
+                        </div>
+                        <div class="wa-pills-row">
+                            <button type="button" class="wa-pill-choice" onclick="document.getElementById('landingKeywords').value='Software Engineer'">Software Engineer</button>
+                            <button type="button" class="wa-pill-choice" onclick="document.getElementById('landingKeywords').value='Nurse'">Nurse</button>
+                            <button type="button" class="wa-pill-choice" onclick="document.getElementById('landingKeywords').value='Project Manager'">Project Manager</button>
+                            <button type="button" class="wa-pill-choice" onclick="document.getElementById('landingKeywords').value='Accountant'">Accountant</button>
+                        </div>
+                    </div>
+
+                    <div class="wa-field">
+                        <label class="wa-field-label">Preferred Location (Optional)</label>
+                        <div class="wa-field-input-wrap">
+                            <span class="wa-field-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </span>
+                            <input type="text" id="landingLocation" name="location" placeholder="e.g. London, Manchester, or Remote UK" value="{{if .Data.InitialLocation}}{{.Data.InitialLocation}}{{end}}" class="wa-input-control">
+                        </div>
+                    </div>
+
+                    <div id="landingFormError" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; margin-bottom: 12px;"></div>
+
+                    <button type="submit" id="landingSubmitBtn" class="wa-btn-submit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span id="landingSubmitBtnText">Start 3-Day Free Trial</span>
+                    </button>
+
+                    <div class="wa-form-footer-guarantee">
+                        <div class="wa-guarantee-item">
+                            <span class="wa-tick-circle">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="wa-guarantee-label">3 days free (2–3 alerts daily)</span>
+                        </div>
+                        <span class="wa-guarantee-dot">•</span>
+                        <div class="wa-guarantee-item">
+                            <span class="wa-tick-circle">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="wa-guarantee-label">No credit card</span>
+                        </div>
+                        <span class="wa-guarantee-dot">•</span>
+                        <div class="wa-guarantee-item">
+                            <span class="wa-tick-circle">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="wa-guarantee-label">Pause anytime</span>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- OTP Verification Step -->
+                <div id="landingVerifyStep" class="wa-verify-view" style="display: none;">
+                    <div class="wa-verify-icon-wrap">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <h3 style="font-size: 1.15rem; font-weight: 850; color: var(--wa-slate-900); margin: 0 0 6px 0;">PIN Sent to Your WhatsApp</h3>
+                    <p style="font-size: 0.82rem; color: var(--wa-slate-600); margin: 0 0 16px 0;" id="landingVerifyNotice">Please check your WhatsApp chat for a 6-digit confirmation code.</p>
+                    
+                    <div class="wa-pin-boxes">
+                        <input type="text" id="landingPinInput" maxlength="6" placeholder="• • • • • •" class="wa-pin-input-field" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                    </div>
+
+                    <div id="landingVerifyError" style="display: none; color: #dc2626; font-size: 0.8rem; margin-bottom: 12px; font-weight: 600;"></div>
+
+                    <button type="button" onclick="verifyLandingPin()" class="wa-btn-submit" style="max-width: 260px; margin: 0 auto;">
+                        <span>Confirm & Activate Alerts</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIP Membership Plans (Ultra-Premium iOS / MindBloom+ Inspired Design) -->
+    <div class="wa-vip-section" id="pricing" itemscope itemtype="https://schema.org/Product">
+        <!-- Eyebrow Pill Badge & Headline -->
+        <div class="wa-vip-eyebrow-wrap">
+            <div class="wa-vip-pill-badge">
+                <svg class="wa-vip-pill-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+                <span>Subscription Plans</span>
+            </div>
+        </div>
+        <h2 class="wa-vip-title">Upgrade to <span class="wa-vip-gradient-text">WhatsApp VIP</span></h2>
+        <p class="wa-vip-desc">
+            Boost your UK job search with real-time alerts, priority queue, and direct recruiter links.
+        </p>
+
+        <!-- DESKTOP VIEW: Full 3-Card Side-by-Side Pricing Grid -->
+        <div class="wa-vip-desktop-wrap">
+            <div class="wa-vip-grid">
+                <!-- 1. Monthly -->
+                <div class="wa-tier-card">
+                    <div>
+                        <h3 class="wa-tier-name">Monthly Pass</h3>
+                        <p class="wa-tier-desc">Flexible month-to-month access for active job hunters.</p>
+                        <div class="wa-tier-price-row">
+                            <span class="wa-tier-amount">£4.99</span>
+                            <span class="wa-tier-cycle">/ month</span>
+                        </div>
+                        <ul class="wa-tier-features">
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Tailored Role & Location Matching</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Zero Risk Guarantee • Cancel Anytime</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/my-alerts?tab=plans&plan=monthly" class="wa-tier-btn secondary">Select Monthly</a>
+                </div>
+
+                <!-- 2. 6 Months Featured -->
+                <div class="wa-tier-card featured">
+                    <span class="wa-tier-ribbon">Most Popular</span>
+                    <div>
+                        <h3 class="wa-tier-name">6-Month Career Pass</h3>
+                        <p class="wa-tier-desc">The preferred choice for thorough career transitions.</p>
+                        <div class="wa-tier-price-row">
+                            <span class="wa-tier-amount">£24.99</span>
+                            <span class="wa-tier-cycle">/ 6 months (Save 17%)</span>
+                        </div>
+                        <div style="font-size: 0.74rem; font-weight: 750; color: #059669; margin-top: -12px; margin-bottom: 14px;">Equivalent to £4.16 / month • Just 13p / day</div>
+                        <ul class="wa-tier-features">
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Unlimited Roles, Cities & Remote Filters</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Official UK VAT & Pro-Forma Invoice</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/my-alerts?tab=plans&plan=6month" class="wa-tier-btn primary">Select 6-Month Pass</a>
+                </div>
+
+                <!-- 3. Annual -->
+                <div class="wa-tier-card">
+                    <div>
+                        <h3 class="wa-tier-name">Annual Pass</h3>
+                        <p class="wa-tier-desc">Continuous intelligence for contractors & executives.</p>
+                        <div class="wa-tier-price-row">
+                            <span class="wa-tier-amount">£39.99</span>
+                            <span class="wa-tier-cycle">/ year (Save 33%)</span>
+                        </div>
+                        <div style="font-size: 0.74rem; font-weight: 750; color: #2563eb; margin-top: -12px; margin-bottom: 14px;">Equivalent to £3.33 / month • Just 11p / day</div>
+                        <ul class="wa-tier-features">
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Unlimited Roles, Cities & Remote Filters</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-tier-feature-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Priority Dedicated Support & Concierge</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/my-alerts?tab=plans&plan=annual" class="wa-tier-btn secondary">Select Annual</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE VIEW: Ultra-Clean Paywall Single Card with Capsule Switcher -->
+        <div class="wa-vip-mobile-wrap">
+            <!-- Capsule Segmented Tabs Bar (Capsule Pill Switcher) -->
+            <div class="wa-vip-capsule-wrap">
+                <div class="wa-vip-capsule-bar" role="tablist" aria-label="Subscription Duration">
+                    <button type="button" class="wa-vip-tab-btn" data-target="plan-panel-monthly" role="tab" aria-selected="false">
+                        <span>Monthly</span>
+                    </button>
+                    <button type="button" class="wa-vip-tab-btn active" data-target="plan-panel-6month" role="tab" aria-selected="true">
+                        <span class="wa-tab-popular-badge">Popular</span>
+                        <span>6 Months</span>
+                    </button>
+                    <button type="button" class="wa-vip-tab-btn" data-target="plan-panel-annual" role="tab" aria-selected="false">
+                        <span>Annual</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Floating Card Panels -->
+            <div class="wa-vip-panels-wrap">
+                <!-- PANEL 1: MONTHLY -->
+                <div id="plan-panel-monthly" class="wa-vip-panel" role="tabpanel" aria-labelledby="tab-monthly" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <div class="wa-vip-paywall-card">
+                        <div class="wa-paywall-price-row">
+                            <div class="wa-paywall-price-cluster">
+                                <span class="wa-paywall-price" itemprop="price">£4.99</span>
+                                <span class="wa-paywall-period">/month</span>
+                            </div>
+                            <div class="wa-paywall-save-pill wa-pill-neutral">Flexible</div>
+                        </div>
+                        <p class="wa-paywall-subtitle">
+                            Flexible on-demand alert queue to apply to UK vacancies in real-time.
+                        </p>
+
+                        <div class="wa-paywall-features-sep">
+                            <span>Features</span>
+                        </div>
+
+                        <ul class="wa-paywall-features-list">
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                </span>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                                </span>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </span>
+                                <span>Tailored Role & Location Matching</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </span>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                </span>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <span>Zero Risk Guarantee • Cancel Anytime</span>
+                            </li>
+                        </ul>
+
+                        <a href="/my-alerts?tab=plans&plan=monthly" class="wa-paywall-cta-btn">
+                            <span>Upgrade to VIP — £4.99</span>
+                        </a>
+                        <div class="wa-paywall-guarantee">
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>Instant Setup</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <span>Cancel Anytime</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                                <span>16p / day</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2: 6 MONTHS (ACTIVE BY DEFAULT) -->
+                <div id="plan-panel-6month" class="wa-vip-panel active" role="tabpanel" aria-labelledby="tab-6month" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <div class="wa-vip-paywall-card">
+                        <div class="wa-paywall-price-row">
+                            <div class="wa-paywall-price-cluster">
+                                <span class="wa-paywall-price" itemprop="price">£24.99</span>
+                                <span class="wa-paywall-period">/6 months</span>
+                                <span class="wa-paywall-was-price">£29.94</span>
+                            </div>
+                            <div class="wa-paywall-save-pill">Save 17%</div>
+                        </div>
+                        <p class="wa-paywall-subtitle">
+                            Equivalent to £4.16/mo (13p/day) • <strong style="color: #047857; font-weight: 750;">Save 17% vs Monthly</strong>. The #1 most popular plan.
+                        </p>
+
+                        <div class="wa-paywall-features-sep">
+                            <span>Features</span>
+                        </div>
+
+                        <ul class="wa-paywall-features-list">
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                </span>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                                </span>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </span>
+                                <span>Unlimited Roles, Cities & Remote Filters</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </span>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                </span>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <span>Official UK VAT & Pro-Forma Invoice</span>
+                            </li>
+                        </ul>
+
+                        <a href="/my-alerts?tab=plans&plan=6month" class="wa-paywall-cta-btn">
+                            <span>Upgrade to VIP — £24.99</span>
+                            <span class="wa-cta-save-tag">Save 17%</span>
+                        </a>
+                        <div class="wa-paywall-guarantee">
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>Instant Setup</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <span>Cancel Anytime</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                                <span>13p / day</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 3: ANNUAL -->
+                <div id="plan-panel-annual" class="wa-vip-panel" role="tabpanel" aria-labelledby="tab-annual" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <div class="wa-vip-paywall-card">
+                        <div class="wa-paywall-price-row">
+                            <div class="wa-paywall-price-cluster">
+                                <span class="wa-paywall-price" itemprop="price">£39.99</span>
+                                <span class="wa-paywall-period">/year</span>
+                                <span class="wa-paywall-was-price">£59.88</span>
+                            </div>
+                            <div class="wa-paywall-save-pill">Save 33%</div>
+                        </div>
+                        <p class="wa-paywall-subtitle">
+                            Equivalent to £3.33/mo (11p/day) • <strong style="color: #047857; font-weight: 750;">Save 33% vs Monthly</strong>. Full 365 days access.
+                        </p>
+
+                        <div class="wa-paywall-features-sep">
+                            <span>Features</span>
+                        </div>
+
+                        <ul class="wa-paywall-features-list">
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                </span>
+                                <span>Sub-Minute 60s Alert Delivery</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                                </span>
+                                <span>VIP Priority Queue (Up to 7 Daily)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </span>
+                                <span>Unlimited Roles, Cities & Remote Filters</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </span>
+                                <span>1-Tap Direct Application Links</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                </span>
+                                <span>WhatsApp Self-Service (Pause/Resume)</span>
+                            </li>
+                            <li class="wa-paywall-feature-row">
+                                <span class="wa-paywall-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <span>Priority Dedicated Support & Concierge</span>
+                            </li>
+                        </ul>
+
+                        <a href="/my-alerts?tab=plans&plan=annual" class="wa-paywall-cta-btn">
+                            <span>Upgrade to VIP — £39.99</span>
+                            <span class="wa-cta-save-tag">Save 33%</span>
+                        </a>
+                        <div class="wa-paywall-guarantee">
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>Instant Setup</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <span>Cancel Anytime</span>
+                            </span>
+                            <span class="wa-dot">•</span>
+                            <span class="wa-guarantee-item">
+                                <svg class="wa-guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                                <span>11p / day</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bento Grid Section: The Advantage (Now placed below VIP plans) -->
+    <div class="wa-bento-section">
+        <div class="wa-bento-header">
+            <h2 class="wa-bento-title">Why Professionals Choose WhatsApp Alerts</h2>
+            <p class="wa-bento-desc">Traditional job boards bury you in daily bulk emails after the hiring manager has already received hundreds of applications. Here is how we do it differently.</p>
+        </div>
+
+        <div class="wa-bento-grid">
+            <div class="wa-bento-card">
+                <div class="wa-bento-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <h3 class="wa-bento-heading">Sub-Minute Dispatch</h3>
+                <p class="wa-bento-body">When employers publish a role matching your specifications, our real-time listeners ping your WhatsApp in under 60 seconds.</p>
+            </div>
+
+            <div class="wa-bento-card">
+                <div class="wa-bento-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 12 8"></polygon></svg>
+                </div>
+                <h3 class="wa-bento-heading">Zero Spam & Clutter</h3>
+                <p class="wa-bento-body">Only receive genuine, verified openings that meet your exact job role, salary threshold, and preferred UK territory.</p>
+            </div>
+
+            <div class="wa-bento-card">
+                <div class="wa-bento-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </div>
+                <h3 class="wa-bento-heading">1-Tap Direct Apply</h3>
+                <p class="wa-bento-body">Skip endless recruiter forms. Open the verified direct application link directly from your mobile chat.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="wa-faq-section">
+        <div class="wa-faq-header">
+            <div class="wa-faq-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Help & Support</span>
+            </div>
+            <h2 class="wa-faq-title">Frequently Asked Questions</h2>
+            <p class="wa-faq-desc">Clear answers to questions about our WhatsApp Alerts service.</p>
+        </div>
+
+        <div class="wa-faq-item active">
+            <div class="wa-faq-trigger" onclick="toggleFaq(this)">
+                <span>How does the 3-day free trial work?</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="wa-faq-content">
+                When you enter your number above and confirm your PIN, your 3-day free trial starts immediately. You will receive 2 to 3 curated live WhatsApp job alerts daily matching your job role and location preferences for 3 full days with no payment details required. When you are ready for full real-time dispatches (up to 7 alerts daily), you can upgrade to any VIP tier.
+            </div>
+        </div>
+
+        <div class="wa-faq-item">
+            <div class="wa-faq-trigger" onclick="toggleFaq(this)">
+                <span>Can I update my role or location preferences later?</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="wa-faq-content">
+                Yes. You can modify your target job title, location, or minimum salary at any time directly through your candidate portal at <a href="/my-alerts/" style="color: #059669; font-weight: 700; text-decoration: underline;">jobyuk.com/my-alerts</a>.
+            </div>
+        </div>
+
+        <div class="wa-faq-item">
+            <div class="wa-faq-trigger" onclick="toggleFaq(this)">
+                <span>How do I pause alerts if I find a job?</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="wa-faq-content">
+                You can pause alerts with 1 tap from your candidate dashboard, or simply reply <code>PAUSE</code> to any message from our WhatsApp gateway. You can unpause whenever you resume your job search.
+            </div>
+        </div>
+
+        <div class="wa-faq-item">
+            <div class="wa-faq-trigger" onclick="toggleFaq(this)">
+                <span>What payment options are supported?</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="wa-faq-content">
+                We accept major Credit & Debit Cards (Apple Pay and Google Pay enabled), PayPal, Binance USDT (TRC-20 & BEP-20), as well as direct UK Bank Transfer / Wise Pro-Forma Invoices via our billing concierge.
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Topical Hub: Cross-Link High Authority Pathways (Tabbed Experience matching Home Page) -->
+    <section class="wa-seo-hub-section" aria-label="Explore UK Jobs by Role and Region">
+        <div class="wa-seo-hub-header">
+            <div class="wa-seo-hub-pill">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>Live UK Career Directory</span>
+            </div>
+            <h2 class="wa-seo-hub-title">Explore Verified UK Opportunities on JobyUK.com</h2>
+            <p class="wa-seo-hub-sub">Filter thousands of live vacancies or connect your WhatsApp for real-time dispatches.</p>
+        </div>
+
+        <!-- Browse Tabs Header -->
+        <div class="wa-browse-tabs-header-wrap">
+            <div class="wa-browse-tabs-header" role="tablist">
+                <button type="button" class="wa-browse-tab-btn wa-browse-tab-btn--active" data-hub-target="#hub-tab-roles" role="tab" aria-selected="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>High-Demand Roles</span>
+                </button>
+                <button type="button" class="wa-browse-tab-btn" data-hub-target="#hub-tab-regions" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>Major UK Regions</span>
+                </button>
+                <button type="button" class="wa-browse-tab-btn" data-hub-target="#hub-tab-resources" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Career Resources</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Browse Tabs Content -->
+        <div class="wa-browse-tabs-content">
+            <!-- Panel 1: High-Demand Roles -->
+            <div class="wa-browse-tab-panel wa-browse-tab-panel--active" id="hub-tab-roles" role="tabpanel">
+                <div class="wa-browse-panel-grid">
+                    <a href="/jobs/?q=Software+Engineer" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Software Engineer Jobs UK</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Nurse" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">NHS & Healthcare Nursing Roles</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Accountant" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Finance & Accounting Vacancies</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Project+Manager" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Project & Operations Managers</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Data+Analyst" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Data Analyst & Science Roles</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Marketing+Manager" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Digital Marketing & Growth</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Product+Manager" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Product Management Roles</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=Business+Analyst" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Business Analysis & Strategy</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?q=DevOps+Engineer" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">DevOps & Cloud Engineering</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </div>
+                <div class="wa-browse-panel-cta">
+                    <a href="/job-roles/" class="wa-browse-view-all-btn">
+                        <span>Explore All High-Demand Roles</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Panel 2: Major UK Regions -->
+            <div class="wa-browse-tab-panel" id="hub-tab-regions" role="tabpanel">
+                <div class="wa-browse-panel-grid">
+                    <a href="/jobs/?location=London" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">London & Greater London Jobs</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Manchester" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Manchester & North West Jobs</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Birmingham" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Birmingham & Midlands Roles</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Leeds" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Leeds & Yorkshire Vacancies</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Remote" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Fully Remote UK Positions</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Bristol" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Bristol & South West Jobs</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Edinburgh" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Edinburgh & Scotland Vacancies</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Cambridge" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Cambridge Tech Cluster Jobs</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/jobs/?location=Glasgow" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Glasgow & Central Belt Jobs</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </div>
+                <div class="wa-browse-panel-cta">
+                    <a href="/locations/" class="wa-browse-view-all-btn">
+                        <span>Explore All UK Job Locations</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Panel 3: Career Resources -->
+            <div class="wa-browse-tab-panel" id="hub-tab-resources" role="tabpanel">
+                <div class="wa-browse-panel-grid">
+                    <a href="/jobs/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Browse All Live UK Vacancies</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/companies/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">UK Employer Directory (500+)</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/salaries/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">UK Salary Benchmarks 2026</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/job-roles/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Explore High-Paying Career Roles</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/my-alerts/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">Manage WhatsApp Alert Preferences</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <a href="/pricing/" class="wa-browse-tab-link">
+                        <span class="wa-browse-link-name">JobyUK.com Membership & Pricing</span>
+                        <svg class="wa-browse-link-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </div>
+                <div class="wa-browse-panel-cta">
+                    <a href="/jobs/" class="wa-browse-view-all-btn">
+                        <span>Browse Live Job Board</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var wasActive = item.classList.contains('active');
+    document.querySelectorAll('.wa-faq-item').forEach(function(el) {
+        el.classList.remove('active');
+        var c = el.querySelector('.wa-faq-content');
+        if (c) c.style.display = '';
+        var s = el.querySelector('.wa-faq-trigger svg');
+        if (s) s.style.transform = '';
+    });
+    if (!wasActive) {
+        item.classList.add('active');
+    }
+}
+
+var activeSubscribedPhone = '';
+
+function handleLandingTrialSubmit(e) {
+    e.preventDefault();
+    var errBox = document.getElementById('landingFormError');
+    var btn = document.getElementById('landingSubmitBtn');
+    var btnText = document.getElementById('landingSubmitBtnText');
+
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btn.style.opacity = '0.75';
+    btnText.textContent = 'Connecting to WhatsApp...';
+
+    var payload = {
+        full_name: document.getElementById('landingName').value.trim(),
+        phone: document.getElementById('landingPhone').value.trim(),
+        keywords: document.getElementById('landingKeywords').value.trim(),
+        location: document.getElementById('landingLocation').value.trim()
+    };
+
+    activeSubscribedPhone = payload.phone;
+
+    fetch('/api/whatsapp/trial-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btnText.textContent = 'Start 3-Day Free Trial';
+
+        if (data.success) {
+            document.getElementById('waLandingTrialForm').style.display = 'none';
+            var step = document.getElementById('landingVerifyStep');
+            step.style.display = 'block';
+            document.getElementById('landingVerifyNotice').innerHTML = 'We sent a 6-digit confirmation code to <strong>' + activeSubscribedPhone + '</strong> via WhatsApp. Enter it below to activate:';
+            document.getElementById('landingPinInput').focus();
+        } else {
+            errBox.textContent = data.error || 'Could not register. Please verify your phone number.';
+            errBox.style.display = 'block';
+        }
+    })
+    .catch(function(err) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btnText.textContent = 'Start 3-Day Free Trial';
+        errBox.textContent = 'Network error contacting WhatsApp gateway. Please try again.';
+        errBox.style.display = 'block';
+    });
+}
+
+function verifyLandingPin() {
+    var pin = document.getElementById('landingPinInput').value.trim();
+    var errBox = document.getElementById('landingVerifyError');
+    if (pin.length < 4) {
+        errBox.textContent = 'Please enter the verification PIN sent to your WhatsApp.';
+        errBox.style.display = 'block';
+        return;
+    }
+    errBox.style.display = 'none';
+
+    fetch('/api/whatsapp/trial-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            phone: activeSubscribedPhone,
+            pin: pin
+        })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (data.success) {
+            window.location.href = '/my-alerts?success=Welcome+to+JobyUK.com!+Your+3-Day+Free+Trial+is+now+active.';
+        } else {
+            errBox.textContent = data.error || 'Invalid or expired PIN. Please try again.';
+            errBox.style.display = 'block';
+        }
+    })
+    .catch(function(err) {
+        errBox.textContent = 'Network error verifying PIN. Please try again.';
+        errBox.style.display = 'block';
+    });
+}
+
+// WhatsApp Landing Page Directory Browse Tabs Switcher
+document.addEventListener('DOMContentLoaded', function() {
+    var tabBtns = document.querySelectorAll('.wa-browse-tab-btn');
+    var tabPanels = document.querySelectorAll('.wa-browse-tab-panel');
+    if (tabBtns.length > 0 && tabPanels.length > 0) {
+        tabBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                tabBtns.forEach(function(b) {
+                    b.classList.remove('wa-browse-tab-btn--active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                tabPanels.forEach(function(p) {
+                    p.classList.remove('wa-browse-tab-panel--active');
+                });
+                btn.classList.add('wa-browse-tab-btn--active');
+                btn.setAttribute('aria-selected', 'true');
+                var targetId = btn.getAttribute('data-hub-target');
+                if (targetId) {
+                    var targetPanel = document.querySelector(targetId);
+                    if (targetPanel) {
+                        targetPanel.classList.add('wa-browse-tab-panel--active');
+                    }
+                }
+            });
+        });
+    }
+});
+
+// WhatsApp Job Preview Live Carousel / Swiper
+document.addEventListener('DOMContentLoaded', function() {
+    var track = document.getElementById('waBubbleSliderTrack');
+    var dots = document.querySelectorAll('.wa-dot');
+    var tagEl = document.getElementById('waSlideTag');
+    var counterEl = document.getElementById('waSlideCounter');
+    var timeEl = document.getElementById('waSlideTime');
+    var previewBox = document.getElementById('waChatPreviewBox');
+    
+    if (!track || dots.length === 0) return;
+    
+    var slides = track.querySelectorAll('.wa-bubble-slide');
+    var totalSlides = slides.length;
+    var currentSlide = 0;
+    var autoPlayTimer = null;
+    var isHovered = false;
+
+    function goToSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        currentSlide = index;
+
+        track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+
+        dots.forEach(function(dot, i) {
+            if (i === currentSlide) {
+                dot.classList.add('wa-dot--active');
+            } else {
+                dot.classList.remove('wa-dot--active');
+            }
+        });
+
+        var activeSlide = slides[currentSlide];
+        if (activeSlide) {
+            var tag = activeSlide.getAttribute('data-tag');
+            var time = activeSlide.getAttribute('data-time');
+            if (tagEl && tag) tagEl.textContent = tag;
+            if (timeEl && time) timeEl.textContent = time;
+            if (counterEl) counterEl.textContent = 'Role ' + (currentSlide + 1) + ' of ' + totalSlides + ' • Auto-rotating';
+        }
+    }
+
+    dots.forEach(function(dot) {
+        dot.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var targetIdx = parseInt(dot.getAttribute('data-slide'), 10);
+            goToSlide(targetIdx);
+            resetAutoPlay();
+        });
+    });
+
+    function nextSlide() {
+        goToSlide(currentSlide + 1);
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(function() {
+            if (!isHovered) {
+                nextSlide();
+            }
+        }, 3000);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+    }
+
+    function resetAutoPlay() {
+        startAutoPlay();
+    }
+
+    if (previewBox) {
+        previewBox.addEventListener('mouseenter', function() {
+            isHovered = true;
+        });
+        previewBox.addEventListener('mouseleave', function() {
+            isHovered = false;
+        });
+
+        // Touch swipe support for mobile
+        var touchStartX = 0;
+        var touchEndX = 0;
+        previewBox.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        previewBox.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            var diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+                resetAutoPlay();
+            }
+        }, { passive: true });
+    }
+
+    startAutoPlay();
+
+    // VIP Plan Tabs Switcher
+    (function() {
+        var tabBtns = document.querySelectorAll('.wa-vip-tab-btn');
+        var panels = document.querySelectorAll('.wa-vip-panel');
+        if (!tabBtns.length || !panels.length) return;
+
+        tabBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var targetId = this.getAttribute('data-target');
+                if (!targetId) return;
+
+                tabBtns.forEach(function(b) {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                panels.forEach(function(p) {
+                    p.classList.remove('active');
+                });
+
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+
+                var targetPanel = document.getElementById(targetId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+    })();
+});
+</script>
+{{end}}

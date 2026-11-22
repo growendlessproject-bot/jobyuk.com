@@ -1,0 +1,1237 @@
+{{define "search_modal"}}
+<!-- Prominent Global Spotlight Search Modal -->
+<div id="global-search-modal" class="gsm-overlay" style="display: none;" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gsm-search-input">
+    <div class="gsm-backdrop" onclick="closeGlobalSearchModal()"></div>
+    
+    <div class="gsm-card" role="document">
+        <!-- 1. Search Input Header Row -->
+        <form class="gsm-search-form" action="/jobs/" method="GET" onsubmit="handleGlobalSearchSubmit(event)">
+            <div class="gsm-input-wrap">
+                <svg class="gsm-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" 
+                       id="gsm-search-input" 
+                       name="q" 
+                       class="gsm-input" 
+                       placeholder="Search jobs, roles, companies, salaries, locations..." 
+                       autocomplete="off" 
+                       spellcheck="false"
+                       aria-label="Global Search"
+                       oninput="handleGlobalSearchInput(this.value)"
+                       onkeydown="handleGlobalSearchKeydown(event)" />
+                <button type="button" id="gsm-clear-btn" class="gsm-clear-btn" onclick="clearGlobalSearchInput()" style="display: none;" aria-label="Clear input" title="Clear">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="gsm-header-actions">
+                <button type="submit" class="gsm-submit-btn" style="display: inline-flex; align-items: center; gap: 7px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>Search</span>
+                </button>
+                <button type="button" class="gsm-close-modal-btn" onclick="closeGlobalSearchModal()" aria-label="Close search modal" title="Close (Esc)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </form>
+
+        <!-- Category Pills Filter Bar (Pure Modern SVGs, Zero Emojis) -->
+        <div class="gsm-filter-pills">
+            <button type="button" class="gsm-pill gsm-pill--active" data-cat="all" onclick="setGsmCategory('all')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                <span>All Results</span>
+            </button>
+            <button type="button" class="gsm-pill" data-cat="role" onclick="setGsmCategory('role')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span>Roles</span>
+            </button>
+            <button type="button" class="gsm-pill" data-cat="company" onclick="setGsmCategory('company')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path></svg>
+                <span>Companies</span>
+            </button>
+            <button type="button" class="gsm-pill" data-cat="location" onclick="setGsmCategory('location')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>Locations</span>
+            </button>
+            <button type="button" class="gsm-pill" data-cat="salary" onclick="setGsmCategory('salary')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>
+                <span>Salaries</span>
+            </button>
+        </div>
+
+        <!-- 2. Dynamic Results & Suggestions Body -->
+        <div class="gsm-body">
+            <!-- Section Header Row with Tab-Specific Dynamic Navigation Link -->
+            <div class="gsm-section-header" id="gsm-section-title">
+                <div class="gsm-section-label">
+                    <span class="gsm-trending-icon-wrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    </span>
+                    <span id="gsm-header-text">Popular UK Careers & Hubs</span>
+                </div>
+                <a href="/jobs/" id="gsm-quick-action-link" class="gsm-quick-all-jobs" onclick="closeGlobalSearchModal()">
+                    <span id="gsm-quick-action-text">Browse All</span>
+                    <svg class="jy-arrow-right" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Suggestions List (Zero-Duplicate Verified) -->
+            <div class="gsm-suggestions-list" id="gsm-suggestions-list">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- 3. Fixed Bottom Footer with Pro Navigation Bar -->
+        <div class="gsm-footer">
+            <div class="gsm-footer-left">
+                <a href="/jobs/" class="gsm-browse-link" onclick="closeGlobalSearchModal()">
+                    <span class="gsm-browse-icon-wrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </span>
+                    <span>View 10,000+ UK Live Jobs</span>
+                </a>
+            </div>
+            <div class="gsm-footer-hint-row">
+                <span class="gsm-hint-text"><kbd>↑</kbd> <kbd>↓</kbd> Navigate</span>
+                <span class="gsm-hint-dot">•</span>
+                <span class="gsm-hint-text"><kbd>↵</kbd> Select</span>
+                <span class="gsm-hint-dot">•</span>
+                <span class="gsm-hint-text"><kbd>Esc</kbd> Close</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* =========================================================
+   Spotlight Global Search Modal - JobyUK Executive Emerald Theme
+   ========================================================= */
+.gsm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999 !important;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 16px 24px 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
+}
+
+.gsm-overlay--open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gsm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 25%, rgba(15, 81, 50, 0.42) 0%, rgba(11, 31, 26, 0.82) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.gsm-card {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+    max-width: 660px;
+    border-radius: 24px;
+    border: 1.5px solid rgba(167, 243, 208, 0.7);
+    box-shadow: 0 32px 85px -16px rgba(11, 31, 26, 0.4), 0 0 0 1px rgba(5, 150, 105, 0.15), 0 0 45px rgba(16, 185, 129, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 90px);
+    transform: scale(0.96) translateY(-14px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gsm-overlay--open .gsm-card {
+    transform: scale(1) translateY(0);
+}
+
+/* 1. Search Form Header */
+.gsm-search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 22px;
+    border-bottom: 1px solid #E2E8F0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAF8 100%);
+    flex-shrink: 0;
+}
+
+.gsm-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 8px 14px;
+    transition: all 0.2s ease;
+}
+
+.gsm-input-wrap:focus-within {
+    background: #FFFFFF;
+    border-color: #059669;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.16);
+}
+
+.gsm-search-icon {
+    flex-shrink: 0;
+    color: #059669;
+}
+
+.gsm-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0B1F1A;
+    background: transparent;
+    font-family: inherit;
+}
+
+.gsm-input::placeholder {
+    color: #94A3B8;
+    font-weight: 450;
+}
+
+.gsm-clear-btn {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #059669;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.gsm-clear-btn:hover {
+    background: #059669;
+    color: #FFFFFF;
+    border-color: #059669;
+}
+
+.gsm-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.gsm-submit-btn {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 0.92rem;
+    font-weight: 750;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-family: inherit;
+    box-shadow: 0 4px 14px rgba(15, 81, 50, 0.25);
+}
+
+.gsm-submit-btn:hover {
+    background: linear-gradient(135deg, #0A3C24 0%, #047857 100%);
+    box-shadow: 0 6px 18px rgba(15, 81, 50, 0.35);
+    transform: translateY(-1.5px);
+}
+
+.gsm-close-modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #F8FAF8;
+    border: 1.5px solid #E2E8F0;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.gsm-close-modal-btn:hover {
+    background: #ECFDF5;
+    color: #065F46;
+    border-color: #A7F3D0;
+    transform: rotate(90deg);
+}
+
+/* Category Filter Pills */
+.gsm-filter-pills {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: #F8FAF8;
+    border-bottom: 1px solid #E2E8F0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
+}
+.gsm-filter-pills::-webkit-scrollbar {
+    display: none;
+}
+
+.gsm-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 15px;
+    border-radius: 9999px;
+    border: 1px solid #E2E8F0;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.78rem;
+    font-weight: 750;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    font-family: inherit;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.gsm-pill svg {
+    flex-shrink: 0;
+    transition: stroke 0.15s ease;
+}
+
+.gsm-pill:hover {
+    background: #ECFDF5;
+    color: #065F46;
+    border-color: #A7F3D0;
+    transform: translateY(-1px);
+}
+
+.gsm-pill--active {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    border-color: #0F5132 !important;
+    box-shadow: 0 3px 12px rgba(15, 81, 50, 0.3) !important;
+}
+
+.gsm-pill--active svg {
+    stroke: #ffffff !important;
+}
+
+/* 2. Modal Body & Suggestions */
+.gsm-body {
+    padding: 14px 18px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 400px;
+    background: #ffffff;
+    scrollbar-width: thin;
+    scrollbar-color: #A7F3D0 transparent;
+}
+
+.gsm-body::-webkit-scrollbar {
+    width: 6px;
+}
+.gsm-body::-webkit-scrollbar-thumb {
+    background: #A7F3D0;
+    border-radius: 6px;
+}
+
+.gsm-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px 12px 10px;
+    gap: 8px;
+}
+
+.gsm-section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 850;
+    color: #065F46;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-width: 0;
+    flex: 1;
+}
+
+.gsm-section-label span#gsm-header-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gsm-trending-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #059669;
+    flex-shrink: 0;
+}
+
+.gsm-quick-all-jobs {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.76rem;
+    font-weight: 750;
+    color: #065F46;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.gsm-quick-all-jobs:hover {
+    background: #0F5132;
+    color: #ffffff;
+    border-color: #0F5132;
+    box-shadow: 0 3px 10px rgba(15, 81, 50, 0.25);
+}
+
+.gsm-quick-all-jobs .j-arrow-right {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+.gsm-quick-all-jobs:hover .j-arrow-right {
+    transform: translateX(3px);
+}
+
+.gsm-suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gsm-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #0B1F1A;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.gsm-item:hover, .gsm-item--active {
+    background: linear-gradient(90deg, #F0FDF4 0%, #FFFFFF 100%) !important;
+    border-color: #A7F3D0 !important;
+    box-shadow: 0 4px 16px -2px rgba(5, 150, 105, 0.12);
+    transform: translateX(4px);
+}
+
+.gsm-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.gsm-item-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #F8FAF8;
+    border: 1px solid #E2E8F0;
+    color: #059669;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+}
+
+.gsm-item:hover .gsm-item-icon-wrap,
+.gsm-item--active .gsm-item-icon-wrap {
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+    color: #ffffff;
+    border-color: #0F5132;
+    box-shadow: 0 4px 10px rgba(15, 81, 50, 0.25);
+}
+
+.gsm-item-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.gsm-item-title {
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #0B1F1A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gsm-item:hover .gsm-item-title,
+.gsm-item--active .gsm-item-title {
+    color: #0F5132;
+}
+
+.gsm-item-title strong {
+    color: #059669;
+    font-weight: 850;
+    background: #ECFDF5;
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+.gsm-item-subtitle {
+    font-size: 0.77rem;
+    color: #64748B;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gsm-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.gsm-badge--role {
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+}
+.gsm-badge--company {
+    background: #F0FDF4;
+    color: #047857;
+    border: 1px solid #86EFAC;
+}
+.gsm-badge--location {
+    background: #F8FAFC;
+    color: #334155;
+    border: 1px solid #CBD5E1;
+}
+.gsm-badge--salary {
+    background: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+}
+.gsm-badge--search {
+    background: #ECFDF5;
+    color: #059669;
+    border: 1px solid #A7F3D0;
+}
+
+/* 3. Fixed Footer */
+.gsm-footer {
+    padding: 12px 22px;
+    border-top: 1px solid #E2E8F0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAF8 100%);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gsm-browse-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 750;
+    color: #0F5132;
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+
+.gsm-browse-link:hover {
+    color: #059669;
+    transform: translateX(2px);
+}
+
+.gsm-browse-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #059669;
+}
+
+.gsm-footer-hint-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gsm-hint-text {
+    font-size: 0.72rem;
+    color: #64748B;
+    font-weight: 550;
+}
+
+.gsm-hint-dot {
+    font-size: 0.72rem;
+    color: #CBD5E1;
+}
+
+.gsm-footer-hint-row kbd {
+    background: #ffffff;
+    border: 1px solid #CBD5E1;
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-family: inherit;
+    font-size: 0.68rem;
+    font-weight: 750;
+    color: #065F46;
+    box-shadow: 0 1px 2px rgba(15, 81, 50, 0.08);
+}
+
+/* ================================================================
+   Next-Level Mobile App Spotlight Search Modal
+   ================================================================ */
+@media (max-width: 640px) {
+    .gsm-overlay {
+        padding: 0 !important;
+        align-items: flex-start !important;
+        background: rgba(11, 31, 26, 0.88) !important;
+    }
+    .gsm-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        transform: translateY(30px) !important;
+        background: #ffffff !important;
+    }
+    .gsm-overlay--open .gsm-card {
+        transform: translateY(0) !important;
+    }
+    .gsm-search-form {
+        padding: 12px 14px !important;
+        gap: 8px !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 20 !important;
+    }
+    .gsm-input-wrap {
+        background: #f8faf8 !important;
+        border-radius: 12px !important;
+        padding: 6px 12px !important;
+        border: 1.5px solid #e2e8f0 !important;
+        transition: border-color 0.2s, background 0.2s !important;
+    }
+    .gsm-input-wrap:focus-within {
+        background: #ffffff !important;
+        border-color: #059669 !important;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16) !important;
+    }
+    .gsm-search-icon {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    .gsm-input {
+        font-size: 0.92rem !important;
+    }
+    .gsm-input::placeholder {
+        font-size: 0.8rem !important;
+        color: #94a3b8 !important;
+    }
+    .gsm-submit-btn {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
+    }
+    .gsm-close-modal-btn {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+        background: #f1f5f9 !important;
+    }
+    .gsm-filter-pills {
+        padding: 8px 14px !important;
+        background: #f8faf8 !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        gap: 6px !important;
+    }
+    .gsm-pill {
+        padding: 5px 12px !important;
+        font-size: 0.76rem !important;
+    }
+    .gsm-body {
+        padding: 12px 12px !important;
+        flex: 1 !important;
+        max-height: none !important;
+    }
+    .gsm-section-header {
+        padding: 4px 6px 8px 6px !important;
+        gap: 6px !important;
+    }
+    .gsm-section-label {
+        font-size: 0.72rem !important;
+        gap: 6px !important;
+    }
+    .gsm-trending-icon-wrap {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .gsm-quick-all-jobs {
+        font-size: 0.72rem !important;
+        padding: 3px 8px !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+    .gsm-item {
+        padding: 10px 12px !important;
+        border-radius: 12px !important;
+    }
+    .gsm-item-icon-wrap {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    .gsm-item-title {
+        font-size: 0.88rem !important;
+    }
+    .gsm-item-subtitle {
+        font-size: 0.72rem !important;
+    }
+    .gsm-footer {
+        padding: 12px 16px !important;
+        background: #ffffff !important;
+        border-top: 1px solid #e2e8f0 !important;
+        position: sticky !important;
+        bottom: 0 !important;
+        z-index: 20 !important;
+    }
+    .gsm-footer-hint-row {
+        display: none !important;
+    }
+    .gsm-browse-link {
+        width: 100% !important;
+        justify-content: center !important;
+        font-size: 0.88rem !important;
+        padding: 6px 0 !important;
+    }
+}
+</style>
+
+<script>
+// =========================================================
+// Global Spotlight Search Modal Engine (Zero-Duplicate & SVGs)
+// =========================================================
+
+let gsmActiveCategory = 'all';
+
+const GSM_CATEGORY_CONFIG = {
+    all: {
+        title: "Popular UK Careers & Hubs",
+        actionText: "Browse All",
+        actionUrl: "/jobs/"
+    },
+    role: {
+        title: "Top UK Job Roles & Careers",
+        actionText: "All Roles",
+        actionUrl: "/job-roles/"
+    },
+    company: {
+        title: "Top UK Employers & Companies",
+        actionText: "All Companies",
+        actionUrl: "/companies/"
+    },
+    location: {
+        title: "Top UK Cities & Remote Hubs",
+        actionText: "All UK Jobs",
+        actionUrl: "/jobs/"
+    },
+    salary: {
+        title: "UK Average Salary Benchmarks",
+        actionText: "All Salaries",
+        actionUrl: "/salaries/"
+    }
+};
+
+const GSM_SPOTLIGHT_DATABASE = {
+    roles: [
+        { title: "Software Engineer", subtitle: "Tech & Software Development", url: "/job-roles/software-engineer/", badge: "Role" },
+        { title: "Frontend Developer", subtitle: "Web & UI Engineering", url: "/job-roles/frontend-developer/", badge: "Role" },
+        { title: "Backend Developer", subtitle: "API & Server Systems", url: "/job-roles/backend-developer/", badge: "Role" },
+        { title: "Full Stack Developer", subtitle: "End-to-End Application Dev", url: "/job-roles/full-stack-developer/", badge: "Role" },
+        { title: "DevOps Engineer", subtitle: "Cloud & Infrastructure Operations", url: "/job-roles/devops-engineer/", badge: "Role" },
+        { title: "Data Analyst", subtitle: "SQL, PowerBI & Business Insights", url: "/job-roles/data-analyst/", badge: "Role" },
+        { title: "Data Scientist", subtitle: "Machine Learning & Advanced Analytics", url: "/job-roles/data-scientist/", badge: "Role" },
+        { title: "Product Manager", subtitle: "Product Strategy & Agile Delivery", url: "/job-roles/product-manager/", badge: "Role" },
+        { title: "Project Manager", subtitle: "Planning, Budgeting & Execution", url: "/job-roles/project-manager/", badge: "Role" },
+        { title: "Business Analyst", subtitle: "Process Transformation & Specs", url: "/job-roles/business-analyst/", badge: "Role" },
+        { title: "Registered Nurse", subtitle: "NHS & Healthcare Support", url: "/job-roles/nurse/", badge: "Role" },
+        { title: "Accountant", subtitle: "ACCA/CIMA Finance & Taxation", url: "/job-roles/accountant/", badge: "Role" }
+    ],
+    companies: [
+        { title: "NHS", subtitle: "National Health Service - UK Healthcare", url: "/companies/nhs/", badge: "Company" },
+        { title: "Reed Recruitment", subtitle: "Leading UK Staffing & Recruitment", url: "/companies/reed-recruitment/", badge: "Company" },
+        { title: "Barclays", subtitle: "Banking, Fintech & Capital Markets", url: "/companies/barclays/", badge: "Company" },
+        { title: "Deloitte", subtitle: "Audit, Tax & Management Consulting", url: "/companies/deloitte/", badge: "Company" },
+        { title: "BBC", subtitle: "Broadcasting, Creative & Journalism", url: "/companies/bbc/", badge: "Company" },
+        { title: "Amazon UK", subtitle: "Tech, Cloud Computing & Logistics", url: "/companies/amazon/", badge: "Company" },
+        { title: "Tesco", subtitle: "Retail, Operations & Supply Chain", url: "/companies/tesco/", badge: "Company" },
+        { title: "BT Group", subtitle: "Telecommunications & Digital Infrastructure", url: "/companies/bt/", badge: "Company" },
+        { title: "KPMG", subtitle: "Financial Advisory & Tax Solutions", url: "/companies/kpmg/", badge: "Company" },
+        { title: "PwC UK", subtitle: "Professional Services & Strategy", url: "/companies/pwc/", badge: "Company" },
+        { title: "Vodafone", subtitle: "Global Telecoms & Mobile Technology", url: "/companies/vodafone/", badge: "Company" },
+        { title: "Sainsbury's", subtitle: "Supermarkets & Retail Logistics", url: "/companies/sainsburys/", badge: "Company" }
+    ],
+    locations: [
+        { title: "Remote (Work from Anywhere in UK)", subtitle: "Nationwide Remote & Hybrid Jobs", url: "/jobs/?location=Remote%2C+UK", badge: "Remote" },
+        { title: "London, England", subtitle: "Greater London Metropolitan", url: "/jobs/?location=London%2C+England", badge: "City" },
+        { title: "Manchester, England", subtitle: "North West Digital & Commercial Hub", url: "/jobs/?location=Manchester%2C+England", badge: "City" },
+        { title: "Birmingham, England", subtitle: "West Midlands Tech & Commerce", url: "/jobs/?location=Birmingham%2C+England", badge: "City" },
+        { title: "Leeds, England", subtitle: "Yorkshire Financial Hub", url: "/jobs/?location=Leeds%2C+England", badge: "City" },
+        { title: "Glasgow, Scotland", subtitle: "Scotland Central Belt Commercial Centre", url: "/jobs/?location=Glasgow%2C+Scotland", badge: "City" },
+        { title: "Edinburgh, Scotland", subtitle: "Capital of Scotland Tech Sector", url: "/jobs/?location=Edinburgh%2C+Scotland", badge: "City" },
+        { title: "Bristol, England", subtitle: "South West Creative & Tech Cluster", url: "/jobs/?location=Bristol%2C+England", badge: "City" },
+        { title: "Liverpool, England", subtitle: "Merseyside Commerce & Health", url: "/jobs/?location=Liverpool%2C+England", badge: "City" },
+        { title: "Sheffield, England", subtitle: "South Yorkshire Engineering Hub", url: "/jobs/?location=Sheffield%2C+England", badge: "City" },
+        { title: "Cardiff, Wales", subtitle: "Capital of Wales Commercial Hub", url: "/jobs/?location=Cardiff%2C+Wales", badge: "City" },
+        { title: "Belfast, Northern Ireland", subtitle: "Northern Ireland Technology Hub", url: "/jobs/?location=Belfast%2C+Northern+Ireland", badge: "City" }
+    ],
+    salaries: [
+        { title: "Software Engineer Salary Benchmark", subtitle: "Avg £55,000 / yr • View salary percentiles", url: "/salaries/software-engineer/", badge: "Salary" },
+        { title: "Frontend Developer Salary Benchmark", subtitle: "Avg £48,000 / yr • Modern web salaries", url: "/salaries/frontend-developer/", badge: "Salary" },
+        { title: "Data Analyst Salary Benchmark", subtitle: "Avg £42,000 / yr • UK market rates", url: "/salaries/data-analyst/", badge: "Salary" },
+        { title: "Project Manager Salary Benchmark", subtitle: "Avg £52,000 / yr • UK market rates", url: "/salaries/project-manager/", badge: "Salary" },
+        { title: "NHS Nurse Salary Guide", subtitle: "Agenda for Change band scales", url: "/salaries/nurse/", badge: "Salary" },
+        { title: "Accountant Salary Benchmark", subtitle: "Avg £45,000 / yr • Qualified benchmarks", url: "/salaries/accountant/", badge: "Salary" },
+        { title: "DevOps Engineer Salary Benchmark", subtitle: "Avg £65,000 / yr • Cloud architect pay", url: "/salaries/devops-engineer/", badge: "Salary" },
+        { title: "Product Manager Salary Benchmark", subtitle: "Avg £58,000 / yr • Strategy & Agile pay", url: "/salaries/product-manager/", badge: "Salary" },
+        { title: "Business Analyst Salary Benchmark", subtitle: "Avg £46,000 / yr • Process transformation", url: "/salaries/business-analyst/", badge: "Salary" },
+        { title: "Marketing Manager Salary Benchmark", subtitle: "Avg £44,000 / yr • Growth & digital", url: "/salaries/marketing-manager/", badge: "Salary" },
+        { title: "Data Scientist Salary Benchmark", subtitle: "Avg £62,000 / yr • AI & ML pay rates", url: "/salaries/data-scientist/", badge: "Salary" },
+        { title: "Teacher Salary Benchmark", subtitle: "Avg £36,000 / yr • National pay spine", url: "/salaries/teacher/", badge: "Salary" }
+    ]
+};
+
+const GSM_ICONS = {
+    role: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
+    company: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9v.01"></path><path d="M9 12v.01"></path><path d="M9 15v.01"></path><path d="M9 18v.01"></path></svg>`,
+    location: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
+    salary: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7c0-5.333-8-5.333-8 0v10a2 2 0 0 0 2 2h6"></path><path d="M6 13h10"></path></svg>`,
+    search: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`
+};
+
+function openGlobalSearchModal(initialQuery) {
+    const modal = document.getElementById('global-search-modal');
+    const input = document.getElementById('gsm-search-input');
+    if (!modal || !input) return;
+
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => {
+        modal.classList.add('gsm-overlay--open');
+        modal.setAttribute('aria-hidden', 'false');
+    });
+
+    gsmActiveCategory = 'all';
+    updateGsmPillsUI();
+
+    if (initialQuery) {
+        input.value = initialQuery;
+        handleGlobalSearchInput(initialQuery);
+    } else {
+        input.value = '';
+        handleGlobalSearchInput('');
+    }
+
+    setTimeout(() => {
+        input.focus();
+    }, 60);
+
+    document.body.style.overflow = 'hidden';
+}
+
+function closeGlobalSearchModal() {
+    const modal = document.getElementById('global-search-modal');
+    if (!modal) return;
+
+    modal.classList.remove('gsm-overlay--open');
+    modal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }, 200);
+}
+
+function clearGlobalSearchInput() {
+    const input = document.getElementById('gsm-search-input');
+    if (input) {
+        input.value = '';
+        input.focus();
+        handleGlobalSearchInput('');
+    }
+}
+
+function setGsmCategory(cat) {
+    gsmActiveCategory = cat;
+    updateGsmPillsUI();
+    const input = document.getElementById('gsm-search-input');
+    handleGlobalSearchInput(input ? input.value : '');
+}
+
+function updateGsmPillsUI() {
+    document.querySelectorAll('.gsm-pill').forEach(pill => {
+        if (pill.getAttribute('data-cat') === gsmActiveCategory) {
+            pill.classList.add('gsm-pill--active');
+        } else {
+            pill.classList.remove('gsm-pill--active');
+        }
+    });
+
+    // Update section header action link & text based on active tab
+    const config = GSM_CATEGORY_CONFIG[gsmActiveCategory] || GSM_CATEGORY_CONFIG.all;
+    const quickLink = document.getElementById('gsm-quick-action-link');
+    const quickText = document.getElementById('gsm-quick-action-text');
+
+    if (quickLink && quickText) {
+        quickLink.href = config.actionUrl;
+        quickText.textContent = config.actionText;
+    }
+}
+
+function handleGlobalSearchSubmit(e) {
+    const input = document.getElementById('gsm-search-input');
+    if (input && !input.value.trim()) {
+        if (e && e.preventDefault) e.preventDefault();
+        input.focus();
+    }
+}
+
+function handleGlobalSearchInput(query) {
+    const clearBtn = document.getElementById('gsm-clear-btn');
+    const headerText = document.getElementById('gsm-header-text');
+    const list = document.getElementById('gsm-suggestions-list');
+    const rawQ = query.trim();
+    const q = rawQ.toLowerCase();
+
+    if (clearBtn) {
+        clearBtn.style.display = rawQ.length > 0 ? 'flex' : 'none';
+    }
+
+    if (!list) return;
+
+    const seenUrls = new Set();
+    const seenTitles = new Set();
+    const items = [];
+
+    // Helper to add unique item
+    const pushUnique = (item) => {
+        const titleKey = item.title.toLowerCase();
+        const urlKey = item.url.toLowerCase();
+        if (!seenTitles.has(titleKey) && !seenUrls.has(urlKey)) {
+            seenTitles.add(titleKey);
+            seenUrls.add(urlKey);
+            items.push(item);
+        }
+    };
+
+    const config = GSM_CATEGORY_CONFIG[gsmActiveCategory] || GSM_CATEGORY_CONFIG.all;
+
+    if (rawQ.length === 0) {
+        if (headerText) headerText.textContent = config.title;
+
+        // 1. Roles
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'role') {
+            const limit = gsmActiveCategory === 'role' ? 12 : 3;
+            GSM_SPOTLIGHT_DATABASE.roles.slice(0, limit).forEach(r => {
+                pushUnique({
+                    title: r.title,
+                    subtitle: r.subtitle,
+                    url: r.url,
+                    type: 'role',
+                    badge: 'Role',
+                    badgeClass: 'gsm-badge--role',
+                    icon: GSM_ICONS.role
+                });
+            });
+        }
+
+        // 2. Companies
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'company') {
+            const limit = gsmActiveCategory === 'company' ? 12 : 3;
+            GSM_SPOTLIGHT_DATABASE.companies.slice(0, limit).forEach(c => {
+                pushUnique({
+                    title: c.title,
+                    subtitle: c.subtitle,
+                    url: c.url,
+                    type: 'company',
+                    badge: 'Company',
+                    badgeClass: 'gsm-badge--company',
+                    icon: GSM_ICONS.company
+                });
+            });
+        }
+
+        // 3. Locations
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'location') {
+            const limit = gsmActiveCategory === 'location' ? 12 : 3;
+            GSM_SPOTLIGHT_DATABASE.locations.slice(0, limit).forEach(l => {
+                pushUnique({
+                    title: l.title,
+                    subtitle: l.subtitle,
+                    url: l.url,
+                    type: 'location',
+                    badge: l.badge || 'Location',
+                    badgeClass: 'gsm-badge--location',
+                    icon: GSM_ICONS.location
+                });
+            });
+        }
+
+        // 4. Salaries
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'salary') {
+            const limit = gsmActiveCategory === 'salary' ? 12 : 3;
+            GSM_SPOTLIGHT_DATABASE.salaries.slice(0, limit).forEach(s => {
+                pushUnique({
+                    title: s.title,
+                    subtitle: s.subtitle,
+                    url: s.url,
+                    type: 'salary',
+                    badge: 'Salary',
+                    badgeClass: 'gsm-badge--salary',
+                    icon: GSM_ICONS.salary
+                });
+            });
+        }
+    } else {
+        if (headerText) headerText.textContent = `Matching Results for "${rawQ}"`;
+
+        // 1. Primary Direct Keyword Search Action
+        if (gsmActiveCategory === 'all') {
+            pushUnique({
+                title: rawQ,
+                subtitle: `Search all UK jobs matching "${rawQ}"`,
+                url: `/jobs/?q=${encodeURIComponent(rawQ)}`,
+                type: 'search',
+                badge: 'Search',
+                badgeClass: 'gsm-badge--search',
+                icon: GSM_ICONS.search
+            });
+        }
+
+        // 2. Matched Roles
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'role') {
+            GSM_SPOTLIGHT_DATABASE.roles.forEach(r => {
+                if (r.title.toLowerCase().includes(q) || r.subtitle.toLowerCase().includes(q)) {
+                    pushUnique({
+                        title: r.title,
+                        subtitle: r.subtitle,
+                        url: r.url,
+                        type: 'role',
+                        badge: 'Role',
+                        badgeClass: 'gsm-badge--role',
+                        icon: GSM_ICONS.role
+                    });
+                }
+            });
+        }
+
+        // 3. Matched Companies
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'company') {
+            GSM_SPOTLIGHT_DATABASE.companies.forEach(c => {
+                if (c.title.toLowerCase().includes(q) || c.subtitle.toLowerCase().includes(q)) {
+                    pushUnique({
+                        title: c.title,
+                        subtitle: c.subtitle,
+                        url: c.url,
+                        type: 'company',
+                        badge: 'Company',
+                        badgeClass: 'gsm-badge--company',
+                        icon: GSM_ICONS.company
+                    });
+                }
+            });
+        }
+
+        // 4. Matched Locations
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'location') {
+            GSM_SPOTLIGHT_DATABASE.locations.forEach(l => {
+                if (l.title.toLowerCase().includes(q) || l.subtitle.toLowerCase().includes(q)) {
+                    pushUnique({
+                        title: l.title,
+                        subtitle: l.subtitle,
+                        url: l.url,
+                        type: 'location',
+                        badge: l.badge || 'Location',
+                        badgeClass: 'gsm-badge--location',
+                        icon: GSM_ICONS.location
+                    });
+                }
+            });
+        }
+
+        // 5. Matched Salaries
+        if (gsmActiveCategory === 'all' || gsmActiveCategory === 'salary') {
+            GSM_SPOTLIGHT_DATABASE.salaries.forEach(s => {
+                if (s.title.toLowerCase().includes(q) || s.subtitle.toLowerCase().includes(q) || q.includes('salary') || q.includes('pay')) {
+                    pushUnique({
+                        title: s.title,
+                        subtitle: s.subtitle,
+                        url: s.url,
+                        type: 'salary',
+                        badge: 'Salary',
+                        badgeClass: 'gsm-badge--salary',
+                        icon: GSM_ICONS.salary
+                    });
+                }
+            });
+        }
+    }
+
+    if (items.length === 0) {
+        list.innerHTML = `
+            <div style="text-align: center; padding: 36px 18px; color: #64748B;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #ECFDF5; border: 1.5px solid #A7F3D0; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; color: #059669;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <p style="font-size: 0.95rem; font-weight: 750; color: #0B1F1A; margin: 0 0 4px;">No direct match in this section</p>
+                <p style="font-size: 0.82rem; color: #64748B; margin: 0 0 16px;">Search all 15,000+ UK live job vacancies directly</p>
+                <a href="/jobs/?q=${encodeURIComponent(rawQ)}" class="gsm-submit-btn" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;" onclick="closeGlobalSearchModal()">
+                    <span>Search "${escapeHtml(rawQ)}" on JobyUK</span>
+                    <svg class="jy-arrow-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+            </div>
+        `;
+        return;
+    }
+
+    // Render HTML list with active first element
+    list.innerHTML = items.slice(0, 12).map((item, idx) => `
+        <a href="${escapeHtml(item.url)}" class="gsm-item${idx === 0 ? ' gsm-item--active' : ''}" data-url="${escapeHtml(item.url)}" onclick="closeGlobalSearchModal()">
+            <div class="gsm-item-left">
+                <span class="gsm-item-icon-wrap">${item.icon}</span>
+                <div class="gsm-item-content">
+                    <span class="gsm-item-title">${highlightGsmQuery(item.title, q)}</span>
+                    <span class="gsm-item-subtitle">${escapeHtml(item.subtitle)}</span>
+                </div>
+            </div>
+            <span class="gsm-badge ${item.badgeClass}">${item.badge}</span>
+        </a>
+    `).join('');
+}
+
+function highlightGsmQuery(text, query) {
+    if (!query) return escapeHtml(text);
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return escapeHtml(text).replace(regex, '<strong>$1</strong>');
+}
+
+function handleGlobalSearchKeydown(e) {
+    if (e.key === 'Escape') {
+        closeGlobalSearchModal();
+        return;
+    }
+
+    const list = document.getElementById('gsm-suggestions-list');
+    if (!list) return;
+
+    const visibleItems = Array.from(list.querySelectorAll('.gsm-item')).filter(el => el.style.display !== 'none');
+    if (visibleItems.length === 0) return;
+
+    let activeIndex = visibleItems.findIndex(el => el.classList.contains('gsm-item--active'));
+
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (activeIndex >= 0) visibleItems[activeIndex].classList.remove('gsm-item--active');
+        activeIndex = (activeIndex + 1) % visibleItems.length;
+        visibleItems[activeIndex].classList.add('gsm-item--active');
+        visibleItems[activeIndex].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (activeIndex >= 0) visibleItems[activeIndex].classList.remove('gsm-item--active');
+        activeIndex = (activeIndex - 1 + visibleItems.length) % visibleItems.length;
+        visibleItems[activeIndex].classList.add('gsm-item--active');
+        visibleItems[activeIndex].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+        if (activeIndex >= 0 && visibleItems[activeIndex]) {
+            e.preventDefault();
+            visibleItems[activeIndex].click();
+        }
+    }
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
+// Global Keyboard Shortcut: Ctrl+K / Cmd+K / Slash key
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const modal = document.getElementById('global-search-modal');
+        if (modal && modal.classList.contains('gsm-overlay--open')) {
+            closeGlobalSearchModal();
+        } else {
+            openGlobalSearchModal();
+        }
+    } else if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        openGlobalSearchModal();
+    } else if (e.key === 'Escape') {
+        const modal = document.getElementById('global-search-modal');
+        if (modal && modal.classList.contains('gsm-overlay--open')) {
+            closeGlobalSearchModal();
+        }
+    }
+});
+</script>
+{{end}}

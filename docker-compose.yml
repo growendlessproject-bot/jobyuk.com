@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - ENV=development
+      - DATABASE_URL=postgres://jobyuk:jobyuk@db:5432/jobyuk?sslmode=disable
+      - REDIS_URL=redis://cache:6379/0
+      - REED_API_KEY=${REED_API_KEY}
+      - BASE_URL=http://localhost:8080
+      - JWT_SECRET=development-secret-only
+    depends_on:
+      - db
+      - cache
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=jobyuk
+      - POSTGRES_PASSWORD=jobyuk
+      - POSTGRES_DB=jobyuk
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

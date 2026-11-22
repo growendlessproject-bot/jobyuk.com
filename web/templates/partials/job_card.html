@@ -1,0 +1,150 @@
+{{define "job_card"}}
+<article class="jy-dream-card" id="job-card-{{.ID}}" aria-labelledby="job-title-{{.ID}}">
+    <!-- Whole card clickable directly to Job Detail page -->
+    <a href="/jobs/{{.Slug}}/" class="jy-dream-card__overlay" aria-label="View details for {{.Title}}"></a>
+
+    <!-- Top Row: Logo + Company & Location + Salary -->
+    <div class="jy-dream-card__top">
+        <div class="jy-dream-card__brand">
+            {{if .CompanySlug}}
+                <a href="/companies/{{.CompanySlug}}/" class="jy-dream-card__logo" title="View {{if .EmployerName}}{{.EmployerName}}{{else}}Company{{end}} profile" aria-label="{{if .EmployerName}}{{.EmployerName}}{{else}}Company{{end}} profile">
+            {{else if .EmployerName}}
+                <a href="/jobs/?q={{.EmployerName}}" class="jy-dream-card__logo" title="View {{.EmployerName}} jobs" aria-label="{{.EmployerName}} jobs">
+            {{else}}
+                <div class="jy-dream-card__logo" aria-hidden="true">
+            {{end}}
+                {{$emp := lower .EmployerName}}
+                {{if or (eq $emp "loom") (eq $emp "loom uk")}}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#625DF5">
+                        <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"/>
+                        <circle cx="12" cy="12" r="3.5" fill="#625DF5"/>
+                    </svg>
+                {{else if or (eq $emp "notion") (eq $emp "notion labs")}}
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#000000">
+                        <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.093-.373L18.3 2.25c-.42-.327-.98-.747-2.148-.654L3.899 2.576c-.514.047-.654.42-.42.7l.98 1.482v-.55zm1.306 3.685v12.825c0 .84.373 1.12 1.213 1.073l13.681-.793c.84-.047 1.027-.56 1.027-1.26V6.953c0-.7-.28-.98-.934-.934l-14.053.84c-.7.046-.934.373-.934 1.026v-.002zm11.756 1.82c.047.373-.093.746-.467.793l-.84.14v7.742l1.353.606c.373.187.42.514.373.887l-2.846.187-3.966-5.83v4.618l1.027.234c.373.093.466.42.42.793l-2.8.187c-.047-.373.093-.7.467-.793l.887-.234v-7.37l-1.307-.233c-.373-.047-.466-.42-.42-.793l2.847-.187 4.012 5.923V9.67l-1.027-.233c-.373-.093-.42-.467-.373-.84l2.844-.187z"/>
+                    </svg>
+                {{else if or (eq $emp "twitter") (eq $emp "x") (eq $emp "x corp")}}
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#1DA1F2">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.936 9.936 0 0024 4.59z"/>
+                    </svg>
+                {{else if or (eq $emp "google") (eq $emp "google uk")}}
+                    <svg width="26" height="26" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#1DB954">
+                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                    </svg>
+                {{else if or (eq $emp "revolut") (eq $emp "revolut ltd")}}
+                    <span style="width: 28px; height: 28px; border-radius: 6px; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px;">R</span>
+                {{else if or (eq $emp "monzo") (eq $emp "monzo bank")}}
+                    <svg width="26" height="26" viewBox="0 0 24 24">
+                        <path fill="#FF4D5A" d="M4 18h3.2V8.6L10.4 14h3.2l3.2-5.4V18H20V6h-3.6L12 13.5 7.6 6H4v12z"/>
+                    </svg>
+                {{else if .CompanyLogoURL}}
+                    <img src="{{.CompanyLogoURL}}" alt="{{.EmployerName}} logo" width="32" height="32" loading="lazy" />
+                {{else}}
+                    <span class="jy-figma-logo-fallback" style="font-size: 18px; font-weight: 800; color: #0F5132;">{{if .EmployerName}}{{slice .EmployerName 0 1}}{{else}}J{{end}}</span>
+                {{end}}
+            {{if or .CompanySlug .EmployerName}}
+                </a>
+            {{else}}
+                </div>
+            {{end}}
+
+            <div class="jy-dream-card__company-info">
+                <div class="jy-dream-card__company-name">
+                    {{if .CompanySlug}}
+                        <a href="/companies/{{.CompanySlug}}/">{{if .EmployerName}}{{.EmployerName}}{{else}}Verified Employer{{end}}</a>
+                    {{else}}
+                        <span>{{if .EmployerName}}{{.EmployerName}}{{else}}Verified Employer{{end}}</span>
+                    {{end}}
+                </div>
+                <p class="jy-dream-card__loc" title="{{if .DisplayLocation}}{{.DisplayLocation}}{{else}}London, UK{{end}}">
+                    {{if .DisplayLocation}}{{truncateText .DisplayLocation 45}}{{else}}London, UK{{end}} • {{if .IsRemote}}Remote{{else}}Hybrid{{end}}
+                </p>
+            </div>
+        </div>
+
+        <div class="jy-dream-card__salary">
+            {{if .FormattedSalary}}
+                {{.FormattedSalary}}
+            {{else if and .YearlyMin .YearlyMax}}
+                £{{formatSalary .YearlyMin}} – £{{formatSalary .YearlyMax}}
+            {{else if .YearlyMin}}
+                From £{{formatSalary .YearlyMin}}
+            {{else}}
+                Competitive
+            {{end}}
+        </div>
+    </div>
+
+    <!-- Middle: Title and Excerpt (Uniform clamped heights across cards) -->
+    <h3 class="jy-dream-card__title" id="job-title-{{.ID}}">
+        <a href="/jobs/{{.Slug}}/">{{.Title}}</a>
+    </h3>
+
+    <p class="jy-dream-card__desc">
+        {{if .Description}}
+            {{truncateText .Description 130}}
+        {{else}}
+            Join our dynamic team building next-generation products in the UK. Seeking motivated talent for immediate placement with competitive benefits.
+        {{end}}
+    </p>
+
+    <!-- Meta Tags Row (Dedicated row, perfectly aligned across cards) -->
+    <div class="jy-dream-card__meta-row">
+        <span class="jy-dream-badge">
+            {{if eq .JobType "full_time"}}Full time{{else if eq .ContractType "contract"}}Contract{{else}}Permanent{{end}}
+        </span>
+        {{if .IsRemote}}
+            <span class="jy-dream-badge jy-dream-badge--remote">Remote</span>
+        {{end}}
+    </div>
+
+    <!-- Bottom Row: Posted Date on Left + Apply CTA & Bookmark on Right (Pinned at bottom, NEVER WRAPS) -->
+    <div class="jy-dream-card__footer">
+        <div class="jy-dream-card__footer-left">
+            <span class="jy-dream-date" title="Posting Date">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>{{.TimeAgo}}</span>
+            </span>
+        </div>
+
+        <div class="jy-dream-card__footer-right">
+            <a href="/jobs/{{.ID}}/apply/" class="jy-dream-apply-cta" title="Apply for {{.Title}}">
+                <span>Apply</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+
+            <button type="button" class="jy-dream-bookmark-btn" 
+                data-job-id="{{.ID}}"
+                data-job-title="{{.Title}}"
+                data-job-slug="{{.Slug}}"
+                data-job-employer="{{.EmployerName}}"
+                data-job-employer-slug="{{.CompanySlug}}"
+                data-job-logo="{{.CompanyLogoURL}}"
+                data-job-location="{{if .DisplayLocation}}{{.DisplayLocation}}{{else}}UK{{end}}"
+                data-job-remote="{{if .IsRemote}}true{{else}}false{{end}}"
+                data-job-salary="{{if .FormattedSalary}}{{.FormattedSalary}}{{else if and .YearlyMin .YearlyMax}}£{{formatSalary .YearlyMin}} – £{{formatSalary .YearlyMax}}{{else}}Competitive salary{{end}}"
+                data-job-time="{{.TimeAgo}}"
+                onclick="JobyUKSaved.toggleFromButton(this, event)"
+                title="Save job" 
+                aria-label="Save {{.Title}}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</article>
+{{end}}

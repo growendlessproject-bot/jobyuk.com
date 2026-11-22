@@ -1,0 +1,476 @@
+{{define "wfa_ad_styles"}}
+<style id="wfa-ad-css">
+.wfa-ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    clear: both !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+}
+.wfa-ad-leaderboard {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 12px auto 18px auto !important;
+    clear: both !important;
+    z-index: 10 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    contain: layout style;
+}
+.wfa-ad-leaderboard:has(iframe),
+.wfa-ad-leaderboard:has([data-wfa-ad].wfa-filled),
+.wfa-ad-leaderboard.is-filled {
+    margin: 14px auto 22px auto !important;
+    padding: 4px 0 !important;
+}
+/* Ensure breadcrumbs and nav elements have complete independent clear block separation */
+nav[aria-label="Breadcrumb"],
+.breadcrumbs,
+.job-breadcrumbs-wrap,
+.job-detail-nav {
+    display: block !important;
+    clear: both !important;
+    float: none !important;
+    position: relative !important;
+    top: auto !important;
+    width: 100% !important;
+    margin-top: 14px !important;
+    margin-bottom: 16px !important;
+    z-index: 5 !important;
+}
+.listing-header {
+    clear: both !important;
+    position: relative !important;
+    z-index: 4 !important;
+}
+.search-bar-sticky-wrap {
+    clear: both !important;
+}
+.wfa-ad-incontent {
+    max-width: 100%;
+}
+/* Margins only applied when an ad actually has content / iframe */
+.wfa-ad-container:has(iframe),
+.wfa-ad-container:has([data-wfa-ad].wfa-filled),
+.wfa-ad-container.is-filled,
+.JobyUK-ad-wrapper:has(iframe),
+.JobyUK-ad-wrapper.is-filled {
+    margin: 16px auto 22px auto !important;
+}
+.wfa-ad-incontent:has(iframe),
+.wfa-ad-incontent:has([data-wfa-ad].wfa-filled),
+.wfa-ad-incontent.is-filled {
+    margin: 20px auto 26px auto !important;
+}
+/* Strict zero-space collapse for empty / unserved slots (Only when confirmed unfilled by ad tag) */
+.wfa-ad-container.is-empty,
+.wfa-ad-container:has(.wfa-empty),
+.JobyUK-ad-wrapper.is-empty,
+[data-wfa-ad].wfa-empty {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+}
+
+/* Strictly suppress WeForAds watermark logo, badges, branding & images */
+.wfa-badge-wrap,
+.wfa-badge-outer,
+.wfa-badge,
+.wfa-badge-lbl,
+[data-wfa-branded],
+[class*="wfa-bs-"],
+.wfa-badge-wrap *,
+img[src*="weforadssmalllogo"],
+img[src*="weforads"],
+img[src*="revwala"],
+a[href*="weforads.com"],
+a[href*="weforads"],
+#wfa-anc-ad-label,
+#wfa-anc-hdr,
+#wfa-anc-ftr {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    max-height: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden !important;
+}
+.wfa-ad-container [data-wfa-ad] {
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+.wfa-ad-container [data-wfa-ad] iframe {
+    position: static !important;
+    display: block !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+}
+.wfa-ad-container [data-wfa-ad] > div {
+    position: static !important;
+    margin: 0 auto !important;
+}
+/* Sticky Video & Floating Outstream Protection (Never overlap UI or modals) */
+#wfa-floating-video,
+[class*="wfa-video-container"],
+[id*="wfa-video-"],
+[class*="wfa-anc-"] {
+    z-index: 9950 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+@media (max-width: 768px) {
+    .wfa-ad-leaderboard {
+        position: relative !important;
+        top: auto !important;
+        margin: 8px auto 14px auto !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+    nav[aria-label="Breadcrumb"],
+    .breadcrumbs,
+    .job-breadcrumbs-wrap,
+    .job-detail-nav {
+        margin-top: 10px !important;
+        margin-bottom: 14px !important;
+    }
+    .wfa-ad-container:has(iframe),
+    .wfa-ad-container:has([data-wfa-ad].wfa-filled),
+    .wfa-ad-container.is-filled {
+        margin: 10px auto 16px auto !important;
+    }
+    .wfa-ad-incontent:has(iframe),
+    .wfa-ad-incontent:has([data-wfa-ad].wfa-filled),
+    .wfa-ad-incontent.is-filled {
+        margin: 14px auto 18px auto !important;
+    }
+    #wfa-floating-video,
+    [class*="wfa-video-container"],
+    [id*="wfa-video-"] {
+        bottom: 74px !important; /* Safe clearance for mobile sticky action bars */
+        right: 10px !important;
+        max-width: 220px !important;
+    }
+}
+</style>
+<script>
+(function() {
+    // Dynamic client-side size gating based on Publift standard IAB sizes
+    function sanitizeHeaderAdSizes() {
+        try {
+            var slots = document.querySelectorAll('[data-wfa-ad="wfa_1229_header_leaderboard"]');
+            var isNarrow = window.innerWidth < 768;
+            slots.forEach(function(slot) {
+                if (isNarrow) {
+                    slot.setAttribute('data-wfa-size', '320x100,300x250,320x50');
+                } else {
+                    slot.setAttribute('data-wfa-size', '970x250,970x90,728x90');
+                }
+            });
+        } catch(e) {}
+    }
+    sanitizeHeaderAdSizes();
+    window.addEventListener('resize', sanitizeHeaderAdSizes, { passive: true });
+
+    // Prevent multiple executions when both leaderboard and incontent templates are included on the same page
+    if (window.__JobyUKAdsInitialized) return;
+    window.__JobyUKAdsInitialized = true;
+
+    // Immediate first ad loading trigger
+    function triggerFirstAdLoad() {
+        try {
+            if (window.wfa && typeof window.wfa.refresh === 'function') {
+                window.wfa.refresh();
+            } else if (window.googletag && typeof window.googletag.pubads === 'function') {
+                window.googletag.pubads().refresh();
+            }
+        } catch(e) {}
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(triggerFirstAdLoad, 200);
+        });
+    } else {
+        setTimeout(triggerFirstAdLoad, 200);
+    }
+
+    // Global Ad Refresh & Zero-Space Collapse Guard
+    window.JobyUKRefreshAds = function() {
+        try {
+            if (window.wfa && typeof window.wfa.refresh === 'function') {
+                window.wfa.refresh();
+            } else if (window.googletag && typeof window.googletag.pubads === 'function') {
+                var pubads = window.googletag.pubads();
+                if (pubads && typeof pubads.refresh === 'function') {
+                    pubads.refresh();
+                }
+            }
+        } catch(e) {}
+        checkAdContainers();
+    };
+
+    function checkAdContainers() {
+        try {
+            var containers = document.querySelectorAll('.wfa-ad-container');
+            containers.forEach(function(c) {
+                var slot = c.querySelector('[data-wfa-ad]');
+                if (!slot) return;
+                var hasIframe = slot.querySelector('iframe') !== null;
+                var isFilled = slot.classList.contains('wfa-filled');
+                var isEmpty = slot.classList.contains('wfa-empty');
+
+                if (isEmpty) {
+                    c.classList.add('is-empty');
+                    c.classList.remove('is-filled');
+                } else if (hasIframe || isFilled) {
+                    c.classList.remove('is-empty');
+                    c.classList.add('is-filled');
+                }
+            });
+        } catch(err) {}
+    }
+
+    function initAdContainerObservers() {
+        if (!window.MutationObserver) return;
+        try {
+            document.querySelectorAll('.wfa-ad-container').forEach(function(c) {
+                if (c._wfaObserved) return;
+                c._wfaObserved = true;
+                var observer = new MutationObserver(function() {
+                    try {
+                        var slot = c.querySelector('[data-wfa-ad]');
+                        if (!slot) return;
+                        var hasIframe = slot.querySelector('iframe') !== null;
+                        var isFilled = slot.classList.contains('wfa-filled');
+                        var isEmpty = slot.classList.contains('wfa-empty');
+
+                        if (isEmpty) {
+                            c.classList.add('is-empty');
+                            c.classList.remove('is-filled');
+                        } else if (hasIframe || isFilled) {
+                            c.classList.remove('is-empty');
+                            c.classList.add('is-filled');
+                        }
+                    } catch(e) {}
+                });
+                observer.observe(c, { childList: true, subtree: true });
+            });
+        } catch(err) {}
+    }
+
+    function removeWeForAdsWatermarks() {
+        try {
+            var badges = document.querySelectorAll('.wfa-badge-wrap, .wfa-badge-outer, .wfa-badge, [data-wfa-branded], [class*="wfa-bs-"], img[src*="weforadssmalllogo"], img[src*="weforads"], img[src*="revwala"], a[href*="weforads"]');
+            for (var i = 0; i < badges.length; i++) {
+                badges[i].remove();
+            }
+        } catch(e) {}
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdContainers();
+            initAdContainerObservers();
+            removeWeForAdsWatermarks();
+        });
+    } else {
+        checkAdContainers();
+        initAdContainerObservers();
+        removeWeForAdsWatermarks();
+    }
+    setTimeout(function() { checkAdContainers(); initAdContainerObservers(); removeWeForAdsWatermarks(); }, 1500);
+    setTimeout(function() { checkAdContainers(); initAdContainerObservers(); removeWeForAdsWatermarks(); }, 4000);
+    setInterval(removeWeForAdsWatermarks, 1000);
+
+    // ==========================================
+    // Smart Viewable Ad Auto-Refresh Controller (Google & IAB Policy Compliant)
+    // ==========================================
+    var REFRESH_INTERVAL_SECONDS = 35; // Safe IAB standard interval (35s viewable time)
+    var MAX_REFRESHES_PER_SLOT = 3;   // Maximum 3 refreshes per ad slot per pageview
+    var lastUserActivity = Date.now();
+
+    // Track user engagement (pauses refresh if user abandoned or stopped interacting)
+    ['mousemove', 'scroll', 'touchstart', 'keydown', 'click'].forEach(function(evt) {
+        window.addEventListener(evt, function() {
+            lastUserActivity = Date.now();
+        }, { passive: true });
+    });
+
+    var slotTimers = new WeakMap();
+
+    function initViewableAdRefresh() {
+        if (!('IntersectionObserver' in window)) return;
+
+        try {
+            var refreshObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    var container = entry.target;
+                    var slotData = slotTimers.get(container) || { viewTime: 0, refreshCount: 0, timer: null };
+
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        // Ad is 50%+ visible in active viewport
+                        if (!slotData.timer) {
+                            slotData.timer = setInterval(function() {
+                                // Policy Checks:
+                                // 1. Tab must be active and focused
+                                if (document.hidden || document.visibilityState !== 'visible') return;
+                                // 2. User must have interacted within the last 90 seconds (not an idle tab)
+                                if (Date.now() - lastUserActivity > 90000) return;
+                                // 3. Ad slot must not be marked empty
+                                if (container.classList.contains('is-empty')) return;
+                                // 4. Max refresh cap check
+                                if (slotData.refreshCount >= MAX_REFRESHES_PER_SLOT) {
+                                    clearInterval(slotData.timer);
+                                    slotData.timer = null;
+                                    return;
+                                }
+
+                                slotData.viewTime += 1;
+                                if (slotData.viewTime >= REFRESH_INTERVAL_SECONDS) {
+                                    slotData.viewTime = 0;
+                                    slotData.refreshCount += 1;
+
+                                    // Perform safe refresh without layout shift
+                                    try {
+                                        if (window.wfa && typeof window.wfa.refresh === 'function') {
+                                            window.wfa.refresh();
+                                        } else if (window.googletag && typeof window.googletag.pubads === 'function') {
+                                            var pubads = window.googletag.pubads();
+                                            if (pubads && typeof pubads.refresh === 'function') {
+                                                pubads.refresh();
+                                            }
+                                        }
+                                    } catch(e) {}
+                                }
+                            }, 1000);
+                            slotTimers.set(container, slotData);
+                        }
+                    } else {
+                        // User scrolled away: pause the interval
+                        if (slotData.timer) {
+                            clearInterval(slotData.timer);
+                            slotData.timer = null;
+                            slotTimers.set(container, slotData);
+                        }
+                    }
+                });
+            }, { threshold: [0.5] });
+
+            // Observe all ad containers on the page
+            document.querySelectorAll('.wfa-ad-container').forEach(function(c) {
+                refreshObserver.observe(c);
+            });
+        } catch(err) {}
+    }
+
+    try {
+        window.googletag = window.googletag || { cmd: [] };
+        if (Array.isArray(window.googletag.cmd)) {
+            window.googletag.cmd.push(function() {
+                try {
+                    if (window.googletag && typeof window.googletag.pubads === 'function') {
+                        var pubads = window.googletag.pubads();
+                        if (pubads && typeof pubads.addEventListener === 'function') {
+                            pubads.addEventListener('slotRenderEnded', function(event) {
+                                try {
+                                    var slotElementId = event && event.slot && typeof event.slot.getSlotElementId === 'function' ? event.slot.getSlotElementId() : null;
+                                    var el = (slotElementId ? document.getElementById(slotElementId) : null) || document.querySelector('[data-wfa-ad]');
+                                    if (!el) return;
+                                    var container = el.closest('.wfa-ad-container');
+                                    if (!container) return;
+                                    if (event && event.isEmpty) {
+                                        container.classList.add('is-empty');
+                                        container.classList.remove('is-filled');
+                                    } else {
+                                        container.classList.remove('is-empty');
+                                        container.classList.add('is-filled');
+                                    }
+                                } catch(err) {}
+                            });
+                        }
+                    }
+                } catch(e) {}
+            });
+        }
+    } catch(e) {}
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initViewableAdRefresh);
+    } else {
+        initViewableAdRefresh();
+    }
+})();
+</script>
+{{end}}
+
+{{define "wfa_leaderboard"}}
+{{template "wfa_ad_styles" .}}
+<div class="wfa-ad-container wfa-ad-leaderboard">
+    <!-- Publift Top Performing Header Formats:
+         Desktop (>=768px): Billboard (970x250), Large Leaderboard (970x90), Leaderboard (728x90)
+         Mobile (<768px): Large Mobile Banner (320x100), Medium Rectangle (300x250), Mobile Banner (320x50)
+    -->
+    <div data-wfa-ad="wfa_1229_header_leaderboard" data-wfa-size="{{if .IsMobile}}320x100,300x250,320x50{{else}}970x250,970x90,728x90{{end}}"></div>
+</div>
+{{end}}
+
+{{define "wfa_incontent"}}
+{{template "wfa_ad_styles" .}}
+<div class="wfa-ad-container wfa-ad-incontent">
+    <!-- Publift Top Performing In-Content Formats: Large Rectangle (336x280), Medium Rectangle (300x250), Half Page (300x600) -->
+    <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="336x280,300x250,300x600"></div>
+</div>
+{{end}}
+
+{{define "wfa_halfpage"}}
+{{template "wfa_ad_styles" .}}
+<div class="wfa-ad-container wfa-ad-halfpage" style="min-height: 250px; max-width: 336px; margin: 16px auto;">
+    <!-- Publift Top Performing Sidebar Formats: Half Page (300x600), Large Rectangle (336x280), Medium Rectangle (300x250), Wide Skyscraper (160x600) -->
+    <div data-wfa-ad="wfa_1229_sidebar_halfpage" data-wfa-size="300x600,336x280,300x250,160x600"></div>
+</div>
+{{end}}
+
+{{define "JobyUK_article_top_ad"}}
+{{template "wfa_ad_styles" .}}
+<div class="JobyUK-ad-wrapper JobyUK-ad-article-top" style="width: 100%; display: flex; justify-content: center; align-items: center; margin: 16px auto 22px auto; text-align: center; clear: both; min-height: 90px;">
+    <!-- /23373452670/JobyUK.com_article_top -->
+    <div id="div-gpt-ad-1790831872647-0" style="min-width: 300px; min-height: 90px; margin: 0 auto; text-align: center;">
+        <script>
+            window.googletag = window.googletag || {cmd: []};
+            googletag.cmd.push(function() {
+                googletag.display('div-gpt-ad-1790831872647-0');
+            });
+        </script>
+    </div>
+</div>
+{{end}}
+

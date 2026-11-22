@@ -1,0 +1,1074 @@
+{{define "whatsapp_trial_banner"}}
+{{if whatsappAlertsEnabled}}
+<style>
+/* Modern SaaS WhatsApp Free Trial Widget */
+.wa-trial-alert-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 18px;
+    padding: 26px 24px;
+    margin: 22px 0;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.08), 0 8px 10px -6px rgba(16, 185, 129, 0.04);
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.wa-trial-alert-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #10b981 0%, #059669 50%, #34d399 100%);
+}
+
+.wa-trial-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.wa-trial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #dcfce7;
+    color: #065f46;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #86efac;
+}
+
+.wa-trial-pulse {
+    width: 7px;
+    height: 7px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: waTrialPulse 1.8s infinite;
+}
+
+@keyframes waTrialPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.wa-trial-sub-badge {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    background: #ffffff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.wa-trial-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.wa-trial-icon {
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    border: 1px solid #d1fae5;
+    flex-shrink: 0;
+}
+
+.wa-trial-title {
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+}
+
+.wa-trial-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.wa-trial-form {
+    margin-top: 16px;
+}
+
+.wa-trial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+
+.wa-trial-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.wa-trial-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wa-trial-badge-free {
+    font-size: 0.68rem;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.wa-trial-select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.wa-trial-select:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.wa-trial-phone-wrap {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.wa-trial-phone-wrap:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.wa-trial-country-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    border: none;
+    border-right: 1px solid #e2e8f0;
+    padding: 10px 10px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    font-family: inherit;
+    color: #0f172a;
+}
+
+.wa-trial-country-btn:hover {
+    background: #f1f5f9;
+}
+
+.wa-trial-phone-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 11px 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.wa-trial-submit-btn {
+    width: 100%;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.wa-trial-submit-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+    transform: translateY(-1px);
+}
+
+.wa-trial-submit-btn:active {
+    transform: translateY(0);
+}
+
+.wa-trial-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.wa-trial-note {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wa-trial-error-msg {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Success Card */
+.wa-trial-success-card {
+    background: #ffffff;
+    border: 1.5px solid #86efac;
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 10px;
+    animation: waFadeIn 0.3s ease;
+}
+
+@keyframes waFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.wa-trial-success-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.wa-trial-success-icon-badge {
+    width: 40px;
+    height: 40px;
+    background: #dcfce7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.wa-trial-success-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #065f46;
+    margin: 0 0 4px 0;
+}
+
+.wa-trial-success-subtitle {
+    font-size: 0.85rem;
+    color: #334155;
+    margin: 0;
+}
+
+.wa-trial-success-details {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+}
+
+.wa-trial-pill-item {
+    font-size: 0.78rem;
+    display: inline-flex;
+    gap: 6px;
+}
+
+.wa-trial-pill-label {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.wa-trial-pill-val {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.wa-trial-success-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.wa-trial-cta-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.wa-trial-cta-login:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.wa-trial-btn-reset {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 6px 8px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .wa-trial-alert-card {
+        padding: 18px 14px;
+        margin: 16px 0;
+        border-radius: 14px;
+    }
+    .wa-trial-title {
+        font-size: 1.1rem;
+    }
+    .wa-trial-desc {
+        font-size: 0.82rem;
+    }
+    .wa-trial-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .wa-trial-submit-btn {
+        padding: 12px;
+    }
+}
+</style>
+
+<!-- DYNAMIC WHATSAPP JOB ALERTS 3-DAY FREE TRIAL BANNER -->
+<div class="wa-trial-alert-card" id="waTrialBanner">
+    <div class="wa-trial-badge-row">
+        <span class="wa-trial-badge">
+            <span class="wa-trial-pulse"></span>
+            3-DAY FREE TRIAL • WHATSAPP ALERTS
+        </span>
+        <span class="wa-trial-sub-badge">2–3 Alerts Daily • No Card Needed</span>
+    </div>
+
+    <div class="wa-trial-header">
+        <div class="wa-trial-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/>
+                <path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/>
+            </svg>
+        </div>
+        <div>
+            <h3 class="wa-trial-title">Get Instant UK Job Alerts on WhatsApp</h3>
+            <p class="wa-trial-desc">Verified job vacancies tailored to your interests delivered directly to your chat. <strong>Try it free for 3 days (2–3 curated alerts daily)</strong> — no account password or credit card needed.</p>
+        </div>
+    </div>
+
+    <!-- Active Subscription Form -->
+    <form class="wa-trial-form" id="waTrialForm" onsubmit="submitWaTrial(event)">
+        <div class="wa-trial-grid">
+            <!-- Sector Selection -->
+            <div class="wa-trial-field">
+                <label class="wa-trial-label" for="waTrialCategory">Target Sector / Role</label>
+                <select class="wa-trial-select" id="waTrialCategory">
+                    <option value="All Categories">All Job Categories</option>
+                    <option value="Technology & IT">Technology & IT</option>
+                    <option value="Healthcare & Nursing">Healthcare & Nursing</option>
+                    <option value="Finance & Accounting">Finance & Accounting</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Sales & Marketing">Sales & Marketing</option>
+                    <option value="Education">Education & Teaching</option>
+                    <option value="Hospitality & Catering">Hospitality & Catering</option>
+                    <option value="Construction">Construction & Trades</option>
+                    <option value="Administration">Administration & HR</option>
+                </select>
+            </div>
+
+            <!-- UK Location Selection -->
+            <div class="wa-trial-field">
+                <label class="wa-trial-label" for="waTrialLocation">UK Location</label>
+                <select class="wa-trial-select" id="waTrialLocation">
+                    <option value="All UK Locations">All UK Locations</option>
+                    <option value="London">London & Greater London</option>
+                    <option value="Manchester">Manchester & North West</option>
+                    <option value="Birmingham">Birmingham & West Midlands</option>
+                    <option value="Leeds">Leeds & Yorkshire</option>
+                    <option value="Glasgow">Glasgow & Scotland</option>
+                    <option value="Bristol">Bristol & South West</option>
+                    <option value="Remote UK">100% Remote (UK)</option>
+                </select>
+            </div>
+
+            <!-- International WhatsApp Phone Input -->
+            <div class="wa-trial-field">
+                <label class="wa-trial-label" for="waTrialPhoneInput">
+                    <span>WhatsApp Number</span>
+                    <span class="wa-trial-badge-free">Zero Spam</span>
+                </label>
+                <div class="wa-trial-phone-wrap" id="waTrialPhoneWrap">
+                    <button type="button" class="wa-trial-country-btn" onclick="openWaHomeCountryModal()" title="Select country">
+                        <span id="waTrialFlag">🇬🇧</span>
+                        <span id="waTrialDial" style="font-weight:800; font-size:0.9rem;">+44</span>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <input type="hidden" id="waTrialCountryCode" value="GB">
+                    <input type="tel" 
+                           id="waTrialPhoneInput" 
+                           class="wa-trial-phone-input" 
+                           placeholder="7123 456789" 
+                           inputmode="numeric" 
+                           autocomplete="tel" 
+                           required>
+                </div>
+            </div>
+
+            <!-- Submit CTA -->
+            <div class="wa-trial-field wa-trial-btn-wrap">
+                <button type="submit" id="waTrialSubmitBtn" class="wa-trial-submit-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span id="waTrialBtnText">Start 3-Day Free Trial</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="wa-trial-note">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Complimentary 72-hour trial (2–3 curated alerts daily). Dispatches matching jobs straight to your WhatsApp. Upgrade or pause anytime.
+        </div>
+        <div id="waTrialError" class="wa-trial-error-msg" style="display:none; margin-top: 14px;"></div>
+    </form>
+
+    <!-- Step 2: 6-Digit WhatsApp Phone Ownership Verification -->
+    <div class="wa-trial-verify-card" id="waTrialVerifyCard" style="display: none; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 22px; margin-top: 10px; animation: waFadeIn 0.3s ease;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
+            <div>
+                <h4 style="font-size: 1.12rem; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Verify WhatsApp Number</span>
+                </h4>
+                <p style="font-size: 0.84rem; color: #475569; margin: 0;">
+                    We sent a 6-digit code to <strong id="waTrialVerifyPhoneDisplay" style="color: #0f172a;"></strong> to verify ownership.
+                </p>
+            </div>
+            <button type="button" onclick="editWaTrialPhone()" style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer;">
+                Change Number
+            </button>
+        </div>
+
+        <form id="waTrialVerifyForm" onsubmit="submitWaTrialVerify(event)">
+            <div style="display: flex; gap: 8px; justify-content: center; max-width: 360px; margin: 0 auto 16px auto;">
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-0" maxlength="1" inputmode="numeric" autocomplete="one-time-code" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-1" maxlength="1" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-2" maxlength="1" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-3" maxlength="1" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-4" maxlength="1" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+                <input type="text" class="wa-trial-otp-digit" id="wt-otp-5" maxlength="1" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: 2px solid #cbd5e1; border-radius: 10px; outline: none; transition: all 0.15s;" required>
+            </div>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                <button type="submit" id="waTrialVerifyBtn" class="wa-trial-submit-btn" style="max-width: 360px; width: 100%;">
+                    <span id="waTrialVerifyBtnText">Verify & Activate 3-Day Free Trial</span>
+                </button>
+            </div>
+
+            <div style="text-align: center; font-size: 0.82rem; color: #64748b;">
+                Didn't receive the code?
+                <button type="button" id="waTrialResendBtn" onclick="resendWaTrialCode()" style="background: none; border: none; color: #10b981; font-weight: 800; cursor: pointer; text-decoration: underline; margin-left: 4px;" disabled>
+                    Resend Code (<span id="waTrialResendTimer">120</span>s)
+                </button>
+            </div>
+            <div id="waTrialVerifyError" class="wa-trial-error-msg" style="display:none; max-width: 360px; margin: 12px auto 0 auto; text-align: center;"></div>
+        </form>
+    </div>
+
+    <!-- Success Feedback State -->
+    <div class="wa-trial-success-card" id="waTrialSuccess" style="display: none;">
+        <div class="wa-trial-success-header">
+            <div class="wa-trial-success-icon-badge">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div>
+                <h4 class="wa-trial-success-title">3-Day Free Trial Activated!</h4>
+                <p class="wa-trial-success-subtitle" id="waTrialSuccessDesc">We've dispatched a welcome message and your 6-digit login PIN to your WhatsApp.</p>
+            </div>
+        </div>
+        
+        <div class="wa-trial-success-details">
+            <div class="wa-trial-pill-item">
+                <span class="wa-trial-pill-label">Trial Duration:</span>
+                <span class="wa-trial-pill-val">72 Hours Complimentary</span>
+            </div>
+            <div class="wa-trial-pill-item">
+                <span class="wa-trial-pill-label">Alert Mode:</span>
+                <span class="wa-trial-pill-val">Instant WhatsApp Match</span>
+            </div>
+            <div class="wa-trial-pill-item">
+                <span class="wa-trial-pill-label">Access PIN:</span>
+                <span class="wa-trial-pill-val" style="color:#059669; font-weight:800;">Delivered via WhatsApp</span>
+            </div>
+        </div>
+
+        <div class="wa-trial-success-actions">
+            <a href="/my-alerts/login" class="wa-trial-cta-login">
+                <span>Go to Candidate Dashboard</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <button type="button" class="wa-trial-btn-reset" onclick="resetWaTrialForm()">Subscribe Another Number</button>
+        </div>
+    </div>
+</div>
+
+<!-- Searchable Country Modal for Homepage Trial -->
+<div id="waHomeCountryModal" class="country-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); z-index:99999; align-items:center; justify-content:center; padding:16px;" onclick="if(event.target === this) closeWaHomeCountryModal()">
+    <div class="country-modal-card" style="background:#ffffff; width:100%; max-width:440px; border-radius:18px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); max-height:85vh; display:flex; flex-direction:column; overflow:hidden; border:1px solid #e2e8f0;">
+        <div class="country-modal-header" style="display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid #f1f5f9;">
+            <h3 class="country-modal-title" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:0;">Select Country Code</h3>
+            <button type="button" onclick="closeWaHomeCountryModal()" style="background:none; border:none; font-size:1.6rem; line-height:1; color:#94a3b8; cursor:pointer;">&times;</button>
+        </div>
+        <div style="padding:12px 18px; border-bottom:1px solid #f1f5f9;">
+            <input type="text" id="waHomeCountrySearch" placeholder="Search country name or code (+44, PK, US)..." style="width:100%; box-sizing:border-box; padding:10px 14px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:0.9rem; outline:none;" oninput="filterWaHomeCountries()">
+        </div>
+        <ul id="waHomeCountryList" style="list-style:none; margin:0; padding:8px 0; overflow-y:auto; flex:1; max-height:360px;">
+            <!-- Rendered by JS -->
+        </ul>
+    </div>
+</div>
+
+<script>
+(function() {
+    var homeCountries = [
+        { code: 'GB', name: 'United Kingdom', dial: '+44', flag: '🇬🇧', len: 10, format: '7123 456789' },
+        { code: 'PK', name: 'Pakistan', dial: '+92', flag: '🇵🇰', len: 10, format: '300 1234567' },
+        { code: 'AE', name: 'United Arab Emirates', dial: '+971', flag: '🇦🇪', len: 9, format: '50 1234567' },
+        { code: 'SA', name: 'Saudi Arabia', dial: '+966', flag: '🇸🇦', len: 9, format: '50 1234567' },
+        { code: 'US', name: 'United States', dial: '+1', flag: '🇺🇸', len: 10, format: '202 555 0123' },
+        { code: 'CA', name: 'Canada', dial: '+1', flag: '🇨🇦', len: 10, format: '416 555 0123' },
+        { code: 'IN', name: 'India', dial: '+91', flag: '🇮🇳', len: 10, format: '98765 43210' },
+        { code: 'QA', name: 'Qatar', dial: '+974', flag: '🇶🇦', len: 8, format: '3312 3456' },
+        { code: 'KW', name: 'Kuwait', dial: '+965', flag: '🇰🇼', len: 8, format: '9123 4567' },
+        { code: 'OM', name: 'Oman', dial: '+968', flag: '🇴🇲', len: 8, format: '9123 4567' },
+        { code: 'BH', name: 'Bahrain', dial: '+973', flag: '🇧🇭', len: 8, format: '3612 3456' },
+        { code: 'AU', name: 'Australia', dial: '+61', flag: '🇦🇺', len: 9, format: '412 345 678' },
+        { code: 'IE', name: 'Ireland', dial: '+353', flag: '🇮🇪', len: 9, format: '83 123 4567' },
+        { code: 'DE', name: 'Germany', dial: '+49', flag: '🇩🇪', len: 10, format: '151 23456789' },
+        { code: 'FR', name: 'France', dial: '+33', flag: '🇫🇷', len: 9, format: '6 12 34 56 78' },
+        { code: 'IT', name: 'Italy', dial: '+39', flag: '🇮🇹', len: 10, format: '312 345 6789' },
+        { code: 'ES', name: 'Spain', dial: '+34', flag: '🇪🇸', len: 9, format: '612 345 678' },
+        { code: 'NL', name: 'Netherlands', dial: '+31', flag: '🇳🇱', len: 9, format: '6 12345678' },
+        { code: 'CH', name: 'Switzerland', dial: '+41', flag: '🇨🇭', len: 9, format: '78 123 45 67' },
+        { code: 'SE', name: 'Sweden', dial: '+46', flag: '🇸🇪', len: 9, format: '70 123 45 67' },
+        { code: 'NO', name: 'Norway', dial: '+47', flag: '🇳🇴', len: 8, format: '412 34 567' },
+        { code: 'DK', name: 'Denmark', dial: '+45', flag: '🇩🇰', len: 8, format: '20 12 34 56' },
+        { code: 'FI', name: 'Finland', dial: '+358', flag: '🇫🇮', len: 9, format: '41 2345678' },
+        { code: 'BE', name: 'Belgium', dial: '+32', flag: '🇧🇪', len: 9, format: '470 12 34 56' },
+        { code: 'AT', name: 'Austria', dial: '+43', flag: '🇦🇹', len: 10, format: '664 1234567' },
+        { code: 'PT', name: 'Portugal', dial: '+351', flag: '🇵🇹', len: 9, format: '912 345 678' },
+        { code: 'PL', name: 'Poland', dial: '+48', flag: '🇵🇱', len: 9, format: '512 345 678' },
+        { code: 'TR', name: 'Turkey', dial: '+90', flag: '🇹🇷', len: 10, format: '532 123 4567' },
+        { code: 'ZA', name: 'South Africa', dial: '+27', flag: '🇿🇦', len: 9, format: '71 234 5678' },
+        { code: 'EG', name: 'Egypt', dial: '+20', flag: '🇪🇬', len: 10, format: '10 1234 5678' },
+        { code: 'NG', name: 'Nigeria', dial: '+234', flag: '🇳🇬', len: 10, format: '802 123 4567' },
+        { code: 'KE', name: 'Kenya', dial: '+254', flag: '🇰🇪', len: 9, format: '712 345678' },
+        { code: 'MY', name: 'Malaysia', dial: '+60', flag: '🇲🇾', len: 9, format: '12 345 6789' },
+        { code: 'SG', name: 'Singapore', dial: '+65', flag: '🇸🇬', len: 8, format: '8123 4567' },
+        { code: 'NZ', name: 'New Zealand', dial: '+64', flag: '🇳🇿', len: 9, format: '21 123 4567' },
+        { code: 'BD', name: 'Bangladesh', dial: '+880', flag: '🇧🇩', len: 10, format: '1712 345678' },
+        { code: 'LK', name: 'Sri Lanka', dial: '+94', flag: '🇱🇰', len: 9, format: '71 234 5678' },
+        { code: 'NP', name: 'Nepal', dial: '+977', flag: '🇳🇵', len: 10, format: '981 2345678' },
+        { code: 'PH', name: 'Philippines', dial: '+63', flag: '🇵🇭', len: 10, format: '917 123 4567' },
+        { code: 'ID', name: 'Indonesia', dial: '+62', flag: '🇮🇩', len: 10, format: '812 3456 7890' },
+        { code: 'TH', name: 'Thailand', dial: '+66', flag: '🇹🇭', len: 9, format: '81 234 5678' },
+        { code: 'VN', name: 'Vietnam', dial: '+84', flag: '🇻🇳', len: 9, format: '91 234 5678' },
+        { code: 'JP', name: 'Japan', dial: '+81', flag: '🇯🇵', len: 10, format: '90 1234 5678' },
+        { code: 'KR', name: 'South Korea', dial: '+82', flag: '🇰🇷', len: 10, format: '10 1234 5678' },
+        { code: 'CN', name: 'China', dial: '+86', flag: '🇨🇳', len: 11, format: '138 0013 8000' },
+        { code: 'HK', name: 'Hong Kong', dial: '+852', flag: '🇭🇰', len: 8, format: '9123 4567' },
+        { code: 'TW', name: 'Taiwan', dial: '+886', flag: '🇹🇼', len: 9, format: '912 345 678' },
+        { code: 'BR', name: 'Brazil', dial: '+55', flag: '🇧🇷', len: 11, format: '11 91234 5678' },
+        { code: 'MX', name: 'Mexico', dial: '+52', flag: '🇲🇽', len: 10, format: '55 1234 5678' },
+        { code: 'AR', name: 'Argentina', dial: '+54', flag: '🇦🇷', len: 10, format: '9 11 1234 5678' },
+        { code: 'CL', name: 'Chile', dial: '+56', flag: '🇨🇱', len: 9, format: '9 1234 5678' },
+        { code: 'CO', name: 'Colombia', dial: '+57', flag: '🇨🇴', len: 10, format: '300 123 4567' }
+    ];
+
+    window.openWaHomeCountryModal = function() {
+        var modal = document.getElementById('waHomeCountryModal');
+        var input = document.getElementById('waHomeCountrySearch');
+        if (modal) modal.style.display = 'flex';
+        if (input) {
+            input.value = '';
+            input.focus();
+        }
+        renderWaHomeCountryList(homeCountries);
+    };
+
+    window.closeWaHomeCountryModal = function() {
+        var modal = document.getElementById('waHomeCountryModal');
+        if (modal) modal.style.display = 'none';
+    };
+
+    function renderWaHomeCountryList(list) {
+        var ul = document.getElementById('waHomeCountryList');
+        if (!ul) return;
+        ul.innerHTML = '';
+        var curCode = document.getElementById('waTrialCountryCode') ? document.getElementById('waTrialCountryCode').value : 'GB';
+
+        list.forEach(function(item) {
+            var li = document.createElement('li');
+            li.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:10px 20px; cursor:pointer; font-size:0.88rem; transition:background 0.15s;' + (item.code === curCode ? ' background:#ecfdf5; font-weight:700;' : '');
+            li.onmouseenter = function() { if (item.code !== curCode) this.style.background = '#f8fafc'; };
+            li.onmouseleave = function() { if (item.code !== curCode) this.style.background = 'transparent'; };
+            li.onclick = function() { selectWaHomeCountry(item); };
+            li.innerHTML = '<div style="display:flex; align-items:center; gap:10px;">' +
+                '<span style="font-size:1.3rem;">' + item.flag + '</span>' +
+                '<span style="color:#0f172a;">' + item.name + '</span>' +
+                '</div>' +
+                '<span style="font-weight:800; color:#059669; font-family:monospace;">' + item.dial + '</span>';
+            ul.appendChild(li);
+        });
+    }
+
+    window.filterWaHomeCountries = function() {
+        var q = document.getElementById('waHomeCountrySearch').value.toLowerCase().trim();
+        if (!q) {
+            renderWaHomeCountryList(homeCountries);
+            return;
+        }
+        var filtered = homeCountries.filter(function(c) {
+            return c.name.toLowerCase().indexOf(q) !== -1 ||
+                   c.dial.toLowerCase().indexOf(q) !== -1 ||
+                   c.code.toLowerCase().indexOf(q) !== -1;
+        });
+        renderWaHomeCountryList(filtered);
+    };
+
+    function selectWaHomeCountry(item) {
+        var flagEl = document.getElementById('waTrialFlag');
+        var dialEl = document.getElementById('waTrialDial');
+        var codeEl = document.getElementById('waTrialCountryCode');
+        var input = document.getElementById('waTrialPhoneInput');
+
+        if (flagEl) flagEl.textContent = item.flag;
+        if (dialEl) dialEl.textContent = item.dial;
+        if (codeEl) codeEl.value = item.code;
+        if (input) {
+            input.placeholder = item.format || '7123 456789';
+            input.maxLength = item.len;
+            if (input.value.length > item.len) {
+                input.value = input.value.substring(0, item.len);
+            }
+        }
+        closeWaHomeCountryModal();
+        if (input) input.focus();
+    }
+
+    // Set up digits input listener
+    var phoneInput = document.getElementById('waTrialPhoneInput');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            var val = this.value.replace(/[^0-9]/g, '');
+            if (val.startsWith('0')) {
+                val = val.replace(/^0+/, '');
+            }
+            var curCode = document.getElementById('waTrialCountryCode').value;
+            var cur = homeCountries.find(function(c) { return c.code === curCode; }) || homeCountries[0];
+            if (val.length > cur.len) {
+                val = val.substring(0, cur.len);
+            }
+            this.value = val;
+        });
+
+        phoneInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            var pasted = (e.clipboardData || window.clipboardData).getData('text');
+            var digits = pasted.replace(/[^0-9]/g, '');
+            var curCode = document.getElementById('waTrialCountryCode').value;
+            var cur = homeCountries.find(function(c) { return c.code === curCode; }) || homeCountries[0];
+            var dialDigits = cur.dial.replace(/[^0-9]/g, '');
+
+            if (dialDigits && digits.startsWith(dialDigits) && digits.length > cur.len) {
+                digits = digits.substring(dialDigits.length);
+            }
+            if (digits.startsWith('0')) {
+                digits = digits.replace(/^0+/, '');
+            }
+            if (digits.length > cur.len) {
+                digits = digits.substring(0, cur.len);
+            }
+            this.value = digits;
+        });
+    }
+
+    var currentTrialPhone = '';
+    var currentTrialCategory = '';
+    var currentTrialLocation = '';
+    var trialResendInterval = null;
+
+    // Setup 6-digit OTP boxes auto navigation
+    var otpInputs = [
+        document.getElementById('wt-otp-0'),
+        document.getElementById('wt-otp-1'),
+        document.getElementById('wt-otp-2'),
+        document.getElementById('wt-otp-3'),
+        document.getElementById('wt-otp-4'),
+        document.getElementById('wt-otp-5')
+    ];
+
+    otpInputs.forEach(function(input, index) {
+        if (!input) return;
+        input.addEventListener('input', function(e) {
+            var val = e.target.value.replace(/\D/g, '');
+            e.target.value = val ? val[0] : '';
+            if (e.target.value && index < 5 && otpInputs[index + 1]) {
+                otpInputs[index + 1].focus();
+            }
+            checkAutoSubmitVerify();
+        });
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !e.target.value && index > 0 && otpInputs[index - 1]) {
+                otpInputs[index - 1].focus();
+            }
+        });
+
+        input.addEventListener('paste', function(e) {
+            e.preventDefault();
+            var paste = (e.clipboardData || window.clipboardData).getData('text');
+            var digits = paste.replace(/\D/g, '');
+            for (var i = 0; i < 6 && i < digits.length; i++) {
+                if (otpInputs[i]) otpInputs[i].value = digits[i];
+            }
+            if (digits.length >= 6) {
+                if (otpInputs[5]) otpInputs[5].focus();
+                checkAutoSubmitVerify();
+            } else if (digits.length > 0 && otpInputs[Math.min(digits.length, 5)]) {
+                otpInputs[Math.min(digits.length, 5)].focus();
+            }
+        });
+    });
+
+    function checkAutoSubmitVerify() {
+        var code = '';
+        for (var i = 0; i < 6; i++) {
+            if (otpInputs[i] && otpInputs[i].value) {
+                code += otpInputs[i].value;
+            }
+        }
+        if (code.length === 6) {
+            submitWaTrialVerify(new Event('submit'));
+        }
+    }
+
+    function startResendTimer(seconds) {
+        clearInterval(trialResendInterval);
+        var timerEl = document.getElementById('waTrialResendTimer');
+        var resendBtn = document.getElementById('waTrialResendBtn');
+        if (resendBtn) resendBtn.disabled = true;
+
+        var rem = seconds || 120;
+        if (timerEl) timerEl.textContent = rem;
+
+        trialResendInterval = setInterval(function() {
+            rem--;
+            if (timerEl) timerEl.textContent = rem;
+            if (rem <= 0) {
+                clearInterval(trialResendInterval);
+                if (resendBtn) {
+                    resendBtn.disabled = false;
+                    resendBtn.innerHTML = 'Resend Code Now';
+                }
+            }
+        }, 1000);
+    }
+
+    window.submitWaTrial = function(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        var cat = document.getElementById('waTrialCategory').value;
+        var loc = document.getElementById('waTrialLocation').value;
+        var dial = document.getElementById('waTrialDial').textContent.trim();
+        var rawDigits = document.getElementById('waTrialPhoneInput').value.trim();
+        var btn = document.getElementById('waTrialSubmitBtn');
+        var btnText = document.getElementById('waTrialBtnText');
+        var errEl = document.getElementById('waTrialError');
+
+        if (errEl) errEl.style.display = 'none';
+
+        if (!rawDigits || rawDigits.length < 6) {
+            if (errEl) {
+                errEl.style.background = '#fef2f2';
+                errEl.style.color = '#dc2626';
+                errEl.style.border = '1px solid #fecaca';
+                errEl.textContent = 'Please enter valid phone number digits.';
+                errEl.style.display = 'block';
+            }
+            return;
+        }
+
+        var fullPhone = dial + rawDigits;
+        currentTrialPhone = fullPhone;
+        currentTrialCategory = cat;
+        currentTrialLocation = loc;
+
+        if (btn) btn.disabled = true;
+        if (btnText) btnText.textContent = 'Sending WhatsApp Code...';
+
+        fetch('/api/whatsapp/trial-subscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                phone: fullPhone,
+                category: cat,
+                location: loc
+            })
+        })
+        .then(function(res) {
+            return res.json().then(function(data) {
+                return { status: res.status, data: data };
+            });
+        })
+        .then(function(res) {
+            if (btn) btn.disabled = false;
+            if (btnText) btnText.textContent = 'Start 3-Day Free Trial';
+
+            if (!res.data || !res.data.success) {
+                var msg = (res.data && res.data.error) ? res.data.error : 'Could not request trial code. Please try again.';
+                if (errEl) {
+                    if (res.data && res.data.already_registered) {
+                        errEl.style.background = '#fef2f2';
+                        errEl.style.color = '#991b1b';
+                        errEl.style.border = '1.5px solid #fecaca';
+                        errEl.style.padding = '12px 14px';
+                        errEl.style.borderRadius = '10px';
+                        errEl.innerHTML = '<div style="display: flex; align-items: center; gap: 8px; font-weight: 800; margin-bottom: 6px; font-size: 0.94rem; color: #991b1b;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span>Already Registered!</span></div><div style="font-size: 0.86rem; line-height: 1.45; color: #7f1d1d;">' + msg + '</div><div style="margin-top: 10px;"><a href="/my-alerts/login" style="display: inline-flex; align-items: center; gap: 7px; background: #0f172a; color: #ffffff; padding: 8px 16px; border-radius: 9px; font-weight: 800; font-size: 0.84rem; text-decoration: none; box-shadow: 0 2px 8px rgba(15,23,42,0.18);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>Sign In with PIN</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>';
+                    } else {
+                        errEl.style.background = '#fef2f2';
+                        errEl.style.color = '#dc2626';
+                        errEl.style.border = '1px solid #fecaca';
+                        errEl.textContent = msg;
+                    }
+                    errEl.style.display = 'block';
+                }
+                return;
+            }
+
+            // Step 2: Show 6-digit WhatsApp ownership verification card
+            var form = document.getElementById('waTrialForm');
+            var verifyCard = document.getElementById('waTrialVerifyCard');
+            var phoneDisplay = document.getElementById('waTrialVerifyPhoneDisplay');
+            var verifyErr = document.getElementById('waTrialVerifyError');
+
+            if (form) form.style.display = 'none';
+            if (verifyErr) verifyErr.style.display = 'none';
+            if (phoneDisplay) phoneDisplay.textContent = fullPhone;
+            if (verifyCard) verifyCard.style.display = 'block';
+
+            // Clear inputs and focus first digit
+            otpInputs.forEach(function(inp) { if (inp) inp.value = ''; });
+            if (otpInputs[0]) otpInputs[0].focus();
+
+            startResendTimer(120);
+        })
+        .catch(function(err) {
+            if (btn) btn.disabled = false;
+            if (btnText) btnText.textContent = 'Start 3-Day Free Trial';
+            if (errEl) {
+                errEl.style.background = '#fef2f2';
+                errEl.style.color = '#dc2626';
+                errEl.style.border = '1px solid #fecaca';
+                errEl.textContent = 'Network or server error. Please try again.';
+                errEl.style.display = 'block';
+            }
+        });
+    };
+
+    window.submitWaTrialVerify = function(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        var code = '';
+        for (var i = 0; i < 6; i++) {
+            if (otpInputs[i]) code += otpInputs[i].value;
+        }
+
+        var errEl = document.getElementById('waTrialVerifyError');
+        var btn = document.getElementById('waTrialVerifyBtn');
+        var btnText = document.getElementById('waTrialVerifyBtnText');
+
+        if (errEl) errEl.style.display = 'none';
+
+        if (code.length !== 6) {
+            if (errEl) {
+                errEl.textContent = 'Please enter the complete 6-digit verification code.';
+                errEl.style.display = 'block';
+            }
+            return;
+        }
+
+        if (btn) btn.disabled = true;
+        if (btnText) btnText.textContent = 'Verifying Code...';
+
+        fetch('/api/whatsapp/trial-verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                phone: currentTrialPhone,
+                code: code
+            })
+        })
+        .then(function(res) {
+            return res.json().then(function(data) {
+                return { status: res.status, data: data };
+            });
+        })
+        .then(function(res) {
+            if (btn) btn.disabled = false;
+            if (btnText) btnText.textContent = 'Verify & Activate 3-Day Free Trial';
+
+            if (!res.data || !res.data.success) {
+                var msg = (res.data && res.data.error) ? res.data.error : 'Invalid verification code. Please try again.';
+                if (errEl) {
+                    if (res.data && res.data.already_registered) {
+                        errEl.style.background = '#fef2f2';
+                        errEl.style.color = '#991b1b';
+                        errEl.style.border = '1.5px solid #fecaca';
+                        errEl.style.padding = '12px 14px';
+                        errEl.style.borderRadius = '10px';
+                        errEl.innerHTML = '<div style="display: flex; align-items: center; gap: 8px; font-weight: 800; margin-bottom: 6px; font-size: 0.94rem; color: #991b1b;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span>Already Registered!</span></div><div style="font-size: 0.86rem; line-height: 1.45; color: #7f1d1d;">' + msg + '</div><div style="margin-top: 10px;"><a href="/my-alerts/login" style="display: inline-flex; align-items: center; gap: 7px; background: #0f172a; color: #ffffff; padding: 8px 16px; border-radius: 9px; font-weight: 800; font-size: 0.84rem; text-decoration: none; box-shadow: 0 2px 8px rgba(15,23,42,0.18);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>Sign In with PIN</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>';
+                    } else {
+                        errEl.style.background = '#fef2f2';
+                        errEl.style.color = '#dc2626';
+                        errEl.style.border = '1px solid #fecaca';
+                        errEl.style.padding = '10px 14px';
+                        errEl.style.borderRadius = '8px';
+                        errEl.textContent = msg;
+                    }
+                    errEl.style.display = 'block';
+                }
+                return;
+            }
+
+            // Step 3: Success!
+            clearInterval(trialResendInterval);
+            var verifyCard = document.getElementById('waTrialVerifyCard');
+            var successCard = document.getElementById('waTrialSuccess');
+            var successDesc = document.getElementById('waTrialSuccessDesc');
+
+            if (verifyCard) verifyCard.style.display = 'none';
+            if (successDesc) {
+                successDesc.textContent = "Your WhatsApp number (" + currentTrialPhone + ") has been verified. Welcome message and dashboard access PIN confirmed on WhatsApp.";
+            }
+            if (successCard) successCard.style.display = 'block';
+        })
+        .catch(function(err) {
+            if (btn) btn.disabled = false;
+            if (btnText) btnText.textContent = 'Verify & Activate 3-Day Free Trial';
+            if (errEl) {
+                errEl.textContent = 'Network or server error. Please try again.';
+                errEl.style.display = 'block';
+            }
+        });
+    };
+
+    window.editWaTrialPhone = function() {
+        clearInterval(trialResendInterval);
+        var form = document.getElementById('waTrialForm');
+        var verifyCard = document.getElementById('waTrialVerifyCard');
+        if (verifyCard) verifyCard.style.display = 'none';
+        if (form) form.style.display = 'block';
+        var phoneInp = document.getElementById('waTrialPhoneInput');
+        if (phoneInp) phoneInp.focus();
+    };
+
+    window.resendWaTrialCode = function() {
+        var resendBtn = document.getElementById('waTrialResendBtn');
+        if (resendBtn) {
+            resendBtn.disabled = true;
+            resendBtn.innerHTML = 'Sending...';
+        }
+        submitWaTrial();
+    };
+
+    window.resetWaTrialForm = function() {
+        clearInterval(trialResendInterval);
+        var form = document.getElementById('waTrialForm');
+        var verifyCard = document.getElementById('waTrialVerifyCard');
+        var successCard = document.getElementById('waTrialSuccess');
+        var phoneInput = document.getElementById('waTrialPhoneInput');
+        var errEl = document.getElementById('waTrialError');
+
+        if (verifyCard) verifyCard.style.display = 'none';
+        if (successCard) successCard.style.display = 'none';
+        if (errEl) errEl.style.display = 'none';
+        if (phoneInput) phoneInput.value = '';
+        if (form) form.style.display = 'block';
+    };
+})();
+</script>
+{{end}}
+{{end}}

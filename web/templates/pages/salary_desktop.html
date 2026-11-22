@@ -1,0 +1,998 @@
+{{define "content"}}
+<div class="jy-salary-hub-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        {{if .Data.Guide}}
+        <!-- =========================================================================
+             1. SALARY GUIDE DETAIL VIEW (/salaries/{slug}/) - JobyUK Emerald Theme
+             ========================================================================= -->
+
+        <!-- Hero Header -->
+        <header class="jy-sal-detail-header animate-fade-in" style="margin-top: 10px; margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                <span class="jy-sal-badge-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                    Verified UK Market Benchmark {{currentYear}}
+                </span>
+                <span style="font-size: 0.75rem; font-weight: 750; color: #065F46; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 10px; border-radius: 9999px;">
+                    Based on {{.Data.Guide.SampleSize}} Live Vacancies
+                </span>
+            </div>
+
+            <h1 style="font-size: 2.6rem; font-weight: 850; color: #0B1F1A; letter-spacing: -0.025em; line-height: 1.2; margin: 0 0 10px;">
+                {{.Data.Guide.RoleName}} Salary in the UK
+            </h1>
+            <!-- AEO / GEO Direct Answer Box (Google AI Overviews & Perplexity) -->
+            <div class="jy-aeo-summary" style="background: #FFFFFF; border-left: 4px solid #059669; border-radius: 0 14px 14px 0; padding: 18px 22px; margin: 16px 0 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); max-width: 880px;">
+                <p style="font-size: 1.1rem; color: #0F172A; margin: 0; line-height: 1.65; font-weight: 500;">
+                    The average <strong>{{.Data.Guide.RoleName}}</strong> salary in the UK is <strong>£{{formatSalary .Data.Guide.AvgSalary}}</strong> per year ({{currentYear}}), typically ranging from <strong>£{{formatSalary .Data.Guide.MinSalary}}</strong> for entry-level positions to <strong>£{{formatSalary .Data.Guide.MaxSalary}}</strong> for senior roles. Based on verified UK market listings, estimated gross monthly earnings are approximately <strong>£{{calcMonthly .Data.Guide.AvgSalary}}</strong>.
+                </p>
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 10px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Source: JobyUK UK Verified Employment Benchmark · Last updated: {{currentYear}}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 4 Top Core Stats Cards Grid -->
+        <section class="jy-sal-stats-grid animate-fade-in" style="margin-bottom: 32px;">
+            <!-- Stat 1: Market Average -->
+            <div class="jy-sal-stat-box jy-sal-stat-box--primary">
+                <div class="jy-sal-stat-box__icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <div class="jy-sal-stat-box__tag">Average Annual Salary</div>
+                <div class="jy-sal-stat-box__val" style="color: #065F46;">£{{formatSalary .Data.Guide.AvgSalary}}</div>
+                <div class="jy-sal-stat-box__sub">~£{{calcMonthly .Data.Guide.AvgSalary}} / month gross</div>
+            </div>
+
+            <!-- Stat 2: Entry Level Min -->
+            <div class="jy-sal-stat-box">
+                <div class="jy-sal-stat-box__icon" style="background: #F1F5F9; color: #475569;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                        <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                </div>
+                <div class="jy-sal-stat-box__tag">Starting / Min Salary</div>
+                <div class="jy-sal-stat-box__val" style="color: #0F172A;">£{{formatSalary .Data.Guide.MinSalary}}</div>
+                <div class="jy-sal-stat-box__sub">25th Percentile Baseline</div>
+            </div>
+
+            <!-- Stat 3: Senior Level Max -->
+            <div class="jy-sal-stat-box">
+                <div class="jy-sal-stat-box__icon" style="background: #FEF3C7; color: #D97706;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                        <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                </div>
+                <div class="jy-sal-stat-box__tag">Senior / Top 10% Pay</div>
+                <div class="jy-sal-stat-box__val" style="color: #0F172A;">£{{formatSalary .Data.Guide.MaxSalary}}</div>
+                <div class="jy-sal-stat-box__sub">90th Percentile Bracket</div>
+            </div>
+
+            <!-- Stat 4: Market Sample Depth -->
+            <div class="jy-sal-stat-box">
+                <div class="jy-sal-stat-box__icon" style="background: #ECFDF5; color: #059669;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div class="jy-sal-stat-box__tag">Live Data Points</div>
+                <div class="jy-sal-stat-box__val" style="color: #0F172A;">{{.Data.Guide.SampleSize}}</div>
+                <div class="jy-sal-stat-box__sub">Verified UK Openings</div>
+            </div>
+        </section>
+
+        <!-- Visual Pay Spectrum Card -->
+        <section class="jy-sal-spectrum-panel animate-fade-in" style="margin-bottom: 32px;">
+            <div class="jy-sal-spectrum-panel__top">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 850; color: #0B1F1A; margin: 0 0 4px;">How Much Does a {{.Data.Guide.RoleName}} Earn in the UK?</h2>
+                    <p style="font-size: 0.88rem; color: #64748B; margin: 0;">National salary distribution from entry-level through established senior roles across the United Kingdom.</p>
+                </div>
+                <span class="jy-sal-spectrum-pill">Verified {{currentYear}}</span>
+            </div>
+
+            <!-- Progress Track -->
+            <div class="jy-sal-track-container">
+                <div class="jy-sal-track-bar">
+                    <div class="jy-sal-track-fill"></div>
+                </div>
+                <div class="jy-sal-pin-box">
+                    <div class="jy-sal-pin-badge">
+                        <span style="font-size: 0.7rem; font-weight: 750; text-transform: uppercase;">Average</span>
+                        <span style="font-size: 0.95rem; font-weight: 850;">£{{formatSalary .Data.Guide.AvgSalary}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Labels Row -->
+            <div class="jy-sal-spectrum-labels">
+                <div>
+                    <div style="font-size: 0.72rem; font-weight: 750; color: #64748B; text-transform: uppercase;">Entry Level (25th %ile)</div>
+                    <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-top: 2px;">£{{formatSalary .Data.Guide.MinSalary}}</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 0.72rem; font-weight: 750; color: #059669; text-transform: uppercase;">National Median</div>
+                    <div style="font-size: 1.15rem; font-weight: 850; color: #065F46; margin-top: 2px;">£{{formatSalary .Data.Guide.AvgSalary}}</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 0.72rem; font-weight: 750; color: #64748B; text-transform: uppercase;">Senior Level (90th %ile)</div>
+                    <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-top: 2px;">£{{formatSalary .Data.Guide.MaxSalary}}</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rate Equivalents Breakdown Table Card -->
+        <section class="jy-sal-rates-card animate-fade-in" style="margin-bottom: 32px;">
+            <h2 style="font-size: 1.25rem; font-weight: 850; color: #0B1F1A; margin: 0 0 16px;">
+                What is the Hourly and Monthly Take-Home Pay for a {{.Data.Guide.RoleName}}?
+            </h2>
+            <div class="jy-sal-rates-grid">
+                <div class="jy-sal-rate-item">
+                    <span class="jy-sal-rate-item__label">Annual Gross</span>
+                    <span class="jy-sal-rate-item__val">£{{formatSalary .Data.Guide.AvgSalary}}</span>
+                    <span class="jy-sal-rate-item__note">Base salary</span>
+                </div>
+                <div class="jy-sal-rate-item">
+                    <span class="jy-sal-rate-item__label">Monthly Pay</span>
+                    <span class="jy-sal-rate-item__val">£{{calcMonthly .Data.Guide.AvgSalary}}</span>
+                    <span class="jy-sal-rate-item__note">Gross per month</span>
+                </div>
+                <div class="jy-sal-rate-item">
+                    <span class="jy-sal-rate-item__label">Daily Equivalent</span>
+                    <span class="jy-sal-rate-item__val">£{{calcDaily .Data.Guide.AvgSalary}}</span>
+                    <span class="jy-sal-rate-item__note">5 days / week</span>
+                </div>
+                <div class="jy-sal-rate-item">
+                    <span class="jy-sal-rate-item__label">Hourly Rate</span>
+                    <span class="jy-sal-rate-item__val">£{{calcHourly .Data.Guide.AvgSalary}}</span>
+                    <span class="jy-sal-rate-item__note">37.5 hours / week</span>
+                </div>
+            </div>
+        </section>
+
+        {{template "whatsapp_context_banner" dict "Title" (printf "Get Top-Paying %s Vacancies on WhatsApp" .Data.Guide.RoleName) "Desc" (printf "Instant alerts for UK %s openings paying above £%s. Direct ATS links, zero recruiter spam." .Data.Guide.RoleName (formatSalary .Data.Guide.AvgSalary)) "Role" .Data.Guide.RoleName}}
+
+        {{template "wfa_incontent" .}}
+
+        <!-- Career Strategy & Negotiation Advice Card -->
+        <section class="jy-sal-advice-card animate-fade-in" style="margin-top: 32px;">
+            <div style="margin-bottom: 24px;">
+                <span class="jy-sal-badge-pill">UK Career Guidance</span>
+                <h2 style="font-size: 1.6rem; font-weight: 850; color: #0B1F1A; margin: 8px 0 6px;">
+                    How to Negotiate a Top-Tier {{.Data.Guide.RoleName}} Offer
+                </h2>
+                <p style="font-size: 0.95rem; color: #64748B; margin: 0; line-height: 1.6;">
+                    UK employers base upper-quartile offers on measurable commercial contribution rather than generic tenure. Here are 3 verified ways to command the £{{formatSalary .Data.Guide.MaxSalary}} bracket.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+                <div class="jy-sal-advice-block">
+                    <div class="jy-sal-advice-block__icon">1</div>
+                    <h3 style="font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Demonstrate Revenue or Efficiency Impact</h3>
+                    <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.6;">
+                        Quantify previous achievements in pounds, hours saved, or project turnaround times. Candidates who speak commercial ROI consistently secure 15–20% higher base offers.
+                    </p>
+                </div>
+
+                <div class="jy-sal-advice-block">
+                    <div class="jy-sal-advice-block__icon">2</div>
+                    <h3 style="font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Factor in Regional & London Weightings</h3>
+                    <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.6;">
+                        London and South East roles typically include a 15–25% living allowance weighting. When interviewing remotely, benchmark against nationwide national medians.
+                    </p>
+                </div>
+
+                <div class="jy-sal-advice-block">
+                    <div class="jy-sal-advice-block__icon">3</div>
+                    <h3 style="font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Target Direct Employer ATS Vacancies</h3>
+                    <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.6;">
+                        Applying directly via company ATS portals avoids recruiter 20% commission deductions, giving hiring managers more salary budget flexibility for your candidate package.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Link to Live Jobs -->
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #EEF2F6; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin: 0 0 4px;">Ready to explore {{.Data.Guide.RoleName}} vacancies?</h3>
+                    <p style="font-size: 0.88rem; color: #64748B; margin: 0;">Apply direct to verified UK employers hiring right now on JobyUK.</p>
+                </div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="/salary-calculator/" class="jy-sal-btn-secondary">Calculate Take-Home Pay</a>
+                    <a href="/job-roles/{{.Data.Guide.RoleSlug}}/" class="jy-sal-btn-primary">
+                        <span>Find {{.Data.Guide.RoleName}} Jobs</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        {{else}}
+        <!-- =========================================================================
+             2. SALARY GUIDES DIRECTORY INDEX (/salaries/) - JobyUK Emerald Theme
+             ========================================================================= -->
+
+        <!-- Hero Header -->
+        <header class="jy-sal-hero animate-fade-in" style="margin-bottom: 28px;">
+            <div style="max-width: 820px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <span class="jy-sal-badge-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="m9 12 2 2 4-4"></path>
+                        </svg>
+                        UK Market Benchmark {{currentYear}}
+                    </span>
+                    <span style="font-size: 0.78rem; font-weight: 750; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 3px 12px; border-radius: 9999px;">
+                        {{.Data.TotalCount}}+ UK Salary Guides
+                    </span>
+                </div>
+
+                <h1 style="font-size: 2.85rem; font-weight: 850; color: #0B1F1A; line-height: 1.15; letter-spacing: -0.03em; margin: 0 0 12px;">
+                    UK Salary Guides & Pay Benchmarks
+                </h1>
+                <p style="font-size: 1.1rem; color: #64748B; line-height: 1.6; margin: 0 0 18px;">
+                    Compare market averages, entry-to-senior pay brackets, and take-home pay rates across 2,400+ verified UK job roles. Updated for {{currentYear}} with zero recruiter guesswork.
+                </p>
+
+                <!-- Salary Calculator & Roles Fast Links -->
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px;">
+                    <a href="/salary-calculator/" class="jy-sal-action-pill jy-sal-action-pill--calc" title="UK Salary & Take-Home Pay Calculator">
+                        <span class="jy-sal-action-pill__icon">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                                <line x1="8" y1="6" x2="16" y2="6"></line>
+                                <line x1="16" y1="14" x2="16" y2="14.01"></line>
+                                <line x1="12" y1="14" x2="12" y2="14.01"></line>
+                                <line x1="8" y1="14" x2="8" y2="14.01"></line>
+                                <line x1="16" y1="18" x2="16" y2="18.01"></line>
+                                <line x1="12" y1="18" x2="12" y2="18.01"></line>
+                                <line x1="8" y1="18" x2="8" y2="18.01"></line>
+                            </svg>
+                        </span>
+                        <span>Calculate Take-Home Pay (Tax & NI)</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="/job-roles/" class="jy-sal-action-pill jy-sal-action-pill--roles" title="Browse 2,400+ UK Job Roles">
+                        <span class="jy-sal-action-pill__icon">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </span>
+                        <span>Browse Job Roles Directory</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Floating Search Bar & A-Z Navigation -->
+        <div class="jy-sal-filter-sticky animate-fade-in" style="margin-bottom: 24px;">
+            <!-- Instant Search Input -->
+            <form action="/salaries/" method="GET" class="jy-hero__search-card" onsubmit="event.preventDefault(); applySalaryFilter();" style="width: 100%; box-shadow: 0 8px 24px -4px rgba(15, 81, 50, 0.08); margin-bottom: 18px;">
+                <div class="jy-hero__search-field" style="padding-left: 4px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" name="q" id="salary-search-input" value="{{.Data.Query}}" placeholder="Search salary benchmarks (e.g. Software Engineer, Nurse, Accountant, Chef)..." class="jy-hero__search-input" autocomplete="off" oninput="filterSalariesLive(this.value)">
+                    <button type="button" id="salary-search-clear" onclick="clearSalarySearch()" style="display: none; background: #E2E8F0; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: #475569; font-weight: 800; font-size: 11px; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 8px;">✕</button>
+                </div>
+                <div class="jy-hero__search-btn-glass">
+                    <button type="submit" class="jy-hero__search-btn">Search Salaries</button>
+                </div>
+            </form>
+
+            <!-- A-Z Alphabet Filter Navigation -->
+            <div class="jy-sal-az-bar" style="border-top: 1px solid #EEF2F6; padding-top: 16px;">
+                <div style="font-size: 0.75rem; font-weight: 800; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+                    Filter Salaries Alphabetically (A–Z):
+                </div>
+                <div class="jy-sal-az-slider" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                    <a href="/salaries/" class="jy-az-pill {{if eq .Data.SelectedLetter ""}}active{{end}}">All</a>
+                    {{$selectedLetter := .Data.SelectedLetter}}
+                    {{range .Data.Alphabet}}
+                        <a href="/salaries/?letter={{.}}" class="jy-az-pill {{if eq $selectedLetter .}}active{{end}}">{{.}}</a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        {{template "whatsapp_context_banner" dict "Title" "Targeting High-Paying UK Vacancies? Get WhatsApp Alerts" "Desc" "Set your salary expectations and get top-paying UK roles delivered directly to your chat in under 60 seconds." "Role" "High Paying Jobs"}}
+
+        {{template "wfa_incontent" .}}
+
+        <!-- 3-Column Salary Cards Grid -->
+        <div id="salary-directory-container" style="margin-top: 24px;">
+            <div class="jy-sal-grid" id="salary-cards-grid">
+                {{range .Data.Guides}}
+                <article class="jy-sal-card" data-name="{{lower .RoleName}}" data-slug="{{.RoleSlug}}">
+                    <a href="/salaries/{{.RoleSlug}}/" class="jy-sal-card__overlay" aria-label="Explore {{.RoleName}} salary guide"></a>
+                    <div class="jy-sal-card__inner">
+                        <!-- Card Header -->
+                        <div class="jy-sal-card__header">
+                            <div class="jy-sal-card__icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <span class="jy-sal-card__sample-badge">
+                                {{if .SampleSize}}{{.SampleSize}} listings{{else}}Verified 2026{{end}}
+                            </span>
+                        </div>
+
+                        <!-- Card Role Title -->
+                        <h2 class="jy-sal-card__title">
+                            <a href="/salaries/{{.RoleSlug}}/">{{.RoleName}}</a>
+                        </h2>
+
+                        <!-- Market Average Figure -->
+                        <div class="jy-sal-card__avg-wrap">
+                            <span class="jy-sal-card__avg-label">Market Average</span>
+                            <div class="jy-sal-card__avg-amount">£{{formatSalary .AvgSalary}} <span style="font-size: 0.82rem; font-weight: 600; color: #64748B;">/ yr</span></div>
+                            <div class="jy-sal-card__monthly-note">~£{{calcMonthly .AvgSalary}} / month gross</div>
+                        </div>
+
+                        <!-- Visual Spectrum Gradient Bar -->
+                        <div class="jy-sal-card__bar-wrap">
+                            <div class="jy-sal-card__bar-track">
+                                <div class="jy-sal-card__bar-fill"></div>
+                            </div>
+                            <div class="jy-sal-card__range-row">
+                                <span class="jy-sal-card__range-min">Min £{{formatSalary .MinSalary}}</span>
+                                <span class="jy-sal-card__range-max">Max £{{formatSalary .MaxSalary}}</span>
+                            </div>
+                        </div>
+
+                        <!-- Card Action Footer -->
+                        <div class="jy-sal-card__footer">
+                            <div class="jy-sal-card__btn">
+                                <span class="jy-sal-card__btn-txt">View Pay Breakdown</span>
+                                <span class="jy-sal-card__btn-arrow">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {{else}}
+                <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 20px; padding: 48px 32px; text-align: center; border: 1.5px solid #EEF2F6; grid-column: 1 / -1;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <h2 style="font-size: 1.35rem; font-weight: 850; color: #0B1F1A; margin: 0 0 6px;">No salary benchmarks found matching your search</h2>
+                    <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 16px;">Try searching for a different role title or clear filters.</p>
+                    <a href="/salaries/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 750; font-size: 0.88rem; padding: 9px 22px; border-radius: 10px; text-decoration: none;">
+                        Reset Filters
+                    </a>
+                </div>
+                {{end}}
+            </div>
+
+            <!-- Empty State for Client-Side Live Search -->
+            <div id="noSalariesLiveEmptyState" style="display: none; background: #FFFFFF; border-radius: 20px; padding: 48px 32px; text-align: center; border: 1.5px solid #EEF2F6; margin-top: 16px;">
+                <div style="width: 54px; height: 54px; border-radius: 16px; background: #ECFDF5; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #0B1F1A; margin: 0 0 6px;">No salary guides match your search</h3>
+                <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 16px;">Try searching for "Engineer", "Nurse", "Manager", or "Developer".</p>
+                <button type="button" onclick="clearSalarySearch()" style="background: #059669; color: #FFFFFF; border: none; padding: 9px 20px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer;">
+                    Reset Search
+                </button>
+            </div>
+
+            <!-- Load More Salaries & Auto-Scroll Controller -->
+            {{if gt .Data.TotalPages 1}}
+            <div class="jy-load-more-wrap" id="load-more-salaries-wrap" data-current-page="{{.Data.Page}}" data-total-pages="{{.Data.TotalPages}}" data-type="salaries">
+                <button type="button" class="jy-load-more-btn" id="load-more-salaries-btn">
+                    <svg class="jy-load-more-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display: none; animation: jSpin 0.9s linear infinite;"><circle cx="12" cy="12" r="10" stroke="#A7F3D0"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#059669" stroke-linecap="round"></path></svg>
+                    <span class="jy-load-more-text">Load More Salaries</span>
+                    <svg class="jy-load-more-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M12 6v12"/></svg>
+                </button>
+            </div>
+
+            <!-- Fallback Static Pagination for SEO & Non-JS -->
+            <noscript>
+                <div style="margin-top: 24px; display: flex; justify-content: center;">
+                    <div class="jy-pagination-wrap" style="display: flex; align-items: center; gap: 8px;">
+                        {{if gt .Data.Page 1}}
+                        <a href="/salaries/?page={{sub .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-page-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>Previous</span>
+                        </a>
+                        {{end}}
+                        <span style="font-size: 0.88rem; font-weight: 700; color: #475569; padding: 6px 14px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px;">
+                            Page {{.Data.Page}} of {{.Data.TotalPages}}
+                        </span>
+                        {{if lt .Data.Page .Data.TotalPages}}
+                        <a href="/salaries/?page={{add .Data.Page 1}}{{if .Data.Query}}&q={{.Data.Query}}{{end}}{{if .Data.SelectedLetter}}&letter={{.Data.SelectedLetter}}{{end}}" class="jy-page-btn">
+                            <span>Next</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        {{end}}
+                    </div>
+                </div>
+            </noscript>
+            {{end}}
+        </div>
+        {{end}}
+
+        {{template "listing_floating_bar" .Data}}
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   JobyUK Salary Guide & Benchmarks (JobyUK Emerald Design System)
+   ========================================================================= */
+
+/* Badge Pill */
+.j-sal-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+/* Stat Box Grid */
+.j-sal-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+@media (max-width: 1024px) {
+    .j-sal-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 580px) {
+    .j-sal-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.j-sal-stat-box {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.j-sal-stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
+}
+.j-sal-stat-box--primary {
+    border-color: #A7F3D0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+}
+.j-sal-stat-box__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #ECFDF5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+.j-sal-stat-box__tag {
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748B;
+    margin-bottom: 4px;
+}
+.j-sal-stat-box__val {
+    font-size: 1.85rem;
+    font-weight: 850;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+.j-sal-stat-box__sub {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #059669;
+}
+
+/* Visual Spectrum Panel */
+.j-sal-spectrum-panel {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
+}
+.j-sal-spectrum-panel__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.j-sal-spectrum-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 3px 10px;
+    border-radius: 9999px;
+}
+.j-sal-track-container {
+    position: relative;
+    padding: 18px 0 24px;
+}
+.j-sal-track-bar {
+    width: 100%;
+    height: 12px;
+    border-radius: 9999px;
+    background: #F1F5F9;
+    overflow: hidden;
+    position: relative;
+}
+.j-sal-track-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #BBF7D0 0%, #10B981 50%, #059669 100%);
+    border-radius: 9999px;
+}
+.j-sal-pin-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.j-sal-pin-badge {
+    background: #0B1F1A;
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(11, 31, 26, 0.25);
+}
+.j-sal-spectrum-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #F1F5F9;
+}
+
+/* Equivalent Rates Card */
+.j-sal-rates-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
+}
+.j-sal-rates-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+@media (max-width: 860px) {
+    .j-sal-rates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .j-sal-rates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.j-sal-rate-item {
+    background: #F8FAF8;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 16px 18px;
+}
+.j-sal-rate-item__label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    color: #64748B;
+    margin-bottom: 4px;
+}
+.j-sal-rate-item__val {
+    display: block;
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #065F46;
+    margin-bottom: 2px;
+}
+.j-sal-rate-item__note {
+    font-size: 0.75rem;
+    color: #94A3B8;
+}
+
+/* Career Advice Panel */
+.j-sal-advice-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+}
+.j-sal-advice-block {
+    background: #F8FAF8;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 22px;
+}
+.j-sal-advice-block__icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #ECFDF5;
+    color: #059669;
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    border: 1px solid #A7F3D0;
+}
+
+/* Buttons */
+.j-sal-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #FFFFFF;
+    font-weight: 750;
+    font-size: 0.95rem;
+    padding: 11px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    transition: all 0.2s ease;
+}
+.j-sal-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+}
+.j-sal-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    color: #0F172A;
+    font-weight: 750;
+    font-size: 0.95rem;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.j-sal-btn-secondary:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #F0FDF4;
+}
+
+/* Salary Cards Grid (Index Directory) */
+.j-sal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+@media (max-width: 1100px) {
+    .j-sal-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+}
+@media (max-width: 640px) {
+    .j-sal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.j-sal-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+.j-sal-card:hover {
+    transform: translateY(-3px);
+    border-color: #10B981;
+    box-shadow: 0 16px 30px -8px rgba(5, 150, 105, 0.16), 0 4px 10px rgba(15, 23, 42, 0.04);
+}
+.j-sal-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+}
+.j-sal-card__inner {
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+.j-sal-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.j-sal-card__icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.j-sal-card__sample-badge {
+    font-size: 0.72rem;
+    font-weight: 750;
+    color: #065F46;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    padding: 3px 9px;
+    border-radius: 6px;
+}
+.j-sal-card__title {
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: #0B1F1A;
+    margin: 0 0 14px;
+    line-height: 1.3;
+}
+.j-sal-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+.j-sal-card__avg-wrap {
+    margin-bottom: 14px;
+}
+.j-sal-card__avg-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748B;
+    margin-bottom: 2px;
+}
+.j-sal-card__avg-amount {
+    font-size: 1.65rem;
+    font-weight: 850;
+    color: #065F46;
+    line-height: 1.2;
+}
+.j-sal-card__monthly-note {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #059669;
+    margin-top: 2px;
+}
+
+/* Mini Spectrum Bar */
+.j-sal-card__bar-wrap {
+    background: #F8FAF8;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    margin-top: auto;
+}
+.j-sal-card__bar-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 9999px;
+    background: #E2E8F0;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.j-sal-card__bar-fill {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #A7F3D0 0%, #10B981 50%, #059669 100%);
+}
+.j-sal-card__range-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+.j-sal-card__range-min {
+    color: #64748B;
+}
+.j-sal-card__range-max {
+    color: #0F172A;
+}
+
+/* Card Button Footer */
+.j-sal-card__footer {
+    padding-top: 10px;
+}
+.j-sal-card__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 11px;
+    color: #0F172A;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.j-sal-card:hover .j-sal-card__btn {
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+    box-shadow: 0 6px 14px -2px rgba(5, 150, 105, 0.35) !important;
+}
+.j-sal-card__btn-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #0F172A;
+    transition: all 0.25s ease;
+}
+.j-sal-card:hover .j-sal-card__btn-arrow {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: #FFFFFF !important;
+    transform: translateX(3px);
+}
+
+/* A-Z Pills */
+.j-az-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #475569;
+    border: 1.5px solid #CBD5E1;
+    font-size: 0.82rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.j-az-pill:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #F0FDF4;
+    transform: translateY(-2px);
+}
+.j-az-pill.active {
+    background: #059669 !important;
+    color: #FFFFFF !important;
+    border-color: #059669 !important;
+    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+}
+
+.j-page-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    color: #0F172A;
+    font-weight: 750;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.j-page-btn:hover {
+    border-color: #059669;
+    color: #059669;
+    background: #F0FDF4;
+}
+</style>
+
+<script>
+// Role form submission & search filter
+function applySalaryFilter() {
+    const input = document.getElementById('salary-search-input');
+    if (input) {
+        const val = input.value.trim();
+        if (val) {
+            window.location.href = '/salaries/?q=' + encodeURIComponent(val);
+        } else {
+            window.location.href = '/salaries/';
+        }
+    }
+}
+
+// Live client-side role filtering
+function filterSalariesLive(val) {
+    const q = (val || '').toLowerCase().trim();
+    const clearBtn = document.getElementById('salary-search-clear');
+    if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
+
+    const cards = document.querySelectorAll('#salary-cards-grid .j-sal-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+        const name = card.getAttribute('data-name') || '';
+        if (!q || name.includes(q)) {
+            card.style.display = 'block';
+            visible++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const empty = document.getElementById('noSalariesLiveEmptyState');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+}
+
+function clearSalarySearch() {
+    const input = document.getElementById('salary-search-input');
+    if (input) {
+        input.value = '';
+        input.focus();
+    }
+    filterSalariesLive('');
+}
+</script>
+{{end}}

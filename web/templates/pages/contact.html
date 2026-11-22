@@ -1,0 +1,925 @@
+{{define "content"}}
+<div style="background: #F8FAF8; padding-top: 24px; padding-bottom: 64px; min-height: 85vh;">
+    <div class="jy-container">
+        {{template "breadcrumbs" .}}
+
+        <div class="contact-page-wrap animate-fade-in">
+        <!-- Hero Header -->
+        <header class="contact-hero">
+
+            <h1 class="contact-title">Get in Touch with JobyUK.com</h1>
+            <p class="contact-subtitle">
+                Have questions about a UK vacancy, need assistance with job alerts, or want to list opportunities for your organization? We're here to help.
+            </p>
+        </header>
+
+        <!-- Two Column Layout: Info + Form -->
+        <div class="contact-grid">
+            
+            <!-- Left Column: Support Cards & Direct Info -->
+            <div class="contact-info-col">
+                
+                <!-- Quick Contact Card -->
+                <div class="contact-card">
+                    <h2 class="contact-card__title">Direct Channels</h2>
+                    <p class="contact-card__desc">Choose the channel that best suits your inquiry for faster resolution.</p>
+
+                    <div class="contact-channels">
+                        <div class="channel-item">
+                            <div class="channel-icon channel-icon--email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="channel-content">
+                                <span class="channel-label">Email Support</span>
+                                <a href="mailto:{{getSiteEmail}}" class="channel-val">{{getSiteEmail}}</a>
+                                <span class="channel-sub">Average response under 24 business hours</span>
+                            </div>
+                        </div>
+
+                        <div class="channel-item">
+                            <div class="channel-icon channel-icon--office">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="channel-content">
+                                <span class="channel-label">UK Operations</span>
+                                <span class="channel-val">London, United Kingdom</span>
+                                <span class="channel-sub">Operating hours: Mon – Fri, 09:00 – 18:00 GMT</span>
+                            </div>
+                        </div>
+
+                        {{if whatsappAlertsEnabled}}
+                        <div class="channel-item">
+                            <div class="channel-icon channel-icon--wa">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.12.553 4.11 1.519 5.84L.01 24l6.328-1.474a11.96 11.96 0 0 0 5.666 1.478c6.631 0 12.004-5.373 12.004-12.004C24.008 5.373 18.635 0 12.004 0z" fill="#25D366"/>
+                                    <path d="M17.472 14.382c-.301-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.13-.611.136-.134.301-.35.452-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.585-.493-.505-.675-.514-.175-.009-.375-.01-.575-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.116 3.23 5.125 4.53.716.31 1.275.495 1.71.634.72.228 1.375.196 1.893.119.578-.086 1.777-.726 2.027-1.427.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" fill="#ffffff"/>
+                                </svg>
+                            </div>
+                            <div class="channel-content">
+                                <span class="channel-label">Instant Alerts</span>
+                                <a href="/whatsapp-alerts/" class="channel-val">WhatsApp Job Alert Bot</a>
+                                <span class="channel-sub">Verified real-time vacancies direct to your phone</span>
+                            </div>
+                        </div>
+                        {{end}}
+                    </div>
+
+                    <!-- Employer Notice Box -->
+                    <div class="contact-employer-callout">
+                        <div class="callout-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div class="callout-text">
+                            <strong>Hiring in the UK?</strong>
+                            <span>List your vacancies directly to thousands of qualified candidates without third-party fees.</span>
+                            <a href="/employers/post-job/" class="callout-link" style="display: inline-flex; align-items: center; gap: 6px;"><span>Post a vacancy</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Help / FAQs Card -->
+                <div class="contact-card">
+                    <h2 class="contact-card__title">Frequently Asked Questions</h2>
+                    <div class="contact-faqs">
+                        <details class="faq-item" open>
+                            <summary class="faq-question">
+                                <span>Is applying for jobs on JobyUK.com free?</span>
+                                <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="faq-answer">
+                                Yes, 100% free for all candidates. We connect you directly with employers and authentic applicant tracking systems (ATS) with zero candidate fees or hidden subscriptions.
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">
+                                <span>How do I report an incorrect or expired job?</span>
+                                <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="faq-answer">
+                                On every individual job page, you'll find a "Report Job" button. Alternatively, use this contact form and select "Technical Bug Report" with the job URL.
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">
+                                <span>How can recruitment agencies partner with JobyUK.com?</span>
+                                <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="faq-answer">
+                                Select "Partnership & Press" in the form topic, specify your agency details, and our employer partnerships team will respond with integration options.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Interactive Secure Contact Form -->
+            <div class="contact-form-col">
+                <div class="contact-card contact-form-card">
+                    
+                    <div class="form-header">
+                        <h2 class="form-heading">Send us a Message</h2>
+                        <p class="form-subheading">Fill in the form below and an advisor will get back to you promptly.</p>
+                    </div>
+
+                    <!-- Success Alert (Server Flash or AJAX) -->
+                    <div id="contact-success-alert" class="alert-box alert-box--success" style="{{if not .Data.Success}}display: none;{{end}}">
+                        <div class="alert-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="alert-text">
+                            <strong>Message Received!</strong>
+                            <p id="contact-success-msg">Thank you for reaching out. We have logged your inquiry and our support team will reply within 24 business hours.</p>
+                        </div>
+                    </div>
+
+                    <!-- Error Alert -->
+                    <div id="contact-error-alert" class="alert-box alert-box--error" style="{{if not .Data.Error}}display: none;{{end}}">
+                        <div class="alert-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <div class="alert-text">
+                            <strong>Unable to Submit</strong>
+                            <p id="contact-error-msg">{{if .Data.Error}}{{.Data.Error}}{{else}}Please check the highlighted fields and try again.{{end}}</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <form id="JobyUK-contact-form" action="/contact/" method="POST" class="contact-form" novalidate>
+                        
+                        <!-- CSRF Protection Token -->
+                        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+                        <!-- Cryptographic Time-Elapsed Verification Token (Anti-Bot Velocity Check) -->
+                        <input type="hidden" name="form_token" value="{{.Data.FormToken}}">
+
+                        <!-- Anti-Bot Decoy Honeypot (Guaranteed hidden so no human or password manager touches it) -->
+                        <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true" tabindex="-1">
+                            <label for="contact_hp_website">Leave this field blank</label>
+                            <input type="text" id="contact_hp_website" name="contact_hp_website" value="" autocomplete="new-password" tabindex="-1">
+                        </div>
+
+                        <!-- Name and Email Row -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name" class="form-label">Full Name <span class="required-star">*</span></label>
+                                <div class="input-container">
+                                    <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. Sarah Jenkins" required maxlength="120" autocomplete="name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-email" class="form-label">Email Address <span class="required-star">*</span></label>
+                                <div class="input-container">
+                                    <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    <input type="email" id="contact-email" name="email" class="form-control" placeholder="e.g. sarah.j@example.co.uk" required maxlength="255" autocomplete="email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inquiry Category -->
+                        <div class="form-group">
+                            <label for="contact-inquiry-type" class="form-label">Inquiry Category</label>
+                            <div class="input-container">
+                                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline points="2 17 12 22 22 17"></polyline>
+                                    <polyline points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                                <select id="contact-inquiry-type" name="inquiry_type" class="form-control form-select">
+                                    <option value="general" selected>General Inquiry</option>
+                                    <option value="candidate">Candidate Support & Job Applications</option>
+                                    <option value="employer">Employer Vacancies & Hiring Partnerships</option>
+                                    <option value="partnership">Partnership, Press & Media</option>
+                                    <option value="technical">Technical Issue or Bug Report</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Subject -->
+                        <div class="form-group">
+                            <label for="contact-subject" class="form-label">Subject</label>
+                            <div class="input-container">
+                                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                                    <line x1="16" y1="3" x2="14" y2="21"></line>
+                                </svg>
+                                <input type="text" id="contact-subject" name="subject" class="form-control" placeholder="Brief subject (optional)" maxlength="200">
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="form-group">
+                            <div class="label-with-counter">
+                                <label for="contact-message" class="form-label">Your Message <span class="required-star">*</span></label>
+                                <span class="char-count" id="message-char-count">0 / 5,000</span>
+                            </div>
+                            <textarea id="contact-message" name="message" class="form-control form-textarea" rows="6" placeholder="How can our team help you? Please write your question or message here..." required maxlength="5000"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-submit-row">
+                            <button type="submit" id="btn-submit-contact" class="btn-contact-submit">
+                                <span class="btn-text">Send Message</span>
+                                <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                                <span class="btn-spinner" style="display: none;"></span>
+                            </button>
+                        </div>
+
+                        <!-- Security Note -->
+                        <div class="form-security-footer">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <span>End-to-end TLS 1.3 encryption & automated bot defense. Your information is never sold or shared.</span>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+/* =========================================================================
+   Contact Page Styles - Clean British Corporate Theme
+   ========================================================================= */
+.contact-page-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+.contact-hero {
+    text-align: center;
+    max-width: 760px;
+    margin: 10px auto 40px;
+}
+
+.contact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+}
+
+.contact-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin: 0 0 12px;
+}
+
+.contact-subtitle {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Grid Layout */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 32px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .contact-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* On mobile devices: 'Send us a Message' form displays on top, info and FAQs below */
+    .contact-form-col {
+        order: 1;
+        width: 100%;
+    }
+
+    .contact-info-col {
+        order: 2;
+        width: 100%;
+    }
+}
+
+/* Cards Surface */
+.contact-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
+    margin-bottom: 24px;
+}
+
+.contact-card:last-child {
+    margin-bottom: 0;
+}
+
+.contact-card__title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+}
+
+.contact-card__desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+/* Channels List */
+.contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.channel-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.channel-item:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+}
+
+.channel-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Channel icons */
+.channel-icon--email {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.channel-icon--office {
+    background: #f0fdf4;
+    color: #059669;
+}
+
+.channel-icon--wa {
+    background: #ecfdf5;
+}
+
+.channel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.channel-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+.channel-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-decoration: none;
+}
+
+a.channel-val:hover {
+    color: #059669;
+    text-decoration: underline;
+}
+
+.channel-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Employer Callout */
+.contact-employer-callout {
+    display: flex;
+    gap: 14px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.callout-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.86rem;
+    color: #065f46;
+    line-height: 1.45;
+}
+
+.callout-text strong {
+    color: #064e3b;
+    font-size: 0.92rem;
+}
+
+.callout-link {
+    font-weight: 750;
+    color: #059669;
+    text-decoration: none;
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.callout-link:hover {
+    color: #047857;
+    text-decoration: underline;
+}
+
+/* FAQs Accordion */
+.contact-faqs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    transition: border-color 0.15s ease;
+}
+
+.faq-item[open] {
+    border-color: #a7f3d0;
+}
+
+.faq-question {
+    padding: 13px 16px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+    display: none;
+}
+
+.faq-chevron {
+    color: #64748b;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    padding: 0 16px 14px;
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* Form Styles */
+.contact-form-card {
+    padding: 32px 34px;
+}
+
+@media (max-width: 600px) {
+    .contact-form-card {
+        padding: 22px 18px;
+    }
+}
+
+.form-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-heading {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+}
+
+.form-subheading {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Alerts */
+.alert-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.alert-box--success {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+}
+
+.alert-box--success .alert-icon {
+    color: #059669;
+}
+
+.alert-box--error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alert-box--error .alert-icon {
+    color: #dc2626;
+}
+
+.alert-text p {
+    margin: 3px 0 0;
+    font-size: 0.84rem;
+}
+
+/* Form Fields */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.required-star {
+    color: #ef4444;
+}
+
+.label-with-counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.char-count {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    pointer-events: none;
+    transition: color 0.15s ease;
+}
+
+.form-control {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px 0 42px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    color: #0f172a;
+    font-size: 0.92rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.18s ease;
+}
+
+.form-control:focus {
+    background: #ffffff;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.form-control:focus + .input-icon,
+.input-container:focus-within .input-icon {
+    color: #059669;
+}
+
+.form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23059669' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-textarea {
+    height: auto;
+    padding: 12px 14px;
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+/* Submit Button */
+.form-submit-row {
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.btn-contact-submit {
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 750;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-contact-submit:hover {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+    transform: translateY(-1px);
+}
+
+.btn-contact-submit:active {
+    transform: translateY(0);
+}
+
+.btn-contact-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.form-security-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Honeypot Trap Style */
+.visually-hidden-trap {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+}
+</style>
+
+<script>
+// Client-side validation, live character counter, and seamless submission
+(function() {
+    const form = document.getElementById("JobyUK-contact-form");
+    if (!form) return;
+
+    const msgInput = document.getElementById("contact-message");
+    const charCounter = document.getElementById("message-char-count");
+    const submitBtn = document.getElementById("btn-submit-contact");
+    const btnText = submitBtn.querySelector(".btn-text");
+    const btnArrow = submitBtn.querySelector(".btn-arrow");
+    const btnSpinner = submitBtn.querySelector(".btn-spinner");
+    const successAlert = document.getElementById("contact-success-alert");
+    const errorAlert = document.getElementById("contact-error-alert");
+    const successMsg = document.getElementById("contact-success-msg");
+    const errorMsg = document.getElementById("contact-error-msg");
+    const pageMountedAt = Date.now();
+
+    // Live character counter
+    if (msgInput && charCounter) {
+        msgInput.addEventListener("input", function() {
+            const count = this.value.length;
+            charCounter.textContent = `${count.toLocaleString()} / 5,000`;
+            if (count > 4800) {
+                charCounter.style.color = "#dc2626";
+            } else {
+                charCounter.style.color = "#94a3b8";
+            }
+        });
+    }
+
+    // Interactive AJAX form submission
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        // Hide previous notices
+        if (successAlert) successAlert.style.display = "none";
+        if (errorAlert) errorAlert.style.display = "none";
+
+        const nameEl = form.querySelector('[name="name"]');
+        const emailEl = form.querySelector('[name="email"]');
+        const subjectEl = form.querySelector('[name="subject"]');
+        const messageEl = form.querySelector('[name="message"]');
+
+        const name = (nameEl ? nameEl.value : "").trim();
+        const email = (emailEl ? emailEl.value : "").trim();
+        const message = (messageEl ? messageEl.value : "").trim();
+
+        // Forgiving validation: only require non-empty fields
+        if (!name) {
+            showError("Please enter your name.");
+            if (nameEl) nameEl.focus();
+            return;
+        }
+        if (!email || !email.includes("@") || !email.includes(".")) {
+            showError("Please enter a valid email address.");
+            if (emailEl) emailEl.focus();
+            return;
+        }
+        if (!message) {
+            showError("Please enter your message.");
+            if (messageEl) messageEl.focus();
+            return;
+        }
+
+        // Set Loading state
+        submitBtn.disabled = true;
+        btnText.textContent = "Sending Message...";
+        if (btnArrow) btnArrow.style.display = "none";
+        if (btnSpinner) btnSpinner.style.display = "inline-block";
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams();
+        for (const pair of formData.entries()) {
+            params.append(pair[0], pair[1]);
+        }
+        params.append("client_elapsed_ms", String(Date.now() - pageMountedAt));
+
+        fetch("/contact/", {
+            method: "POST",
+            body: params.toString(),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "application/json"
+            }
+        })
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (response.ok && data && data.success) {
+                // Success!
+                form.reset();
+                if (charCounter) charCounter.textContent = "0 / 5,000";
+                if (successAlert) {
+                    if (data.message && successMsg) successMsg.textContent = data.message;
+                    successAlert.style.display = "flex";
+                    successAlert.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            } else {
+                const err = (data && data.error) ? data.error : "Submission failed. Please check your network and try again.";
+                showError(err);
+            }
+        })
+        .catch(err => {
+            showError("A network error occurred. Please try again or email us directly at {{getSiteEmail}}.");
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            btnText.textContent = "Send Message";
+            if (btnArrow) btnArrow.style.display = "inline-block";
+            if (btnSpinner) btnSpinner.style.display = "none";
+        });
+    });
+
+    function showError(msg) {
+        if (errorAlert && errorMsg) {
+            errorMsg.textContent = msg;
+            errorAlert.style.display = "flex";
+            errorAlert.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+            alert(msg);
+        }
+    }
+})();
+</script>
+{{end}}

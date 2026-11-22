@@ -1,0 +1,652 @@
+{{define "content"}}
+<div class="jy-container" style="padding-top: 14px; padding-bottom: 60px;">
+    {{template "breadcrumbs" .}}
+
+    <!-- 1. Company Profile Card -->
+    <section class="jy-co-mob-card" aria-label="Company Profile Header">
+        <!-- Cover Banner -->
+        <div class="jy-co-mob-cover">
+            <img src="/static/images/company_cover.jpg" alt="{{.Data.Company.Name}} Office" loading="eager" />
+            <div class="jy-co-mob-cover__overlay"></div>
+        </div>
+
+        <!-- Profile Bar -->
+        <div class="jy-co-mob-profile">
+            <!-- Overlapping Logo & Follow CTA -->
+            <div class="jy-co-mob-avatar-row">
+                <div class="jy-co-mob-avatar" aria-label="{{.Data.Company.Name}} logo">
+                    {{$emp := lower .Data.Company.Name}}
+                    {{if or (eq $emp "google") (eq $emp "google uk")}}
+                        <svg width="34" height="34" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    {{else if or (eq $emp "spotify") (eq $emp "spotify uk")}}
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="#1DB954">
+                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                        </svg>
+                    {{else if .Data.Company.ProxiedLogoURL}}
+                        <img src="{{.Data.Company.ProxiedLogoURL}}" alt="{{.Data.Company.Name}} logo" width="44" height="44" style="object-fit: contain;" />
+                    {{else}}
+                        <span class="jy-co-mob-avatar__initial">{{if .Data.Company.Name}}{{slice .Data.Company.Name 0 1}}{{else}}J{{end}}</span>
+                    {{end}}
+                </div>
+
+                <div class="jy-co-mob-actions-right">
+                    <button type="button" class="jy-co-mob-icon-btn" onclick="shareCompanyProfile()" aria-label="Share company profile">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Badges Row -->
+            <div class="jy-co-mob-badges">
+                <span class="jy-co-mob-verified-badge">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Verified UK Employer</span>
+                </span>
+                <span class="jy-co-mob-active-badge">
+                    <span class="jy-co-mob-pulse-dot"></span>
+                    <span>{{if .Data.Results.Jobs}}{{len .Data.Results.Jobs}} Live Roles{{else}}Actively Hiring{{end}}</span>
+                </span>
+            </div>
+
+            <!-- Title & Info -->
+            <h1 class="jy-co-mob-name">{{.Data.Company.Name}}</h1>
+            <p class="jy-co-mob-meta">
+                Verified UK Employer • 
+                {{if .Data.Company.JobCount}}{{.Data.Company.JobCount}} UK vacancies{{else if .Data.Results.Jobs}}{{len .Data.Results.Jobs}} active openings{{else}}Active Hiring{{end}} • 
+                Direct ATS Apply
+            </p>
+
+            <!-- Fast Glance Pills Rail -->
+            <div class="jy-co-mob-glance-rail">
+                <div class="jy-co-glance-chip">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span>{{len .Data.Results.Jobs}} Positions</span>
+                </div>
+                <div class="jy-co-glance-chip">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>London &amp; UK</span>
+                </div>
+                <div class="jy-co-glance-chip">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>No Agency Middlemen</span>
+                </div>
+            </div>
+
+            <!-- Segmented Tabs Bar -->
+            <div class="jy-co-mob-tabs" role="tablist">
+                <button type="button" class="jy-co-mob-tab is-active" id="tab-btn-about" onclick="switchCompanyTabM('about', this)" role="tab" aria-selected="true">
+                    Overview
+                </button>
+                <button type="button" class="jy-co-mob-tab" id="tab-btn-jobs" onclick="switchCompanyTabM('jobs', this)" role="tab" aria-selected="false">
+                    Vacancies ({{len .Data.Results.Jobs}})
+                </button>
+                <button type="button" class="jy-co-mob-tab" id="tab-btn-culture" onclick="switchCompanyTabM('culture', this)" role="tab" aria-selected="false">
+                    Perks &amp; Culture
+                </button>
+                <button type="button" class="jy-co-mob-tab" id="tab-btn-reviews" onclick="switchCompanyTabM('reviews', this)" role="tab" aria-selected="false">
+                    Reviews
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tab 1: Overview Panel -->
+    <div id="coTabAbout" class="jy-co-tab-panel animate-fade-in">
+        <!-- About Box -->
+        <div class="jy-co-info-card">
+            <h2 class="jy-co-card-title">About {{.Data.Company.Name}}</h2>
+            <p class="jy-co-card-desc">
+                {{if .Data.Company.Description}}
+                    {{.Data.Company.Description}}
+                {{else}}
+                    {{.Data.Company.Name}} is an established employer in the United Kingdom providing career growth, competitive remuneration, and forward-thinking work environments. Apply directly on their official careers portal through JobyUK.
+                {{end}}
+            </p>
+
+            {{if .Data.Company.WebsiteURL}}
+            <a href="{{.Data.Company.WebsiteURL}}" target="_blank" rel="noopener noreferrer" class="jy-co-website-btn">
+                <span>Visit Official Careers Site</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"></polyline><polyline points="10 14 21 3"></polyline></svg>
+            </a>
+            {{end}}
+        </div>
+
+        <!-- WhatsApp In-Feed Alert Card -->
+        {{template "whatsapp_infeed_card" dict "CustomTitle" (printf "Get %s Alerts on WhatsApp" .Data.Company.Name) "CustomDesc" (printf "Instant direct job alerts for %s vacancies in the UK. Free forever." .Data.Company.Name) "Role" .Data.Company.Name}}
+    </div>
+
+    <!-- Tab 2: Vacancies List -->
+    <div id="coTabJobs" class="jy-co-tab-panel animate-fade-in" style="margin-top: 14px;">
+        <div class="jy-co-vacancies-head">
+            <h2 class="jy-co-card-title" style="margin: 0;">Open Positions at {{.Data.Company.Name}}</h2>
+            <span class="jy-co-count-badge">{{len .Data.Results.Jobs}} available</span>
+        </div>
+
+        <div class="listing-jobs" style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+            {{range .Data.Results.Jobs}}
+                {{template "job_card_mobile" .}}
+            {{else}}
+            <div class="empty-state animate-fade-in" style="background: #FFFFFF; border-radius: 16px; padding: 36px 16px; text-align: center; border: 1.5px solid #EEF2F6;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin-bottom: 6px;">No vacancies open right now</h3>
+                <p style="color: #64748B; font-size: 0.85rem; margin-bottom: 14px;">Check back soon or follow {{$.Data.Company.Name}} for instant alerts.</p>
+                <a href="/jobs/" style="display: inline-block; background: #059669; color: #FFFFFF; font-weight: 700; font-size: 0.82rem; padding: 8px 18px; border-radius: 8px; text-decoration: none;">Browse All UK Jobs</a>
+            </div>
+            {{end}}
+        </div>
+    </div>
+
+    <!-- Tab 3: Perks & Culture Panel -->
+    <div id="coTabCulture" class="jy-co-tab-panel animate-fade-in" style="display: none; margin-top: 14px;">
+        <div class="jy-co-info-card">
+            <h2 class="jy-co-card-title">Perks &amp; Culture</h2>
+            <div class="jy-co-perks-grid">
+                <div class="jy-co-perk-box">
+                    <span class="jy-co-perk-icon">🏠</span>
+                    <div>
+                        <div class="jy-co-perk-head">Hybrid Working</div>
+                        <div class="jy-co-perk-sub">Flexible office &amp; remote balance</div>
+                    </div>
+                </div>
+                <div class="jy-co-perk-box">
+                    <span class="jy-co-perk-icon">💰</span>
+                    <div>
+                        <div class="jy-co-perk-head">Competitive Salary</div>
+                        <div class="jy-co-perk-sub">Benchmark pay &amp; performance bonus</div>
+                    </div>
+                </div>
+                <div class="jy-co-perk-box">
+                    <span class="jy-co-perk-icon">🏥</span>
+                    <div>
+                        <div class="jy-co-perk-head">Health &amp; Wellness</div>
+                        <div class="jy-co-perk-sub">Healthcare coverage &amp; support</div>
+                    </div>
+                </div>
+                <div class="jy-co-perk-box">
+                    <span class="jy-co-perk-icon">📈</span>
+                    <div>
+                        <div class="jy-co-perk-head">Pension Plan</div>
+                        <div class="jy-co-perk-sub">Generous employer contributions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 4: Reviews Panel -->
+    <div id="coTabReviews" class="jy-co-tab-panel animate-fade-in" style="display: none; margin-top: 14px;">
+        <div class="jy-co-info-card">
+            <h2 class="jy-co-card-title">Employer Rating &amp; Insights</h2>
+            <div class="jy-co-review-rating-row">
+                <span class="jy-co-rating-num">4.8</span>
+                <div class="jy-co-rating-stars">★★★★★</div>
+                <span class="jy-co-rating-label">Verified candidate &amp; employee feedback</span>
+            </div>
+            <p class="jy-co-card-desc" style="margin-top: 10px;">
+                Employees rate {{.Data.Company.Name}} highly for career progression, collaborative team culture, and competitive compensation packages across the UK.
+            </p>
+        </div>
+    </div>
+
+    <!-- Similar Employers Rail -->
+    {{if .Data.RelatedCompanies}}
+    <div class="jy-co-similar-wrap" style="margin-top: 24px;">
+        <h3 class="jy-co-card-title" style="margin-bottom: 12px;">Similar Employers in the UK</h3>
+        <div class="jy-co-similar-rail">
+            {{range .Data.RelatedCompanies}}
+            <a href="/companies/{{.Slug}}/" class="jy-co-similar-chip">
+                <div class="jy-co-sim-logo">
+                    {{if .ProxiedLogoURL}}
+                        <img src="{{.ProxiedLogoURL}}" alt="{{.Name}}" width="24" height="24" style="object-fit: contain;" />
+                    {{else}}
+                        <span>{{slice .Name 0 1}}</span>
+                    {{end}}
+                </div>
+                <div class="jy-co-sim-info">
+                    <span class="jy-co-sim-name">{{.Name}}</span>
+                    <span class="jy-co-sim-count">{{.FormattedJobCount}}</span>
+                </div>
+            </a>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</div>
+
+<style>
+/* =========================================================================
+   Mobile Company Detail View (JobyUK Emerald Card Theme)
+   ========================================================================= */
+.j-co-mob-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    margin-bottom: 14px;
+}
+.j-co-mob-cover {
+    width: 100%;
+    height: 110px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
+}
+.j-co-mob-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.j-co-mob-cover__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.45) 100%);
+}
+.j-co-mob-profile {
+    padding: 0 14px 14px;
+    position: relative;
+}
+.j-co-mob-avatar-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: -30px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
+.j-co-mob-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+    background: #FFFFFF;
+    border: 2.5px solid #FFFFFF;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.j-co-mob-avatar__initial {
+    font-size: 1.6rem;
+    font-weight: 850;
+    color: #059669;
+}
+.j-co-mob-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 15px 0px;
+}
+.j-co-mob-follow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 999px;
+    color: #065F46;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.j-co-mob-follow-btn.following {
+    background: #059669;
+    color: #FFFFFF;
+    border-color: #059669;
+}
+.j-co-mob-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    cursor: pointer;
+}
+.j-co-mob-badges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.j-co-mob-badges::-webkit-scrollbar {
+    display: none;
+}
+.j-co-mob-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 750;
+    color: #065F46;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    padding: 2.5px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.j-co-mob-active-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 750;
+    color: #047857;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    padding: 2.5px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.j-co-mob-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+}
+.j-co-mob-name {
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #0F172A;
+    margin: 0 0 4px 0;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+}
+.j-co-mob-meta {
+    font-size: 0.82rem;
+    color: #64748B;
+    margin: 0 0 10px 0;
+    line-height: 1.45;
+}
+.j-co-mob-glance-rail {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 12px;
+}
+.j-co-mob-glance-rail::-webkit-scrollbar {
+    display: none;
+}
+.j-co-glance-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 650;
+    color: #475569;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.j-co-mob-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-top: 1px solid #F1F5F9;
+    padding-top: 10px;
+}
+.j-co-mob-tabs::-webkit-scrollbar {
+    display: none;
+}
+.j-co-mob-tab {
+    background: none;
+    border: none;
+    font-size: 12.5px;
+    font-weight: 650;
+    color: #64748B;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+.j-co-mob-tab.is-active {
+    background: #059669;
+    color: #FFFFFF;
+    font-weight: 750;
+}
+.j-co-info-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    margin-bottom: 12px;
+}
+.j-co-card-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 8px 0;
+}
+.j-co-card-desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0;
+}
+.j-co-website-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 8px 14px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 750;
+    color: #065F46;
+    text-decoration: none;
+}
+.j-co-vacancies-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.j-co-count-badge {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #065F46;
+    font-size: 11.5px;
+    font-weight: 750;
+    padding: 3px 9px;
+    border-radius: 999px;
+}
+.j-co-perks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+.j-co-perk-box {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.j-co-perk-icon {
+    font-size: 18px;
+}
+.j-co-perk-head {
+    font-size: 12px;
+    font-weight: 750;
+    color: #0F172A;
+}
+.j-co-perk-sub {
+    font-size: 10.5px;
+    color: #64748B;
+}
+.j-co-review-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.j-co-rating-num {
+    font-size: 1.5rem;
+    font-weight: 850;
+    color: #0F172A;
+}
+.j-co-rating-stars {
+    color: #F59E0B;
+    font-size: 1rem;
+    letter-spacing: 2px;
+}
+.j-co-rating-label {
+    font-size: 11px;
+    color: #64748B;
+    font-weight: 500;
+}
+.j-co-similar-rail {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+}
+.j-co-similar-rail::-webkit-scrollbar {
+    display: none;
+}
+.j-co-similar-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+}
+.j-co-sim-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #059669;
+    flex-shrink: 0;
+}
+.j-co-sim-info {
+    display: flex;
+    flex-direction: column;
+}
+.j-co-sim-name {
+    font-size: 12px;
+    font-weight: 750;
+    color: #0F172A;
+    white-space: nowrap;
+}
+.j-co-sim-count {
+    font-size: 10.5px;
+    color: #64748B;
+}
+</style>
+
+<script>
+function toggleFollowCompany(btn) {
+    btn.classList.toggle('following');
+    const textSpan = btn.querySelector('.follow-text');
+    if (btn.classList.contains('following')) {
+        textSpan.textContent = 'Following';
+    } else {
+        textSpan.textContent = 'Follow';
+    }
+}
+
+function shareCompanyProfile() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{.Data.Company.Name}} UK Careers | JobyUK.com',
+            url: window.location.href
+        }).catch(function() {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href).then(function() {
+            alert('Company link copied to clipboard!');
+        });
+    }
+}
+
+function switchCompanyTabM(tabName, clickedBtn) {
+    document.querySelectorAll('.j-co-mob-tab').forEach(function(t) {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+    });
+    if (clickedBtn) {
+        clickedBtn.classList.add('is-active');
+        clickedBtn.setAttribute('aria-selected', 'true');
+    }
+
+    var aboutSec = document.getElementById('coTabAbout');
+    var jobsSec = document.getElementById('coTabJobs');
+    var cultureSec = document.getElementById('coTabCulture');
+    var reviewsSec = document.getElementById('coTabReviews');
+
+    if (tabName === 'about') {
+        if (aboutSec) aboutSec.style.display = 'block';
+        if (jobsSec) jobsSec.style.display = 'block';
+        if (cultureSec) cultureSec.style.display = 'none';
+        if (reviewsSec) reviewsSec.style.display = 'none';
+    } else if (tabName === 'jobs') {
+        if (aboutSec) aboutSec.style.display = 'none';
+        if (jobsSec) jobsSec.style.display = 'block';
+        if (cultureSec) cultureSec.style.display = 'none';
+        if (reviewsSec) reviewsSec.style.display = 'none';
+        jobsSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (tabName === 'culture') {
+        if (aboutSec) aboutSec.style.display = 'none';
+        if (jobsSec) jobsSec.style.display = 'none';
+        if (cultureSec) cultureSec.style.display = 'block';
+        if (reviewsSec) reviewsSec.style.display = 'none';
+    } else if (tabName === 'reviews') {
+        if (aboutSec) aboutSec.style.display = 'none';
+        if (jobsSec) jobsSec.style.display = 'none';
+        if (cultureSec) cultureSec.style.display = 'none';
+        if (reviewsSec) reviewsSec.style.display = 'block';
+    }
+}
+</script>
+{{end}}

@@ -1,0 +1,757 @@
+{{define "content"}}
+<!-- ==========================================================================
+     Figma Panel 01: Official JobyUK.com Desktop Homepage
+     ========================================================================== -->
+
+<!-- Hero Section: Figma Exact Match Container -->
+<section class="jy-hero">
+    <div class="jy-container">
+        <div class="jy-hero__frame">
+            <div class="jy-hero__grid">
+                <!-- Left Hero Column -->
+                <div class="jy-hero__content">
+                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 9999px; margin-bottom: 12px;">
+                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #059669;"></span>
+                        <span style="font-size: 0.8rem; font-weight: 750; color: #065F46; letter-spacing: 0.01em;">Apply direct. Skip the middleman</span>
+                    </div>
+                    <h1 class="jy-hero__title">
+                        Find <span class="jy-hero__title-green">Your Next</span><br>
+                        Big Opportunity
+                    </h1>
+                    <p class="jy-hero__subtitle">
+                        Discover thousands of jobs from top companies across the UK.<br>
+                        Your dream career is just a search away.
+                    </p>
+
+                    <!-- Search Card with Frosted Glass Button Area -->
+                    <form class="jy-hero__search-card" action="/jobs/" method="GET" id="hero-search-form">
+                        <div class="jy-hero__search-field" style="position: relative;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="hero-search-q" name="q" class="jy-hero__search-input" placeholder="Job title, keywords or company" aria-label="Job keywords" autocomplete="off">
+                            <button type="button" class="jy-search-clear-btn" id="hero-clear-q" style="display: none;" aria-label="Clear job search">✕</button>
+                            <!-- Suggestions Dropdown -->
+                            <div class="jy-suggest-dropdown" id="hero-suggest-dropdown-q" style="display: none;"></div>
+                        </div>
+                        <div class="jy-hero__search-divider"></div>
+                        <div class="jy-hero__search-field" style="position: relative;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <input type="text" id="hero-search-loc" name="location" class="jy-hero__search-input" placeholder="Location (e.g. London, Remote)" aria-label="Job location" autocomplete="off">
+                            <button type="button" class="jy-search-clear-btn" id="hero-clear-loc" style="display: none;" aria-label="Clear location search">✕</button>
+                            <!-- Suggestions Dropdown -->
+                            <div class="jy-suggest-dropdown" id="hero-suggest-dropdown-loc" style="display: none;"></div>
+                        </div>
+                        <div class="jy-hero__search-btn-glass">
+                            <button type="submit" class="jy-hero__search-btn">
+                                Search Jobs
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Popular Searches -->
+                    <div class="jy-hero__popular">
+                        <span class="jy-hero__popular-label">Popular searches:</span>
+                        <a href="/jobs/?q=Remote" class="jy-hero__popular-pill">Remote</a>
+                        <a href="/jobs/?q=Marketing" class="jy-hero__popular-pill">Marketing</a>
+                        <a href="/jobs/?q=Developer" class="jy-hero__popular-pill">Developer</a>
+                        <a href="/jobs/?q=London" class="jy-hero__popular-pill">London</a>
+                        <a href="/jobs/?q=Entry+Level" class="jy-hero__popular-pill">Entry Level</a>
+                    </div>
+                </div>
+
+                <!-- Right Hero Visual Column -->
+                <div class="jy-hero__visual">
+                    <!-- Organic Lime Backdrop Shape -->
+                    <div class="jy-hero__lime-backdrop"></div>
+
+                    <!-- Handwritten Badge: Better Jobs Brighten Future with curved arrow -->
+                    <img src="/static/images/better_jobs_badge.svg" alt="Better Jobs, Brighten Future" class="jy-hero__badge" width="195" height="115">
+
+                    <!-- Woman Holding Silver Laptop in Green Blazer -->
+                    <img src="/static/images/jobyuk_hero_woman.png" alt="Young professional holding laptop" class="jy-hero__person" width="410" height="490">
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Logos Strip -->
+<!-- Trusted By Logos Strip: Continuous Infinite Marquee Slider (No Jerk) -->
+<section class="jy-trust">
+    <div class="jy-container">
+        <div class="jy-trust__caption">Trusted by 10,000+ companies</div>
+        <div class="jy-trust__slider">
+        <div class="jy-trust__track">
+            <div class="jy-trust__group">
+                <!-- Microsoft -->
+                <div class="jy-trust__logo-item" title="Microsoft">
+                    <svg width="118" height="26" viewBox="0 0 118 26" fill="none">
+                        <rect x="0" y="3" width="9.5" height="9.5" fill="#F25022"/>
+                        <rect x="11.5" y="3" width="9.5" height="9.5" fill="#7FBA00"/>
+                        <rect x="0" y="14.5" width="9.5" height="9.5" fill="#00A4EF"/>
+                        <rect x="11.5" y="14.5" width="9.5" height="9.5" fill="#FFB900"/>
+                        <text x="28" y="18" font-family="'Inter', -apple-system, sans-serif" font-weight="600" font-size="16" fill="currentColor" letter-spacing="-0.3px">Microsoft</text>
+                    </svg>
+                </div>
+                <!-- Amazon -->
+                <div class="jy-trust__logo-item" title="Amazon">
+                    <svg width="95" height="28" viewBox="0 0 95 28" fill="currentColor">
+                        <text x="0" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="18" letter-spacing="-0.5px">amazon</text>
+                        <path d="M4 22 C 28 29, 62 28, 76 19" stroke="#FF9900" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+                        <path d="M73 17 L 78 19 L 76 24" fill="#FF9900"/>
+                    </svg>
+                </div>
+                <!-- Meta -->
+                <div class="jy-trust__logo-item" title="Meta">
+                    <svg width="88" height="26" viewBox="0 0 88 26" fill="currentColor">
+                        <path d="M12 5 C 7.5 5, 4 8.5, 4 13 C 4 17.5, 7.5 21, 12 21 C 15.2 21, 17.5 18.5, 19.5 15.5 C 21.5 18.5, 23.8 21, 27 21 C 31.5 21, 35 17.5, 35 13 C 35 8.5, 31.5 5, 27 5 C 23.8 5, 21.5 7.5, 19.5 10.5 C 17.5 7.5, 15.2 5, 12 5 Z M 12 8 C 14.5 8, 16.5 10.5, 18 13 C 16.5 15.5, 14.5 18, 12 18 C 9.2 18, 7 15.8, 7 13 C 7 10.2, 9.2 8, 12 8 Z M 27 8 C 29.8 8, 32 10.2, 32 13 C 32 15.8, 29.8 18, 27 18 C 24.5 18, 22.5 15.5, 21 13 C 22.5 10.5, 24.5 8, 27 8 Z" fill="#0668E1"/>
+                        <text x="40" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="currentColor">Meta</text>
+                    </svg>
+                </div>
+                <!-- Tesco (UK) -->
+                <div class="jy-trust__logo-item" title="Tesco">
+                    <svg width="90" height="28" viewBox="0 0 90 28" fill="none">
+                        <text x="2" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#EE1C25" letter-spacing="1.5px">TESCO</text>
+                        <rect x="3" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="20" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="37" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="54" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="71" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                    </svg>
+                </div>
+                <!-- BBC (UK) -->
+                <div class="jy-trust__logo-item" title="BBC">
+                    <svg width="86" height="26" viewBox="0 0 86 26" fill="none">
+                        <rect x="0" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="6" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">B</text>
+                        <rect x="26" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="32" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">B</text>
+                        <rect x="52" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="57" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">C</text>
+                    </svg>
+                </div>
+                <!-- Barclays (UK) -->
+                <div class="jy-trust__logo-item" title="Barclays">
+                    <svg width="112" height="26" viewBox="0 0 112 26" fill="none">
+                        <path d="M12 2 L 18 10 L 15 13 L 20 22 L 12 18 L 4 22 L 9 13 L 6 10 Z" fill="#00AEEF"/>
+                        <circle cx="12" cy="7" r="2.5" fill="#00395D"/>
+                        <text x="27" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#00AEEF" letter-spacing="-0.3px">BARCLAYS</text>
+                    </svg>
+                </div>
+                <!-- HSBC (UK / Global) -->
+                <div class="jy-trust__logo-item" title="HSBC">
+                    <svg width="98" height="26" viewBox="0 0 98 26" fill="none">
+                        <polygon points="12,2 22,13 12,24" fill="#DB0011"/>
+                        <polygon points="12,2 2,13 12,24" fill="#DB0011"/>
+                        <polygon points="12,2 22,2 17,7" fill="#FFFFFF"/>
+                        <rect x="0" y="3" width="24" height="20" fill="none" stroke="#DB0011" stroke-width="1"/>
+                        <text x="30" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="currentColor" letter-spacing="1px">HSBC</text>
+                    </svg>
+                </div>
+                <!-- Vodafone (UK) -->
+                <div class="jy-trust__logo-item" title="Vodafone">
+                    <svg width="115" height="26" viewBox="0 0 115 26" fill="none">
+                        <circle cx="12" cy="13" r="10.5" fill="#E60000"/>
+                        <path d="M12 8 C 9.5 8 8 10 8 12.5 C 8 15 10 17 12.5 17 C 15 17 16 15 16 13.5 C 16 10 13.5 8 12 8 Z" fill="#FFFFFF"/>
+                        <text x="28" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="currentColor">vodafone</text>
+                    </svg>
+                </div>
+                <!-- BP (UK) -->
+                <div class="jy-trust__logo-item" title="BP">
+                    <svg width="78" height="26" viewBox="0 0 78 26" fill="none">
+                        <g transform="translate(2, 2)">
+                            <circle cx="11" cy="11" r="10" fill="#007A33"/>
+                            <circle cx="11" cy="11" r="6" fill="#FDB813"/>
+                            <circle cx="11" cy="11" r="3" fill="#FFFFFF"/>
+                        </g>
+                        <text x="30" y="19" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#007A33" letter-spacing="-0.5px">bp</text>
+                    </svg>
+                </div>
+                <!-- Sainsbury's (UK) -->
+                <div class="jy-trust__logo-item" title="Sainsbury's">
+                    <svg width="118" height="26" viewBox="0 0 118 26" fill="none">
+                        <text x="0" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#E86C00" letter-spacing="-0.3px">Sainsbury's</text>
+                    </svg>
+                </div>
+                <!-- AstraZeneca (UK) -->
+                <div class="jy-trust__logo-item" title="AstraZeneca">
+                    <svg width="135" height="26" viewBox="0 0 135 26" fill="none">
+                        <path d="M8 4 C 12 4, 15 7, 15 11 C 15 15, 12 18, 8 18 C 5 18, 3 16, 3 13 C 3 9, 6 6, 8 4 Z" fill="#830051"/>
+                        <path d="M12 9 C 15 9, 18 12, 18 16 C 18 20, 15 22, 11 22 C 8 22, 6 20, 6 18" stroke="#F1B521" stroke-width="2" fill="none"/>
+                        <text x="24" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="15" fill="currentColor" letter-spacing="-0.3px">AstraZeneca</text>
+                    </svg>
+                </div>
+                <!-- Sky (UK) -->
+                <div class="jy-trust__logo-item" title="Sky">
+                    <svg width="68" height="26" viewBox="0 0 68 26" fill="none">
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#0066CC"/>
+                                <stop offset="100%" stop-color="#FF0066"/>
+                            </linearGradient>
+                        </defs>
+                        <text x="2" y="19" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="url(#skyGrad)" letter-spacing="-0.5px">sky</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="jy-trust__group" aria-hidden="true">
+                <!-- Microsoft -->
+                <div class="jy-trust__logo-item" title="Microsoft">
+                    <svg width="118" height="26" viewBox="0 0 118 26" fill="none">
+                        <rect x="0" y="3" width="9.5" height="9.5" fill="#F25022"/>
+                        <rect x="11.5" y="3" width="9.5" height="9.5" fill="#7FBA00"/>
+                        <rect x="0" y="14.5" width="9.5" height="9.5" fill="#00A4EF"/>
+                        <rect x="11.5" y="14.5" width="9.5" height="9.5" fill="#FFB900"/>
+                        <text x="28" y="18" font-family="'Inter', -apple-system, sans-serif" font-weight="600" font-size="16" fill="currentColor" letter-spacing="-0.3px">Microsoft</text>
+                    </svg>
+                </div>
+                <!-- Amazon -->
+                <div class="jy-trust__logo-item" title="Amazon">
+                    <svg width="95" height="28" viewBox="0 0 95 28" fill="currentColor">
+                        <text x="0" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="18" letter-spacing="-0.5px">amazon</text>
+                        <path d="M4 22 C 28 29, 62 28, 76 19" stroke="#FF9900" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+                        <path d="M73 17 L 78 19 L 76 24" fill="#FF9900"/>
+                    </svg>
+                </div>
+                <!-- Meta -->
+                <div class="jy-trust__logo-item" title="Meta">
+                    <svg width="88" height="26" viewBox="0 0 88 26" fill="currentColor">
+                        <path d="M12 5 C 7.5 5, 4 8.5, 4 13 C 4 17.5, 7.5 21, 12 21 C 15.2 21, 17.5 18.5, 19.5 15.5 C 21.5 18.5, 23.8 21, 27 21 C 31.5 21, 35 17.5, 35 13 C 35 8.5, 31.5 5, 27 5 C 23.8 5, 21.5 7.5, 19.5 10.5 C 17.5 7.5, 15.2 5, 12 5 Z M 12 8 C 14.5 8, 16.5 10.5, 18 13 C 16.5 15.5, 14.5 18, 12 18 C 9.2 18, 7 15.8, 7 13 C 7 10.2, 9.2 8, 12 8 Z M 27 8 C 29.8 8, 32 10.2, 32 13 C 32 15.8, 29.8 18, 27 18 C 24.5 18, 22.5 15.5, 21 13 C 22.5 10.5, 24.5 8, 27 8 Z" fill="#0668E1"/>
+                        <text x="40" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="currentColor">Meta</text>
+                    </svg>
+                </div>
+                <!-- Tesco (UK) -->
+                <div class="jy-trust__logo-item" title="Tesco">
+                    <svg width="90" height="28" viewBox="0 0 90 28" fill="none">
+                        <text x="2" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#EE1C25" letter-spacing="1.5px">TESCO</text>
+                        <rect x="3" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="20" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="37" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="54" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                        <rect x="71" y="23" width="10" height="2.5" fill="#00539F" rx="0.5"/>
+                    </svg>
+                </div>
+                <!-- BBC (UK) -->
+                <div class="jy-trust__logo-item" title="BBC">
+                    <svg width="86" height="26" viewBox="0 0 86 26" fill="none">
+                        <rect x="0" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="6" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">B</text>
+                        <rect x="26" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="32" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">B</text>
+                        <rect x="52" y="2" width="22" height="22" rx="3" fill="#000000"/>
+                        <text x="57" y="18" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">C</text>
+                    </svg>
+                </div>
+                <!-- Barclays (UK) -->
+                <div class="jy-trust__logo-item" title="Barclays">
+                    <svg width="112" height="26" viewBox="0 0 112 26" fill="none">
+                        <path d="M12 2 L 18 10 L 15 13 L 20 22 L 12 18 L 4 22 L 9 13 L 6 10 Z" fill="#00AEEF"/>
+                        <circle cx="12" cy="7" r="2.5" fill="#00395D"/>
+                        <text x="27" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#00AEEF" letter-spacing="-0.3px">BARCLAYS</text>
+                    </svg>
+                </div>
+                <!-- HSBC (UK / Global) -->
+                <div class="jy-trust__logo-item" title="HSBC">
+                    <svg width="98" height="26" viewBox="0 0 98 26" fill="none">
+                        <polygon points="12,2 22,13 12,24" fill="#DB0011"/>
+                        <polygon points="12,2 2,13 12,24" fill="#DB0011"/>
+                        <polygon points="12,2 22,2 17,7" fill="#FFFFFF"/>
+                        <rect x="0" y="3" width="24" height="20" fill="none" stroke="#DB0011" stroke-width="1"/>
+                        <text x="30" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="currentColor" letter-spacing="1px">HSBC</text>
+                    </svg>
+                </div>
+                <!-- Vodafone (UK) -->
+                <div class="jy-trust__logo-item" title="Vodafone">
+                    <svg width="115" height="26" viewBox="0 0 115 26" fill="none">
+                        <circle cx="12" cy="13" r="10.5" fill="#E60000"/>
+                        <path d="M12 8 C 9.5 8 8 10 8 12.5 C 8 15 10 17 12.5 17 C 15 17 16 15 16 13.5 C 16 10 13.5 8 12 8 Z" fill="#FFFFFF"/>
+                        <text x="28" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="currentColor">vodafone</text>
+                    </svg>
+                </div>
+                <!-- BP (UK) -->
+                <div class="jy-trust__logo-item" title="BP">
+                    <svg width="78" height="26" viewBox="0 0 78 26" fill="none">
+                        <g transform="translate(2, 2)">
+                            <circle cx="11" cy="11" r="10" fill="#007A33"/>
+                            <circle cx="11" cy="11" r="6" fill="#FDB813"/>
+                            <circle cx="11" cy="11" r="3" fill="#FFFFFF"/>
+                        </g>
+                        <text x="30" y="19" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#007A33" letter-spacing="-0.5px">bp</text>
+                    </svg>
+                </div>
+                <!-- Sainsbury's (UK) -->
+                <div class="jy-trust__logo-item" title="Sainsbury's">
+                    <svg width="118" height="26" viewBox="0 0 118 26" fill="none">
+                        <text x="0" y="18" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#E86C00" letter-spacing="-0.3px">Sainsbury's</text>
+                    </svg>
+                </div>
+                <!-- AstraZeneca (UK) -->
+                <div class="jy-trust__logo-item" title="AstraZeneca">
+                    <svg width="135" height="26" viewBox="0 0 135 26" fill="none">
+                        <path d="M8 4 C 12 4, 15 7, 15 11 C 15 15, 12 18, 8 18 C 5 18, 3 16, 3 13 C 3 9, 6 6, 8 4 Z" fill="#830051"/>
+                        <path d="M12 9 C 15 9, 18 12, 18 16 C 18 20, 15 22, 11 22 C 8 22, 6 20, 6 18" stroke="#F1B521" stroke-width="2" fill="none"/>
+                        <text x="24" y="18" font-family="'Inter', sans-serif" font-weight="700" font-size="15" fill="currentColor" letter-spacing="-0.3px">AstraZeneca</text>
+                    </svg>
+                </div>
+                <!-- Sky (UK) -->
+                <div class="jy-trust__logo-item" title="Sky">
+                    <svg width="68" height="26" viewBox="0 0 68 26" fill="none">
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#0066CC"/>
+                                <stop offset="100%" stop-color="#FF0066"/>
+                            </linearGradient>
+                        </defs>
+                        <text x="2" y="19" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="url(#skyGrad)" letter-spacing="-0.5px">sky</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Explore Top Categories -->
+<section class="jy-section jy-cat-section">
+    <div class="jy-cat-decor" aria-hidden="true"></div>
+    <div class="jy-container">
+        <div class="jy-cat-heading-row">
+            <div>
+                <h2 class="jy-cat-title">Explore top categories</h2>
+                <p class="jy-cat-subheading">Discover roles across the UK's most popular industries.</p>
+            </div>
+            <a class="jy-cat-view-all" href="/job-roles/"><span>Explore all categories</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+
+        <nav class="jy-cat-grid" aria-label="Popular job categories">
+            <!-- 1. Technology -->
+            <a class="jy-cat-card" href="/job-roles/software-developer/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M9 9l-2 2 2 2M15 9l2 2-2 2"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Technology</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">1,241 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+
+            <!-- 2. Marketing -->
+            <a class="jy-cat-card" href="/job-roles/marketing-manager/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M3 11v2a2 2 0 0 0 2 2h2l10 5V4L7 9H5a2 2 0 0 0-2 2Z"/><path d="m7 15 2 5h4l-2.5-6.2M17 9a4 4 0 0 1 0 6"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Marketing</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">812 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+
+            <!-- 3. Healthcare -->
+            <a class="jy-cat-card" href="/job-roles/nurse/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s-8-4.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.6-8 11-8 11Z"/><path d="M12 8v7M8.5 11.5h7"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Healthcare</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">634 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+
+            <!-- 4. Finance -->
+            <a class="jy-cat-card" href="/job-roles/accountant/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M7 9h3M7 13h3M7 17h3M15 9h2M15 13h2M15 17h2M8 2v3M16 2v3"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Finance</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">521 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+
+            <!-- 5. Education -->
+            <a class="jy-cat-card" href="/job-roles/teacher/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5L2 9Z"/><path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Education</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">412 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+
+            <!-- 6. Design -->
+            <a class="jy-cat-card" href="/job-roles/ux-designer/">
+                <span class="jy-cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Z"/><path d="m14 7 3 3M4 20h16"/></svg>
+                </span>
+                <span class="jy-cat-copy">
+                    <span class="jy-cat-name">Design</span>
+                    <span class="jy-cat-bottom">
+                        <span class="jy-cat-count">354 jobs</span>
+                        <span class="jy-cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </span>
+                </span>
+            </a>
+        </nav>
+
+        <div class="jy-cat-footer-note">
+            <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Your next career move starts with the right opportunity across verified UK employers.</span>
+        </div>
+    </div>
+</section>
+
+<!-- Middle Sponsored Skyline Banner (London Cityscape) -->
+<section class="jy-container">
+    <div class="jy-skyline-banner">
+        <div class="jy-skyline-banner__bg"></div>
+        <div class="jy-skyline-banner__content">
+            <div class="jy-skyline-banner__tag">Featured UK Companies</div>
+            <h2 class="jy-skyline-banner__heading">Build Your Future with Top UK Companies</h2>
+            <a href="/jobs/" class="jy-skyline-banner__btn">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Vacancies (3-Column Live Job Cards from DB) -->
+<section class="jy-section">
+    <div class="jy-container">
+        <div class="jy-section__header">
+            <h2 class="jy-section__title">Featured vacancies</h2>
+            <a href="/jobs/" class="jy-section__link"><span>View all jobs</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="jy-section__arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+
+        <div class="jy-dream-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+            {{range $index, $job := .Data.LatestJobs}}
+            {{if lt $index 6}}
+                {{template "job_card" $job}}
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+</section>
+
+<!-- Why JobyUK? Section -->
+<section class="jy-section">
+    <div class="jy-container">
+        <h2 class="jy-section__title" style="margin-bottom: 24px;">Why JobyUK?</h2>
+        <div class="jy-why__grid">
+            <!-- Card 1 -->
+            <div class="jy-why-card">
+                <div class="jy-why-card__icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                </div>
+                <h3 class="jy-why-card__title">Trusted Companies</h3>
+                <p class="jy-why-card__desc">Work with the best. All listings are directly sourced from verified UK employer career portals.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="jy-why-card">
+                <div class="jy-why-card__icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <h3 class="jy-why-card__title">Easy to Apply</h3>
+                <p class="jy-why-card__desc">Simple and fast process. Direct transfer to official employer ATS systems without recruiter middlemen.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="jy-why-card">
+                <div class="jy-why-card__icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                </div>
+                <h3 class="jy-why-card__title">Career Growth</h3>
+                <p class="jy-why-card__desc">Build your future. Access thousands of permanent, remote, and competitive salary roles daily.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter / Job Alerts Box -->
+<section class="jy-container">
+    <div class="jy-newsletter">
+        <div class="jy-newsletter__content">
+            <h2 class="jy-newsletter__title">Get the latest jobs straight to your inbox</h2>
+            <form class="jy-newsletter__form" action="/contact/" method="POST">
+                <input type="email" name="email" class="jy-newsletter__input" placeholder="Enter your email address" required aria-label="Email address">
+                <button type="submit" class="jy-newsletter__btn">Subscribe</button>
+            </form>
+        </div>
+        <img src="/static/images/paper_plane.svg" alt="Subscribe to job alerts" class="jy-newsletter__plane">
+    </div>
+</section>
+
+<script>
+(function() {
+    function initJobyUKAutocomplete(inputId, clearBtnId, dropdownId, type, formId) {
+        const input = document.getElementById(inputId);
+        const clearBtn = document.getElementById(clearBtnId);
+        const dropdown = document.getElementById(dropdownId);
+        const form = document.getElementById(formId);
+        if (!input || !dropdown) return;
+        if (input.dataset.autocompleteAttached === 'true') return;
+        input.dataset.autocompleteAttached = 'true';
+
+        let selectedIndex = -1;
+        let items = [];
+        let debounceTimer = null;
+
+        const defaultJobs = [
+            { value: "Software Developer", label: "Software Developer", category: "Popular Role", icon: "role" },
+            { value: "UI/UX Designer", label: "UI/UX Designer", category: "Popular Role", icon: "role" },
+            { value: "Project Manager", label: "Project Manager", category: "Popular Role", icon: "role" },
+            { value: "Data Analyst", label: "Data Analyst", category: "Popular Role", icon: "role" },
+            { value: "Registered Nurse", label: "Registered Nurse", category: "Popular Role", icon: "role" },
+            { value: "Accountant", label: "Accountant", category: "Popular Role", icon: "role" },
+            { value: "Marketing Manager", label: "Marketing Manager", category: "Popular Role", icon: "role" },
+            { value: "Customer Service", label: "Customer Service", category: "Popular Role", icon: "role" }
+        ];
+
+        const defaultLocations = [
+            { value: "Remote", label: "Remote (Work From Home UK)", category: "Workplace", icon: "remote" },
+            { value: "London", label: "London, Greater London", category: "City", icon: "location" },
+            { value: "Manchester", label: "Manchester, UK", category: "City", icon: "location" },
+            { value: "Birmingham", label: "Birmingham, West Midlands", category: "City", icon: "location" },
+            { value: "Leeds", label: "Leeds, Yorkshire", category: "City", icon: "location" },
+            { value: "Glasgow", label: "Glasgow, Scotland", category: "City", icon: "location" },
+            { value: "Bristol", label: "Bristol, UK", category: "City", icon: "location" },
+            { value: "Edinburgh", label: "Edinburgh, Scotland", category: "City", icon: "location" }
+        ];
+
+        function render(list, query) {
+            items = list;
+            selectedIndex = -1;
+            if (!list || list.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            const headerLabel = query ? 'Suggestions' : (type === 'location' ? 'Popular UK Locations' : 'Popular Job Searches');
+            let html = '<div class="jy-suggest-header"><span>' + headerLabel + '</span><span>Instant</span></div>';
+
+            list.forEach((item, idx) => {
+                let iconSvg = '';
+                if (item.icon === 'location') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+                } else if (item.icon === 'remote') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>';
+                } else if (item.icon === 'company') {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>';
+                } else {
+                    iconSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
+                }
+
+                const badgeText = item.count ? (item.count + ' jobs') : item.category;
+
+                let displayLabel = item.label || item.value;
+                if (query && query.trim()) {
+                    const reg = new RegExp('(' + query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                    displayLabel = displayLabel.replace(reg, '<strong style="color: #059669;">$1</strong>');
+                }
+
+                html += '<div class="jy-suggest-item" data-idx="' + idx + '" data-val="' + encodeURIComponent(item.value) + '">';
+                html += '  <div class="jy-suggest-left">';
+                html += '    <div class="jy-suggest-icon-wrap">' + iconSvg + '</div>';
+                html += '    <span class="jy-suggest-title">' + displayLabel + '</span>';
+                html += '  </div>';
+                html += '  <span class="jy-suggest-badge">' + badgeText + '</span>';
+                html += '</div>';
+            });
+
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+
+            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+                const selectItemHandler = function(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    const target = e.currentTarget || this;
+                    const rawVal = target.getAttribute('data-val');
+                    if (rawVal) {
+                        chooseItem(decodeURIComponent(rawVal));
+                    }
+                };
+                el.addEventListener('mousedown', selectItemHandler);
+                el.addEventListener('click', selectItemHandler);
+                el.addEventListener('touchend', selectItemHandler);
+            });
+        }
+
+        let lastSelectedTime = 0;
+        function chooseItem(val) {
+            const now = Date.now();
+            if (now - lastSelectedTime < 350) return;
+            lastSelectedTime = now;
+
+            input.value = val;
+            dropdown.style.display = 'none';
+            isOverDropdown = false;
+            if (clearBtn) clearBtn.style.display = 'flex';
+            if (form) {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        function fetchSuggestions(q) {
+            const url = '/api/search/suggestions/?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q || '');
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        render(data, q);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function showSuggestions(val) {
+            val = val || '';
+            const base = type === 'location' ? defaultLocations : defaultJobs;
+            const qTrim = val.toLowerCase().trim();
+            const localMatches = qTrim ? base.filter(x => x.label.toLowerCase().includes(qTrim) || x.value.toLowerCase().includes(qTrim)) : base;
+            render(localMatches, val);
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetchSuggestions(val);
+            }, 100);
+        }
+
+        // Prevent input blur when clicking inside the dropdown or scrollbar
+        dropdown.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+        });
+
+        let isOverDropdown = false;
+        dropdown.addEventListener('mouseenter', function() { isOverDropdown = true; });
+        dropdown.addEventListener('mouseleave', function() { isOverDropdown = false; });
+        dropdown.addEventListener('touchstart', function() { isOverDropdown = true; }, { passive: true });
+        dropdown.addEventListener('touchend', function() { setTimeout(() => { isOverDropdown = false; }, 300); }, { passive: true });
+
+        input.addEventListener('input', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('focus', function() {
+            const val = this.value;
+            if (clearBtn) clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            showSuggestions(val);
+        });
+
+        input.addEventListener('click', function() {
+            if (dropdown.style.display === 'none' || dropdown.innerHTML === '') {
+                showSuggestions(this.value);
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!isOverDropdown) {
+                    dropdown.style.display = 'none';
+                }
+            }, 250);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !dropdown.contains(e.target) && (!clearBtn || !clearBtn.contains(e.target))) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                input.value = '';
+                clearBtn.style.display = 'none';
+                input.focus();
+                showSuggestions('');
+            });
+        }
+
+        input.addEventListener('keydown', function(e) {
+            if (dropdown.style.display === 'none') {
+                if (e.key === 'ArrowDown') {
+                    showSuggestions(this.value);
+                }
+                return;
+            }
+            const domItems = dropdown.querySelectorAll('.j-suggest-item');
+            if (domItems.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % domItems.length;
+                updateSelection(domItems);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + domItems.length) % domItems.length;
+                updateSelection(domItems);
+            } else if (e.key === 'Enter') {
+                if (selectedIndex >= 0 && selectedIndex < domItems.length) {
+                    e.preventDefault();
+                    const val = decodeURIComponent(domItems[selectedIndex].getAttribute('data-val'));
+                    chooseItem(val);
+                }
+            } else if (e.key === 'Escape') {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function updateSelection(domItems) {
+            domItems.forEach((el, idx) => {
+                if (idx === selectedIndex) {
+                    el.classList.add('is-selected');
+                    el.scrollIntoView({ block: 'nearest' });
+                    input.value = decodeURIComponent(el.getAttribute('data-val'));
+                } else {
+                    el.classList.remove('is-selected');
+                }
+            });
+        }
+    }
+
+    function setupHomeSearchAutocomplete() {
+        initJobyUKAutocomplete('hero-search-q', 'hero-clear-q', 'hero-suggest-dropdown-q', 'job', 'hero-search-form');
+        initJobyUKAutocomplete('hero-search-loc', 'hero-clear-loc', 'hero-suggest-dropdown-loc', 'location', 'hero-search-form');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupHomeSearchAutocomplete);
+    } else {
+        setupHomeSearchAutocomplete();
+    }
+    window.addEventListener('jobyuk:turbo-load', setupHomeSearchAutocomplete);
+    window.addEventListener('popstate', function() { setTimeout(setupHomeSearchAutocomplete, 50); });
+})();
+</script>
+{{end}}
