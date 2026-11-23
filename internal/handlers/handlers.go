@@ -589,15 +589,94 @@ func (h *Handlers) JobDetail(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	slug := chi.URLParam(r, "slug")
 
-	job, err := h.repos.Job.FindBySlug(ctx, slug)
-	if err != nil {
-		h.NotFound(w, r)
+	// 1. If slug is purely a numeric ID (e.g. /jobs/46636/ or /jobs/45327/), lookup by ID and 301 Redirect to canonical slug URL
+	if id, parseErr := strconv.ParseInt(slug, 10, 64); parseErr == nil {
+		jobByID, errID := h.repos.Job.FindByID(ctx, id)
+		if errID == nil && jobByID != nil {
+			if jobByID.Status == "active" {
+				http.Redirect(w, r, fmt.Sprintf("/jobs/%s/", jobByID.Slug), http.StatusMovedPermanently)
+				return
+			}
+			// If expired or removed, render 410 Gone page with similar jobs
+			similarJobs, _ := h.repos.Job.FindSimilar(ctx, jobByID.ID, 5)
+			data := PageData{
+				Title:     fmt.Sprintf("%s (Expired) | JobyUK.com", jobByID.Title),
+				Robots:    "noindex,follow",
+				ActiveNav: "jobs",
+				Breadcrumbs: []BreadcrumbData{
+					{Name: "Home", URL: "/"},
+					{Name: "Jobs", URL: "/jobs/"},
+					{Name: jobByID.Title + " (Expired)"},
+				},
+				Data: map[string]interface{}{
+					"Job":         jobByID,
+					"SimilarJobs": similarJobs,
+					"IsExpired":   true,
+					"IsGone":      true,
+				},
+			}
+			if err := h.renderer.RenderWithStatus(w, "job_detail", http.StatusGone, data); err != nil {
+				w.WriteHeader(http.StatusGone)
+			}
+			return
+		}
+		// If numeric ID is not found in database, 301 redirect to /jobs/ list to prevent 404
+		http.Redirect(w, r, "/jobs/", http.StatusMovedPermanently)
 		return
 	}
 
-	// Soft-deleted jobs by admin should return 404 Page Not Found
+	job, err := h.repos.Job.FindBySlug(ctx, slug)
+	if err != nil {
+		// 2. Slug not found — render 410 Gone with helpful active vacancies rather than 404 error
+		similarJobs, _ := h.repos.Job.FindLatest(ctx, 6)
+		cleanTitle := strings.ReplaceAll(slug, "-", " ")
+		data := PageData{
+			Title:     fmt.Sprintf("%s (Expired) | JobyUK.com", strings.Title(cleanTitle)),
+			Robots:    "noindex,follow",
+			ActiveNav: "jobs",
+			Breadcrumbs: []BreadcrumbData{
+				{Name: "Home", URL: "/"},
+				{Name: "Jobs", URL: "/jobs/"},
+				{Name: "Expired Vacancy"},
+			},
+			Data: map[string]interface{}{
+				"Job": &models.Job{
+					Title: strings.Title(cleanTitle),
+					Slug:  slug,
+				},
+				"SimilarJobs": similarJobs,
+				"IsExpired":   true,
+				"IsGone":      true,
+			},
+		}
+		if err := h.renderer.RenderWithStatus(w, "job_detail", http.StatusGone, data); err != nil {
+			w.WriteHeader(http.StatusGone)
+		}
+		return
+	}
+
+	// Soft-deleted jobs by admin should return 410 Gone (fast Googlebot de-indexing)
 	if job.Status == "removed" {
-		h.NotFound(w, r)
+		similarJobs, _ := h.repos.Job.FindSimilar(ctx, job.ID, 5)
+		data := PageData{
+			Title:     fmt.Sprintf("%s (Expired) | JobyUK.com", job.Title),
+			Robots:    "noindex,follow",
+			ActiveNav: "jobs",
+			Breadcrumbs: []BreadcrumbData{
+				{Name: "Home", URL: "/"},
+				{Name: "Jobs", URL: "/jobs/"},
+				{Name: job.Title + " (Expired)"},
+			},
+			Data: map[string]interface{}{
+				"Job":         job,
+				"SimilarJobs": similarJobs,
+				"IsExpired":   true,
+				"IsGone":      true,
+			},
+		}
+		if err := h.renderer.RenderWithStatus(w, "job_detail", http.StatusGone, data); err != nil {
+			w.WriteHeader(http.StatusGone)
+		}
 		return
 	}
 
