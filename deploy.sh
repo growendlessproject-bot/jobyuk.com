@@ -111,6 +111,10 @@ if [ -d "migrations" ]; then
         echo "Importing $f..."
         sudo -u postgres psql -d ${DB_NAME} -f "$f" >/dev/null 2>&1 || true
     done
+    if [ -f "migrations/019_clean_production_jobs_seed.sql.gz" ]; then
+        echo "📦 Importing 12,421 verified production jobs, companies & taxonomy into '${DB_NAME}'..."
+        zcat migrations/019_clean_production_jobs_seed.sql.gz | sudo -u postgres psql -d ${DB_NAME} >/dev/null 2>&1 || true
+    fi
     sudo -u postgres psql -d ${DB_NAME} -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ${DB_USER}; GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ${DB_USER}; ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO ${DB_USER}; ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO ${DB_USER};" 2>/dev/null || true
     echo "✅ Database tables & taxonomy imported."
 fi

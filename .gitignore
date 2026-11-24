@@ -22,6 +22,7 @@ credentials.json
 google-credentials.json
 google-key.json
 *.sql.gz
+!migrations/019_clean_production_jobs_seed.sql.gz
 *.dump
 
 # ------------------------------------------------------------------------------
