@@ -97,8 +97,8 @@ REDIS_URL=redis://localhost:6379/0
 REED_API_KEY=ec7a89c8-0d1f-464d-9878-3936d1316620
 JWT_SECRET=jobyuk-super-secret-production-jwt-key-32chars
 CSRF_SECRET=jobyuk-super-secret-production-csrf-key-32chars
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=change_this_admin_password_123
+ADMIN_USERNAME=jobyuk_admin
+ADMIN_PASSWORD=JobyUK_SecureAdmin_2026!
 INDEXNOW_KEY=ab4225315c73f110cb98d2abd9911d76
 ENABLE_WHATSAPP_ALERTS=false
 EOF
