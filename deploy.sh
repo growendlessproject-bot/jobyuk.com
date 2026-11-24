@@ -15,6 +15,29 @@ APP_DIR="/var/www/jobyuk"
 SERVICE_NAME="jobyuk"
 PORT=8082
 
+# 0. Safety Port Conflict Check (Protects Jobies, AnimeWatch, iLookio)
+echo "🔍 Checking for port ${PORT} conflicts..."
+if command -v ss &> /dev/null; then
+    CONFLICT_LINE=$(sudo ss -tulpn | grep ":${PORT} " || true)
+    if [ -n "$CONFLICT_LINE" ]; then
+        ACTIVE_PID=$(echo "$CONFLICT_LINE" | grep -o 'pid=[0-9]*' | cut -d'=' -f2 | head -n1 || true)
+        PROC_NAME=""
+        if [ -n "$ACTIVE_PID" ]; then
+            PROC_NAME=$(ps -p "$ACTIVE_PID" -o comm= 2>/dev/null || true)
+        fi
+        if [ "$PROC_NAME" != "jobyuk" ] && [ -n "$PROC_NAME" ]; then
+            echo "❌ PORT OVERLAP ALERT: Port ${PORT} is currently in use by '$PROC_NAME' (PID $ACTIVE_PID)!"
+            echo "Existing process details: $CONFLICT_LINE"
+            echo "🚫 Deployment stopped to protect existing services. Choose an alternate port (e.g. 8085)."
+            exit 1
+        else
+            echo "ℹ️ Port ${PORT} is held by previous jobyuk instance. Safe to update."
+        fi
+    else
+        echo "✅ Port ${PORT} is completely FREE and isolated."
+    fi
+fi
+
 # 1. Ensure Directory Structure
 if [ ! -d "$APP_DIR" ]; then
     echo "📁 Creating application directory: $APP_DIR"
