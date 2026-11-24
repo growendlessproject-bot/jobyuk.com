@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top" style="padding-top: 24px; padding-bottom: 72px;">
     <div class="jy-container">
         {{template "breadcrumbs" .}}
@@ -211,7 +211,7 @@
         <script>
         function filterIndustries(query) {
             var q = (query || '').toLowerCase().trim();
-            var cards = document.querySelectorAll('.j-industry-card');
+            var cards = document.querySelectorAll('.jy-industry-card');
             cards.forEach(function(card) {
                 var name = (card.getAttribute('data-industry-name') || '').toLowerCase();
                 if (!q || name.indexOf(q) !== -1) {

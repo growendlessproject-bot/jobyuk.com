@@ -437,6 +437,8 @@ func main() {
 	r.Get("/job-alerts/", h.WhatsAppAlertsPage)
 	r.Get("/subscribe", h.WhatsAppAlertsPage)
 	r.Get("/subscribe/", h.WhatsAppAlertsPage)
+	r.Get("/pricing", h.WhatsAppAlertsPage)
+	r.Get("/pricing/", h.WhatsAppAlertsPage)
 
 	// Legal pages & Aliases
 	r.Get("/privacy-policy/", h.PrivacyPolicy)
@@ -449,6 +451,8 @@ func main() {
 	r.Get("/terms", h.TermsOfService)
 	r.Get("/cookie-policy/", h.CookiePolicy)
 	r.Get("/cookie-policy", h.CookiePolicy)
+	r.Get("/cookies/", h.CookiePolicy)
+	r.Get("/cookies", h.CookiePolicy)
 
 	// SEO routes
 	r.Get("/sitemap.xml", h.SitemapIndex)
@@ -709,6 +713,7 @@ func main() {
 			r.Post("/settings/site", adminH.UpdateSiteSettings)
 			r.Post("/settings/ads-txt", adminH.UpdateAdsTxt)
 			r.Post("/settings/anti-adblock/toggle", adminH.ToggleAntiAdblock)
+			r.Post("/settings/whatsapp-alerts/toggle", adminH.ToggleWhatsAppAlerts)
 			r.Post("/settings/google-indexing", adminH.UpdateGoogleIndexing)
 			r.Post("/settings/google-indexing-test", adminH.TestGoogleIndexing)
 			r.Post("/settings/google-auto-index", adminH.TriggerAutoIndex)
@@ -726,6 +731,10 @@ func main() {
 	// Start background workers
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	// Drip-Feed Progressive Job Publishing Engine (Natural Human UK Cadence)
+	dripFeedService := services.NewDripFeedService(db, sitemapService, indexNowService, cfg.BaseURL)
+	go dripFeedService.StartWorker(ctx)
 
 	// Reed API sync worker (every 4 hours)
 	go syncService.StartScheduled(ctx, 4*time.Hour)

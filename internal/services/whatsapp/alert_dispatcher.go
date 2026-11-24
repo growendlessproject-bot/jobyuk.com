@@ -12,6 +12,7 @@ import (
 
 	"jobyuk/internal/models"
 	"jobyuk/internal/repository"
+	"jobyuk/internal/settings"
 )
 
 // AlertDispatcher handles automated job alert matching and scheduled delivery.
@@ -71,6 +72,10 @@ func (d *AlertDispatcher) TriggerImmediateCycle(ctx context.Context) {
 // Triggered right after trial verification or subscription signup.
 // Delays delivery by 3-5 minutes (randomized, within user's trust window).
 func (d *AlertDispatcher) ScheduleInitialCandidateAlert(sub *models.WhatsAppSubscriber, delay time.Duration) {
+	if !settings.IsWhatsAppAlertsEnabled() {
+		slog.Debug("WhatsApp alerts disabled in settings, skipping initial candidate alert")
+		return
+	}
 	if sub == nil || sub.PhoneNumber == "" {
 		return
 	}
@@ -136,6 +141,10 @@ func (d *AlertDispatcher) ScheduleInitialCandidateAlert(sub *models.WhatsAppSubs
 
 // RunDispatchCycle processes all active subscribers and delivers newly matched jobs.
 func (d *AlertDispatcher) RunDispatchCycle(ctx context.Context) {
+	if !settings.IsWhatsAppAlertsEnabled() {
+		slog.Debug("WhatsApp alerts disabled in settings, skipping RunDispatchCycle")
+		return
+	}
 	d.mu.Lock()
 	if d.running {
 		d.mu.Unlock()
@@ -275,6 +284,10 @@ func (d *AlertDispatcher) StartChannelAutoPoster(ctx context.Context, interval t
 }
 
 func (d *AlertDispatcher) runChannelPostCycle(ctx context.Context) {
+	if !settings.IsWhatsAppAlertsEnabled() {
+		slog.Debug("WhatsApp alerts disabled in settings, skipping channel auto-post cycle")
+		return
+	}
 	// Only post during active UK hours: 08:00 to 20:00 UTC
 	hour := time.Now().UTC().Hour()
 	if hour < 8 || hour >= 20 {
@@ -291,6 +304,9 @@ func (d *AlertDispatcher) runChannelPostCycle(ctx context.Context) {
 // BroadcastNextChannelJob selects the highest-CTR unposted UK job and broadcasts it to the WhatsApp Channel.
 // Enforces a strict daily cap of 20 jobs and prevents any duplicates.
 func (d *AlertDispatcher) BroadcastNextChannelJob(ctx context.Context) (*models.WhatsAppChannelPost, error) {
+	if !settings.IsWhatsAppAlertsEnabled() {
+		return nil, fmt.Errorf("WhatsApp channel alerts are currently disabled in admin settings")
+	}
 	d.mu.Lock()
 	defer d.mu.Unlock()
 

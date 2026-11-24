@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-role-mob-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 50px; min-height: 85vh;">
     <div class="jy-container" style="padding-left: 14px; padding-right: 14px;">
         {{template "breadcrumbs" .}}
@@ -410,8 +410,8 @@
    ========================================================================= */
 
 /* --- Next-Level Mobile Role Hero & Search System --- */
-.j-role-mob-detail-hero,
-.j-role-mob-index-hero {
+.jy-role-mob-detail-hero,
+.jy-role-mob-index-hero {
     background: linear-gradient(180deg, #FFFFFF 0%, #F5FBF7 100%);
     border: 1.5px solid #D1FAE5;
     border-radius: 20px;
@@ -420,7 +420,7 @@
     margin-bottom: 16px;
     box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.08), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
 }
-.j-role-badge-row {
+.jy-role-badge-row {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -430,10 +430,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-role-badge-row::-webkit-scrollbar {
+.jy-role-badge-row::-webkit-scrollbar {
     display: none;
 }
-.j-role-live-badge {
+.jy-role-live-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -447,7 +447,7 @@
     flex-shrink: 0;
     white-space: nowrap;
 }
-.j-role-live-dot {
+.jy-role-live-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
@@ -459,7 +459,7 @@
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.25); opacity: 0.8; }
 }
-.j-role-direct-pill {
+.jy-role-direct-pill {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -473,8 +473,8 @@
     flex-shrink: 0;
     white-space: nowrap;
 }
-.j-role-detail-title,
-.j-role-index-title {
+.jy-role-detail-title,
+.jy-role-index-title {
     font-size: 1.68rem;
     font-weight: 850;
     color: #0F172A;
@@ -482,13 +482,13 @@
     letter-spacing: -0.025em;
     margin: 0 0 6px;
 }
-.j-role-title-highlight {
+.jy-role-title-highlight {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.j-role-detail-sub,
-.j-role-index-sub {
+.jy-role-detail-sub,
+.jy-role-index-sub {
     font-size: 0.88rem;
     color: #64748B;
     line-height: 1.48;
@@ -496,13 +496,13 @@
 }
 
 /* Modern Single-Row Hero Search Bar */
-.j-role-search-form {
+.jy-role-search-form {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-bottom: 4px;
 }
-.j-role-single-search-row {
+.jy-role-single-search-row {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -514,17 +514,17 @@
     position: relative;
     transition: box-shadow 0.18s ease;
 }
-.j-role-single-search-row:focus-within {
+.jy-role-single-search-row:focus-within {
     box-shadow: 0 6px 20px rgba(5, 150, 105, 0.22);
 }
-.j-role-search-icon {
+.jy-role-search-icon {
     color: #059669;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     margin-right: 8px;
 }
-.j-role-main-input {
+.jy-role-main-input {
     flex: 1;
     min-width: 0;
     border: none;
@@ -536,12 +536,12 @@
     outline: none;
     height: 36px;
 }
-.j-role-main-input::placeholder {
+.jy-role-main-input::placeholder {
     color: #94A3B8;
     font-size: 14px !important;
     font-weight: 450;
 }
-.j-role-submit-btn {
+.jy-role-submit-btn {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
     color: #FFFFFF;
     border: none;
@@ -557,10 +557,10 @@
     box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
     transition: transform 0.15s ease;
 }
-.j-role-submit-btn:active {
+.jy-role-submit-btn:active {
     transform: scale(0.96);
 }
-.j-role-loc-search-row {
+.jy-role-loc-search-row {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -571,17 +571,17 @@
     position: relative;
     transition: border-color 0.18s ease;
 }
-.j-role-loc-search-row:focus-within {
+.jy-role-loc-search-row:focus-within {
     border-color: #059669;
 }
-.j-role-loc-icon {
+.jy-role-loc-icon {
     color: #64748B;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     margin-right: 7px;
 }
-.j-role-loc-input {
+.jy-role-loc-input {
     flex: 1;
     min-width: 0;
     border: none;
@@ -593,13 +593,13 @@
     outline: none;
     height: 32px;
 }
-.j-role-loc-input::placeholder {
+.jy-role-loc-input::placeholder {
     color: #94A3B8;
     font-size: 13.5px !important;
 }
 
 /* Quick Filter Tags Rail */
-.j-role-tags-rail {
+.jy-role-tags-rail {
     display: flex;
     gap: 7px;
     overflow-x: auto;
@@ -607,10 +607,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-role-tags-rail::-webkit-scrollbar {
+.jy-role-tags-rail::-webkit-scrollbar {
     display: none;
 }
-.j-role-filter-tag {
+.jy-role-filter-tag {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -626,12 +626,12 @@
     flex-shrink: 0;
     transition: all 0.15s ease;
 }
-.j-role-filter-tag:active {
+.jy-role-filter-tag:active {
     background: #ECFDF5;
     border-color: #A7F3D0;
     color: #065F46;
 }
-.j-role-filter-tag--emerald {
+.jy-role-filter-tag--emerald {
     background: #ECFDF5;
     border-color: #A7F3D0;
     color: #065F46;
@@ -639,8 +639,8 @@
 }
 
 /* Sticky Search Wrapper on Scroll (/job-roles/{slug}/ & /job-roles/) */
-.j-role-sticky-search-wrap,
-.j-role-index-sticky-wrap {
+.jy-role-sticky-search-wrap,
+.jy-role-index-sticky-wrap {
     position: -webkit-sticky;
     position: sticky;
     top: 68px;
@@ -653,11 +653,11 @@
     border-radius: 0 0 16px 16px;
     transition: box-shadow 0.2s ease;
 }
-.j-role-sticky-search-wrap.is-scrolled,
-.j-role-index-sticky-wrap.is-scrolled {
+.jy-role-sticky-search-wrap.is-scrolled,
+.jy-role-index-sticky-wrap.is-scrolled {
     box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
 }
-.j-role-index-search-bar {
+.jy-role-index-search-bar {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -666,7 +666,7 @@
     padding: 4px 8px 4px 14px;
     box-shadow: 0 4px 16px -2px rgba(5, 150, 105, 0.12);
 }
-.j-role-index-search-input {
+.jy-role-index-search-input {
     width: 100%;
     border: none;
     outline: none;
@@ -677,23 +677,23 @@
     font-weight: 600;
     height: 36px;
 }
-.j-role-index-search-input::placeholder {
+.jy-role-index-search-input::placeholder {
     color: #94A3B8;
     font-size: 14px !important;
     font-weight: 450;
 }
-.j-role-az-container {
+.jy-role-az-container {
     border-top: 1px solid #EEF2F6;
     padding-top: 10px;
     margin-top: 10px;
 }
-.j-role-az-label {
+.jy-role-az-label {
     font-size: 0.72rem;
     font-weight: 750;
     color: #64748B;
     margin-bottom: 6px;
 }
-.j-mob-az-slider {
+.jy-mob-az-slider {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -702,11 +702,11 @@
     scrollbar-width: none;
     padding-bottom: 4px;
 }
-.j-mob-az-slider::-webkit-scrollbar {
+.jy-mob-az-slider::-webkit-scrollbar {
     display: none;
 }
 
-.j-mob-az-pill {
+.jy-mob-az-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -722,14 +722,14 @@
     text-decoration: none;
     flex-shrink: 0;
 }
-.j-mob-az-pill.active {
+.jy-mob-az-pill.active {
     background: #059669 !important;
     color: #FFFFFF !important;
     border-color: #059669 !important;
     box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
 }
 
-.j-mob-role-card {
+.jy-mob-role-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #EEF2F6;
@@ -737,19 +737,19 @@
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
     transition: transform 0.2s ease, border-color 0.2s ease;
 }
-.j-mob-role-card:active {
+.jy-mob-role-card:active {
     transform: scale(0.98);
     border-color: #059669;
 }
-.j-mob-role-card__overlay {
+.jy-mob-role-card__overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
 }
-.j-mob-role-card__inner {
+.jy-mob-role-card__inner {
     padding: 14px 14px;
 }
-.j-mob-role-card__icon {
+.jy-mob-role-card__icon {
     width: 36px;
     height: 36px;
     border-radius: 10px;
@@ -760,7 +760,7 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.j-mob-role-card__title {
+.jy-mob-role-card__title {
     font-size: 0.95rem;
     font-weight: 800;
     color: #0B1F1A;
@@ -770,7 +770,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.j-mob-role-card__badge {
+.jy-mob-role-card__badge {
     font-size: 0.68rem;
     font-weight: 700;
     color: #065F46;
@@ -779,7 +779,7 @@
     padding: 1px 6px;
     border-radius: 4px;
 }
-.j-mob-page-btn {
+.jy-mob-page-btn {
     display: inline-flex;
     align-items: center;
     padding: 6px 14px;
@@ -793,7 +793,7 @@
 }
 
 /* Mobile Suggestion Dropdown styling */
-.j-suggest-dropdown {
+.jy-suggest-dropdown {
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
@@ -808,14 +808,14 @@
     max-height: 280px;
     overflow-y: auto;
 }
-.j-suggest-header {
+.jy-suggest-header {
     padding: 4px 12px 2px;
     font-size: 0.68rem;
     font-weight: 800;
     text-transform: uppercase;
     color: #64748B;
 }
-.j-suggest-item {
+.jy-suggest-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -824,18 +824,18 @@
     min-height: 40px;
     box-sizing: border-box;
 }
-.j-suggest-item * {
+.jy-suggest-item * {
     pointer-events: none !important;
 }
-.j-suggest-item:active {
+.jy-suggest-item:active {
     background: #F0FDF4;
 }
-.j-suggest-title {
+.jy-suggest-title {
     font-size: 0.85rem;
     font-weight: 650;
     color: #0F172A;
 }
-.j-suggest-badge {
+.jy-suggest-badge {
     font-size: 0.65rem;
     font-weight: 700;
     color: #059669;
@@ -843,7 +843,7 @@
     padding: 2px 6px;
     border-radius: 9999px;
 }
-.j-search-clear-btn {
+.jy-search-clear-btn {
     background: #E2E8F0;
     border: none;
     border-radius: 50%;
@@ -868,7 +868,7 @@ function filterRolesLiveMobile(val) {
     const clearBtn = document.getElementById('role-search-clear-m');
     if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
 
-    const cards = document.querySelectorAll('#roles-cards-list-m .j-mob-role-card');
+    const cards = document.querySelectorAll('#roles-cards-list-m .jy-mob-role-card');
     let visible = 0;
 
     cards.forEach(card => {
@@ -937,7 +937,7 @@ function clearRoleSearchMobile() {
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
 
-            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+            dropdown.querySelectorAll('.jy-suggest-item').forEach(el => {
                 const selectItemHandler = function(e) {
                     if (e) {
                         e.preventDefault();

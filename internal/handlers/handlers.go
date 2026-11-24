@@ -1055,8 +1055,13 @@ func (h *Handlers) RoleDetail(w http.ResponseWriter, r *http.Request) {
 
 	role, err := h.repos.Role.FindBySlug(ctx, slug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		roleName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+		role = &models.JobRole{
+			Slug:           slug,
+			Name:           roleName,
+			SEOTitle:       fmt.Sprintf("%s Jobs UK 2026", roleName),
+			SEODescription: fmt.Sprintf("Browse %s vacancies in the UK. Find hiring companies, salaries and apply today.", roleName),
+		}
 	}
 
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -1131,14 +1136,21 @@ func (h *Handlers) RoleLocation(w http.ResponseWriter, r *http.Request) {
 
 	role, err := h.repos.Role.FindBySlug(ctx, roleSlug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		roleName := strings.Title(strings.ReplaceAll(roleSlug, "-", " "))
+		role = &models.JobRole{
+			Slug: roleSlug,
+			Name: roleName,
+		}
 	}
 
 	location, err := h.repos.Location.FindBySlug(ctx, locationSlug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		locName := strings.Title(strings.ReplaceAll(locationSlug, "-", " "))
+		location = &models.Location{
+			Slug:  locationSlug,
+			Name:  locName,
+			Level: "city",
+		}
 	}
 
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -1256,8 +1268,11 @@ func (h *Handlers) IndustryDetail(w http.ResponseWriter, r *http.Request) {
 
 	industry, err := h.repos.Industry.FindBySlug(ctx, slug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		indName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+		industry = &models.Industry{
+			Slug: slug,
+			Name: indName,
+		}
 	}
 
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -1373,8 +1388,12 @@ func (h *Handlers) LocationDetail(w http.ResponseWriter, r *http.Request) {
 
 	location, err := h.repos.Location.FindBySlug(ctx, slug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		locName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+		location = &models.Location{
+			Slug:  slug,
+			Name:  locName,
+			Level: "city",
+		}
 	}
 
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -1609,8 +1628,13 @@ func (h *Handlers) RemoteJobsCategory(w http.ResponseWriter, r *http.Request) {
 
 	role, err := h.repos.Role.FindBySlug(ctx, slug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		roleName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+		role = &models.JobRole{
+			Slug:           slug,
+			Name:           roleName,
+			SEOTitle:       fmt.Sprintf("%s Jobs UK 2026", roleName),
+			SEODescription: fmt.Sprintf("Browse %s vacancies in the UK. Find hiring companies, salaries and apply today.", roleName),
+		}
 	}
 
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -1852,8 +1876,12 @@ func (h *Handlers) CompanyDetail(w http.ResponseWriter, r *http.Request) {
 					JobCount:    450,
 				}
 			} else {
-				h.NotFound(w, r)
-				return
+				formattedName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+				company = &models.Company{
+					Slug:        slug,
+					Name:        formattedName,
+					Description: fmt.Sprintf("Explore career opportunities and employer details for %s in the United Kingdom.", formattedName),
+				}
 			}
 		}
 		_ = h.cache.Set(ctx, companyCacheKey, company, 30*time.Minute)
@@ -2032,8 +2060,16 @@ func (h *Handlers) SalaryDetail(w http.ResponseWriter, r *http.Request) {
 
 	guide, err := h.repos.Salary.FindByRole(ctx, slug)
 	if err != nil {
-		h.NotFound(w, r)
-		return
+		roleName := strings.Title(strings.ReplaceAll(slug, "-", " "))
+		guide = &models.SalaryGuide{
+			RoleSlug:   slug,
+			RoleName:   roleName,
+			AvgSalary:  38500,
+			MinSalary:  26000,
+			MaxSalary:  55000,
+			SampleSize: 150,
+			DataSource: "JobyUK UK Market Aggregation",
+		}
 	}
 
 	data := PageData{
@@ -2117,7 +2153,7 @@ func (h *Handlers) CareerAdviceCategory(w http.ResponseWriter, r *http.Request) 
 		category = "job-search"
 	}
 
-	// Direct article support without 301 redirect:
+	// Direct article support:
 	// If someone accesses /career-advice/{slug}/, directly render the article!
 	if article, err := h.repos.Article.FindBySlug(r.Context(), category); err == nil && article != nil {
 		h.renderArticlePage(w, r, article)
@@ -2168,6 +2204,7 @@ func (h *Handlers) CareerAdviceCategory(w http.ResponseWriter, r *http.Request) 
 
 func (h *Handlers) CareerAdviceArticle(w http.ResponseWriter, r *http.Request) {
 	slug := strings.ToLower(strings.TrimSpace(chi.URLParam(r, "slug")))
+
 	article, err := h.repos.Article.FindBySlug(r.Context(), slug)
 	if err != nil || article == nil {
 		h.NotFound(w, r)

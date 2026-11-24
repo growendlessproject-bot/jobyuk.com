@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <!-- Sticky Floating Apply Bar on Scroll -->
 <aside class="jy-sticky-apply-bar" id="sticky-apply-bar" aria-label="Quick apply bar">
     <div class="jy-container jy-sticky-apply-bar__inner">
@@ -561,7 +561,7 @@
 
 <script>
 function switchDetailTab(e, tabId) {
-    document.querySelectorAll('.j-detail-tab').forEach(function(t) {
+    document.querySelectorAll('.jy-detail-tab').forEach(function(t) {
         t.classList.remove('active');
     });
     e.currentTarget.classList.add('active');
@@ -576,7 +576,7 @@ function switchDetailTab(e, tabId) {
 function slidePopularJobs(direction) {
     var track = document.getElementById('popular-slider-track');
     if (!track) return;
-    var card = track.querySelector('.j-popular-card');
+    var card = track.querySelector('.jy-popular-card');
     var scrollAmount = (card ? card.offsetWidth + 20 : 300) * (direction > 0 ? 2 : -2);
     track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 }
@@ -591,7 +591,7 @@ function goToPopularSlide(pageIndex) {
 // Sync slider dots on user scroll
 (function() {
     var track = document.getElementById('popular-slider-track');
-    var dots = document.querySelectorAll('#popular-dots .j-popular-dot');
+    var dots = document.querySelectorAll('#popular-dots .jy-popular-dot');
     if (!track || dots.length === 0) return;
 
     track.addEventListener('scroll', function() {
@@ -627,17 +627,17 @@ function goToPopularSlide(pageIndex) {
                 if (popSection) {
                     var rect = popSection.getBoundingClientRect();
                     if (rect.top <= 160) {
-                        bar.classList.remove('j-sticky-apply-bar--visible');
-                        if (sidebar) sidebar.classList.remove('j-detail-sidebar--shifted');
+                        bar.classList.remove('jy-sticky-apply-bar--visible');
+                        if (sidebar) sidebar.classList.remove('jy-detail-sidebar--shifted');
                         ticking = false;
                         return;
                     }
                 }
-                bar.classList.add('j-sticky-apply-bar--visible');
-                if (sidebar) sidebar.classList.add('j-detail-sidebar--shifted');
+                bar.classList.add('jy-sticky-apply-bar--visible');
+                if (sidebar) sidebar.classList.add('jy-detail-sidebar--shifted');
             } else {
-                bar.classList.remove('j-sticky-apply-bar--visible');
-                if (sidebar) sidebar.classList.remove('j-detail-sidebar--shifted');
+                bar.classList.remove('jy-sticky-apply-bar--visible');
+                if (sidebar) sidebar.classList.remove('jy-detail-sidebar--shifted');
             }
             ticking = false;
         }

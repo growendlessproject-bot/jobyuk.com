@@ -31,6 +31,7 @@ type SiteSettings struct {
 	HiringCtaLink       string `json:"hiring_cta_link"`
 	ApplyCtaText        string `json:"apply_cta_text"`
 	AntiAdblockEnabled  bool   `json:"anti_adblock_enabled"`
+	WhatsAppAlertsEnabled bool   `json:"whatsapp_alerts_enabled"`
 }
 
 var (
@@ -311,8 +312,13 @@ func UpdateAdsTxt(content string) error {
 	return mgr.saveLocked()
 }
 
-// IsWhatsAppAlertsEnabled returns true if WhatsApp alerts module is enabled via config/env.
+// IsWhatsAppAlertsEnabled returns true if WhatsApp alerts module and dispatcher are active.
 func IsWhatsAppAlertsEnabled() bool {
+	// 1. Dynamic Admin Setting check (can be toggled in admin settings without restart)
+	if !GetManager().GetAll().WhatsAppAlertsEnabled {
+		return false
+	}
+	// 2. Environment variable check
 	val := strings.ToLower(strings.TrimSpace(os.Getenv("ENABLE_WHATSAPP_ALERTS")))
 	return val != "false" && val != "0" && val != "no"
 }

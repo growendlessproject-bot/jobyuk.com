@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-saved-page-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
     <div class="jy-container">
         {{template "breadcrumbs" .}}
@@ -261,18 +261,18 @@ function toggleSavedMenu(e, menuId) {
     if (!dropdown) return;
     const wasOpen = dropdown.classList.contains('show');
     
-    document.querySelectorAll('.j-saved-card__menu-dropdown').forEach(d => {
+    document.querySelectorAll('.jy-saved-card__menu-dropdown').forEach(d => {
         d.classList.remove('show');
         d.classList.remove('drop-up');
     });
-    document.querySelectorAll('.j-saved-card').forEach(c => {
+    document.querySelectorAll('.jy-saved-card').forEach(c => {
         c.classList.remove('menu-open');
         c.style.zIndex = '';
     });
     
     if (!wasOpen) {
         dropdown.classList.add('show');
-        const card = dropdown.closest('.j-saved-card');
+        const card = dropdown.closest('.jy-saved-card');
         if (card) {
             card.classList.add('menu-open');
             card.style.zIndex = '100';
@@ -285,12 +285,12 @@ function toggleSavedMenu(e, menuId) {
 }
 
 document.addEventListener('click', function(e) {
-    if (!e.target.closest('.j-saved-card__menu-dropdown') && !e.target.closest('.j-saved-card__menu-btn')) {
-        document.querySelectorAll('.j-saved-card__menu-dropdown').forEach(d => {
+    if (!e.target.closest('.jy-saved-card__menu-dropdown') && !e.target.closest('.jy-saved-card__menu-btn')) {
+        document.querySelectorAll('.jy-saved-card__menu-dropdown').forEach(d => {
             d.classList.remove('show');
             d.classList.remove('drop-up');
         });
-        document.querySelectorAll('.j-saved-card').forEach(c => {
+        document.querySelectorAll('.jy-saved-card').forEach(c => {
             c.classList.remove('menu-open');
             c.style.zIndex = '';
         });

@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-career-mobile-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 50px; min-height: 85vh;">
     <div class="jy-container" style="padding-left: 16px; padding-right: 16px;">
         {{template "breadcrumbs" .}}
@@ -360,7 +360,7 @@
    ========================================================================= */
 
 /* Horizontally scrollable pill slider */
-.j-mob-pill-slider {
+.jy-mob-pill-slider {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -369,10 +369,10 @@
     padding-bottom: 4px;
     scrollbar-width: none;
 }
-.j-mob-pill-slider::-webkit-scrollbar {
+.jy-mob-pill-slider::-webkit-scrollbar {
     display: none;
 }
-.j-mob-pill {
+.jy-mob-pill {
     background: #FFFFFF;
     color: #475569;
     border: 1.5px solid #CBD5E1;
@@ -386,7 +386,7 @@
     transition: all 0.2s ease;
     outline: none;
 }
-.j-mob-pill.active {
+.jy-mob-pill.active {
     background: #059669 !important;
     color: #FFFFFF !important;
     border-color: #059669 !important;
@@ -394,7 +394,7 @@
 }
 
 /* Pillar Cards */
-.j-mob-pillar-card {
+.jy-mob-pillar-card {
     background: #FFFFFF;
     border: 1.5px solid #EEF2F6;
     border-radius: 14px;
@@ -407,11 +407,11 @@
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
     transition: transform 0.2s ease, border-color 0.2s ease;
 }
-.j-mob-pillar-card:active {
+.jy-mob-pillar-card:active {
     transform: scale(0.98);
     border-color: #059669;
 }
-.j-mob-pillar-icon {
+.jy-mob-pillar-icon {
     width: 36px;
     height: 36px;
     border-radius: 10px;
@@ -420,7 +420,7 @@
     justify-content: center;
     margin-bottom: 10px;
 }
-.j-mob-pillar-kicker {
+.jy-mob-pillar-kicker {
     font-size: 0.68rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -428,14 +428,14 @@
     display: block;
     margin-bottom: 2px;
 }
-.j-mob-pillar-title {
+.jy-mob-pillar-title {
     font-size: 0.92rem;
     font-weight: 800;
     color: #0B1F1A;
     line-height: 1.25;
     margin: 0 0 2px;
 }
-.j-mob-pillar-desc {
+.jy-mob-pillar-desc {
     font-size: 0.72rem;
     color: #64748B;
     line-height: 1.35;
@@ -443,7 +443,7 @@
 }
 
 /* Tax Calculator Card */
-.j-mob-calc-card {
+.jy-mob-calc-card {
     display: block;
     background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
     border-radius: 16px;
@@ -452,10 +452,10 @@
     box-shadow: 0 6px 18px rgba(5, 150, 105, 0.22);
     transition: transform 0.2s ease;
 }
-.j-mob-calc-card:active {
+.jy-mob-calc-card:active {
     transform: scale(0.98);
 }
-.j-mob-calc-tag {
+.jy-mob-calc-tag {
     display: inline-block;
     background: rgba(255, 255, 255, 0.2);
     color: #FFFFFF;
@@ -467,12 +467,12 @@
 }
 
 /* Guides Feed Cards */
-.j-mob-guides-list {
+.jy-mob-guides-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-.j-mob-guide-card {
+.jy-mob-guide-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #EEF2F6;
@@ -481,19 +481,19 @@
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.j-mob-guide-card:active {
+.jy-mob-guide-card:active {
     border-color: #059669;
     box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1);
 }
-.j-mob-guide-card__overlay {
+.jy-mob-guide-card__overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
 }
-.j-mob-guide-card__inner {
+.jy-mob-guide-card__inner {
     padding: 16px 14px;
 }
-.j-mob-badge {
+.jy-mob-badge {
     display: inline-block;
     font-size: 0.68rem;
     font-weight: 800;
@@ -505,7 +505,7 @@
     padding: 2px 8px;
     border-radius: 5px;
 }
-.j-mob-guide-title {
+.jy-mob-guide-title {
     font-size: 1.05rem;
     font-weight: 800;
     color: #0B1F1A;
@@ -513,11 +513,11 @@
     margin: 0 0 6px;
     letter-spacing: -0.01em;
 }
-.j-mob-guide-title a {
+.jy-mob-guide-title a {
     color: inherit;
     text-decoration: none;
 }
-.j-mob-guide-desc {
+.jy-mob-guide-desc {
     font-size: 0.84rem;
     color: #64748B;
     line-height: 1.45;
@@ -527,14 +527,14 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.j-mob-guide-footer {
+.jy-mob-guide-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 10px;
     border-top: 1px solid #F1F5F9;
 }
-.j-mob-read-link {
+.jy-mob-read-link {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -544,32 +544,32 @@
 }
 
 /* Article Typography */
-.j-mob-article-body h2 {
+.jy-mob-article-body h2 {
     font-size: 1.3rem;
     font-weight: 850;
     color: #0B1F1A;
     margin: 26px 0 10px;
     line-height: 1.3;
 }
-.j-mob-article-body h3 {
+.jy-mob-article-body h3 {
     font-size: 1.15rem;
     font-weight: 800;
     color: #0F172A;
     margin: 20px 0 8px;
     line-height: 1.35;
 }
-.j-mob-article-body p {
+.jy-mob-article-body p {
     margin: 0 0 16px;
 }
-.j-mob-article-body ul,
-.j-mob-article-body ol {
+.jy-mob-article-body ul,
+.jy-mob-article-body ol {
     margin: 0 0 16px;
     padding-left: 20px;
 }
-.j-mob-article-body li {
+.jy-mob-article-body li {
     margin-bottom: 6px;
 }
-.j-mob-article-body blockquote {
+.jy-mob-article-body blockquote {
     border-left: 3.5px solid #059669;
     padding-left: 14px;
     margin: 18px 0;
@@ -580,7 +580,7 @@
     padding-bottom: 8px;
     border-radius: 0 8px 8px 0;
 }
-.j-mob-article-body table {
+.jy-mob-article-body table {
     width: 100%;
     border-collapse: collapse;
     margin: 18px 0;
@@ -588,7 +588,7 @@
     display: block;
     overflow-x: auto;
 }
-.j-mob-article-body th {
+.jy-mob-article-body th {
     background: #F1F5F9;
     padding: 8px 10px;
     border: 1px solid #CBD5E1;
@@ -596,14 +596,14 @@
     text-align: left;
     white-space: nowrap;
 }
-.j-mob-article-body td {
+.jy-mob-article-body td {
     padding: 8px 10px;
     border: 1px solid #E2E8F0;
     white-space: nowrap;
 }
 
 /* Mobile Proper Search Card */
-.j-mob-search-card {
+.jy-mob-search-card {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -613,11 +613,11 @@
     box-shadow: 0 4px 14px -2px rgba(15, 81, 50, 0.06);
     transition: all 0.2s ease;
 }
-.j-mob-search-card:focus-within {
+.jy-mob-search-card:focus-within {
     border-color: #059669;
     box-shadow: 0 6px 20px -2px rgba(5, 150, 105, 0.15);
 }
-.j-mob-search-btn {
+.jy-mob-search-btn {
     background: linear-gradient(180deg, #0F5132 0%, #0B4228 100%);
     color: #FFFFFF;
     border: none;
@@ -633,7 +633,7 @@
     font-family: inherit;
     box-shadow: 0 2px 6px rgba(15, 81, 50, 0.2);
 }
-.j-mob-tag {
+.jy-mob-tag {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     color: #475569;
@@ -647,7 +647,7 @@
     font-family: inherit;
     transition: all 0.2s ease;
 }
-.j-mob-tag:active {
+.jy-mob-tag:active {
     background: #ECFDF5;
     border-color: #A7F3D0;
     color: #065F46;
@@ -660,7 +660,7 @@ var activeCategoryMobile = 'all';
 
 function filterByCategoryMobile(cat, btn) {
     activeCategoryMobile = cat;
-    document.querySelectorAll('.j-mob-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.jy-mob-pill').forEach(p => p.classList.remove('active'));
     if (btn) btn.classList.add('active');
     applyFiltersMobile();
 }
@@ -700,7 +700,7 @@ function clearCareerSearchMobile() {
 
 function applyFiltersMobile() {
     const query = (document.getElementById('careerSearchInputMobile')?.value || '').toLowerCase().trim();
-    const cards = document.querySelectorAll('#careerGuidesListMobile .j-mob-guide-card');
+    const cards = document.querySelectorAll('#careerGuidesListMobile .jy-mob-guide-card');
     let visibleCount = 0;
 
     cards.forEach(card => {

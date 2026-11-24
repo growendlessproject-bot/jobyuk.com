@@ -201,8 +201,8 @@
             overflow-x: clip;
             -webkit-overflow-scrolling: touch;
         }
-        html body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.j-drawer-open):not(.jy-interstitial-open),
-        :root body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.j-drawer-open):not(.jy-interstitial-open) {
+        html body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.jy-drawer-open):not(.j-drawer-open):not(.jy-interstitial-open),
+        :root body:not(.wa-modal-open):not(.mobile-drawer-overlay--open):not(.jy-drawer-open):not(.j-drawer-open):not(.jy-interstitial-open) {
             min-height: 100vh;
             overflow: visible !important;
             overflow-x: visible !important;
@@ -210,11 +210,12 @@
             max-width: 100% !important;
             -webkit-overflow-scrolling: auto !important;
         }
+        body.jy-drawer-open,
         body.j-drawer-open,
         body.jy-interstitial-open {
             overflow: hidden !important;
         }
-        .header, .j-header-sticky-wrap {
+        .header, .jy-header-sticky-wrap {
             position: -webkit-sticky !important;
             position: sticky !important;
             top: 0 !important;

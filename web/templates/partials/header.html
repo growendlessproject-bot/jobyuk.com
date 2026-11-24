@@ -70,7 +70,7 @@
 
 <!-- Mobile Navigation Drawer Styles -->
 <style>
-.j-mobile-drawer-overlay {
+.jy-mobile-drawer-overlay {
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.65);
@@ -82,12 +82,12 @@
     pointer-events: none;
     transition: opacity 0.25s ease, visibility 0.25s;
 }
-.j-mobile-drawer-overlay.is-open {
+.jy-mobile-drawer-overlay.is-open {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
 }
-.j-mobile-drawer {
+.jy-mobile-drawer {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -110,14 +110,24 @@
     pointer-events: none;
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
 }
-.j-mobile-drawer.is-open {
+.jy-mobile-drawer.is-open {
     transform: translate3d(0, 0, 0) !important;
     visibility: visible !important;
     pointer-events: auto !important;
 }
-body.j-drawer-open {
+body.jy-drawer-open {
     overflow: hidden !important;
     overscroll-behavior: contain;
+}
+
+@media (min-width: 993px) {
+    .jy-mobile-drawer,
+    .jy-mobile-drawer-overlay,
+    .jy-header__menu-btn {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
 }
 </style>
 
@@ -295,6 +305,7 @@ function openMobileDrawer(e) {
     }
     var menuBtn = document.getElementById('menu-toggle');
     if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('jy-drawer-open');
     document.body.classList.add('j-drawer-open');
 }
 
@@ -314,6 +325,7 @@ function closeMobileDrawer(e) {
     }
     var menuBtn = document.getElementById('menu-toggle');
     if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('jy-drawer-open');
     document.body.classList.remove('j-drawer-open');
 }
 

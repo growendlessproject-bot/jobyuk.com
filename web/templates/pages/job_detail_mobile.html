@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <!-- ==========================================================================
      JobyUK.com Next-Level Mobile Job Detail (Card-Free / Open Modern Canvas)
      ========================================================================== -->
@@ -431,11 +431,11 @@
 <!-- Styles for Card-Free Next-Gen Layout -->
 <style>
 /* 1. Canvas & Reset */
-.j-detail-page-wrap {
+.jy-detail-page-wrap {
     padding: 0 !important;
     background: #FFFFFF !important;
 }
-.j-mob-detail-canvas {
+.jy-mob-detail-canvas {
     background: #FFFFFF;
     min-height: 100vh;
     padding: 14px 16px 84px 16px;
@@ -446,13 +446,13 @@
 }
 
 /* 2. Top Nav Bar */
-.j-mob-detail-nav {
+.jy-mob-detail-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
-.j-mob-back-pill {
+.jy-mob-back-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -466,16 +466,16 @@
     text-decoration: none;
     transition: background 0.15s ease;
 }
-.j-mob-back-pill:active {
+.jy-mob-back-pill:active {
     background: #EFF6FF;
     color: #2563EB;
 }
-.j-mob-top-actions {
+.jy-mob-top-actions {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.j-mob-action-circle-btn {
+.jy-mob-action-circle-btn {
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -488,23 +488,23 @@
     cursor: pointer;
     transition: all 0.15s ease;
 }
-.j-mob-action-circle-btn:active, .j-mob-action-circle-btn.saved {
+.jy-mob-action-circle-btn:active, .jy-mob-action-circle-btn.saved {
     background: #ECFDF5;
     border-color: #059669;
     color: #059669;
 }
 
 /* 3. Hero Header */
-.j-mob-detail-hero {
+.jy-mob-detail-hero {
     margin-bottom: 20px;
 }
-.j-mob-hero-header-row {
+.jy-mob-hero-header-row {
     display: flex;
     align-items: flex-start;
     gap: 14px;
     margin-bottom: 14px;
 }
-.j-mob-brand-logo-box {
+.jy-mob-brand-logo-box {
     width: 52px;
     height: 52px;
     border-radius: 14px;
@@ -517,21 +517,21 @@
     flex-shrink: 0;
     overflow: hidden;
 }
-.j-mob-brand-logo-box img {
+.jy-mob-brand-logo-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-.j-mob-logo-initial {
+.jy-mob-logo-initial {
     font-size: 22px;
     font-weight: 850;
     color: #059669;
 }
-.j-mob-hero-text {
+.jy-mob-hero-text {
     flex: 1;
     min-width: 0;
 }
-.j-mob-employer-line {
+.jy-mob-employer-line {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -539,7 +539,7 @@
     color: #64748B;
     margin-bottom: 4px;
 }
-.j-mob-employer-link {
+.jy-mob-employer-link {
     font-weight: 750;
     color: #059669;
     text-decoration: none;
@@ -547,14 +547,14 @@
     align-items: center;
     gap: 3px;
 }
-.j-mob-meta-dot {
+.jy-mob-meta-dot {
     color: #CBD5E1;
 }
-.j-mob-post-time {
+.jy-mob-post-time {
     font-size: 12px;
     font-weight: 500;
 }
-.j-mob-job-title {
+.jy-mob-job-title {
     font-size: 22px !important;
     font-weight: 850 !important;
     line-height: 1.25 !important;
@@ -564,7 +564,7 @@
 }
 
 /* 4. Glance Badges Rail */
-.j-mob-glance-rail {
+.jy-mob-glance-rail {
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -572,10 +572,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-glance-rail::-webkit-scrollbar {
+.jy-mob-glance-rail::-webkit-scrollbar {
     display: none;
 }
-.j-glance-chip {
+.jy-glance-chip {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -589,30 +589,30 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.j-glance-chip--salary {
+.jy-glance-chip--salary {
     background: #ECFDF5;
     border-color: #A7F3D0;
     color: #065F46;
     font-weight: 750;
 }
-.j-glance-chip--salary svg {
+.jy-glance-chip--salary svg {
     color: #059669;
 }
-.j-glance-chip--verified {
+.jy-glance-chip--verified {
     background: #FEF3C7;
     border-color: #FDE68A;
     color: #92400E;
 }
-.j-glance-chip--verified svg {
+.jy-glance-chip--verified svg {
     color: #D97706;
 }
 
 /* 5. Clean Hero Apply Action */
-.j-mob-hero-actions {
+.jy-mob-hero-actions {
     margin-top: 6px;
     margin-bottom: 18px;
 }
-.j-mob-hero-apply-btn {
+.jy-mob-hero-apply-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -629,10 +629,10 @@
     box-shadow: 0 4px 16px rgba(15, 81, 50, 0.25);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.j-mob-hero-apply-btn:active {
+.jy-mob-hero-apply-btn:active {
     transform: scale(0.98);
 }
-.j-mob-hero-subnote {
+.jy-mob-hero-subnote {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -644,7 +644,7 @@
 }
 
 /* Floating Bottom Apply Dock Mobile (Clean, Scoped, High Elevation) */
-.j-mob-sticky-bar {
+.jy-mob-sticky-bar {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
@@ -666,12 +666,12 @@
     pointer-events: none !important;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease !important;
 }
-.j-mob-sticky-bar.is-visible {
+.jy-mob-sticky-bar.is-visible {
     transform: translateY(0) !important;
     opacity: 1 !important;
     pointer-events: auto !important;
 }
-.j-mob-sticky-bar__inner {
+.jy-mob-sticky-bar__inner {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -680,11 +680,11 @@
     margin: 0 auto !important;
     width: 100% !important;
 }
-.j-mob-sticky-bar__info {
+.jy-mob-sticky-bar__info {
     flex: 1 !important;
     min-width: 0 !important;
 }
-.j-mob-sticky-bar__title {
+.jy-mob-sticky-bar__title {
     display: block !important;
     font-size: 13.5px !important;
     font-weight: 800 !important;
@@ -694,7 +694,7 @@
     text-overflow: ellipsis !important;
     line-height: 1.25 !important;
 }
-.j-mob-sticky-bar__meta {
+.jy-mob-sticky-bar__meta {
     display: block !important;
     font-size: 11.5px !important;
     color: #059669 !important;
@@ -704,7 +704,7 @@
     text-overflow: ellipsis !important;
     margin-top: 2px !important;
 }
-.j-mob-sticky-bar__btn {
+.jy-mob-sticky-bar__btn {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%) !important;
     color: #FFFFFF !important;
     font-size: 13.5px !important;
@@ -719,12 +719,12 @@
     box-shadow: 0 3px 12px rgba(15, 81, 50, 0.3) !important;
     transition: transform 0.15s ease !important;
 }
-.j-mob-sticky-bar__btn:active {
+.jy-mob-sticky-bar__btn:active {
     transform: scale(0.96) !important;
 }
 
 /* 6. Tabs Bar */
-.j-mob-tabs-bar {
+.jy-mob-tabs-bar {
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -734,10 +734,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-tabs-bar::-webkit-scrollbar {
+.jy-mob-tabs-bar::-webkit-scrollbar {
     display: none;
 }
-.j-mob-tab {
+.jy-mob-tab {
     background: none;
     border: none;
     font-size: 13.5px;
@@ -750,17 +750,17 @@
     flex-shrink: 0;
     transition: all 0.15s ease;
 }
-.j-mob-tab.is-active {
+.jy-mob-tab.is-active {
     background: #ECFDF5;
     color: #059669;
     font-weight: 750;
 }
 
 /* 7. Content Body Flow */
-.j-mob-content-section {
+.jy-mob-content-section {
     margin-bottom: 24px;
 }
-.j-mob-section-heading {
+.jy-mob-section-heading {
     font-size: 17.5px !important;
     font-weight: 800 !important;
     color: #0F172A !important;
@@ -769,20 +769,20 @@
     border-left: 3.5px solid #059669;
     padding-left: 10px;
 }
-.j-mob-description-text {
+.jy-mob-description-text {
     padding: 10px;
     box-sizing: border-box;
 }
-.j-mob-description-text, .j-mob-lead-para {
+.jy-mob-description-text, .jy-mob-lead-para {
     font-size: 14.5px;
     line-height: 1.68;
     color: #334155;
     font-weight: 450;
 }
-.j-mob-description-text p {
+.jy-mob-description-text p {
     margin: 0 0 14px 0;
 }
-.j-mob-bullet-list {
+.jy-mob-bullet-list {
     margin: 0;
     padding: 0 0 0 18px;
     display: flex;
@@ -792,17 +792,17 @@
     line-height: 1.55;
     color: #334155;
 }
-.j-mob-bullet-list li {
+.jy-mob-bullet-list li {
     padding-left: 4px;
 }
 
 /* Benefits Grid */
-.j-mob-benefits-grid {
+.jy-mob-benefits-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
-.j-mob-benefit-card {
+.jy-mob-benefit-card {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
@@ -811,28 +811,28 @@
     align-items: flex-start;
     gap: 10px;
 }
-.j-mob-benefit-icon {
+.jy-mob-benefit-icon {
     font-size: 20px;
 }
-.j-mob-benefit-title {
+.jy-mob-benefit-title {
     font-size: 13px;
     font-weight: 750;
     color: #0F172A;
     margin-bottom: 2px;
 }
-.j-mob-benefit-desc {
+.jy-mob-benefit-desc {
     font-size: 11.5px;
     color: #64748B;
     line-height: 1.35;
 }
 
 /* Best Ever Mobile FAQs Accordion */
-.j-mob-faq-stack {
+.jy-mob-faq-stack {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.j-mob-faq-item {
+.jy-mob-faq-item {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
@@ -840,12 +840,12 @@
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.j-mob-faq-item[open] {
+.jy-mob-faq-item[open] {
     border-color: #A7F3D0;
     background: #FAFCFB;
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.08);
 }
-.j-mob-faq-summary {
+.jy-mob-faq-summary {
     font-weight: 750;
     color: #0F172A;
     font-size: 14px;
@@ -858,10 +858,10 @@
     outline: none;
     line-height: 1.35;
 }
-.j-mob-faq-summary::-webkit-details-marker {
+.jy-mob-faq-summary::-webkit-details-marker {
     display: none;
 }
-.j-mob-faq-chevron {
+.jy-mob-faq-chevron {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -873,11 +873,11 @@
     flex-shrink: 0;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
 }
-.j-mob-faq-item[open] .j-mob-faq-chevron {
+.jy-mob-faq-item[open] .jy-mob-faq-chevron {
     transform: rotate(180deg);
     background: #ECFDF5;
 }
-.j-mob-faq-answer {
+.jy-mob-faq-answer {
     margin-top: 12px;
     padding-top: 10px;
     border-top: 1px solid #EEF2F6;
@@ -887,7 +887,7 @@
 }
 
 /* Internal Silo Box */
-.j-mob-silo-box {
+.jy-mob-silo-box {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
@@ -895,18 +895,18 @@
     margin-top: 24px;
     margin-bottom: 24px;
 }
-.j-mob-silo-title {
+.jy-mob-silo-title {
     font-size: 14.5px;
     font-weight: 800;
     color: #0F172A;
     margin: 0 0 12px 0;
 }
-.j-mob-silo-links {
+.jy-mob-silo-links {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.j-mob-silo-link {
+.jy-mob-silo-link {
     color: #059669;
     text-decoration: none;
     font-weight: 650;
@@ -917,20 +917,20 @@
     padding: 6px 0;
     border-bottom: 1px solid #F1F5F9;
 }
-.j-mob-silo-link:last-child {
+.jy-mob-silo-link:last-child {
     border-bottom: none;
 }
 
 /* Similar Jobs Stack */
-.j-mob-similar-section {
+.jy-mob-similar-section {
     margin-top: 32px;
 }
-.j-mob-similar-stack {
+.jy-mob-similar-stack {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-.j-mob-similar-card {
+.jy-mob-similar-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #F1F5F9;
@@ -938,18 +938,18 @@
     padding: 14px;
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
 }
-.j-mob-card-link-cover {
+.jy-mob-card-link-cover {
     position: absolute;
     inset: 0;
     z-index: 1;
 }
-.j-mob-sim-top {
+.jy-mob-sim-top {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
 }
-.j-mob-sim-logo {
+.jy-mob-sim-logo {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -963,45 +963,45 @@
     font-size: 14px;
     overflow: hidden;
 }
-.j-mob-sim-logo img {
+.jy-mob-sim-logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-.j-mob-sim-company {
+.jy-mob-sim-company {
     font-size: 12.5px;
     font-weight: 700;
     color: #475569;
 }
-.j-mob-sim-time {
+.jy-mob-sim-time {
     font-size: 11px;
     color: #94A3B8;
 }
-.j-mob-sim-title {
+.jy-mob-sim-title {
     font-size: 15px;
     font-weight: 750;
     color: #0F172A;
     margin: 0 0 6px 0;
     line-height: 1.3;
 }
-.j-mob-sim-location {
+.jy-mob-sim-location {
     font-size: 12.5px;
     color: #64748B;
     margin-bottom: 10px;
 }
-.j-mob-sim-bottom {
+.jy-mob-sim-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 8px;
     border-top: 1px solid #F8FAFC;
 }
-.j-mob-sim-salary {
+.jy-mob-sim-salary {
     font-size: 13px;
     font-weight: 750;
     color: #059669;
 }
-.j-mob-sim-btn {
+.jy-mob-sim-btn {
     position: relative;
     z-index: 2;
     background: #ECFDF5;
@@ -1015,20 +1015,20 @@
 }
 
 /* Popular Jobs Track */
-.j-mob-popular-wrap {
+.jy-mob-popular-wrap {
     margin-top: 36px;
 }
-.j-mob-popular-head {
+.jy-mob-popular-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
-.j-mob-nav-arrows {
+.jy-mob-nav-arrows {
     display: flex;
     gap: 6px;
 }
-.j-mob-arrow-btn {
+.jy-mob-arrow-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -1040,7 +1040,7 @@
     cursor: pointer;
     color: #334155;
 }
-.j-mob-popular-track {
+.jy-mob-popular-track {
     display: flex;
     gap: 12px;
     overflow-x: auto;
@@ -1048,10 +1048,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-popular-track::-webkit-scrollbar {
+.jy-mob-popular-track::-webkit-scrollbar {
     display: none;
 }
-.j-mob-popular-slide {
+.jy-mob-popular-slide {
     position: relative;
     flex: 0 0 260px;
     background: #FFFFFF;
@@ -1061,13 +1061,13 @@
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
     box-sizing: border-box;
 }
-.j-mob-pop-head {
+.jy-mob-pop-head {
     display: flex;
     align-items: center;
     gap: 9px;
     margin-bottom: 8px;
 }
-.j-mob-pop-logo {
+.jy-mob-pop-logo {
     width: 30px;
     height: 30px;
     border-radius: 8px;
@@ -1081,21 +1081,21 @@
     font-size: 13px;
     overflow: hidden;
 }
-.j-mob-pop-logo img {
+.jy-mob-pop-logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-.j-mob-pop-emp {
+.jy-mob-pop-emp {
     font-size: 12px;
     font-weight: 700;
     color: #475569;
 }
-.j-mob-pop-time {
+.jy-mob-pop-time {
     font-size: 11px;
     color: #94A3B8;
 }
-.j-mob-pop-title {
+.jy-mob-pop-title {
     font-size: 14px;
     font-weight: 750;
     color: #0F172A;
@@ -1106,22 +1106,22 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.j-mob-pop-loc {
+.jy-mob-pop-loc {
     font-size: 12px;
     color: #64748B;
     margin: 0 0 10px 0;
 }
-.j-mob-pop-footer {
+.jy-mob-pop-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.j-mob-pop-salary {
+.jy-mob-pop-salary {
     font-size: 12.5px;
     font-weight: 750;
     color: #059669;
 }
-.j-mob-pop-apply {
+.jy-mob-pop-apply {
     position: relative;
     z-index: 2;
     background: #059669;
@@ -1136,7 +1136,7 @@
 
 <script>
 function switchDetailTabM(e, targetId) {
-    document.querySelectorAll('.j-mob-tab').forEach(function(t) {
+    document.querySelectorAll('.jy-mob-tab').forEach(function(t) {
         t.classList.remove('is-active');
     });
     e.currentTarget.classList.add('is-active');
@@ -1169,7 +1169,7 @@ function handleJobShare() {
 function slidePopularJobsM(direction) {
     var track = document.getElementById('popular-slider-track-m');
     if (!track) return;
-    var slide = track.querySelector('.j-mob-popular-slide');
+    var slide = track.querySelector('.jy-mob-popular-slide');
     var scrollAmount = (slide ? slide.offsetWidth + 12 : 272) * direction;
     track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 }
@@ -1178,9 +1178,9 @@ function slidePopularJobsM(direction) {
 (function() {
     function initStickyBarM() {
         var bar = document.getElementById('sticky-apply-bar-m');
-        var heroActions = document.querySelector('.j-mob-hero-actions');
-        var bodyFlow = document.querySelector('.j-mob-body-flow');
-        var similarSec = document.querySelector('.j-mob-similar-section') || document.getElementById('popular-jobs-section-m');
+        var heroActions = document.querySelector('.jy-mob-hero-actions');
+        var bodyFlow = document.querySelector('.jy-mob-body-flow');
+        var similarSec = document.querySelector('.jy-mob-similar-section') || document.getElementById('popular-jobs-section-m');
         if (!bar || !heroActions) return;
         
         var ticking = false;

@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-career-hub-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
     <div class="jy-container">
         {{template "breadcrumbs" .}}
@@ -448,13 +448,13 @@
    ========================================================================= */
 
 /* Filter Pills */
-.j-career-filter-tabs {
+.jy-career-filter-tabs {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 }
-.j-career-pill {
+.jy-career-pill {
     background: #FFFFFF;
     color: #475569;
     border: 1.5px solid #CBD5E1;
@@ -466,12 +466,12 @@
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     outline: none;
 }
-.j-career-pill:hover {
+.jy-career-pill:hover {
     border-color: #059669;
     color: #059669;
     background: #F0FDF4;
 }
-.j-career-pill.active {
+.jy-career-pill.active {
     background: #059669 !important;
     color: #FFFFFF !important;
     border-color: #059669 !important;
@@ -479,7 +479,7 @@
 }
 
 /* 4 Core Pillars */
-.j-pillar-card {
+.jy-pillar-card {
     background: #FFFFFF;
     border: 1.5px solid #EEF2F6;
     border-radius: 20px;
@@ -492,12 +492,12 @@
     transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.03);
 }
-.j-pillar-card:hover {
+.jy-pillar-card:hover {
     border-color: #059669;
     transform: translateY(-4px);
     box-shadow: 0 14px 28px -6px rgba(5, 150, 105, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
-.j-pillar-icon {
+.jy-pillar-icon {
     width: 48px;
     height: 48px;
     border-radius: 12px;
@@ -507,10 +507,10 @@
     margin-bottom: 16px;
     transition: transform 0.25s ease;
 }
-.j-pillar-card:hover .j-pillar-icon {
+.jy-pillar-card:hover .jy-pillar-icon {
     transform: scale(1.08);
 }
-.j-pillar-kicker {
+.jy-pillar-kicker {
     font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -519,20 +519,20 @@
     display: block;
     margin-bottom: 4px;
 }
-.j-pillar-title {
+.jy-pillar-title {
     font-size: 1.25rem;
     font-weight: 800;
     color: #0B1F1A;
     margin: 0 0 8px;
     letter-spacing: -0.015em;
 }
-.j-pillar-desc {
+.jy-pillar-desc {
     font-size: 0.88rem;
     color: #64748B;
     line-height: 1.55;
     margin: 0 0 16px;
 }
-.j-pillar-link {
+.jy-pillar-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -541,12 +541,12 @@
     color: #059669;
     transition: gap 0.2s ease;
 }
-.j-pillar-card:hover .j-pillar-link {
+.jy-pillar-card:hover .jy-pillar-link {
     gap: 9px;
 }
 
 /* Feature Calculator Banner */
-.j-calc-feature-banner {
+.jy-calc-feature-banner {
     background: linear-gradient(135deg, #064E3B 0%, #0F5132 50%, #065F46 100%);
     border-radius: 24px;
     padding: 38px 44px;
@@ -560,7 +560,7 @@
     position: relative;
     overflow: hidden;
 }
-.j-calc-feature-banner::before {
+.jy-calc-feature-banner::before {
     content: '';
     position: absolute;
     right: -40px;
@@ -571,12 +571,12 @@
     background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
     pointer-events: none;
 }
-.j-calc-feature-content {
+.jy-calc-feature-content {
     max-width: 620px;
     position: relative;
     z-index: 1;
 }
-.j-calc-feature-tag {
+.jy-calc-feature-tag {
     display: inline-block;
     background: rgba(255, 255, 255, 0.16);
     backdrop-filter: blur(8px);
@@ -589,7 +589,7 @@
     margin-bottom: 12px;
     color: #A7F3D0;
 }
-.j-calc-feature-title {
+.jy-calc-feature-title {
     color: #FFFFFF !important;
     font-size: 1.85rem;
     font-weight: 850;
@@ -597,13 +597,13 @@
     line-height: 1.2;
     letter-spacing: -0.02em;
 }
-.j-calc-feature-desc {
+.jy-calc-feature-desc {
     font-size: 0.98rem;
     color: #D1FAE5;
     margin: 0 0 16px;
     line-height: 1.6;
 }
-.j-calc-feature-pills {
+.jy-calc-feature-pills {
     display: flex;
     align-items: center;
     gap: 18px;
@@ -612,12 +612,12 @@
     color: #E6F4EA;
     font-weight: 600;
 }
-.j-calc-pill-item {
+.jy-calc-pill-item {
     display: inline-flex;
     align-items: center;
     gap: 8px;
 }
-.j-calc-pill-check {
+.jy-calc-pill-check {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -629,7 +629,7 @@
     flex-shrink: 0;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-.j-calc-feature-btn {
+.jy-calc-feature-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -646,7 +646,7 @@
     position: relative;
     z-index: 1;
 }
-.j-calc-feature-btn:hover {
+.jy-calc-feature-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
     background: #F0FDF4;
@@ -654,12 +654,12 @@
 }
 
 /* Article Cards Feed */
-.j-guides-grid {
+.jy-guides-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
     gap: 22px;
 }
-.j-guide-card {
+.jy-guide-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #EEF2F6;
@@ -670,17 +670,17 @@
     display: flex;
     flex-direction: column;
 }
-.j-guide-card:hover {
+.jy-guide-card:hover {
     border-color: #059669;
     transform: translateY(-4px);
     box-shadow: 0 14px 28px -6px rgba(5, 150, 105, 0.1), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
-.j-guide-card__overlay {
+.jy-guide-card__overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
 }
-.j-guide-card__inner {
+.jy-guide-card__inner {
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -690,7 +690,7 @@
     z-index: 2;
     pointer-events: none;
 }
-.j-guide-badge {
+.jy-guide-badge {
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 800;
@@ -702,7 +702,7 @@
     padding: 3px 10px;
     border-radius: 6px;
 }
-.j-guide-title {
+.jy-guide-title {
     font-size: 1.15rem;
     font-weight: 800;
     color: #0B1F1A;
@@ -711,15 +711,15 @@
     letter-spacing: -0.015em;
     transition: color 0.18s ease;
 }
-.j-guide-title a {
+.jy-guide-title a {
     color: inherit;
     text-decoration: none;
     pointer-events: auto;
 }
-.j-guide-card:hover .j-guide-title {
+.jy-guide-card:hover .jy-guide-title {
     color: #059669;
 }
-.j-guide-desc {
+.jy-guide-desc {
     font-size: 0.88rem;
     color: #64748B;
     line-height: 1.55;
@@ -730,7 +730,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.j-guide-footer {
+.jy-guide-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -738,7 +738,7 @@
     border-top: 1px solid #F1F5F9;
     margin-top: auto;
 }
-.j-guide-read-btn {
+.jy-guide-read-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -746,15 +746,15 @@
     font-weight: 750;
     color: #059669;
 }
-.j-guide-arrow {
+.jy-guide-arrow {
     transition: transform 0.22s ease;
 }
-.j-guide-card:hover .j-guide-arrow {
+.jy-guide-card:hover .jy-guide-arrow {
     transform: translateX(4px);
 }
 
 /* Proper Unified JobyUK Search Card for Career Hub */
-.j-career-search-card {
+.jy-career-search-card {
     width: 100% !important;
     max-width: 820px !important;
     background: #FFFFFF !important;
@@ -767,11 +767,11 @@
     gap: 6px !important;
     transition: all 0.25s ease !important;
 }
-.j-career-search-card:focus-within {
+.jy-career-search-card:focus-within {
     border-color: #059669 !important;
     box-shadow: 0 12px 36px -4px rgba(5, 150, 105, 0.16), 0 0 0 3px rgba(16, 185, 129, 0.12) !important;
 }
-.j-career-tag-pill {
+.jy-career-tag-pill {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     color: #475569;
@@ -784,7 +784,7 @@
     outline: none;
     font-family: inherit;
 }
-.j-career-tag-pill:hover {
+.jy-career-tag-pill:hover {
     background: #ECFDF5;
     border-color: #A7F3D0;
     color: #065F46;
@@ -799,7 +799,7 @@ var activeCategory = 'all';
 
 function onTopicSelectChange(val) {
     activeCategory = val;
-    document.querySelectorAll('.j-career-pill').forEach(p => {
+    document.querySelectorAll('.jy-career-pill').forEach(p => {
         if (p.getAttribute('data-cat') === val) {
             p.classList.add('active');
         } else {
@@ -811,7 +811,7 @@ function onTopicSelectChange(val) {
 
 function filterByCategory(cat, btn) {
     activeCategory = cat;
-    document.querySelectorAll('.j-career-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.jy-career-pill').forEach(p => p.classList.remove('active'));
     if (btn) btn.classList.add('active');
     const select = document.getElementById('careerTopicSelect');
     if (select) select.value = cat;
@@ -853,7 +853,7 @@ function clearCareerSearch() {
 
 function applyFilters() {
     const query = (document.getElementById('careerSearchInput')?.value || '').toLowerCase().trim();
-    const cards = document.querySelectorAll('.j-guides-grid .j-guide-card');
+    const cards = document.querySelectorAll('.jy-guides-grid .jy-guide-card');
     let visibleCount = 0;
 
     cards.forEach(card => {

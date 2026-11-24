@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-container" style="padding-top: 18px; padding-bottom: 50px;">
     {{template "breadcrumbs" .}}
     {{template "wfa_leaderboard" .}}
@@ -66,7 +66,7 @@
                 <div class="jy-m-card__header">
                     <div class="jy-m-card__logo-wrap">
                         {{if $company.ProxiedLogoURL}}
-                            <img src="{{$company.ProxiedLogoURL}}" alt="{{$company.Name}} logo" class="jy-m-card__logo-img" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<span class=\'j-m-card__logo-fallback\'>{{$company.Initial}}</span>';" />
+                            <img src="{{$company.ProxiedLogoURL}}" alt="{{$company.Name}} logo" class="jy-m-card__logo-img" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<span class=\'jy-m-card__logo-fallback\'>{{$company.Initial}}</span>';" />
                         {{else}}
                             <span class="jy-m-card__logo-fallback">{{$company.Initial}}</span>
                         {{end}}
@@ -117,7 +117,7 @@
 </div>
 
 <style>
-.j-m-company-card {
+.jy-m-company-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -130,12 +130,12 @@
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.j-m-company-card:active {
+.jy-m-company-card:active {
     transform: scale(0.985);
     background: #F8FAFC;
     border-color: #10B981;
 }
-.j-m-card__banner {
+.jy-m-card__banner {
     height: 44px;
     background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 60%, #F0FDF4 100%);
     display: flex;
@@ -143,7 +143,7 @@
     justify-content: flex-end;
     padding: 0 12px;
 }
-.j-m-card__badge {
+.jy-m-card__badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -155,14 +155,14 @@
     padding: 2px 8px;
     border-radius: 9999px;
 }
-.j-m-card__header {
+.jy-m-card__header {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 0 14px 10px;
     margin-top: -20px;
 }
-.j-m-card__logo-wrap {
+.jy-m-card__logo-wrap {
     width: 52px;
     height: 52px;
     border-radius: 14px;
@@ -178,12 +178,12 @@
     position: relative;
     z-index: 2;
 }
-.j-m-card__logo-img {
+.jy-m-card__logo-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-.j-m-card__logo-fallback {
+.jy-m-card__logo-fallback {
     width: 100%;
     height: 100%;
     border-radius: 8px;
@@ -195,18 +195,18 @@
     align-items: center;
     justify-content: center;
 }
-.j-m-card__head-info {
+.jy-m-card__head-info {
     min-width: 0;
     flex: 1;
     padding-top: 18px;
 }
-.j-m-card__title-row {
+.jy-m-card__title-row {
     display: flex;
     align-items: center;
     gap: 5px;
     margin-bottom: 2px;
 }
-.j-m-card__name {
+.jy-m-card__name {
     font-size: 1.05rem;
     font-weight: 800;
     color: #0F172A;
@@ -215,17 +215,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.j-m-card__check {
+.jy-m-card__check {
     flex-shrink: 0;
 }
-.j-m-card__meta {
+.jy-m-card__meta {
     display: flex;
     align-items: center;
     gap: 6px;
     font-size: 0.75rem;
     color: #64748B;
 }
-.j-m-card__footer {
+.jy-m-card__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -233,7 +233,7 @@
     border-top: 1px solid #F1F5F9;
     background: #FAFBFD;
 }
-.j-m-card__vacancies {
+.jy-m-card__vacancies {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -242,17 +242,17 @@
     padding: 3px 8px;
     border-radius: 6px;
 }
-.j-m-pulse-dot {
+.jy-m-pulse-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #059669;
 }
-.j-m-vacancies-text {
+.jy-m-vacancies-text {
     font-size: 0.75rem;
     color: #065F46;
 }
-.j-m-card__arrow-btn {
+.jy-m-card__arrow-btn {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -262,7 +262,7 @@
 }
 
 /* --- Sticky On-Scroll Search Bar --- */
-.j-co-sticky-search-wrap {
+.jy-co-sticky-search-wrap {
     position: -webkit-sticky;
     position: sticky;
     top: 68px; /* positioned right beneath sticky header with 4px clean gap */
@@ -275,12 +275,12 @@
     border-radius: 0 0 16px 16px;
     transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-.j-co-sticky-search-wrap.is-scrolled {
+.jy-co-sticky-search-wrap.is-scrolled {
     box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(5, 150, 105, 0.08);
     border-bottom: 1.5px solid #E2E8F0;
     background: rgba(255, 255, 255, 0.98);
 }
-.j-co-sticky-search-inner {
+.jy-co-sticky-search-inner {
     position: relative;
     display: flex;
     align-items: center;
@@ -291,15 +291,15 @@
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.j-co-sticky-search-inner:focus-within {
+.jy-co-sticky-search-inner:focus-within {
     border-color: #059669;
     box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
 }
-.j-co-search-icon {
+.jy-co-search-icon {
     flex-shrink: 0;
     margin-right: 10px;
 }
-.j-co-search-input {
+.jy-co-search-input {
     flex: 1;
     min-width: 0;
     border: none;
@@ -310,12 +310,12 @@
     background: transparent;
     padding: 8px 0;
 }
-.j-co-search-input::placeholder {
+.jy-co-search-input::placeholder {
     color: #94A3B8;
     font-size: 13.5px;
     font-weight: 500;
 }
-.j-co-search-clear {
+.jy-co-search-clear {
     background: #F1F5F9;
     border: none;
     border-radius: 50%;
@@ -330,7 +330,7 @@
     margin-left: 6px;
     flex-shrink: 0;
 }
-.j-co-tags-rail {
+.jy-co-tags-rail {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -339,10 +339,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-co-tags-rail::-webkit-scrollbar {
+.jy-co-tags-rail::-webkit-scrollbar {
     display: none;
 }
-.j-co-tags-label {
+.jy-co-tags-label {
     font-size: 0.75rem;
     color: #64748B;
     font-weight: 700;
@@ -352,7 +352,7 @@
     gap: 3px;
 }
 
-.j-m-tag {
+.jy-m-tag {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 9999px;
@@ -363,7 +363,7 @@
     flex-shrink: 0;
     cursor: pointer;
 }
-.j-m-tag:active {
+.jy-m-tag:active {
     background: #ECFDF5;
     border-color: #10B981;
     color: #065F46;
@@ -381,7 +381,7 @@
         transform: translateY(0);
     }
 }
-.j-m-company-card.j-fade-in {
+.jy-m-company-card.jy-fade-in {
     animation: jMobileCardFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 </style>
@@ -392,10 +392,10 @@
         var searchInput = document.getElementById('company-search');
         var clearBtn = document.getElementById('company-search-clear');
         var stickyWrap = document.getElementById('jCoStickySearchWrap');
-        var cards = document.querySelectorAll('.j-m-company-card');
+        var cards = document.querySelectorAll('.jy-m-company-card');
         var loadMoreContainer = document.getElementById('load-more-container');
         var loadMoreBtn = document.getElementById('load-more-btn');
-        var tags = document.querySelectorAll('.j-m-tag');
+        var tags = document.querySelectorAll('.jy-m-tag');
         var spinner = document.getElementById('load-more-spinner');
         var text = document.getElementById('load-more-text');
 
@@ -423,7 +423,7 @@
             if (isLoading) return;
             if (searchInput && searchInput.value.trim().length > 0) return;
 
-            var hiddenCards = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+            var hiddenCards = document.querySelectorAll('.jy-m-company-card.company-card--hidden');
             if (hiddenCards.length === 0) {
                 if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                 if (observer) observer.disconnect();
@@ -435,12 +435,12 @@
             if (text) text.textContent = 'Loading More...';
 
             setTimeout(function() {
-                var currentHidden = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+                var currentHidden = document.querySelectorAll('.jy-m-company-card.company-card--hidden');
                 var count = 0;
                 currentHidden.forEach(function(card) {
                     if (count < batchSize) {
                         card.classList.remove('company-card--hidden');
-                        card.classList.add('j-fade-in');
+                        card.classList.add('jy-fade-in');
                         card.style.display = 'flex';
                         count++;
                     }
@@ -450,7 +450,7 @@
                 if (text) text.textContent = 'Load More UK Employers';
                 isLoading = false;
 
-                var remainingHidden = document.querySelectorAll('.j-m-company-card.company-card--hidden');
+                var remainingHidden = document.querySelectorAll('.jy-m-company-card.company-card--hidden');
                 if (remainingHidden.length === 0) {
                     if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                     if (observer) observer.disconnect();
@@ -521,7 +521,7 @@
                         card.style.display = 'flex';
                     }
                 });
-                var remaining = document.querySelectorAll('.j-m-company-card.company-card--hidden').length;
+                var remaining = document.querySelectorAll('.jy-m-company-card.company-card--hidden').length;
                 if (loadMoreContainer) {
                     loadMoreContainer.style.display = remaining > 0 ? 'block' : 'none';
                 }

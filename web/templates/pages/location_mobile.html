@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top" style="padding: 12px; padding-bottom: 56px;">
     {{template "breadcrumbs" .}}
     {{template "wfa_leaderboard" .}}
@@ -230,7 +230,7 @@
             clearBtn.style.display = q ? 'flex' : 'none';
         }
 
-        var cards = document.querySelectorAll('.j-location-card-m');
+        var cards = document.querySelectorAll('.jy-location-card-m');
         var visibleCount = 0;
         cards.forEach(function(card) {
             var name = (card.getAttribute('data-location-name') || '').toLowerCase();

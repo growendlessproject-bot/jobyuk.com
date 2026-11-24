@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <!-- ==========================================================================
      JobyUK.com Next-Gen Mobile Homepage (Next-Level UI / UX)
      ========================================================================== -->
@@ -7,7 +7,7 @@
 /* --------------------------------------------------------------------------
    Mobile Homepage Design System
    -------------------------------------------------------------------------- */
-.j-mob-home {
+.jy-mob-home {
     background: #F8FAFC;
     min-height: 100vh;
     padding-bottom: 24px;
@@ -17,7 +17,7 @@
 }
 
 /* 1. Sticky On-Scroll Floating Single-Row Search Pill */
-.j-mob-sticky-search {
+.jy-mob-sticky-search {
     position: fixed;
     top: 70px;
     left: 12px;
@@ -32,12 +32,12 @@
     pointer-events: none;
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
 }
-.j-mob-sticky-search.is-visible {
+.jy-mob-sticky-search.is-visible {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
 }
-.j-mob-sticky-bar {
+.jy-mob-sticky-bar {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -52,13 +52,13 @@
     box-sizing: border-box;
     position: relative;
 }
-.j-mob-sticky-icon {
+.jy-mob-sticky-icon {
     color: #059669;
     flex-shrink: 0;
     display: flex;
     align-items: center;
 }
-.j-mob-sticky-input {
+.jy-mob-sticky-input {
     flex: 1;
     min-width: 0;
     border: none;
@@ -69,12 +69,12 @@
     outline: none;
     padding: 6px 0;
 }
-.j-mob-sticky-input::placeholder {
+.jy-mob-sticky-input::placeholder {
     color: #94A3B8;
     font-size: 12px;
     font-weight: 500;
 }
-.j-mob-sticky-btn {
+.jy-mob-sticky-btn {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
     color: #FFFFFF;
     border: none;
@@ -89,17 +89,17 @@
     flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
 }
-.j-mob-sticky-btn:active {
+.jy-mob-sticky-btn:active {
     transform: scale(0.96);
 }
 
 /* 2. Mobile Hero Frame */
-.j-mob-hero {
+.jy-mob-hero {
     position: relative;
     padding: 12px 14px 18px;
     background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 45%, #F8FAFC 100%);
 }
-.j-mob-hero-card {
+.jy-mob-hero-card {
     background: #FFFFFF;
     border-radius: 22px;
     padding: 20px 16px 18px;
@@ -107,7 +107,7 @@
     border: 1px solid #E2E8F0;
     position: relative;
 }
-.j-mob-hero-badge {
+.jy-mob-hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -120,7 +120,7 @@
     color: #065F46;
     margin-bottom: 12px;
 }
-.j-mob-pulse-dot {
+.jy-mob-pulse-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
@@ -133,7 +133,7 @@
     70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
-.j-mob-hero-title {
+.jy-mob-hero-title {
     font-size: 28px;
     font-weight: 900;
     line-height: 1.15;
@@ -141,12 +141,12 @@
     color: #0F172A;
     margin: 0 0 8px;
 }
-.j-mob-hero-highlight {
+.jy-mob-hero-highlight {
     background: linear-gradient(135deg, #059669 0%, #10B981 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.j-mob-hero-sub {
+.jy-mob-hero-sub {
     font-size: 13.5px;
     line-height: 1.45;
     color: #64748B;
@@ -155,11 +155,11 @@
 }
 
 /* 3. Hero Search Form: Single Row */
-.j-mob-hero-search {
+.jy-mob-hero-search {
     position: relative;
     width: 100%;
 }
-.j-mob-single-search-row {
+.jy-mob-single-search-row {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -170,17 +170,17 @@
     box-sizing: border-box;
     transition: box-shadow 0.18s ease;
 }
-.j-mob-single-search-row:focus-within {
+.jy-mob-single-search-row:focus-within {
     box-shadow: 0 6px 22px rgba(5, 150, 105, 0.22);
 }
-.j-mob-search-icon-wrap {
+.jy-mob-search-icon-wrap {
     color: #059669;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     margin-right: 8px;
 }
-.j-mob-input-box {
+.jy-mob-input-box {
     position: relative;
     flex: 1;
     min-width: 0;
@@ -189,7 +189,7 @@
     overflow: hidden;
     height: 38px;
 }
-.j-mob-swipe-ticker {
+.jy-mob-swipe-ticker {
     position: absolute;
     left: 0;
     right: 0;
@@ -202,11 +202,11 @@
     transition: opacity 0.2s ease;
     z-index: 1;
 }
-.j-mob-swipe-ticker.is-hidden {
+.jy-mob-swipe-ticker.is-hidden {
     opacity: 0 !important;
     pointer-events: none !important;
 }
-.j-mob-swipe-text {
+.jy-mob-swipe-text {
     position: absolute;
     left: 0;
     top: 0;
@@ -225,15 +225,15 @@
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
-.j-mob-swipe-text.is-active {
+.jy-mob-swipe-text.is-active {
     transform: translateY(0);
     opacity: 1;
 }
-.j-mob-swipe-text.is-exit {
+.jy-mob-swipe-text.is-exit {
     transform: translateY(-115%);
     opacity: 0;
 }
-.j-mob-single-input {
+.jy-mob-single-input {
     width: 100%;
     height: 100%;
     border: none;
@@ -246,12 +246,12 @@
     position: relative;
     z-index: 2;
 }
-.j-mob-single-input::placeholder {
+.jy-mob-single-input::placeholder {
     color: #94A3B8;
     font-weight: 450;
     font-size: 12px;
 }
-.j-mob-hero-submit-btn {
+.jy-mob-hero-submit-btn {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
     color: #FFFFFF;
     border: none;
@@ -267,12 +267,12 @@
     box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
     transition: transform 0.1s ease;
 }
-.j-mob-hero-submit-btn:active {
+.jy-mob-hero-submit-btn:active {
     transform: scale(0.96);
 }
 
 /* 4. Horizontal Scrolling Filter Pills */
-.j-mob-pills-bar {
+.jy-mob-pills-bar {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -282,10 +282,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-pills-bar::-webkit-scrollbar {
+.jy-mob-pills-bar::-webkit-scrollbar {
     display: none;
 }
-.j-mob-pill {
+.jy-mob-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -302,42 +302,42 @@
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     transition: all 0.15s ease;
 }
-.j-mob-pill.is-active,
-.j-mob-pill:active {
+.jy-mob-pill.is-active,
+.jy-mob-pill:active {
     background: #0F5132;
     color: #FFFFFF;
     border-color: #0F5132;
     box-shadow: 0 3px 10px rgba(15, 81, 50, 0.25);
 }
-.j-mob-pill svg {
+.jy-mob-pill svg {
     color: #059669;
     flex-shrink: 0;
     transition: color 0.15s ease;
 }
-.j-mob-pill.is-active svg,
-.j-mob-pill:active svg {
+.jy-mob-pill.is-active svg,
+.jy-mob-pill:active svg {
     color: #A7F3D0;
 }
 
 /* 6. Section Headers */
-.j-mob-section {
+.jy-mob-section {
     padding: 0 14px;
     margin-bottom: 24px;
 }
-.j-mob-section-head {
+.jy-mob-section-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
-.j-mob-section-title {
+.jy-mob-section-title {
     font-size: 18px;
     font-weight: 850;
     color: #0F172A;
     letter-spacing: -0.02em;
     margin: 0;
 }
-.j-mob-section-link {
+.jy-mob-section-link {
     font-size: 12.5px;
     font-weight: 700;
     color: #059669;
@@ -348,19 +348,19 @@
 }
 
 /* 7. Jobs List */
-.j-mob-jobs-list {
+.jy-mob-jobs-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 /* 8. Top Roles 2-Column Next-Level Bento Grid */
-.j-mob-roles-grid {
+.jy-mob-roles-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
-.j-mob-role-card {
+.jy-mob-role-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
@@ -377,18 +377,18 @@
     position: relative;
     overflow: hidden;
 }
-.j-mob-role-card:active {
+.jy-mob-role-card:active {
     transform: scale(0.97);
     border-color: #A7F3D0;
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.1);
 }
-.j-mob-role-card-top {
+.jy-mob-role-card-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
 }
-.j-mob-role-icon {
+.jy-mob-role-icon {
     width: 32px;
     height: 32px;
     border-radius: 9px;
@@ -397,7 +397,7 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.j-mob-role-badge {
+.jy-mob-role-badge {
     font-size: 10.5px;
     font-weight: 750;
     color: #475569;
@@ -405,14 +405,14 @@
     padding: 2px 7px;
     border-radius: 999px;
 }
-.j-mob-role-name {
+.jy-mob-role-name {
     font-size: 13.5px;
     font-weight: 850;
     color: #0F172A;
     line-height: 1.25;
     margin-bottom: 4px;
 }
-.j-mob-role-foot {
+.jy-mob-role-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -420,19 +420,19 @@
     padding-top: 6px;
     border-top: 1px solid #F8FAFC;
 }
-.j-mob-role-salary {
+.jy-mob-role-salary {
     font-size: 11px;
     font-weight: 750;
     color: #059669;
 }
-.j-mob-role-arrow {
+.jy-mob-role-arrow {
     color: #94A3B8;
     display: flex;
     align-items: center;
 }
 
 /* 11. Single Row Newsletter */
-.j-mob-newsletter-card {
+.jy-mob-newsletter-card {
     background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
     border: 1.5px solid #A7F3D0;
     border-radius: 20px;
@@ -440,10 +440,10 @@
     text-align: center;
     box-shadow: 0 6px 20px -4px rgba(15, 81, 50, 0.08);
 }
-.j-mob-nl-head {
+.jy-mob-nl-head {
     margin-bottom: 12px;
 }
-.j-mob-nl-badge {
+.jy-mob-nl-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -456,22 +456,22 @@
     border-radius: 999px;
     margin-bottom: 4px;
 }
-.j-mob-nl-title {
+.jy-mob-nl-title {
     font-size: 17px;
     font-weight: 900;
     color: #0F172A;
     margin: 0 0 3px;
     letter-spacing: -0.02em;
 }
-.j-mob-nl-sub {
+.jy-mob-nl-sub {
     font-size: 12px;
     color: #64748B;
     margin: 0;
 }
-.j-mob-single-newsletter-form {
+.jy-mob-single-newsletter-form {
     width: 100%;
 }
-.j-mob-single-nl-row {
+.jy-mob-single-nl-row {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -481,14 +481,14 @@
     box-shadow: 0 2px 10px rgba(5, 150, 105, 0.12);
     box-sizing: border-box;
 }
-.j-mob-nl-icon {
+.jy-mob-nl-icon {
     color: #059669;
     display: flex;
     align-items: center;
     flex-shrink: 0;
     margin-right: 6px;
 }
-.j-mob-nl-input {
+.jy-mob-nl-input {
     flex: 1;
     min-width: 0;
     border: none;
@@ -499,12 +499,12 @@
     outline: none;
     padding: 6px 0;
 }
-.j-mob-nl-input::placeholder {
+.jy-mob-nl-input::placeholder {
     color: #94A3B8;
     font-weight: 450;
     font-size: 13px;
 }
-.j-mob-nl-btn {
+.jy-mob-nl-btn {
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
     color: #FFFFFF;
     border: none;
@@ -519,10 +519,10 @@
     gap: 4px;
     box-shadow: 0 2px 8px rgba(15, 81, 50, 0.22);
 }
-.j-mob-nl-btn:active {
+.jy-mob-nl-btn:active {
     transform: scale(0.96);
 }
-.j-mob-nl-privacy {
+.jy-mob-nl-privacy {
     font-size: 11px;
     color: #64748B;
     font-weight: 500;
@@ -530,7 +530,7 @@
 }
 
 /* 9. Top UK Employers Rail */
-.j-mob-companies-rail {
+.jy-mob-companies-rail {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -539,10 +539,10 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-companies-rail::-webkit-scrollbar {
+.jy-mob-companies-rail::-webkit-scrollbar {
     display: none;
 }
-.j-mob-company-card {
+.jy-mob-company-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
@@ -557,7 +557,7 @@
     text-align: center;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
-.j-mob-company-logo {
+.jy-mob-company-logo {
     width: 42px;
     height: 42px;
     border-radius: 11px;
@@ -572,7 +572,7 @@
     margin-bottom: 6px;
     overflow: hidden;
 }
-.j-mob-company-name {
+.jy-mob-company-name {
     font-size: 12.5px;
     font-weight: 800;
     color: #0F172A;
@@ -582,14 +582,14 @@
     text-overflow: ellipsis;
     width: 100%;
 }
-.j-mob-company-jobs {
+.jy-mob-company-jobs {
     font-size: 11px;
     font-weight: 700;
     color: #059669;
 }
 
 /* 10. UK Salary Net Pay Feature Card */
-.j-mob-calc-banner {
+.jy-mob-calc-banner {
     background: linear-gradient(135deg, #0F5132 0%, #064E3B 100%);
     border-radius: 20px;
     padding: 20px 16px;
@@ -598,7 +598,7 @@
     overflow: hidden;
     box-shadow: 0 10px 26px rgba(15, 81, 50, 0.22);
 }
-.j-mob-calc-banner::after {
+.jy-mob-calc-banner::after {
     content: '';
     position: absolute;
     right: -20px;
@@ -610,12 +610,12 @@
 }
 
 /* 11. Bento Why JobyUK */
-.j-mob-why-grid {
+.jy-mob-why-grid {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.j-mob-why-card {
+.jy-mob-why-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
@@ -625,7 +625,7 @@
     gap: 12px;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
-.j-mob-why-icon {
+.jy-mob-why-icon {
     width: 38px;
     height: 38px;
     border-radius: 11px;
@@ -1128,7 +1128,7 @@
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
 
-            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+            dropdown.querySelectorAll('.jy-suggest-item').forEach(el => {
                 const selectItemHandler = function(e) {
                     if (e) {
                         e.preventDefault();
@@ -1254,7 +1254,7 @@
         if (input.dataset.tickerAttached === 'true') return;
         input.dataset.tickerAttached = 'true';
 
-        const items = ticker.querySelectorAll('.j-mob-swipe-text');
+        const items = ticker.querySelectorAll('.jy-mob-swipe-text');
         if (items.length <= 1) return;
 
         let currentIndex = 0;

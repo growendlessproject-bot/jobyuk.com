@@ -264,7 +264,7 @@ func (s *SyncService) mapFreeHireJobToModel(fh FreeHireJob, employerID *int64) m
 		LocationName: fh.Location,
 		EmployerID:   employerID,
 		ExternalURL:  fh.URL,
-		Status:       "active",
+		Status:       "staged",
 		Currency:     "GBP",
 	}
 

@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-salary-mob-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 50px; min-height: 85vh;">
     <div class="jy-container" style="padding-left: 14px; padding-right: 14px;">
         {{template "breadcrumbs" .}}
@@ -380,7 +380,7 @@
    ========================================================================= */
 
 /* Sticky Search Wrapper on Scroll (/salaries/) */
-.j-salary-index-sticky-wrap {
+.jy-salary-index-sticky-wrap {
     position: -webkit-sticky;
     position: sticky;
     top: 68px;
@@ -393,10 +393,10 @@
     border-radius: 0 0 16px 16px;
     transition: box-shadow 0.2s ease;
 }
-.j-salary-index-sticky-wrap.is-scrolled {
+.jy-salary-index-sticky-wrap.is-scrolled {
     box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
 }
-.j-salary-index-search-bar {
+.jy-salary-index-search-bar {
     display: flex;
     align-items: center;
     background: #FFFFFF;
@@ -405,7 +405,7 @@
     padding: 4px 8px 4px 14px;
     box-shadow: 0 4px 16px -2px rgba(5, 150, 105, 0.12);
 }
-.j-salary-index-search-input {
+.jy-salary-index-search-input {
     width: 100%;
     border: none;
     outline: none;
@@ -416,18 +416,18 @@
     font-weight: 600;
     height: 36px;
 }
-.j-salary-index-search-input::placeholder {
+.jy-salary-index-search-input::placeholder {
     color: #94A3B8;
     font-size: 14px !important;
     font-weight: 450;
 }
-.j-salary-az-container {
+.jy-salary-az-container {
     display: none !important;
     border-top: 1px solid #EEF2F6;
     padding-top: 10px;
     margin-top: 10px;
 }
-.j-salary-az-label {
+.jy-salary-az-label {
     font-size: 0.72rem;
     font-weight: 750;
     color: #64748B;
@@ -435,7 +435,7 @@
 }
 
 /* Sticky Salary Bar on Scroll */
-.j-sticky-salary-bar {
+.jy-sticky-salary-bar {
     position: fixed;
     top: 0;
     left: 0;
@@ -450,23 +450,23 @@
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 8px 14px;
 }
-.j-sticky-salary-bar.is-visible {
+.jy-sticky-salary-bar.is-visible {
     transform: translateY(0);
 }
-.j-sticky-salary-bar__inner {
+.jy-sticky-salary-bar__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 600px;
     margin: 0 auto;
 }
-.j-sticky-salary-bar__info {
+.jy-sticky-salary-bar__info {
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 0;
 }
-.j-sticky-salary-bar__icon {
+.jy-sticky-salary-bar__icon {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -476,12 +476,12 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.j-sticky-salary-bar__text {
+.jy-sticky-salary-bar__text {
     display: flex;
     flex-direction: column;
     min-width: 0;
 }
-.j-sticky-salary-bar__title {
+.jy-sticky-salary-bar__title {
     font-size: 0.82rem;
     font-weight: 800;
     color: #0B1F1A;
@@ -489,12 +489,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.j-sticky-salary-bar__avg {
+.jy-sticky-salary-bar__avg {
     font-size: 0.75rem;
     font-weight: 750;
     color: #059669;
 }
-.j-sticky-salary-bar__btn {
+.jy-sticky-salary-bar__btn {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -509,23 +509,23 @@
 }
 
 /* 2x2 Stats Grid */
-.j-mob-stat-grid {
+.jy-mob-stat-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
-.j-mob-stat-card {
+.jy-mob-stat-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 14px;
     padding: 14px 12px;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
-.j-mob-stat-card--primary {
+.jy-mob-stat-card--primary {
     border-color: #A7F3D0;
     background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
 }
-.j-mob-stat-card__tag {
+.jy-mob-stat-card__tag {
     display: block;
     font-size: 0.65rem;
     font-weight: 750;
@@ -533,44 +533,44 @@
     color: #64748B;
     margin-bottom: 2px;
 }
-.j-mob-stat-card__num {
+.jy-mob-stat-card__num {
     font-size: 1.35rem;
     font-weight: 850;
     color: #0B1F1A;
     line-height: 1.15;
     margin-bottom: 2px;
 }
-.j-mob-stat-card__sub {
+.jy-mob-stat-card__sub {
     font-size: 0.72rem;
     color: #059669;
     font-weight: 600;
 }
 
 /* Spectrum Card */
-.j-mob-spectrum-card {
+.jy-mob-spectrum-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 16px;
     padding: 16px;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
-.j-mob-spectrum-track-wrap {
+.jy-mob-spectrum-track-wrap {
     padding: 10px 0;
 }
-.j-mob-spectrum-track {
+.jy-mob-spectrum-track {
     width: 100%;
     height: 8px;
     border-radius: 9999px;
     background: #F1F5F9;
     overflow: hidden;
 }
-.j-mob-spectrum-fill {
+.jy-mob-spectrum-fill {
     width: 100%;
     height: 100%;
     border-radius: 9999px;
     background: linear-gradient(90deg, #BBF7D0 0%, #10B981 50%, #059669 100%);
 }
-.j-mob-spectrum-labels {
+.jy-mob-spectrum-labels {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -579,7 +579,7 @@
 }
 
 /* Equivalent Rates Quick Bar */
-.j-mob-rates-bar {
+.jy-mob-rates-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -589,11 +589,11 @@
     padding: 12px 14px;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
-.j-mob-rate-col {
+.jy-mob-rate-col {
     text-align: center;
     flex: 1;
 }
-.j-mob-rate-col__lbl {
+.jy-mob-rate-col__lbl {
     display: block;
     font-size: 0.65rem;
     font-weight: 750;
@@ -601,33 +601,33 @@
     color: #64748B;
     margin-bottom: 2px;
 }
-.j-mob-rate-col__val {
+.jy-mob-rate-col__val {
     display: block;
     font-size: 0.95rem;
     font-weight: 850;
     color: #065F46;
 }
-.j-mob-rate-col__div {
+.jy-mob-rate-col__div {
     width: 1px;
     height: 24px;
     background: #E2E8F0;
 }
 
 /* Advice Card */
-.j-mob-advice-card {
+.jy-mob-advice-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 16px;
     padding: 18px 16px;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
-.j-mob-tip-item {
+.jy-mob-tip-item {
     display: flex;
     align-items: flex-start;
     gap: 10px;
     margin-bottom: 12px;
 }
-.j-mob-tip-item__num {
+.jy-mob-tip-item__num {
     width: 22px;
     height: 22px;
     border-radius: 6px;
@@ -643,7 +643,7 @@
     margin-top: 2px;
 }
 
-.j-mob-primary-btn {
+.jy-mob-primary-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -659,7 +659,7 @@
 }
 
 /* Mobile Stacked Salary Cards */
-.j-mob-sal-card {
+.jy-mob-sal-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
@@ -668,26 +668,26 @@
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
     transition: transform 0.15s ease, border-color 0.15s ease;
 }
-.j-mob-sal-card:active {
+.jy-mob-sal-card:active {
     transform: scale(0.985);
     border-color: #10B981;
 }
-.j-mob-sal-card__overlay {
+.jy-mob-sal-card__overlay {
     position: absolute;
     inset: 0;
     z-index: 10;
 }
-.j-mob-sal-card__inner {
+.jy-mob-sal-card__inner {
     padding: 16px 14px;
 }
-.j-mob-sal-card__title {
+.jy-mob-sal-card__title {
     font-size: 1.05rem;
     font-weight: 850;
     color: #0B1F1A;
     margin: 0 0 2px;
     line-height: 1.25;
 }
-.j-mob-sal-card__badge {
+.jy-mob-sal-card__badge {
     font-size: 0.6875rem;
     font-weight: 750;
     color: #065F46;
@@ -699,7 +699,7 @@
 }
 
 /* Mobile A-Z Slider */
-.j-mob-az-pill {
+.jy-mob-az-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -715,14 +715,14 @@
     text-decoration: none;
     flex-shrink: 0;
 }
-.j-mob-az-pill.active {
+.jy-mob-az-pill.active {
     background: #059669 !important;
     color: #FFFFFF !important;
     border-color: #059669 !important;
     box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
 }
 
-.j-mob-page-btn {
+.jy-mob-page-btn {
     display: inline-flex;
     align-items: center;
     padding: 6px 12px;
@@ -743,7 +743,7 @@ function filterSalariesLiveMobile(val) {
     const clearBtn = document.getElementById('salary-search-clear-m');
     if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
 
-    const cards = document.querySelectorAll('#salary-cards-list-m .j-mob-sal-card');
+    const cards = document.querySelectorAll('#salary-cards-list-m .jy-mob-sal-card');
     let visible = 0;
 
     cards.forEach(card => {

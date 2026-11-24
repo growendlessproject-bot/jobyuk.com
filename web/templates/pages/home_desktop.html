@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <!-- ==========================================================================
      Figma Panel 01: Official JobyUK.com Desktop Homepage
      ========================================================================== -->
@@ -580,7 +580,7 @@
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
 
-            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+            dropdown.querySelectorAll('.jy-suggest-item').forEach(el => {
                 const selectItemHandler = function(e) {
                     if (e) {
                         e.preventDefault();
@@ -705,7 +705,7 @@
                 }
                 return;
             }
-            const domItems = dropdown.querySelectorAll('.j-suggest-item');
+            const domItems = dropdown.querySelectorAll('.jy-suggest-item');
             if (domItems.length === 0) return;
 
             if (e.key === 'ArrowDown') {

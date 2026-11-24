@@ -265,7 +265,7 @@ func mapReedJobToModel(detail *JobDetail) models.Job {
 		JobType:      normalizeJobType(detail.JobType),
 		ExternalURL:  detail.ExternalURL,
 		ReedURL:      detail.JobURL,
-		Status:       "active",
+		Status:       "staged",
 	}
 
 	// Generate slug

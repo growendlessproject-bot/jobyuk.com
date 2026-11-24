@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top">
     {{template "breadcrumbs" .}}
 
@@ -242,13 +242,13 @@
 
 <style>
 /* Suggestion Dropdown styling & Stacking Context Elevation */
-.j-dream-input-pill {
+.jy-dream-input-pill {
     position: relative !important;
 }
-.j-dream-input-pill:focus-within {
+.jy-dream-input-pill:focus-within {
     z-index: 1050 !important;
 }
-.j-suggest-dropdown {
+.jy-suggest-dropdown {
     position: absolute !important;
     top: calc(100% + 8px) !important;
     left: 0 !important;
@@ -270,7 +270,7 @@
     from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: translateY(0); }
 }
-.j-suggest-header {
+.jy-suggest-header {
     padding: 6px 16px 4px;
     font-size: 0.72rem;
     font-weight: 800;
@@ -281,7 +281,7 @@
     align-items: center;
     justify-content: space-between;
 }
-.j-suggest-item {
+.jy-suggest-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -292,19 +292,19 @@
     color: inherit;
     user-select: none;
 }
-.j-suggest-item * {
+.jy-suggest-item * {
     pointer-events: none !important;
 }
-.j-suggest-item:hover, .j-suggest-item.is-selected {
+.jy-suggest-item:hover, .jy-suggest-item.is-selected {
     background: #F0FDF4;
 }
-.j-suggest-left {
+.jy-suggest-left {
     display: flex;
     align-items: center;
     gap: 12px;
     min-width: 0;
 }
-.j-suggest-icon-wrap {
+.jy-suggest-icon-wrap {
     width: 32px;
     height: 32px;
     border-radius: 9px;
@@ -315,7 +315,7 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.j-suggest-title {
+.jy-suggest-title {
     font-size: 0.92rem;
     font-weight: 650;
     color: #0F172A;
@@ -323,7 +323,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.j-suggest-badge {
+.jy-suggest-badge {
     font-size: 0.7rem;
     font-weight: 700;
     color: #059669;
@@ -334,7 +334,7 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.j-search-clear-btn {
+.jy-search-clear-btn {
     background: #E2E8F0;
     border: none;
     border-radius: 50%;
@@ -432,7 +432,7 @@
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
 
-            dropdown.querySelectorAll('.j-suggest-item').forEach(el => {
+            dropdown.querySelectorAll('.jy-suggest-item').forEach(el => {
                 const selectItemHandler = function(e) {
                     if (e) {
                         e.preventDefault();
@@ -550,7 +550,7 @@
                 }
                 return;
             }
-            const domItems = dropdown.querySelectorAll('.j-suggest-item');
+            const domItems = dropdown.querySelectorAll('.jy-suggest-item');
             if (domItems.length === 0) return;
 
             if (e.key === 'ArrowDown') {

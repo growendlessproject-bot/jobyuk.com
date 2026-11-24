@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-calc-mob-wrap" style="background: #F8FAF8; padding-top: 14px; padding-bottom: 54px; min-height: 85vh;">
     <div class="jy-container" style="padding-left: 14px; padding-right: 14px;">
         {{template "breadcrumbs" .}}
@@ -245,7 +245,7 @@
 /* =========================================================================
    JobyUK Mobile Salary Calculator Styles
    ========================================================================= */
-.j-mob-take-home-hero {
+.jy-mob-take-home-hero {
     text-align: center;
     padding: 20px 16px;
     background: linear-gradient(135deg, #064E3B 0%, #0B1F1A 100%);
@@ -255,7 +255,7 @@
     margin-bottom: 14px;
 }
 
-.j-mob-take-home-hero__label {
+.jy-mob-take-home-hero__label {
     font-size: 0.72rem;
     font-weight: 850;
     text-transform: uppercase;
@@ -265,7 +265,7 @@
     margin-bottom: 4px;
 }
 
-.j-mob-take-home-hero__amount {
+.jy-mob-take-home-hero__amount {
     font-size: 2.35rem;
     font-weight: 900;
     letter-spacing: -0.03em;
@@ -274,13 +274,13 @@
     color: #FFFFFF;
 }
 
-.j-mob-take-home-hero__freq {
+.jy-mob-take-home-hero__freq {
     font-size: 0.86rem;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 600;
 }
 
-.j-mob-calc-card {
+.jy-mob-calc-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
@@ -288,7 +288,7 @@
     box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
 }
 
-.j-mob-period-grid {
+.jy-mob-period-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 4px;
@@ -297,13 +297,13 @@
     border-radius: 10px;
 }
 
-.j-mob-period-grid .j-calc-period-btn {
+.jy-mob-period-grid .jy-calc-period-btn {
     padding: 8px 2px;
     font-size: 0.75rem;
     border-radius: 6px;
 }
 
-.j-mob-presets-scroll {
+.jy-mob-presets-scroll {
     display: flex;
     overflow-x: auto;
     gap: 6px;
@@ -311,17 +311,17 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.j-mob-presets-scroll::-webkit-scrollbar {
+.jy-mob-presets-scroll::-webkit-scrollbar {
     display: none;
 }
 
-.j-mob-presets-scroll .j-calc-preset-pill {
+.jy-mob-presets-scroll .jy-calc-preset-pill {
     flex-shrink: 0;
     padding: 6px 12px;
     font-size: 0.78rem;
 }
 
-.j-mob-cta-btn {
+.jy-mob-cta-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,18 +337,18 @@
     box-sizing: border-box;
 }
 
-.j-mob-cta-btn:hover {
+.jy-mob-cta-btn:hover {
     background: #047857;
 }
 
 /* Base Form Elements for Mobile */
-.j-calc-prefix-wrap {
+.jy-calc-prefix-wrap {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.j-calc-currency-prefix {
+.jy-calc-currency-prefix {
     position: absolute;
     left: 14px;
     font-weight: 850;
@@ -356,7 +356,7 @@
     pointer-events: none;
 }
 
-.j-calc-input {
+.jy-calc-input {
     width: 100%;
     border: 1.5px solid #E2E8F0;
     border-radius: 10px;
@@ -367,18 +367,18 @@
     font-weight: 600;
 }
 
-.j-calc-input:focus {
+.jy-calc-input:focus {
     background: #FFFFFF;
     border-color: #059669;
 }
 
-.j-calc-label {
+.jy-calc-label {
     display: block;
     font-weight: 750;
     color: #0B1F1A;
 }
 
-.j-calc-period-btn {
+.jy-calc-period-btn {
     border: none;
     background: transparent;
     font-weight: 750;
@@ -387,13 +387,13 @@
     text-align: center;
 }
 
-.j-calc-period-btn.active {
+.jy-calc-period-btn.active {
     background: #059669;
     color: #FFFFFF;
     box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
 }
 
-.j-calc-preset-pill {
+.jy-calc-preset-pill {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 8px;
@@ -402,22 +402,22 @@
     cursor: pointer;
 }
 
-.j-calc-preset-pill.active {
+.jy-calc-preset-pill.active {
     background: #065F46;
     color: #FFFFFF;
     border-color: #065F46;
 }
 
-.j-pill-sub {
+.jy-pill-sub {
     font-size: 0.68rem;
     opacity: 0.85;
 }
 
-.j-calc-advanced {
+.jy-calc-advanced {
     border-top: 1px solid #F1F5F9;
 }
 
-.j-calc-advanced__summary {
+.jy-calc-advanced__summary {
     font-weight: 800;
     color: #059669;
     cursor: pointer;
@@ -426,29 +426,29 @@
     justify-content: space-between;
     list-style: none;
 }
-.j-calc-advanced__summary::-webkit-details-marker { display: none; }
+.jy-calc-advanced__summary::-webkit-details-marker { display: none; }
 
-.j-summary-chevron { transition: transform 0.2s ease; }
-.j-calc-advanced[open] .j-summary-chevron { transform: rotate(180deg); }
+.jy-summary-chevron { transition: transform 0.2s ease; }
+.jy-calc-advanced[open] .jy-summary-chevron { transform: rotate(180deg); }
 
-.j-calc-advanced__body {
+.jy-calc-advanced__body {
     display: flex;
     flex-direction: column;
 }
 
-.j-calc-subgroup {
+.jy-calc-subgroup {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.j-subgroup-row {
+.jy-subgroup-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.j-pension-badge {
+.jy-pension-badge {
     font-size: 0.75rem;
     font-weight: 800;
     color: #065F46;
@@ -458,14 +458,14 @@
     border-radius: 4px;
 }
 
-.j-calc-range {
+.jy-calc-range {
     width: 100%;
     accent-color: #059669;
     cursor: pointer;
     height: 6px;
 }
 
-.j-calc-select {
+.jy-calc-select {
     width: 100%;
     border: 1.5px solid #E2E8F0;
     border-radius: 8px;
@@ -476,44 +476,44 @@
     box-sizing: border-box;
 }
 
-.j-subgroup-grid {
+.jy-subgroup-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
 }
 
 /* Breakdown Visuals */
-.j-breakdown-bar {
+.jy-breakdown-bar {
     display: flex;
     border-radius: 9999px;
     overflow: hidden;
     background: #E2E8F0;
 }
-.j-segment { height: 100%; transition: width 0.3s ease; }
-.j-segment--net { background: #10B981; }
-.j-segment--tax { background: #F59E0B; }
-.j-segment--ni { background: #6366F1; }
-.j-segment--pension { background: #14B8A6; }
-.j-segment--loan { background: #EC4899; }
+.jy-segment { height: 100%; transition: width 0.3s ease; }
+.jy-segment--net { background: #10B981; }
+.jy-segment--tax { background: #F59E0B; }
+.jy-segment--ni { background: #6366F1; }
+.jy-segment--pension { background: #14B8A6; }
+.jy-segment--loan { background: #EC4899; }
 
-.j-breakdown-legend {
+.jy-breakdown-legend {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     color: #475569;
 }
-.j-legend-item { display: flex; align-items: center; gap: 4px; }
-.j-dot { width: 7px; height: 7px; border-radius: 50%; }
-.j-dot--net { background: #10B981; }
-.j-dot--tax { background: #F59E0B; }
-.j-dot--ni { background: #6366F1; }
-.j-dot--pension { background: #14B8A6; }
-.j-dot--loan { background: #EC4899; }
+.jy-legend-item { display: flex; align-items: center; gap: 4px; }
+.jy-dot { width: 7px; height: 7px; border-radius: 50%; }
+.jy-dot--net { background: #10B981; }
+.jy-dot--tax { background: #F59E0B; }
+.jy-dot--ni { background: #6366F1; }
+.jy-dot--pension { background: #14B8A6; }
+.jy-dot--loan { background: #EC4899; }
 
 /* Table */
-.j-table-wrap { overflow-x: auto; }
-.j-calc-table { width: 100%; border-collapse: collapse; text-align: right; }
-.j-calc-table th {
+.jy-table-wrap { overflow-x: auto; }
+.jy-calc-table { width: 100%; border-collapse: collapse; text-align: right; }
+.jy-calc-table th {
     padding: 8px 6px;
     background: #F8FAF8;
     color: #64748B;
@@ -522,39 +522,39 @@
     text-transform: uppercase;
     border-bottom: 1.5px solid #E2E8F0;
 }
-.j-calc-table th:first-child, .j-calc-table td:first-child { text-align: left; }
-.j-calc-table td { padding: 8px 6px; border-bottom: 1px solid #F1F5F9; color: #334155; }
-.j-row--allowance { background: #F8FAF8; }
-.j-tbl-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.68rem; font-weight: 800; }
-.j-tbl-badge--green { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
-.j-tbl-badge--amber { background: #FEF3C7; color: #92400E; }
-.j-tbl-badge--indigo { background: #EEF2FF; color: #3730A3; }
-.j-tbl-badge--teal { background: #CCFBF1; color: #115E59; }
-.j-tbl-badge--pink { background: #FCE7F3; color: #9D174D; }
+.jy-calc-table th:first-child, .jy-calc-table td:first-child { text-align: left; }
+.jy-calc-table td { padding: 8px 6px; border-bottom: 1px solid #F1F5F9; color: #334155; }
+.jy-row--allowance { background: #F8FAF8; }
+.jy-tbl-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.68rem; font-weight: 800; }
+.jy-tbl-badge--green { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+.jy-tbl-badge--amber { background: #FEF3C7; color: #92400E; }
+.jy-tbl-badge--indigo { background: #EEF2FF; color: #3730A3; }
+.jy-tbl-badge--teal { background: #CCFBF1; color: #115E59; }
+.jy-tbl-badge--pink { background: #FCE7F3; color: #9D174D; }
 
-.j-row--total td {
+.jy-row--total td {
     border-top: 2px solid #E2E8F0;
     border-bottom: none;
     padding-top: 10px;
     color: #0B1F1A;
     font-size: 0.88rem;
 }
-.j-net-val { font-weight: 850; color: #059669 !important; }
+.jy-net-val { font-weight: 850; color: #059669 !important; }
 
 /* Guide Bands */
-.j-band-card { border-radius: 12px; border: 1px solid #E2E8F0; background: #F8FAF8; }
-.j-band-card--green { background: #ECFDF5; border-color: #A7F3D0; }
-.j-band-card--amber { background: #FFFBEB; border-color: #FDE68A; }
-.j-band-card--purple { background: #FAF5FF; border-color: #E9D5FF; }
-.j-band-card--rose { background: #FFF1F2; border-color: #FECDD3; }
+.jy-band-card { border-radius: 12px; border: 1px solid #E2E8F0; background: #F8FAF8; }
+.jy-band-card--green { background: #ECFDF5; border-color: #A7F3D0; }
+.jy-band-card--amber { background: #FFFBEB; border-color: #FDE68A; }
+.jy-band-card--purple { background: #FAF5FF; border-color: #E9D5FF; }
+.jy-band-card--rose { background: #FFF1F2; border-color: #FECDD3; }
 
-.j-band-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 2px; }
-.j-band-card--green .j-band-tag { color: #065F46; }
-.j-band-card--amber .j-band-tag { color: #92400E; }
-.j-band-card--purple .j-band-tag { color: #6B21A8; }
-.j-band-card--rose .j-band-tag { color: #9F1239; }
-.j-band-range { font-size: 0.82rem; font-weight: 800; color: #475569; }
-.j-band-desc { font-size: 0.76rem; color: #64748B; margin: 0; }
+.jy-band-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 2px; }
+.jy-band-card--green .jy-band-tag { color: #065F46; }
+.jy-band-card--amber .jy-band-tag { color: #92400E; }
+.jy-band-card--purple .jy-band-tag { color: #6B21A8; }
+.jy-band-card--rose .jy-band-tag { color: #9F1239; }
+.jy-band-range { font-size: 0.82rem; font-weight: 800; color: #475569; }
+.jy-band-desc { font-size: 0.76rem; color: #64748B; margin: 0; }
 </style>
 
 <script>
@@ -803,9 +803,9 @@
         tblNetWk.textContent = formatCurrency(netAnnual / 52);
     }
 
-    document.querySelectorAll(".j-calc-period-btn").forEach(btn => {
+    document.querySelectorAll(".jy-calc-period-btn").forEach(btn => {
         btn.addEventListener("click", function() {
-            document.querySelectorAll(".j-calc-period-btn").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".jy-calc-period-btn").forEach(b => b.classList.remove("active"));
             this.classList.add("active");
             currentPeriod = this.dataset.period;
 
@@ -829,13 +829,13 @@
         });
     });
 
-    document.querySelectorAll(".j-calc-preset-pill").forEach(pill => {
+    document.querySelectorAll(".jy-calc-preset-pill").forEach(pill => {
         pill.addEventListener("click", function() {
-            document.querySelectorAll(".j-calc-preset-pill").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".jy-calc-preset-pill").forEach(p => p.classList.remove("active"));
             this.classList.add("active");
 
-            document.querySelectorAll(".j-calc-period-btn").forEach(b => b.classList.remove("active"));
-            document.querySelector('.j-calc-period-btn[data-period="yearly"]')?.classList.add("active");
+            document.querySelectorAll(".jy-calc-period-btn").forEach(b => b.classList.remove("active"));
+            document.querySelector('.jy-calc-period-btn[data-period="yearly"]')?.classList.add("active");
             currentPeriod = "yearly";
 
             grossInput.value = this.dataset.amount;

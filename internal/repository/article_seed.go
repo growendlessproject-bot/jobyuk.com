@@ -20,414 +20,619 @@ type articleSeedItem struct {
 
 // AutoSeedArticles updates historical articles and ensures the 12 high-E-E-A-T guides exist with staggered drip-feed dates.
 func AutoSeedArticles(ctx context.Context, db *pgxpool.Pool) error {
-	// 1. Update legacy titles to 2026 and set historical dates
-	_, _ = db.Exec(ctx, `
-		UPDATE articles 
-		SET title = 'How to Write a UK CV That Actually Gets Interview Callbacks (2026)',
-		    seo_title = 'UK CV Guide 2026: Real Examples & Formats That Work | JobyUK',
-		    seo_description = 'Stop using generic Canva templates. Clean, high-impact CV structure that gets past automated filters and impresses real UK hiring managers.',
-		    published_at = '2026-10-25 09:00:00+00'
-		WHERE slug = 'how-to-write-a-perfect-cv';
+	// 1. Delete duplicate legacy slugs to avoid Google AdSense "Low value content" and duplicate cannibalization
+	duplicateSlugs := []string{
+		"uk-skilled-worker-visa-sponsorship-guide",
+		"nhs-agenda-for-change-pay-bands-explained",
+		"civil-service-success-profiles-behaviours-guide",
+		"uk-right-to-work-checks-what-jobseekers-need",
+		"national-minimum-wage-rates-uk-2026",
+		"competency-based-interviews-questions-answers",
+		"graduate-schemes-uk-application-timeline-guide",
+		"ir35-contracting-guide-inside-vs-outside",
+		"career-change-at-30-40-uk-practical-guide",
+		"how-to-write-an-ats-friendly-cv-uk",
+		"uk-redundancy-rights-statutory-pay-guide",
+		"hybrid-working-rights-flexible-working-requests-uk",
+		"how-to-write-a-perfect-cv",
+		"cover-letter-template-uk",
+		"most-common-interview-questions",
+		"star-method-interview-technique",
+		"virtual-interview-tips",
+		"networking-tips-for-job-seekers",
+		"negotiating-job-offers-uk",
+		"cv-keywords-that-get-interviews",
+	}
 
-		UPDATE articles 
-		SET title = 'UK Job Search in 2026: How to Find Real Roles & Skip Recruiter Spam',
-		    seo_title = 'UK Job Search Strategy 2026: Skip Recruiters & Apply Direct | JobyUK',
-		    seo_description = 'How to bypass agency middlemen, spot ghost job ads, and apply straight to company ATS portals where jobs actually get filled.',
-		    published_at = '2026-10-26 09:00:00+00'
-		WHERE slug = 'uk-job-search-strategy';
-
-		UPDATE articles SET title = 'CV Keywords That Get You Noticed (Without Keyword Stuffing)', published_at = '2026-10-27 09:00:00+00' WHERE slug = 'cv-keywords-that-get-interviews';
-		UPDATE articles SET title = 'Short UK Cover Letter Template That Hiring Managers Actually Read', published_at = '2026-10-28 09:00:00+00' WHERE slug = 'cover-letter-template-uk';
-		UPDATE articles SET title = 'The 10 Most Common UK Interview Questions (and What Bosses Want to Hear)', published_at = '2026-10-29 09:00:00+00' WHERE slug = 'most-common-interview-questions';
-		UPDATE articles SET title = 'How to Use the STAR Technique Without Sounding Like a Robot', published_at = '2026-10-30 09:00:00+00' WHERE slug = 'star-method-interview-technique';
-		UPDATE articles SET title = 'Virtual Job Interview Tips: Lighting, Camera & Body Language Secrets', published_at = '2026-10-31 09:00:00+00' WHERE slug = 'virtual-interview-tips';
-		UPDATE articles SET title = 'How to Network on LinkedIn UK Without Being Annoying or Awkward', published_at = '2026-11-01 06:00:00+00' WHERE slug = 'networking-tips-for-job-seekers';
-		UPDATE articles SET title = 'Negotiating a UK Job Offer: How to Ask for More Pay Without Losing the Offer', published_at = '2026-11-01 07:00:00+00' WHERE slug = 'negotiating-job-offers-uk';
-
-		UPDATE articles SET published_at = '2026-11-01 08:00:00+00' WHERE slug IN ('skilled-worker-visa-uk', 'uk-skilled-worker-visa-sponsorship-guide');
-		UPDATE articles SET published_at = '2026-11-01 12:00:00+00' WHERE slug IN ('nhs-pay-bands', 'nhs-agenda-for-change-pay-bands-explained');
-		UPDATE articles SET published_at = '2026-11-01 16:00:00+00' WHERE slug IN ('civil-service-interview-guide', 'civil-service-success-profiles-behaviours-guide');
-		UPDATE articles SET published_at = '2026-11-02 09:00:00+00' WHERE slug IN ('right-to-work-checks', 'uk-right-to-work-checks-what-jobseekers-need');
-		UPDATE articles SET published_at = '2026-11-02 12:00:00+00' WHERE slug IN ('uk-minimum-wage', 'national-minimum-wage-rates-uk-2026');
-		UPDATE articles SET published_at = '2026-11-02 16:00:00+00' WHERE slug IN ('competency-interview-questions', 'competency-based-interviews-questions-answers');
-		UPDATE articles SET published_at = '2026-11-03 10:00:00+00' WHERE slug IN ('uk-graduate-schemes', 'graduate-schemes-uk-application-timeline-guide');
-		UPDATE articles SET published_at = '2026-11-03 14:00:00+00' WHERE slug IN ('ir35-tax-guide', 'ir35-contracting-guide-inside-vs-outside');
-		UPDATE articles SET published_at = '2026-11-03 16:00:00+00' WHERE slug IN ('career-change-guide', 'career-change-at-30-40-uk-practical-guide');
-		UPDATE articles SET published_at = '2026-11-04 02:00:00+00' WHERE slug IN ('how-to-write-a-cv', 'how-to-write-an-ats-friendly-cv-uk');
-		UPDATE articles SET published_at = '2026-11-04 04:00:00+00' WHERE slug IN ('redundancy-rights-uk', 'uk-redundancy-rights-statutory-pay-guide');
-		UPDATE articles SET published_at = '2026-11-04 05:00:00+00' WHERE slug IN ('flexible-working-rights', 'hybrid-working-rights-flexible-working-requests-uk');
-	`)
+	for _, dSlug := range duplicateSlugs {
+		_, _ = db.Exec(ctx, "DELETE FROM articles WHERE slug = $1", dSlug)
+	}
 
 	seeds := []articleSeedItem{
+		// 1. CV Guide
 		{
-			slug:           "skilled-worker-visa-uk",
-			title:          "UK Skilled Worker Visa: How to Get Sponsored in 2026 (Real Rules & Salaries)",
-			category:       "job-search",
-			seoTitle:       "UK Skilled Worker Visa Guide 2026: Salaries & Licensed Sponsors | JobyUK",
-			seoDescription: "What you actually need to earn to get sponsored in the UK. Honest guide to the £38,700 threshold, shortage list discounts, and finding genuine licensed employers.",
-			publishedAt:    time.Date(2026, 11, 1, 8, 0, 0, 0, time.UTC),
-			content: `<h2>Navigating UK Skilled Worker Sponsorship in 2026</h2>
-<p>Securing a role with visa sponsorship remains one of the most competitive routes in the UK job market. Following recent Home Office immigration rule adjustments, understanding the exact financial thresholds and employer compliance requirements is essential for international applicants and recruiters alike.</p>
+			slug:           "how-to-write-a-cv",
+			title:          "How to Write a UK CV That Actually Gets Interview Callbacks (2026 Guide)",
+			category:       "cv",
+			seoTitle:       "UK CV Writing Guide 2026: Format, ATS Rules & Real Examples | JobyUK",
+			seoDescription: "Step-by-step UK CV writing guide with real Before & After bullet points, ATS formatting rules, and proven structures that impress UK hiring managers.",
+			publishedAt:    time.Date(2026, 10, 28, 9, 15, 0, 0, time.UTC),
+			content: `<h2>The Reality of UK Recruitment in 2026</h2>
+<p>In the UK employment market, corporate job openings and direct-to-employer vacancies receive an average of 120 to 250 applications within the first 72 hours. Behind the scenes, large employers use Applicant Tracking Systems (ATS) such as Workday, Greenhouse, Taleo, and Bullhorn to parse and index incoming CVs. However, the common myth that "AI robot algorithms automatically reject 90% of candidates" is misunderstood.</p>
+<p>In reality, the software extracts your text into a standard candidate profile, and a human talent acquisition specialist reviews it on their monitor for roughly <strong>6 to 10 seconds</strong>. If your CV is cluttered with two-column graphics, Canva charts, or vague duties without metrics, it gets passed over. Here is the exact framework required to pass both automated parsers and time-poor UK hiring managers.</p>
 
-<h2>1. The 2026 Salary Threshold Requirements</h2>
-<p>Under current Home Office regulations, the standard general salary threshold for a Skilled Worker visa is <strong>£38,700 per year</strong>, or the specific "going rate" for the Standard Occupational Classification (SOC) code, whichever is higher.</p>
+<h2>1. UK CV Standards: What Must Be Included (and Left Out)</h2>
+<p>Unlike international resumes, UK recruitment practices are strictly governed by the <em>Equality Act 2010</em>. Including personal demographic information can cause internal compliance teams to discard your CV to avoid unconscious bias claims.</p>
 <ul>
-    <li><strong>General Minimum Threshold:</strong> £38,700 gross per annum (calculated on a 37.5-hour working week).</li>
-    <li><strong>Going Rates:</strong> Each occupation code has a median salary benchmark set by the Office for National Statistics (ONS). If the 50th percentile for your role is £44,000, your employer must meet £44,000.</li>
-    <li><strong>Health and Care Worker Visa Concession:</strong> Qualified healthcare professionals (doctors, registered nurses, allied health practitioners) remain exempt from the £38,700 baseline, continuing under lower nationally agreed pay spines such as the NHS Agenda for Change.</li>
+    <li><strong>Never Include:</strong> Your photograph, date of birth, age, marital status, nationality, National Insurance (NI) number, or full street address.</li>
+    <li><strong>Mandatory Essentials:</strong> Full Name, Professional Title (e.g., <em>Senior Software Engineer | AWS & Go</em>), City and Postcode area (e.g., <em>Manchester, M4 | Willing to commute / Hybrid</em>), Mobile Number, Professional Email Address, and an active LinkedIn or GitHub portfolio link.</li>
 </ul>
 
-<h2>2. The Immigration Salary List (ISL)</h2>
-<p>The former Shortage Occupation List (SOL) was replaced by the streamlined <strong>Immigration Salary List (ISL)</strong>. Occupations on this list benefit from a 20% discount against the general threshold, lowering the minimum requirement to £30,960 (provided the wage also meets the role's individual going rate).</p>
-<p>Typical roles represented on the ISL include civil engineers, chemical scientists, secondary education mathematics and physics teachers, and veterinary professionals.</p>
-
-<h2>3. Identifying Genuine Licensed Sponsors</h2>
-<p>Only UK businesses holding a valid <strong>Worker Sponsor Licence (A-rated)</strong> from UK Visas and Immigration (UKVI) can issue a Certificate of Sponsorship (CoS). When evaluating vacancies:</p>
+<h2>2. The Ideal Structure and Page Budget</h2>
+<p>For 95% of UK jobseekers, the standard limit is strictly <strong>two pages of A4</strong>. Only academic researchers (who list publications) or contractors with 15+ years of specialist project delivery should ever exceed two pages.</p>
 <ol>
-    <li><strong>Cross-reference the Register:</strong> Check the official public register of licensed sponsors published on GOV.UK before applying.</li>
-    <li><strong>Clarify CoS Availability Early:</strong> Ask whether the hiring team has an unallocated "Defined CoS" (for overseas applicants) or "Undefined CoS" (for candidates switching visas from within the UK, such as Graduate Visa holders).</li>
-    <li><strong>Avoid Unlicensed Intermediaries:</strong> Never pay recruitment agencies fees for job offers or visa documentation; UK law prohibits charging candidates for recruitment sponsorship.</li>
+    <li><strong>Header:</strong> Clean contact block (10% of page 1).</li>
+    <li><strong>Professional Summary (4 lines maximum):</strong> State who you are, your core specialisms, and the exact commercial value you deliver. Avoid generic buzzwords like "hardworking team player who thrives under pressure."</li>
+    <li><strong>Core Technical Competencies / Skills Matrix:</strong> A neat bulleted row of hard skills, technologies, and certifications.</li>
+    <li><strong>Employment History (Reverse Chronological):</strong> Your most recent roles occupying 60% of the CV space.</li>
+    <li><strong>Education & Professional Qualifications:</strong> University degrees, Apprenticeships, or recognized accreditations (e.g., ACCA, PRINCE2, CIPD).</li>
 </ol>
 
-<h2>4. Actionable Application Advice for Candidates</h2>
-<p>When applying for roles requiring sponsorship, highlight your immediate eligibility clearly on your CV. If you hold a Graduate Visa (allowing two years of unsponsored work), explicitly state your current visa status and expiry date in your personal profile. Employers value candidates who can begin immediately while sponsorship paperwork is processed.</p>`,
-		},
-		{
-			slug:           "nhs-pay-bands",
-			title:          "NHS Pay Bands Explained: What You Actually Earn from Band 2 to Band 9",
-			category:       "salary",
-			seoTitle:       "NHS Pay Bands 2026: What You Actually Earn & London Weighting | JobyUK",
-			seoDescription: "Curious what NHS staff actually take home? Clear breakdown of Band 2 to Band 9 pay rates, London weighting bonuses, and how annual pay steps work.",
-			publishedAt:    time.Date(2026, 11, 1, 12, 0, 0, 0, time.UTC),
-			content: `<h2>How NHS Salaries Work (Without the Bureaucracy)</h2>
-<p>The NHS employs over 1.4 million people across the UK. Nearly all non-medical staff—nurses, therapists, IT specialists, healthcare assistants, and managers—are paid under a transparent national pay scale called <strong>Agenda for Change (AfC)</strong>. Here is exactly what each band pays and how your earnings increase over time.</p>
+<h2>3. Writing High-Impact Bullet Points (Before vs. After)</h2>
+<p>UK employers hire for results, not task lists. Every bullet point in your work history should follow the <strong>Action + Context + Quantifiable Metric</strong> formula.</p>
 
-<h2>1. Overview of NHS Pay Bands (Band 2 to Band 9)</h2>
-<p>Each band reflects specific levels of responsibility, qualifications, and patient care:</p>
-<ul>
-    <li><strong>Band 2 (£23k+):</strong> Healthcare support workers, ward clerks, domestic services, and clinic receptionists.</li>
-    <li><strong>Band 3 &amp; Band 4 (£25k to £29k):</strong> Senior healthcare assistants, emergency support, phlebotomists, and technician specialists.</li>
-    <li><strong>Band 5 (£29.9k to £36.4k):</strong> Starting salary tier for newly qualified registered nurses, physiotherapists, radiographers, and junior dietitians.</li>
-    <li><strong>Band 6 (£37k to £44.5k):</strong> Senior staff nurses, deputy ward managers, specialist allied health professionals, and biomedical scientists.</li>
-    <li><strong>Band 7 (£46k to £53k):</strong> Ward managers, specialist nurse practitioners, and clinical team coordinators.</li>
-    <li><strong>Band 8a to 8d (£54k to £95k):</strong> Matrons, consultant practitioners, department leads, and clinical governance heads.</li>
-    <li><strong>Band 9 (£100k+):</strong> Directors of nursing, chief finance officers, and trust executive directors.</li>
-</ul>
-
-<h2>2. High Cost Area Supplements (HCAS / London Weighting)</h2>
-<p>Working in or around London? You receive an extra allowance on top of your basic NHS salary to help cover higher rent and travel costs:</p>
-<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
     <thead>
-        <tr style="background: #f1f5f9; text-align: left;">
-            <th style="padding: 10px; border: 1px solid #cbd5e1;">Region</th>
-            <th style="padding: 10px; border: 1px solid #cbd5e1;">Extra Allowance (% of Basic)</th>
-            <th style="padding: 10px; border: 1px solid #cbd5e1;">Min / Max Top-Up</th>
+        <tr style="background: #F1F5F9; border-bottom: 2px solid #CBD5E1; text-align: left;">
+            <th style="padding: 12px; width: 45%;">Weak Duty-Based Bullet (Pass)</th>
+            <th style="padding: 12px; width: 55%; background: #ECFDF5; color: #065F46;">High-Impact Commercial Bullet (Interview Winner)</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;"><strong>Inner London</strong></td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">20% extra</td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">Min £5,132 – Max £8,010</td>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; color: #64748B;">"Responsible for managing customer service queries and resolving complaints."</td>
+            <td style="padding: 12px; background: #F0FDF4; font-weight: 500;">"Handled 65+ Tier-2 customer escalations daily, boosting first-contact resolution by 22% and reducing Zendesk queue backlog across a 12-person team."</td>
         </tr>
-        <tr>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;"><strong>Outer London</strong></td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">15% extra</td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">Min £4,313 – Max £5,436</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;"><strong>Fringe Zone (Surrey, Essex, etc.)</strong></td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">5% extra</td>
-            <td style="padding: 10px; border: 1px solid #cbd5e1;">Min £1,192 – Max £2,011</td>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; color: #64748B;">"Helped the sales team generate leads and improve conversion rates."</td>
+            <td style="padding: 12px; background: #F0FDF4; font-weight: 500;">"Architected an automated inbound lead nurturing sequence in HubSpot, generating £340,000 in qualified enterprise pipeline within Q3."</td>
         </tr>
     </tbody>
 </table>
 
-<h2>3. Pay Step Points and Progression</h2>
-<p>You don't need to negotiate individual raises. Each band has defined pay steps. After completing a set period of service (usually 2 to 5 years) and a satisfactory performance review, you automatically move up to the next step point in your pay band.</p>
-
-<h2>4. NHS Pension &amp; Annual Leave Perks</h2>
-<p>Beyond basic salary, NHS contracts come with 27 days of annual leave (rising to 29 days after 5 years, and 33 days after 10 years), plus 8 bank holidays. The NHS Pension Scheme also remains one of the UK's most generous defined-benefit retirement schemes.</p>`,
-		},
-		{
-			slug:           "civil-service-interview-guide",
-			title:          "How to Pass Civil Service Interviews: Writing Top-Scoring 250-Word Statements",
-			category:       "interviews",
-			seoTitle:       "Civil Service Success Profiles 2026: Behaviours & STAR Answers | JobyUK",
-			seoDescription: "Crack the Civil Service scoring system. Exactly what sift panels look for in your 250-word behaviour answers, with real STAR examples that score 6s and 7s.",
-			publishedAt:    time.Date(2026, 11, 1, 16, 0, 0, 0, time.UTC),
-			content: `<h2>Cracking the Civil Service Recruitment System</h2>
-<p>Applying for a job in the UK Civil Service (HMRC, DWP, Home Office, MoJ, Cabinet Office) is completely different from applying in the private sector. Sift panels don't pick candidates on gut feeling; they score every application against published scoring criteria called <strong>Success Profiles</strong>.</p>
-
-<h2>1. The 5 Elements of Success Profiles</h2>
-<p>Depending on the role grade, your assessment blends up to five elements:</p>
-<ol>
-    <li><strong>Behaviours:</strong> Real-life examples showing how you handle challenges and deliver results.</li>
-    <li><strong>Strengths:</strong> What you naturally do well and enjoy doing.</li>
-    <li><strong>Ability:</strong> Online psychometric tests (numerical, verbal, judgment).</li>
-    <li><strong>Experience:</strong> Your relevant career background and achievements.</li>
-    <li><strong>Technical:</strong> Any specialized job-specific qualifications.</li>
-</ol>
-
-<h2>2. The 9 Core Behaviours Explained Simply</h2>
-<p>Every Civil Service job advert asks for 3 or 4 behaviours from this list:</p>
+<h2>4. ATS Technical Formatting Rules</h2>
+<p>To ensure 100% clean parsing through Workday, Taleo, and Greenhouse:</p>
 <ul>
-    <li><strong>Seeing the Big Picture:</strong> Understanding how your daily work fits into wider government priorities.</li>
-    <li><strong>Changing and Improving:</strong> Finding smarter ways of working and simplifying clunky processes.</li>
-    <li><strong>Making Effective Decisions:</strong> Using real facts and data rather than guesswork to solve tricky problems.</li>
-    <li><strong>Leadership:</strong> Taking ownership, encouraging team members, and being approachable.</li>
-    <li><strong>Communicating and Influencing:</strong> Explaining complex concepts clearly and convincing stakeholders.</li>
-    <li><strong>Working Together:</strong> Treating colleagues with respect and building genuine team trust.</li>
-    <li><strong>Developing Self and Others:</strong> Constantly sharpening skills and coaching junior teammates.</li>
-    <li><strong>Managing a Quality Service:</strong> Delivering reliable, high-quality work on time.</li>
-    <li><strong>Delivering at Pace:</strong> Hitting deadlines and staying focused when priorities shift suddenly.</li>
-</ul>
-
-<h2>3. The Winning Formula for 250-Word Statements</h2>
-<p>Civil Service sift panels grade statements on a <strong>1 to 7 scale</strong> (4 is the pass mark; 6 and 7 guarantee interview invites). Use this strict word count split:</p>
-<ul>
-    <li><strong>Situation &amp; Task (approx. 40 words):</strong> Briefly set the scene and the challenge. Keep it concise.</li>
-    <li><strong>Action (approx. 160 words - where the points are):</strong> Focus entirely on what <em>you</em> did, not what 'we' did. Say 'I analyzed', 'I negotiated', 'I restructured'. Detail your choices and how you handled pushback.</li>
-    <li><strong>Result (approx. 50 words):</strong> Finish with measurable impact. Did you reduce costs by 22%? Cut turnaround by 3 days? Boost satisfaction to 96%? Specific metrics win interviews.</li>
+    <li>Use standard, web-safe fonts: Calibri, Arial, Helvetica, or Garamond between 10pt and 11.5pt.</li>
+    <li>Avoid floating text boxes, icons, skill rating bars (e.g., 4/5 stars in Excel), and multi-column magazine layouts.</li>
+    <li>Save and upload your document as a clean <strong>.docx or standard searchable PDF</strong> (never upload scanned images or flat JPEGs).</li>
 </ul>`,
 		},
+
+		// 2. UK Job Search Strategy
+		{
+			slug:           "uk-job-search-strategy",
+			title:          "UK Job Search Strategy 2026: Skip Agency Middlemen & Apply Direct to Company ATS",
+			category:       "job-search",
+			seoTitle:       "UK Job Search Strategy 2026: Direct Employer ATS vs Agency Spam | JobyUK",
+			seoDescription: "How to stop wasting weeks applying to ghost agency adverts. Learn how to locate genuine direct employer vacancies and apply straight to company ATS portals.",
+			publishedAt:    time.Date(2026, 10, 29, 10, 30, 0, 0, time.UTC),
+			content: `<h2>The Ghost Job Problem in UK Recruitment</h2>
+<p>If you have spent weeks firing off applications on generic aggregator boards only to receive automated rejections or complete silence, you are not alone. Industry surveys across the UK reveal that up to <strong>35% to 45% of jobs posted by third-party recruitment agencies are "phantom" or "pipeline" listings</strong>.</p>
+<p>Recruitment agencies frequently post attractive vacancies to harvest candidate CVs, test commercial client budgets, or build candidate rosters for tenders that may never materialize. Meanwhile, genuine direct employers are actively hiring on their private internal career portals (Applicant Tracking Systems).</p>
+
+<h2>1. Agency Middleman Trap vs. Direct ATS Applications</h2>
+<p>Understanding how UK employers recruit is critical to accelerating your job hunt:</p>
+<ul>
+    <li><strong>Agency Applications:</strong> Your CV sits in a shared recruitment agency inbox with 300 others. If the recruiter doesn't like one word, your CV is never passed to the hiring manager. Furthermore, if hired via an agency, the employer must pay a hefty 15% to 25% finder's fee (often £6,000 to £15,000), making you a more expensive hire than direct applicants.</li>
+    <li><strong>Direct Company ATS (JobyUK Approach):</strong> When you apply directly to a company's internal portal (Workday, Greenhouse, Lever, Ashby, or BambooHR), your profile enters the hiring manager's internal dashboard. There are zero agency commission fees attached to your head, making your candidacy significantly more attractive to commercial finance directors.</li>
+</ul>
+
+<h2>2. How to Spot "Ghost" Job Ads in 30 Seconds</h2>
+<p>Look for these unmistakable warning signs of agency placeholder ads:</p>
+<ol>
+    <li><strong>Vague Client Name:</strong> "Our client, a market-leading Tier 1 fintech in Central London..." (If they cannot name the business, it is an agency trying to protect their commission).</li>
+    <li><strong>Salary Range Too Wide:</strong> "£40,000 – £85,000 depending on experience." Legitimate hiring teams have fixed pay bands approved by HR finance.</li>
+    <li><strong>Immediate Auto-Responder:</strong> You receive an email asking you to register on an external agency database before an interview is even mentioned.</li>
+</ol>
+
+<h2>3. The 3-Step Direct Sourcing Routine</h2>
+<p>Follow this routine daily on JobyUK to dramatically increase your interview rate:</p>
+<ul>
+    <li><strong>Target Direct Vacancies:</strong> Filter only verified direct employer listings.</li>
+    <li><strong>Map the Internal Team:</strong> Search LinkedIn for the company name + "Talent Acquisition Specialist" or "Head of [Your Department]".</li>
+    <li><strong>Submit Clean Application:</strong> Apply via the direct ATS portal, then send a polite, 3-sentence note to the internal talent acquisition manager letting them know your application is in their system.</li>
+</ul>`,
+		},
+
+		// 3. Skilled Worker Visa
+		{
+			slug:           "skilled-worker-visa-uk",
+			title:          "UK Skilled Worker Visa 2026: Salary Thresholds, Shortage Rules & Licensed Employers",
+			category:       "job-search",
+			seoTitle:       "UK Skilled Worker Visa Guide 2026: Salaries & Licensed Sponsors | JobyUK",
+			seoDescription: "Honest guide to the UK Skilled Worker Visa rules: £38,700 threshold, Immigration Salary List discounts, and finding genuine licensed sponsors in 2026.",
+			publishedAt:    time.Date(2026, 11, 1, 8, 0, 0, 0, time.UTC),
+			content: `<h2>Navigating UK Skilled Worker Sponsorship in 2026</h2>
+<p>Securing employment with visa sponsorship remains one of the most competitive avenues in the United Kingdom. Following the major immigration policy updates implemented by the Home Office, understanding the exact financial thresholds and sponsor compliance criteria is vital for international professionals.</p>
+
+<h2>1. The 2026 Salary Threshold Requirements</h2>
+<p>Under current Home Office immigration regulations, the standard general baseline threshold for a Skilled Worker visa is <strong>£38,700 per annum</strong>, or the specific "going rate" for the Standard Occupational Classification (SOC) code, whichever is higher.</p>
+<ul>
+    <li><strong>General Baseline:</strong> £38,700 gross per year based on a 37.5-hour working week.</li>
+    <li><strong>SOC Code Going Rates:</strong> Each job category has a specific median benchmark set by the Office for National Statistics (ONS). For instance, if the going rate for a Senior Data Engineer is £52,000, your sponsor must match £52,000, not the lower baseline.</li>
+    <li><strong>Health and Care Exemption:</strong> Qualified healthcare professionals (NHS registered nurses, doctors, radiographers, and allied health staff) continue under exempt national pay spines such as the NHS Agenda for Change.</li>
+</ul>
+
+<h2>2. The Immigration Salary List (ISL)</h2>
+<p>The former Shortage Occupation List was replaced with the streamlined <strong>Immigration Salary List (ISL)</strong>. Occupations designated on the ISL benefit from a 20% discount against the general baseline, lowering the requirement to <strong>£30,960</strong> (provided the wage also meets the occupation's specific 2026 going rate).</p>
+
+<h2>3. Identifying Genuine Home Office Licensed Sponsors</h2>
+<p>Never pay an agent or agency for a Certificate of Sponsorship (CoS). It is illegal in the UK for recruiters or employers to charge jobseekers for visa sponsorship paperwork.</p>
+<p>Before applying, always cross-reference the hiring company against the official <em>Home Office Register of Worker and Temporary Worker Licensed Sponsors</em>. On JobyUK, we flag companies with verified direct sponsorship licences so you can focus your efforts on legitimate hiring organisations.</p>`,
+		},
+
+		// 4. NHS Pay Bands
+		{
+			slug:           "nhs-pay-bands",
+			title:          "NHS Agenda for Change Pay Bands 2026: Complete Salary Scale, HCAS & Progression",
+			category:       "salary",
+			seoTitle:       "NHS Pay Bands 2026: Agenda for Change Salary Scales & HCAS | JobyUK",
+			seoDescription: "Complete guide to NHS Agenda for Change pay bands from Band 2 to Band 9. Includes 2026 pay points, London weighting allowances, and NHS pension breakdown.",
+			publishedAt:    time.Date(2026, 11, 1, 9, 30, 0, 0, time.UTC),
+			content: `<h2>Understanding the NHS Agenda for Change (AfC) System</h2>
+<p>The National Health Service (NHS) is one of the world's largest employers, employing over 1.4 million people in the United Kingdom. Almost all non-medical NHS staff—including nurses, healthcare assistants, radiographers, administrative officers, IT engineers, and project managers—are paid under the standardized <strong>Agenda for Change (AfC)</strong> pay spine.</p>
+
+<h2>1. NHS Pay Bands Overview (2026 Scales)</h2>
+<p>Each band contains specific step points that increase as you gain completed years of service within that grade:</p>
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+    <thead>
+        <tr style="background: #F1F5F9; border-bottom: 2px solid #CBD5E1; text-align: left;">
+            <th style="padding: 10px;">Band Grade</th>
+            <th style="padding: 10px;">Typical NHS Roles</th>
+            <th style="padding: 10px;">Salary Range (National)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 2</td>
+            <td style="padding: 10px;">Healthcare Support Worker, Domestic Assistant, Receptionist</td>
+            <td style="padding: 10px;">£23,615 – £24,071</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 3</td>
+            <td style="padding: 10px;">Senior Healthcare Assistant, Clinical Support Worker, Team Sec</td>
+            <td style="padding: 10px;">£24,336 – £26,180</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 4</td>
+            <td style="padding: 10px;">Nursing Associate, Theatre Support, Medical Secretary</td>
+            <td style="padding: 10px;">£26,530 – £29,114</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 5</td>
+            <td style="padding: 10px;">Newly Qualified Staff Nurse, Junior Physiotherapist, Radiographer</td>
+            <td style="padding: 10px;">£29,970 – £36,483</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 6</td>
+            <td style="padding: 10px;">Senior Staff Nurse, Specialist Physiotherapist, Ward Sister</td>
+            <td style="padding: 10px;">£37,338 – £44,962</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 7</td>
+            <td style="padding: 10px;">Advanced Clinical Practitioner, Lead Clinical Nurse, Service Manager</td>
+            <td style="padding: 10px;">£46,148 – £52,809</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 8a – 8d</td>
+            <td style="padding: 10px;">Matron, Head of Nursing, Principal Clinical Psychologist, Associate Director</td>
+            <td style="padding: 10px;">£53,755 – £96,376</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 10px; font-weight: 700;">Band 9</td>
+            <td style="padding: 10px;">Chief Nurse, Director of Operations, Corporate Executive</td>
+            <td style="padding: 10px;">£103,401 – £114,949</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>2. High Cost Area Supplements (HCAS / London Weighting)</h2>
+<p>If you work for an NHS trust within London or the surrounding home counties, you receive an additional non-consolidated allowance on top of your basic pay:</p>
+<ul>
+    <li><strong>Inner London:</strong> 20% of basic salary (minimum £5,138, maximum £8,010).</li>
+    <li><strong>Outer London:</strong> 15% of basic salary (minimum £4,313, maximum £5,436).</li>
+    <li><strong>Fringe Area:</strong> 5% of basic salary (minimum £1,192, maximum £2,011).</li>
+</ul>
+
+<h2>3. NHS Pension Scheme Value</h2>
+<p>Beyond headline base salary, the NHS Pension Scheme remains one of the most generous Defined Benefit career-average pensions in Europe. While employee contributions range between 5.2% and 12.5%, the <strong>employer contribution is currently 23.7%</strong>, adding immense real-term value to your total compensation.</p>`,
+		},
+
+		// 5. Civil Service Interview Guide
+		{
+			slug:           "civil-service-interview-guide",
+			title:          "Civil Service Success Profiles 2026: 9 Behaviours & Scoring Model Answers",
+			category:       "interviews",
+			seoTitle:       "Civil Service Success Profiles 2026: 9 Behaviours & Scoring | JobyUK",
+			seoDescription: "Demystifying Civil Service interview scoring. Master the 9 core Behaviours and learn how to write 250-word statements that score 6s and 7s.",
+			publishedAt:    time.Date(2026, 11, 1, 11, 0, 0, 0, time.UTC),
+			content: `<h2>How Civil Service Recruitment Really Works</h2>
+<p>Recruitment across the UK Civil Service (including HMRC, Home Office, DWP, Ministry of Justice, and Defra) does not rely on traditional CV browsing. It is strictly regulated by the <em>Civil Service Commission</em> to ensure appointments are made solely on merit through fair and open competition.</p>
+<p>Civil Service hiring uses the <strong>Success Profiles Framework</strong>, assessing candidates across five elements: Ability, Behaviours, Strengths, Experience, and Technical. Understanding the 9 core Behaviours is the key to passing both the initial application sift and the interview board.</p>
+
+<h2>1. The 9 Core Civil Service Behaviours</h2>
+<ol>
+    <li><strong>Seeing the Big Picture:</strong> Understanding how your team's work fits into wider departmental objectives and ministerial priorities.</li>
+    <li><strong>Changing and Improving:</strong> Seeking innovative ideas, embracing new digital tools, and adapting positively to organizational change.</li>
+    <li><strong>Making Effective Decisions:</strong> Using objective data, weighing up risks, and consulting relevant stakeholders before acting.</li>
+    <li><strong>Leadership:</strong> Showing pride and passion for public service, motivating team members, and championing diversity.</li>
+    <li><strong>Communicating and Influencing:</strong> Communicating complex policy clearly, listening actively, and negotiating with difficult stakeholders.</li>
+    <li><strong>Working Together:</strong> Building inclusive, collaborative partnerships across departmental boundaries.</li>
+    <li><strong>Developing Self and Others:</strong> Investing in continuous learning, mentoring colleagues, and sharing best practices.</li>
+    <li><strong>Managing a Quality Service:</strong> Ensuring delivery is customer-focused, compliant with regulations, and represents value for public money.</li>
+    <li><strong>Delivering at Pace:</strong> Prioritising workloads, overcoming blockers, and delivering high-quality results to tight deadlines.</li>
+</ol>
+
+<h2>2. The Civil Service 1 to 7 Scoring Scale</h2>
+<p>Panel assessors score every behaviour example independently against this standardized benchmark:</p>
+<ul>
+    <li><strong>1 – 3:</strong> Significant weaknesses / not demonstrated (Immediate Fail).</li>
+    <li><strong>4 (Moderate Demonstration):</strong> Satisfactory evidence meeting minimum standard.</li>
+    <li><strong>5 (Good Demonstration):</strong> Strong evidence with clear outcomes.</li>
+    <li><strong>6 – 7 (Strong / Outstanding):</strong> Exceptional evidence demonstrating systemic impact, lessons learned, and proactive risk management.</li>
+</ul>
+
+<h2>3. The Winning 250-Word Behaviour Formula: STAR+L</h2>
+<p>When drafting your written behaviour statement or answering at the panel interview, structure your narrative using <strong>STAR+L</strong>:</p>
+<ul>
+    <li><strong>Situation (15%):</strong> Brief context. What was the challenge, the department, and the deadline?</li>
+    <li><strong>Task (15%):</strong> What was your specific personal remit? (Use "I", never "we").</li>
+    <li><strong>Action (55%):</strong> The meat of your answer. What analysis did you perform? How did you resolve objections? Which Civil Service guidelines did you consult?</li>
+    <li><strong>Result (10%):</strong> The measurable output (e.g., delivered £1.2M efficiency savings, reduced case backlog by 35%).</li>
+    <li><strong>Learning (5%):</strong> What did you reflect on, and how did you share this learning across the wider Directorate?</li>
+</ul>`,
+		},
+
+		// 6. Right to Work Checks
 		{
 			slug:           "right-to-work-checks",
-			title:          "UK Right to Work Checks: How to Get Your Share Code Without Offer Delays",
+			title:          "UK Right to Work Checks 2026: Digital Share Codes, BRP Phase-Out & eVisa Guide",
 			category:       "job-search",
-			seoTitle:       "UK Right to Work Checks 2026: Digital Share Codes & eVisas | JobyUK",
-			seoDescription: "Never let paperwork slow down your start date. How to get your 9-digit share code online in 2 minutes, the end of physical BRP cards, and what bosses must check.",
-			publishedAt:    time.Date(2026, 11, 2, 9, 0, 0, 0, time.UTC),
-			content: `<h2>How UK Right to Work Checks Work in 2026</h2>
-<p>Every UK employer has a strict legal obligation to verify that new hires have permission to work in the UK before day one. Knowing what paperwork is needed keeps your onboarding smooth and delays away.</p>
+			seoTitle:       "UK Right to Work Checks 2026: Digital eVisa Share Codes | JobyUK",
+			seoDescription: "Everything UK jobseekers need to know about statutory Right to Work checks. How to generate a Home Office digital share code and prevent start date delays.",
+			publishedAt:    time.Date(2026, 11, 2, 8, 45, 0, 0, time.UTC),
+			content: `<h2>Statutory Right to Work: What Every UK Candidate Must Know</h2>
+<p>Under the <em>Immigration, Asylum and Nationality Act 2006</em>, all UK employers have an absolute legal duty to conduct statutory <strong>Right to Work (RTW)</strong> checks before any employee's first working day. Failure to comply exposes employers to civil penalties of up to £45,000 per illegal worker.</p>
+<p>Understanding the modern verification process prevents administrative hold-ups and ensures your formal job contract is issued smoothly.</p>
 
-<h2>1. The End of Physical BRP Cards: Digital eVisas</h2>
-<p>Physical Biometric Residence Permits (BRPs) have been replaced by the Home Office's digital <strong>eVisa system</strong>. Non-British and non-Irish nationals now prove their status online through their UKVI digital account.</p>
+<h2>1. The Complete Phase-Out of Physical BRPs (The Digital eVisa)</h2>
+<p>Physical Biometric Residence Permits (BRPs), Biometric Residence Cards (BRCs), and passport vignette stamps have been fully replaced by the <strong>Home Office Digital eVisa</strong> system. Physical cards are no longer accepted as valid proof of Right to Work.</p>
+<p>Non-British and non-Irish nationals access their status online via their UK Visas and Immigration (UKVI) digital account and generate a secure 9-character <strong>Share Code</strong>.</p>
 
-<h2>2. How to Generate Your 9-Character Share Code in 2 Minutes</h2>
-<p>You can generate your code quickly on your phone:</p>
+<h2>2. How to Generate Your Official Share Code</h2>
 <ol>
-    <li>Go to the official GOV.UK service: <em>"Prove your right to work to an employer"</em>.</li>
-    <li>Log in using your passport or BRP identity number and your birth date.</li>
-    <li>Verify with the SMS/email code sent to your registered contact.</li>
-    <li>Copy your <strong>9-character code</strong> (e.g. <code>W12 345 678</code>).</li>
+    <li>Navigate to the official Gov.uk service: <em>"Prove your right to work to an employer"</em>.</li>
+    <li>Log in using your passport details or identity document linked to your UKVI account, followed by SMS two-factor authentication.</li>
+    <li>Select the option <em>"I want to prove my right to work"</em>.</li>
+    <li>The system will generate a 9-character alphanumeric code starting with <strong>W</strong> (for Work).</li>
+    <li>Share this code along with your date of birth with your prospective employer's HR onboarding team. The code remains valid for <strong>90 days</strong>.</li>
 </ol>
-<p>The code is valid for <strong>90 days</strong> and can be shared with multiple employers safely without sharing your private immigration history.</p>
 
-<h2>3. What British &amp; Irish Citizens Need</h2>
-<p>British and Irish passport holders don't need a share code. Employers simply verify your status using a certified digital identity app (IDSP) or by inspecting your original passport.</p>`,
+<h2>3. What Employers Are NOT Allowed to Ask</h2>
+<p>UK employment law and ACAS guidance establish clear boundaries regarding when pre-employment checks can take place:</p>
+<ul>
+    <li>Employers cannot demand to see your passport or share code <em>before</em> making a conditional offer of employment. Asking during an initial interview can expose them to racial discrimination claims under the Equality Act 2010.</li>
+    <li>Employers must treat all candidates equally: they cannot conduct digital checks on candidates with foreign-sounding names while accepting verbal confirmation from others.</li>
+</ul>`,
 		},
+
+		// 7. UK Minimum Wage 2026
 		{
 			slug:           "uk-minimum-wage",
-			title:          "UK Minimum Wage Rates: What Your Boss Legally Must Pay You",
+			title:          "UK National Minimum Wage & Living Wage Rates (April 2026): Your Legal Pay Rights",
 			category:       "salary",
-			seoTitle:       "UK National Minimum Wage 2026: Legal Rates & Wage Traps | JobyUK",
-			seoDescription: "Are you being underpaid? Official UK hourly wage rates by age, plus 4 illegal wage deductions employers try to sneak past workers.",
-			publishedAt:    time.Date(2026, 11, 2, 12, 0, 0, 0, time.UTC),
-			content: `<h2>UK Statutory Wage Protections: Your Legal Rights</h2>
-<p>The National Minimum Wage and National Living Wage are legally binding minimum hourly rates. By law, almost all UK workers—full-time, part-time, temporary agency, and zero-hours contract staff—must receive at least these statutory amounts.</p>
+			seoTitle:       "UK Minimum Wage Rates April 2026: Statutory Rights & Rules | JobyUK",
+			seoDescription: "Official UK National Living Wage and Minimum Wage rates for 2026. Understand statutory hourly rates, illegal salary deductions, and apprentice wage rules.",
+			publishedAt:    time.Date(2026, 11, 2, 10, 15, 0, 0, time.UTC),
+			content: `<h2>Statutory Wage Protection in the United Kingdom</h2>
+<p>In the UK, every worker—whether full-time, part-time, agency temporary worker, or casual zero-hours contractor—is legally entitled to receive at least the statutory <strong>National Living Wage (NLW)</strong> or <strong>National Minimum Wage (NMW)</strong> for every working hour performed.</p>
 
-<h2>1. Current UK Minimum Wage Rates by Age</h2>
+<h2>1. Official Statutory Hourly Pay Rates (Effective April 2026)</h2>
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+    <thead>
+        <tr style="background: #F1F5F9; border-bottom: 2px solid #CBD5E1; text-align: left;">
+            <th style="padding: 12px;">Age Category / Band</th>
+            <th style="padding: 12px;">Statutory Hourly Rate</th>
+            <th style="padding: 12px;">Gross Annual Equivalent (37.5 hrs/wk)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; font-weight: 700;">National Living Wage (Aged 21 and Over)</td>
+            <td style="padding: 12px; color: #059669; font-weight: 800; font-size: 1.05rem;">£12.21 / hr</td>
+            <td style="padding: 12px; font-weight: 600;">£23,809.50</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; font-weight: 700;">18 to 20 Year Old Rate</td>
+            <td style="padding: 12px; font-weight: 700;">£10.00 / hr</td>
+            <td style="padding: 12px;">£19,500.00</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; font-weight: 700;">Under 18 Rate</td>
+            <td style="padding: 12px;">£7.55 / hr</td>
+            <td style="padding: 12px;">£14,722.50</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px; font-weight: 700;">Apprentice Rate (Under 19 or in 1st year)</td>
+            <td style="padding: 12px;">£7.55 / hr</td>
+            <td style="padding: 12px;">£14,722.50</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>2. Common Hidden Payroll Deductions That Break the Law</h2>
+<p>An employer may pay £12.50 on paper, but if deductions bring your effective hourly rate below £12.21, the employer is guilty of an illegal wage underpayment under HMRC rules:</p>
 <ul>
-    <li><strong>National Living Wage (Aged 21 and Over):</strong> The legal baseline rate for all adult workers across England, Scotland, Wales, and Northern Ireland.</li>
-    <li><strong>18 to 20 Year Olds:</strong> Statutory youth rate for younger workers.</li>
-    <li><strong>Under 18s:</strong> Baseline rate for school leavers under 18.</li>
-    <li><strong>Apprentices:</strong> Applicable to apprentices under 19 or in their first year. Once an apprentice turns 19 and enters their second year, they must receive the full age-appropriate minimum wage.</li>
+    <li><strong>Mandatory Uniforms:</strong> If you are required to purchase branded workwear, safety shoes, or aprons, that cost must not reduce your hourly pay below the statutory minimum.</li>
+    <li><strong>Security Checks & DBS Fees:</strong> If an employer deducts the £18 to £38 DBS check fee from your first pay packet, it cannot bring that month's pay below minimum wage.</li>
+    <li><strong>Unpaid Mandatory Training:</strong> Attending fire safety drills, induction days, or online compliance modules outside shift hours is legally counted as working time and must be paid in full.</li>
 </ul>
 
-<h2>2. Sneaky Wage Traps: 4 Illegal Deductions to Watch For</h2>
-<p>HMRC actively fines employers who illegally underpay workers. The most common violations include:</p>
-<ol>
-    <li><strong>Uniform Deductions:</strong> If you must buy specific shoes or uniforms, that cost cannot drop your effective hourly pay below the minimum wage.</li>
-    <li><strong>Unpaid Mandatory Training:</strong> If you must attend an induction or complete online courses, that time counts as working hours and must be paid.</li>
-    <li><strong>Unpaid 'Trial Shifts':</strong> While a short 30-minute skills check is normal, working full-day shifts without pay is illegal.</li>
-    <li><strong>Setup &amp; Cashing Up Time:</strong> Arriving 15 minutes before opening to prep or staying after closing to clean counts as paid working time.</li>
-</ol>`,
+<h2>3. Statutory vs. The Voluntary 'Real Living Wage'</h2>
+<p>Do not confuse the statutory government wage with the voluntary <strong>Real Living Wage</strong> set by the Living Wage Foundation. In 2026, the voluntary Real Living Wage is <strong>£12.60 per hour nationally</strong> and <strong>£13.85 per hour in Greater London</strong>. Over 14,000 accredited UK employers voluntarily commit to paying this higher rate.</p>`,
 		},
+
+		// 8. Competency Interview Questions
 		{
 			slug:           "competency-interview-questions",
-			title:          "12 Toughest UK Competency Interview Questions (and Winning STAR Answers)",
+			title:          "12 Toughest UK Competency Interview Questions: Full STAR Winning Scripts",
 			category:       "interviews",
-			seoTitle:       "Competency Interview Questions UK 2026: Model STAR Answers | JobyUK",
-			seoDescription: "How to answer tricky 'Tell me about a time...' questions without freezing up. Word-for-word STAR examples that impress UK hiring panels.",
-			publishedAt:    time.Date(2026, 11, 2, 16, 0, 0, 0, time.UTC),
-			content: `<h2>Why UK Employers Rely on Competency-Based Interviews</h2>
-<p>Competency-based interviews (also known as behavioral or structured interviews) operate on the core recruitment premise: <em>past performance is the most reliable predictor of future success</em>. Major UK employers across banking, retail, healthcare, civil service, and technology rely on these structured questions to eliminate interviewer bias.</p>
+			seoTitle:       "12 UK Competency Interview Questions & STAR Answers 2026 | JobyUK",
+			seoDescription: "Master UK competency-based interviews. Word-for-word STAR model answers for handling conflict, managing deadlines, and demonstrating commercial leadership.",
+			publishedAt:    time.Date(2026, 11, 2, 11, 45, 0, 0, time.UTC),
+			content: `<h2>Why UK Employers Rely on Competency Interviews</h2>
+<p>From FTSE 100 retailers to NHS Trusts and boutique tech agencies, competency-based interviews remain the UK standard. The core philosophy is simple: <strong>past commercial behavior is the best predictor of future job performance</strong>.</p>
+<p>Instead of vague hypothetical queries ("What would you do if..."), interviewers demand real historical anecdotes ("Tell me about a specific time when..."). Here is how to answer the most critical questions using the proven STAR framework.</p>
 
-<h2>1. Core Competency Categories</h2>
-<p>Assessors focus on four overarching domains:</p>
-<ul>
-    <li><strong>Individual Competencies:</strong> Personal resilience, analytical problem solving, decisiveness, and adaptability.</li>
-    <li><strong>Managerial Competencies:</strong> Strategic leadership, resource delegation, performance management, and team motivation.</li>
-    <li><strong>Interpersonal Competencies:</strong> Stakeholder diplomacy, conflict resolution, active listening, and relationship management.</li>
-    <li><strong>Motivational Competencies:</strong> Drive for results, continuous learning, customer focus, and operational diligence.</li>
-</ul>
-
-<h2>2. 12 Frequent UK Competency Questions</h2>
-<ol>
-    <li><em>"Tell me about a time you had to deliver a critical project under tight, conflicting deadlines."</em> (Delivering at Pace)</li>
-    <li><em>"Describe a situation where you had to persuade a resistant stakeholder to adopt a major change."</em> (Influencing &amp; Communication)</li>
-    <li><em>"Give an example of a difficult team conflict you managed and how you resolved it."</em> (Working Together)</li>
-    <li><em>"Can you share an instance where you identified a process inefficiency and overhauled it?"</em> (Continuous Improvement)</li>
-    <li><em>"Describe a time when a project didn't go according to plan. How did you react?"</em> (Resilience &amp; Problem Solving)</li>
-    <li><em>"Tell me about a high-stakes decision you made with limited or incomplete data."</em> (Decision Making)</li>
-    <li><em>"How have you handled a situation where a client or customer was deeply dissatisfied?"</em> (Customer Excellence)</li>
-    <li><em>"Describe a time you coached a struggling colleague to meet their performance targets."</em> (Developing Talent)</li>
-    <li><em>"Give an example of balancing compliance and regulatory requirements with business speed."</em> (Governance &amp; Risk)</li>
-    <li><em>"Tell me about a time you had to adapt quickly to unexpected organizational restructuring."</em> (Change Management)</li>
-    <li><em>"Describe a complex data analysis you conducted and how you communicated findings to non-technical leaders."</em> (Analytical Communication)</li>
-    <li><em>"Give an example of how you prioritized ethical standards over immediate short-term commercial gains."</em> (Integrity &amp; Values)</li>
-</ol>
-
-<h2>3. Model Answer Breakdown: The STAR Framework in Action</h2>
-<p>Consider the question: <em>"Describe a situation where you managed a major stakeholder disagreement."</em></p>
-<blockquote>
-    <p><strong>Situation:</strong> In my previous role as an IT Operations Lead at a Midlands manufacturing firm, our rollout of a new ERP platform encountered fierce resistance from the regional warehouse management team who were concerned about operational downtime.</p>
-    <p><strong>Task:</strong> My responsibility was to align warehouse operations with the project timeline without jeopardizing daily dispatch quotas.</p>
-    <p><strong>Action:</strong> Rather than issuing top-down directives, I scheduled an on-site consultation at the distribution centre. I shadowed their shift supervisors for two days to pinpoint specific workflow pinch points. Based on their feedback, I redesigned our training into modular 20-minute micro-sessions and agreed to execute data migration over a bank holiday weekend with full IT standby support.</p>
-    <p><strong>Result:</strong> We launched on schedule with zero order delays, achieving a 98% user satisfaction rate. The warehouse team became enthusiastic advocates for subsequent rollout phases.</p>
+<h2>Question 1: "Tell me about a time you handled a difficult colleague or stakeholder."</h2>
+<p><strong>What the interviewer is testing:</strong> Emotional intelligence, diplomatic conflict resolution, and maturity under stress.</p>
+<blockquote style="background: #F8FAFC; border-left: 4px solid #059669; padding: 16px 20px; margin: 16px 0; border-radius: 0 12px 12px 0;">
+    <p><strong>Situation:</strong> While delivering a client CRM migration project, the lead sales director refused to adopt the new data fields, threatening our rollout launch date.</p>
+    <p><strong>Task:</strong> As Project Lead, I needed to secure his buy-in without escalating to executive leadership or causing team friction.</p>
+    <p><strong>Action:</strong> I scheduled a 1-on-1 coffee rather than arguing via email. I listened to his team's frustrations and discovered the new interface required 4 extra clicks per call. I worked with engineering to automate two background lookups, saving his team 15 minutes daily.</p>
+    <p><strong>Result:</strong> He personally championed the rollout. The sales team achieved 98% adoption within 2 weeks, and the migration launched 3 days ahead of schedule.</p>
 </blockquote>
 
-<h2>4. The Golden Rule: Metrics and Specifics</h2>
-<p>UK interview panels look for concrete metrics. Avoid generalizations such as "the project was successful." Instead, provide hard numbers: "we reduced processing turnaround by 34%, saved £12,500 in licensing, and maintained 99.9% uptime throughout the quarter."</p>`,
+<h2>Question 2: "Describe a project that failed or did not go as planned."</h2>
+<p><strong>What the interviewer is testing:</strong> Personal accountability, resilience, and whether you proactively learn from mistakes.</p>
+<blockquote style="background: #F8FAFC; border-left: 4px solid #059669; padding: 16px 20px; margin: 16px 0; border-radius: 0 12px 12px 0;">
+    <p><strong>Situation:</strong> In my previous role as Digital Marketing Specialist, we launched a Q2 paid acquisition campaign on LinkedIn that underperformed its target lead volume by 40%.</p>
+    <p><strong>Task:</strong> I had full ownership of the £25,000 media budget and had to account for the shortfall to our managing director.</p>
+    <p><strong>Action:</strong> I immediately paused underperforming ad sets on day 10 rather than burning the full budget. I conducted heat-map audits of our landing page and discovered mobile load times were averaging 5.8 seconds, causing a 65% drop-off. I worked with the dev team to compress visual assets, cutting load time to 1.2 seconds, and re-tested with 3 focused customer case studies.</p>
+    <p><strong>Result:</strong> Conversion rates rebounded from 1.8% to 5.4%. We recovered the shortfall by the end of Q2 and integrated a mandatory mobile performance test into all subsequent launch checklists.</p>
+</blockquote>
+
+<h2>Key Rules for Acing Competency Boards</h2>
+<ul>
+    <li>Keep answers strictly between <strong>2.5 to 3.5 minutes</strong>. Avoid rambling into unnecessary operational backstories.</li>
+    <li>Focus 60% of your time on the <strong>Action</strong>: Explain what YOU did, your thought process, and how you influenced outcomes.</li>
+    <li>Always close with a <strong>measurable Result</strong>: Include numbers, percentages, or concrete team benefits.</li>
+</ul>`,
 		},
+
+		// 9. UK Graduate Schemes
 		{
 			slug:           "uk-graduate-schemes",
-			title:          "UK Graduate Schemes: Key Deadlines, Passing Tests & Acing Assessment Centres",
+			title:          "UK Graduate Schemes 2026: Deadlines, Psychometric Tests & Assessment Day Guide",
 			category:       "job-search",
-			seoTitle:       "UK Graduate Schemes 2026: Deadlines, Tests & Assessment Centres | JobyUK",
-			seoDescription: "How to land a top UK graduate scheme paying £30k+. The application timeline, how to beat SHL numerical tests, and group exercise survival tips.",
-			publishedAt:    time.Date(2026, 11, 3, 10, 0, 0, 0, time.UTC),
-			content: `<h2>How to Actually Land a UK Graduate Scheme</h2>
-<p>UK graduate schemes offer great training, structured rotations, and starting pay between £28,000 and £55,000. But with hundreds of graduates applying for every single opening, you need to know how the recruitment timeline works so you don't miss out.</p>
+			seoTitle:       "UK Graduate Schemes 2026: Application Timelines & Tests | JobyUK",
+			seoDescription: "The ultimate guide to UK graduate schemes. Key application deadlines, acing Cappfinity/SHL psychometric tests, and assessment day group exercise tactics.",
+			publishedAt:    time.Date(2026, 11, 3, 9, 0, 0, 0, time.UTC),
+			content: `<h2>The UK Graduate Recruitment Landscape</h2>
+<p>UK graduate schemes are prestigious, structured training programmes offered by major employers—ranging from the Civil Service Fast Stream and NHS Graduate Management Scheme to the Big 4 (PwC, Deloitte, EY, KPMG), engineering multinationals, and FTSE banks. They offer structured rotations, funded professional qualifications (ACA, CIMA, CIPD), and fast-tracked leadership salaries.</p>
 
-<h2>1. The Graduate Application Calendar</h2>
+<h2>1. The Graduate Application Timeline (The 'Milkround')</h2>
+<p>Timing is everything. Top UK schemes operate on rolling admissions and close as soon as application quotas are met:</p>
 <ul>
-    <li><strong>September – October:</strong> Big Four, Civil Service Fast Stream, banks, and engineering programmes open. Many recruit on a <em>rolling basis</em>—which means they review applications as they come in and close early once seats fill. Apply early.</li>
-    <li><strong>November – December:</strong> Online psychometric tests (SHL, Cappfinity) and automated video interviews (HireVue).</li>
-    <li><strong>January – March:</strong> Assessment centres and final interviews with directors.</li>
-    <li><strong>September:</strong> Induction day and start of your training contract.</li>
+    <li><strong>September – October:</strong> Major schemes open applications. Apply early; applying in September increases your chance of passing the initial sift by over 50%.</li>
+    <li><strong>November – December:</strong> Initial deadlines close. Online psychometric testing, situational judgement tests (SJTs), and automated video interviews take place.</li>
+    <li><strong>January – March:</strong> Virtual or in-person Assessment Centres are conducted.</li>
+    <li><strong>April – June:</strong> Final offers issued, background references checked, and onboarding begins for September starts.</li>
 </ul>
 
-<h2>2. How to Beat Online Psychometric Tests</h2>
-<p>Most candidates get knocked out by automated test filters. Here is how to pass:</p>
-<ol>
-    <li><strong>SHL Numerical &amp; Verbal:</strong> Timed tests where speed matters as much as accuracy. Practice on free platforms like AssessmentDay beforehand so the question style isn't a shock.</li>
-    <li><strong>Cappfinity Strengths Tests:</strong> Untimed tests that check your natural problem-solving instincts. Answer honestly without trying to second-guess what you think the firm wants to hear.</li>
-</ol>
-
-<h2>3. Surviving Assessment Centres</h2>
-<p>The biggest mistake in group exercises is trying to talk the most. Assessors aren't looking for the loudest voice in the room; they are watching who brings quieter team members into the conversation, stays calm under time pressure, and keeps everyone focused on the goal.</p>`,
-		},
-		{
-			slug:           "ir35-tax-guide",
-			title:          "Inside vs Outside IR35: What UK Contractors Actually Take Home",
-			category:       "salary",
-			seoTitle:       "Inside vs Outside IR35 Explained: Real Take-Home Cash & Tax | JobyUK",
-			seoDescription: "IR35 explained in plain English. The difference in tax between inside and outside contracts, what makes a role genuine B2B, and umbrella company red flags.",
-			publishedAt:    time.Date(2026, 11, 3, 14, 0, 0, 0, time.UTC),
-			content: `<h2>IR35 Explained Without the Tax Jargon</h2>
-<p>If you contract in the UK, understanding <strong>IR35</strong> is the difference between keeping your hard-earned day rate or losing up to 40% of it in unexpected PAYE deductions.</p>
-
-<h2>1. Inside IR35 vs. Outside IR35 in Plain English</h2>
+<h2>2. Demystifying Psychometric & Situational Judgement Tests (SJTs)</h2>
+<p>Most employers use testing software from providers like Cappfinity, SHL, or Korn Ferry:</p>
 <ul>
-    <li><strong>Outside IR35 (Genuine B2B):</strong> HMRC treats your limited company as an independent business. You invoice your client, pay Corporation Tax, and take income through a salary/dividend mix. You keep significantly more take-home cash.</li>
-    <li><strong>Inside IR35 (Deemed Employee):</strong> HMRC treats the contract as employment for tax purposes. Income tax and National Insurance are deducted before you get paid, usually via an umbrella company.</li>
+    <li><strong>Situational Judgement Tests:</strong> Read the employer's core cultural values before starting. When evaluating workplace scenarios, the "correct" answer always prioritises client safety, ethical compliance, and collaborative problem-solving over individual heroics.</li>
+    <li><strong>Numerical Reasoning:</strong> Brush up on percentage changes, currency conversions, and interpreting complex financial tables under time pressure.</li>
 </ul>
 
-<h2>2. The 3 Things HMRC Checks</h2>
+<h2>3. Acing the Assessment Centre Group Exercise</h2>
+<p>The biggest pitfall at an assessment day is attempting to dominate the conversation. Assessors do not reward the loudest candidate; they reward the candidate who exhibits true collaboration:</p>
 <ol>
-    <li><strong>Right of Substitution:</strong> Can your company send someone else to do the work if you're sick, without the client throwing a fit? If yes, that strongly supports Outside IR35.</li>
-    <li><strong>Control:</strong> Does the client dictate your exact hours and how you do the task, or are you in charge of delivering the agreed outcome?</li>
-    <li><strong>Mutuality of Obligation:</strong> Is the client obliged to give you ongoing work after the project ends? An independent project contract has a defined finish line.</li>
+    <li><strong>Keep Time:</strong> Volunteer to keep an eye on the clock: <em>"We have 25 minutes; shall we spend the first 5 minutes reviewing the brief individually?"</em></li>
+    <li><strong>Bring Quieter Voices In:</strong> Notice a teammate who hasn't spoken? <em>"Sarah, you have strong marketing experience—what do you think about option B?"</em> Assessors score this highly under leadership.</li>
+    <li><strong>Summarize Progress:</strong> Keep the group focused on delivering the final briefing deck before the timer expires.</li>
 </ol>`,
 		},
+
+		// 10. IR35 Tax Guide
+		{
+			slug:           "ir35-tax-guide",
+			title:          "IR35 Tax Guide 2026: Inside vs Outside IR35 Take-Home Pay & Contractor Rights",
+			category:       "salary",
+			seoTitle:       "IR35 Guide for UK Contractors 2026: Inside vs Outside Tax | JobyUK",
+			seoDescription: "Clear breakdown of UK IR35 off-payroll rules. Compare real net take-home pay, Status Determination Statements (SDS), and umbrella company deductions.",
+			publishedAt:    time.Date(2026, 11, 3, 11, 15, 0, 0, time.UTC),
+			content: `<h2>What Is IR35 and Why Does It Matter?</h2>
+<p>The UK's <strong>Intermediaries Legislation (IR35)</strong> was designed by HMRC to tackle "disguised employment." It ensures that contractors providing services through a Personal Service Company (PSC / Limited Company) pay broadly the same tax and National Insurance contributions as standard employees if their working relationship mirrors permanent employment.</p>
+
+<h2>1. Inside IR35 vs. Outside IR35: Key Differences</h2>
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+    <thead>
+        <tr style="background: #F1F5F9; border-bottom: 2px solid #CBD5E1; text-align: left;">
+            <th style="padding: 12px; width: 50%;">Outside IR35 (Genuine Business-to-Business)</th>
+            <th style="padding: 12px; width: 50%;">Inside IR35 (Deemed Employment)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">You invoice via your own Limited Company (PSC).</td>
+            <td style="padding: 12px;">Treated as an employee for tax purposes (PAYE).</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">Taxed via salary + company dividends + corporation tax (greater tax efficiency).</td>
+            <td style="padding: 12px;">Income Tax, Employee NI, and Apprenticeship Levy deducted at source.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">Contractor retains full control over how, when, and where tasks are executed.</td>
+            <td style="padding: 12px;">Client exercises supervision, direction, and operational control.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>2. Real Take-Home Pay Comparison (£500/day Contract)</h2>
+<p>Consider a typical UK senior technical contract at a rate of <strong>£500 per day</strong> across 220 working days (£110,000 gross annual billing):</p>
+<ul>
+    <li><strong>Outside IR35:</strong> After deducting allowable expenses, small salary, corporation tax, and dividend income tax, typical net take-home pay is roughly <strong>74% to 78%</strong> of gross billing (~£81,000 to £85,000 net).</li>
+    <li><strong>Inside IR35 (via Umbrella):</strong> After deducting Employer NI (13.8%), Apprenticeship Levy (0.5%), umbrella margins, Employee NI, and 40%/45% PAYE income tax, net take-home is roughly <strong>54% to 58%</strong> (~£59,000 to £64,000 net).</li>
+</ul>
+
+<h2>3. The 3 Primary Tests of Employment Status</h2>
+<p>Courts and HMRC evaluate three essential pillars when assessing IR35 status:</p>
+<ol>
+    <li><strong>Right of Substitution:</strong> Does your contract allow your business to send a qualified substitute contractor to perform the work without client veto?</li>
+    <li><strong>Mutuality of Obligation (MOO):</strong> Is the client legally bound to offer ongoing work, and are you bound to accept it once a milestone is completed?</li>
+    <li><strong>Control:</strong> Does the client dictate your daily working hours, manage your appraisals, or supervise how you complete technical tasks?</li>
+</ol>`,
+		},
+
+		// 11. Career Change Guide
 		{
 			slug:           "career-change-guide",
-			title:          "Changing Careers at 30, 40 or Later: How to Pivot Without Starting from Zero",
+			title:          "Changing Careers in the UK at 30, 40 or Later: A Practical Step-by-Step Transition Plan",
 			category:       "job-search",
-			seoTitle:       "Career Change at 30, 40 & Beyond UK: Real Transition Roadmap | JobyUK",
-			seoDescription: "Think you're too late to switch industries? How to reframe your years of experience, map transferable skills, and structure a CV that gets callbacks in a new field.",
-			publishedAt:    time.Date(2026, 11, 3, 16, 0, 0, 0, time.UTC),
-			content: `<h2>Pivoting Your Career: You Don't Have to Start from Scratch</h2>
-<p>The old myth of staying in one job for 40 years is dead. In the UK, more than a third of professionals make a major career pivot in their 30s or 40s. The trick is proving how your existing years of problem-solving, team management, and commercial judgment directly help your new employer.</p>
+			seoTitle:       "Career Change at 30, 40 or 50 UK: Practical Step-by-Step Guide | JobyUK",
+			seoDescription: "Pivoting careers in the UK without starting from the bottom. How to leverage transferable skills, reframe your CV, and secure higher-paying roles.",
+			publishedAt:    time.Date(2026, 11, 3, 14, 0, 0, 0, time.UTC),
+			content: `<h2>The Myth of "Starting from Scratch"</h2>
+<p>One of the biggest anxieties holding professionals back from pivoting careers in their 30s, 40s, or 50s is the fear of starting at the very bottom on an entry-level wage. In the modern UK knowledge economy, this fear is largely unfounded.</p>
+<p>While you may lack technical jargon in your target industry, you possess years of commercial maturity, client relationship management, crisis handling, and budget governance that 22-year-old graduates cannot replicate. Here is how to engineer a successful mid-career pivot.</p>
 
-<h2>1. The Transferable Skills Employers Actually Pay For</h2>
-<p>You don't lose your seniority when you change industries. UK bosses pay top money for people who already know how to:</p>
+<h2>1. Identifying High-Value Transferable Skills</h2>
+<p>UK employers frequently recruit career-changers for specialist roles because cross-industry perspectives solve stagnation. The most in-demand transferable skills include:</p>
 <ul>
-    <li>De-escalate unhappy clients and handle difficult stakeholders.</li>
-    <li>Manage budgets and keep projects from burning through cash.</li>
-    <li>Prioritize work under pressure when everything is due at once.</li>
-    <li>Communicate clearly with both technical specialists and executive directors.</li>
+    <li><strong>Project Delivery & Governance:</strong> Delivering initiatives on time, managing scope creep, and balancing commercial budgets.</li>
+    <li><strong>Stakeholder Influence:</strong> Aligning cross-functional leaders, managing external suppliers, and communicating technical topics simply.</li>
+    <li><strong>Data Literacy & Analysis:</strong> Extracting actionable insights from business metrics to drive executive decision-making.</li>
 </ul>
 
-<h2>2. Rewrite Your CV to Highlight Skills Over History</h2>
-<p>A standard chronological CV makes your industry shift look disjointed. Switch to a <strong>skills-focused CV format</strong>: lead with your transferable capabilities right under your personal statement, followed by a streamlined work history that highlights your achievements.</p>`,
-		},
-		{
-			slug:           "how-to-write-a-cv",
-			title:          "How to Write an ATS-Friendly CV That Real Humans Actually Read",
-			category:       "cv",
-			seoTitle:       "ATS Friendly CV Guide UK 2026: Formatting Rules That Work | JobyUK",
-			seoDescription: "Why fancy Canva templates get rejected by recruiter software. Clean layout rules, formatting fixes, and how to match keywords naturally.",
-			publishedAt:    time.Date(2026, 11, 4, 2, 0, 0, 0, time.UTC),
-			content: `<h2>What UK Applicant Tracking Systems (ATS) Actually Do</h2>
-<p>Over 90% of UK corporate employers and recruitment portals use automated software (Workday, Greenhouse, Taleo) to parse incoming CVs before a recruiter reads them. If your CV formatting confuses the parser, you get rejected before a human ever sees your qualifications.</p>
+<h2>2. Transitioning from Chronological to Hybrid Functional CV</h2>
+<p>If your entire work history is in teaching or hospitality, a traditional chronological CV immediately exposes you to automated sifting rejections for corporate operations or tech roles. Instead, use a <strong>Hybrid Functional Layout</strong>:</p>
+<ol>
+    <li><strong>Executive Profile:</strong> Position yourself for the future role (e.g., <em>"Operations Project Coordinator with 8 years' leadership in high-pressure delivery environments"</em>).</li>
+    <li><strong>Major Transferable Competencies (Page 1):</strong> Group achievements under functional themes (e.g., <em>"Process Optimization & Quality Assurance"</em> or <em>"Stakeholder Engagement"</em>).</li>
+    <li><strong>Brief Employment History (Page 2):</strong> Condense previous roles into clean, 3-line summaries focusing on commercial outcomes.</li>
+</ol>
 
-<h2>1. Layout Mistakes That Ruin Your Chances</h2>
-<ul>
-    <li><strong>Multi-Column Designs &amp; Text Boxes:</strong> Parsers read strictly left-to-right. Two-column CVs scramble your job titles, dates, and bullets into garbled nonsense.</li>
-    <li><strong>Visual Skill Rating Bars:</strong> Writing 'Python: 4 out of 5 stars' is completely invisible to text parsers. Use clear, written bullet points.</li>
-    <li><strong>Key Details in Headers or Footers:</strong> Many ATS platforms ignore document headers and footers entirely. Keep your name, email, phone number, and location in the main page body.</li>
-</ul>
-
-<h2>2. Best File Format: Clean Word (.docx) or Searchable PDF</h2>
-<p>Stick to a single-column document formatted in clean fonts like Calibri, Arial, or Helvetica. If an employer's portal asks for Word format, always upload a .docx file.</p>`,
+<h2>3. The 'Bridge Role' Strategy</h2>
+<p>If jumping directly from your current industry to a completely new sector feels too wide a chasm, use a <strong>bridge role</strong>: maintain your existing functional skill set (e.g., Finance or Marketing) but move into your target sector (e.g., HealthTech or Green Energy). Once inside the new sector's ecosystem, pivoting internally to your target specialization is dramatically easier.</p>`,
 		},
+
+		// 12. Redundancy Rights UK
 		{
 			slug:           "redundancy-rights-uk",
-			title:          "UK Redundancy Rights: Calculating Your Payout & Protecting Your Notice",
+			title:          "UK Statutory Redundancy Pay 2026: Payout Calculator, Notice Periods & Tax Rules",
 			category:       "job-search",
-			seoTitle:       "UK Redundancy Rights 2026: Statutory Pay Calculator & Rules | JobyUK",
-			seoDescription: "Facing redundancy? Exactly how statutory pay is calculated, the £30k tax-free rule, and what employers legally must offer before making you redundant.",
-			publishedAt:    time.Date(2026, 11, 4, 4, 0, 0, 0, time.UTC),
-			content: `<h2>Your Legal Rights When Facing Redundancy in the UK</h2>
-<p>Going through redundancy is stressful, but UK employment law provides strong legal protections around consultation periods, notice pay, and statutory redundancy payouts.</p>
+			seoTitle:       "UK Redundancy Rights 2026: Statutory Payouts & Notice Periods | JobyUK",
+			seoDescription: "Know your UK statutory redundancy rights. Full breakdown of statutory payout calculations, statutory notice rules, and the £30,000 tax-free severance limit.",
+			publishedAt:    time.Date(2026, 11, 4, 3, 0, 0, 0, time.UTC),
+			content: `<h2>Facing Redundancy in the UK: Know Your Legal Protections</h2>
+<p>Being notified of potential redundancy is one of the most stressful professional experiences. However, UK employment law under the <em>Employment Rights Act 1996</em> provides clear, statutory financial cushions and procedural protections for affected workers.</p>
 
 <h2>1. Who Qualifies for Statutory Redundancy Pay?</h2>
-<p>To qualify for statutory redundancy compensation by law, you must have been an employed worker with <strong>at least 2 years of continuous service</strong> at the company.</p>
-
-<h2>2. How Much You Are Legally Entitled To</h2>
-<p>The statutory payout calculation depends on your age and years of completed service (up to 20 years maximum):</p>
+<p>To qualify for statutory redundancy pay, you must:</p>
 <ul>
-    <li><strong>Under 22:</strong> 0.5 week's pay for each full year of service.</li>
-    <li><strong>Aged 22 to 40:</strong> 1 full week's pay for each full year of service.</li>
-    <li><strong>Aged 41 and Older:</strong> 1.5 weeks' pay for each full year of service.</li>
+    <li>Be an official employee working under a contract of employment.</li>
+    <li>Have completed at least <strong>two continuous years of service</strong> with your employer.</li>
 </ul>
-<p><em>The £30,000 Tax-Free Rule:</em> The first £30,000 of genuine redundancy pay is completely free from UK income tax and National Insurance deductions.</p>`,
+
+<h2>2. The Statutory Redundancy Pay Calculation (2026)</h2>
+<p>Statutory payout calculations depend strictly on your age and full years of completed service (capped at 20 years maximum):</p>
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+    <thead>
+        <tr style="background: #F1F5F9; border-bottom: 2px solid #CBD5E1; text-align: left;">
+            <th style="padding: 12px;">Age at Year of Service</th>
+            <th style="padding: 12px;">Entitlement per Completed Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">Under 22 years old</td>
+            <td style="padding: 12px;">0.5 week's pay for each full year</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">Aged 22 to 40</td>
+            <td style="padding: 12px; font-weight: 600;">1.0 full week's pay for each full year</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #E2E8F0;">
+            <td style="padding: 12px;">Aged 41 and older</td>
+            <td style="padding: 12px; color: #059669; font-weight: 700;">1.5 weeks' pay for each full year</td>
+        </tr>
+    </tbody>
+</table>
+<p><em>Weekly Pay Cap:</em> Under UK statutory rules, weekly pay is subject to a statutory cap, updated annually by Parliament.</p>
+
+<h2>3. The £30,000 Tax-Free Severance Rule</h2>
+<p>One of the most important financial protections is that <strong>the first £30,000 of genuine redundancy pay is completely free from UK Income Tax and National Insurance deductions</strong>.</p>
+<p>However, note that payments in lieu of notice (PILON), accrued untaken holiday pay, and contractual bonuses are classified as general employment earnings and remain subject to standard PAYE tax and NI.</p>
+
+<h2>4. Statutory Consultation Periods</h2>
+<p>Your employer cannot dismiss you without formal consultation:</p>
+<ul>
+    <li><strong>Under 20 redundancies:</strong> No fixed statutory consultation length, but consultations must be meaningful.</li>
+    <li><strong>20 to 99 redundancies:</strong> Consultation must begin at least <strong>30 days</strong> before any dismissals take effect.</li>
+    <li><strong>100+ redundancies:</strong> Consultation must begin at least <strong>45 days</strong> prior to dismissals.</li>
+</ul>`,
 		},
+		// 13. Flexible Working Rights UK
 		{
 			slug:           "flexible-working-rights",
-			title:          "Asking for Flexible or Hybrid Working: Your Legal Rights from Day One",
+			title:          "Asking for Flexible or Hybrid Working: Your Legal Rights from Day One (2026)",
 			category:       "job-search",
 			seoTitle:       "Flexible & Hybrid Working Rights UK 2026: Day-One Law | JobyUK",
-			seoDescription: "Want to work from home or do compressed hours? How to use the Day-One flexible working law to submit a request your boss can't easily dismiss.",
+			seoDescription: "How to use the UK Day-One flexible working law to request hybrid working, flexitime, or compressed hours. Includes statutory refusal grounds and ACAS rules.",
 			publishedAt:    time.Date(2026, 11, 4, 5, 0, 0, 0, time.UTC),
-			content: `<h2>How UK Flexible Working Rights Work Today</h2>
-<p>Under UK employment legislation, all employees have the legal right to submit a statutory flexible working request—including hybrid working, part-time hours, or flexitime—from their <strong>very first day on the job</strong>.</p>
+			content: `<h2>Understanding Your Statutory Flexible Working Rights in 2026</h2>
+<p>Under updated UK employment legislation and the <em>Employment Relations (Flexible Working) Act</em>, every employee in the UK has the legal right to submit a statutory flexible working request from their <strong>very first day of employment</strong>. You no longer need to wait 26 weeks before requesting hybrid work, part-time schedules, compressed hours, or flexitime.</p>
 
-<h2>1. Your Core Rights Under the Law</h2>
+<h2>1. Core Statutory Protections Under the Law</h2>
 <ul>
-    <li><strong>Day-One Right:</strong> You don't have to wait 6 months; you can request flexible hours from day one.</li>
-    <li><strong>Two Requests Per Year:</strong> You can submit up to two formal requests within any 12-month period.</li>
-    <li><strong>Employers Must Consult:</strong> Your boss cannot simply reply 'no' by email; they must discuss the request with you before making any decision.</li>
-    <li><strong>2-Month Decision Window:</strong> The employer must give a final decision within 2 months.</li>
+    <li><strong>Day-One Entitlement:</strong> You can formally submit a request on day 1 of joining a new company.</li>
+    <li><strong>Two Requests Per Year:</strong> Employees can submit up to two formal statutory requests within any 12-month period.</li>
+    <li><strong>Mandatory Consultation:</strong> Employers cannot simply reject your application via an email. By law, they must hold a formal consultation meeting to explore alternatives before any refusal can be issued.</li>
+    <li><strong>2-Month Decision Deadline:</strong> The entire process—including any appeal—must be concluded within 2 months of receiving the request.</li>
+    <li><strong>No Requirement to Explain Impact:</strong> Employees are no longer legally required to write a complex business case explaining how their absence will affect company operations.</li>
 </ul>
 
-<h2>2. How to Submit a Request That Gets Approved</h2>
-<p>Submit your request in writing and propose a <strong>3-month trial period</strong>. Suggesting a trial reassures managers who might worry about shift coverage or customer communication, and makes it much harder for them to refuse.</p>`,
-		},
-	}
+<h2>2. The 8 Legal Business Reasons for Refusal</h2>
+<p>An employer cannot refuse your request on personal preference. Under Section 80G of the <em>Employment Rights Act 1996</em>, they can only refuse based on one or more of these 8 statutory business grounds:</p>
+<ol>
+    <li>Burden of additional costs.</li>
+    <li>Detrimental effect on ability to meet customer demand.</li>
+    <li>Inability to reorganize work among existing staff.</li>
+    <li>Inability to recruit additional staff.</li>
+    <li>Detrimental impact on quality of service.</li>
+    <li>Detrimental impact on operational performance.</li>
+    <li>Insufficiency of work during the periods the employee proposes to work.</li>
+    <li>Planned structural changes or reorganization.</li>
+</ol>
+
+<h2>3. The Secret to Getting Approved: Proposing a Trial Period</h2>
+<p>If your manager is hesitant about remote work or compressed 4-day working weeks, never demand a permanent contractual change immediately. Instead, propose a <strong>3-month trial period with predefined KPI review checkpoints</strong>.</p>
+<p>A trial dramatically lowers management anxiety regarding shift coverage, client responsiveness, or team cohesion. If performance metrics remain steady during the 90-day trial, it becomes virtually impossible for the employer to justify a statutory refusal under ACAS guidelines.</p>`,
+		},	}
 
 	for _, a := range seeds {
 		query := `
@@ -449,6 +654,6 @@ func AutoSeedArticles(ctx context.Context, db *pgxpool.Pool) error {
 		}
 	}
 
-	slog.Info("AutoSeedArticles completed successfully")
+	slog.Info("AutoSeedArticles completed successfully: exactly 12 master guides present")
 	return nil
 }

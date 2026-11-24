@@ -135,13 +135,14 @@ func (r *CompanyRepository) UpdateLogoURL(ctx context.Context, companyID int64, 
 	return err
 }
 
-// FindAllActive returns all companies with at least one active job.
+// FindAllActive returns top active companies with at least one active job.
 func (r *CompanyRepository) FindAllActive(ctx context.Context) ([]models.Company, error) {
 	rows, err := r.db.Query(ctx, `
 		SELECT id, slug, name, logo_url, job_count
 		FROM companies
 		WHERE job_count > 0
-		ORDER BY name ASC
+		ORDER BY job_count DESC, name ASC
+		LIMIT 150
 	`)
 	if err != nil {
 		return nil, err

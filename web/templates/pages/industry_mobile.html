@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top" style="padding: 12px; padding-bottom: 56px;">
     {{template "breadcrumbs" .}}
     {{template "wfa_leaderboard" .}}
@@ -111,7 +111,7 @@
     <script>
     function filterIndustriesMobile(query) {
         var q = (query || '').toLowerCase().trim();
-        var cards = document.querySelectorAll('.j-industry-card-m');
+        var cards = document.querySelectorAll('.jy-industry-card-m');
         cards.forEach(function(card) {
             var name = (card.getAttribute('data-industry-name') || '').toLowerCase();
             if (!q || name.indexOf(q) !== -1) {

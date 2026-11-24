@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top" style="padding-top: 24px; padding-bottom: 72px;">
     <div class="jy-container">
         {{template "breadcrumbs" .}}
@@ -668,7 +668,7 @@
                 clearBtn.style.display = q ? 'flex' : 'none';
             }
 
-            var cards = document.querySelectorAll('.j-location-card');
+            var cards = document.querySelectorAll('.jy-location-card');
             var visibleCount = 0;
             cards.forEach(function(card) {
                 var name = (card.getAttribute('data-location-name') || '').toLowerCase();
@@ -702,14 +702,14 @@
         }
 
         function filterTerritory(territory, btn) {
-            var pills = document.querySelectorAll('#territory-filter-pills .j-loc-tag-pill');
+            var pills = document.querySelectorAll('#territory-filter-pills .jy-loc-tag-pill');
             pills.forEach(function(p) { p.classList.remove('is-active'); });
             if (btn) btn.classList.add('is-active');
 
             var input = document.getElementById('location-search-input');
             if (input) input.value = '';
 
-            var cards = document.querySelectorAll('.j-location-card');
+            var cards = document.querySelectorAll('.jy-location-card');
             var target = (territory || '').toLowerCase().trim();
             var visibleCount = 0;
 

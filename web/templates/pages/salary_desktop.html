@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-salary-hub-wrap" style="background: #F8FAF8; padding-top: 24px; padding-bottom: 72px; min-height: 85vh;">
     <div class="jy-container">
         {{template "breadcrumbs" .}}
@@ -449,7 +449,7 @@
    ========================================================================= */
 
 /* Badge Pill */
-.j-sal-badge-pill {
+.jy-sal-badge-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -465,23 +465,23 @@
 }
 
 /* Stat Box Grid */
-.j-sal-stats-grid {
+.jy-sal-stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 @media (max-width: 1024px) {
-    .j-sal-stats-grid {
+    .jy-sal-stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 @media (max-width: 580px) {
-    .j-sal-stats-grid {
+    .jy-sal-stats-grid {
         grid-template-columns: 1fr;
     }
 }
 
-.j-sal-stat-box {
+.jy-sal-stat-box {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 18px;
@@ -489,15 +489,15 @@
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.j-sal-stat-box:hover {
+.jy-sal-stat-box:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
 }
-.j-sal-stat-box--primary {
+.jy-sal-stat-box--primary {
     border-color: #A7F3D0;
     background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
 }
-.j-sal-stat-box__icon {
+.jy-sal-stat-box__icon {
     width: 44px;
     height: 44px;
     border-radius: 12px;
@@ -507,7 +507,7 @@
     justify-content: center;
     margin-bottom: 14px;
 }
-.j-sal-stat-box__tag {
+.jy-sal-stat-box__tag {
     font-size: 0.72rem;
     font-weight: 750;
     text-transform: uppercase;
@@ -515,27 +515,27 @@
     color: #64748B;
     margin-bottom: 4px;
 }
-.j-sal-stat-box__val {
+.jy-sal-stat-box__val {
     font-size: 1.85rem;
     font-weight: 850;
     line-height: 1.2;
     margin-bottom: 4px;
 }
-.j-sal-stat-box__sub {
+.jy-sal-stat-box__sub {
     font-size: 0.8rem;
     font-weight: 600;
     color: #059669;
 }
 
 /* Visual Spectrum Panel */
-.j-sal-spectrum-panel {
+.jy-sal-spectrum-panel {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 20px;
     padding: 28px 32px;
     box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
 }
-.j-sal-spectrum-panel__top {
+.jy-sal-spectrum-panel__top {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -543,7 +543,7 @@
     margin-bottom: 24px;
     flex-wrap: wrap;
 }
-.j-sal-spectrum-pill {
+.jy-sal-spectrum-pill {
     font-size: 0.72rem;
     font-weight: 800;
     color: #065F46;
@@ -552,11 +552,11 @@
     padding: 3px 10px;
     border-radius: 9999px;
 }
-.j-sal-track-container {
+.jy-sal-track-container {
     position: relative;
     padding: 18px 0 24px;
 }
-.j-sal-track-bar {
+.jy-sal-track-bar {
     width: 100%;
     height: 12px;
     border-radius: 9999px;
@@ -564,13 +564,13 @@
     overflow: hidden;
     position: relative;
 }
-.j-sal-track-fill {
+.jy-sal-track-fill {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, #BBF7D0 0%, #10B981 50%, #059669 100%);
     border-radius: 9999px;
 }
-.j-sal-pin-box {
+.jy-sal-pin-box {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -579,7 +579,7 @@
     flex-direction: column;
     align-items: center;
 }
-.j-sal-pin-badge {
+.jy-sal-pin-badge {
     background: #0B1F1A;
     color: #FFFFFF;
     padding: 4px 12px;
@@ -589,7 +589,7 @@
     align-items: center;
     box-shadow: 0 4px 12px rgba(11, 31, 26, 0.25);
 }
-.j-sal-spectrum-labels {
+.jy-sal-spectrum-labels {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -598,35 +598,35 @@
 }
 
 /* Equivalent Rates Card */
-.j-sal-rates-card {
+.jy-sal-rates-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 20px;
     padding: 28px 32px;
     box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
 }
-.j-sal-rates-grid {
+.jy-sal-rates-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
 }
 @media (max-width: 860px) {
-    .j-sal-rates-grid {
+    .jy-sal-rates-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 @media (max-width: 480px) {
-    .j-sal-rates-grid {
+    .jy-sal-rates-grid {
         grid-template-columns: 1fr;
     }
 }
-.j-sal-rate-item {
+.jy-sal-rate-item {
     background: #F8FAF8;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
     padding: 16px 18px;
 }
-.j-sal-rate-item__label {
+.jy-sal-rate-item__label {
     display: block;
     font-size: 0.72rem;
     font-weight: 750;
@@ -634,33 +634,33 @@
     color: #64748B;
     margin-bottom: 4px;
 }
-.j-sal-rate-item__val {
+.jy-sal-rate-item__val {
     display: block;
     font-size: 1.45rem;
     font-weight: 850;
     color: #065F46;
     margin-bottom: 2px;
 }
-.j-sal-rate-item__note {
+.jy-sal-rate-item__note {
     font-size: 0.75rem;
     color: #94A3B8;
 }
 
 /* Career Advice Panel */
-.j-sal-advice-card {
+.jy-sal-advice-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 24px;
     padding: 36px 40px;
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
 }
-.j-sal-advice-block {
+.jy-sal-advice-block {
     background: #F8FAF8;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
     padding: 22px;
 }
-.j-sal-advice-block__icon {
+.jy-sal-advice-block__icon {
     width: 28px;
     height: 28px;
     border-radius: 8px;
@@ -676,7 +676,7 @@
 }
 
 /* Buttons */
-.j-sal-btn-primary {
+.jy-sal-btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -691,11 +691,11 @@
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
     transition: all 0.2s ease;
 }
-.j-sal-btn-primary:hover {
+.jy-sal-btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
 }
-.j-sal-btn-secondary {
+.jy-sal-btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -709,31 +709,31 @@
     text-decoration: none;
     transition: all 0.2s ease;
 }
-.j-sal-btn-secondary:hover {
+.jy-sal-btn-secondary:hover {
     border-color: #059669;
     color: #059669;
     background: #F0FDF4;
 }
 
 /* Salary Cards Grid (Index Directory) */
-.j-sal-grid {
+.jy-sal-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 22px;
 }
 @media (max-width: 1100px) {
-    .j-sal-grid {
+    .jy-sal-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 18px;
     }
 }
 @media (max-width: 640px) {
-    .j-sal-grid {
+    .jy-sal-grid {
         grid-template-columns: 1fr;
     }
 }
 
-.j-sal-card {
+.jy-sal-card {
     position: relative;
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
@@ -742,31 +742,31 @@
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
 }
-.j-sal-card:hover {
+.jy-sal-card:hover {
     transform: translateY(-3px);
     border-color: #10B981;
     box-shadow: 0 16px 30px -8px rgba(5, 150, 105, 0.16), 0 4px 10px rgba(15, 23, 42, 0.04);
 }
-.j-sal-card__overlay {
+.jy-sal-card__overlay {
     position: absolute;
     inset: 0;
     z-index: 10;
 }
-.j-sal-card__inner {
+.jy-sal-card__inner {
     padding: 22px 24px;
     display: flex;
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
 }
-.j-sal-card__header {
+.jy-sal-card__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 14px;
 }
-.j-sal-card__icon-box {
+.jy-sal-card__icon-box {
     width: 40px;
     height: 40px;
     border-radius: 12px;
@@ -776,7 +776,7 @@
     align-items: center;
     justify-content: center;
 }
-.j-sal-card__sample-badge {
+.jy-sal-card__sample-badge {
     font-size: 0.72rem;
     font-weight: 750;
     color: #065F46;
@@ -785,21 +785,21 @@
     padding: 3px 9px;
     border-radius: 6px;
 }
-.j-sal-card__title {
+.jy-sal-card__title {
     font-size: 1.15rem;
     font-weight: 850;
     color: #0B1F1A;
     margin: 0 0 14px;
     line-height: 1.3;
 }
-.j-sal-card__title a {
+.jy-sal-card__title a {
     color: inherit;
     text-decoration: none;
 }
-.j-sal-card__avg-wrap {
+.jy-sal-card__avg-wrap {
     margin-bottom: 14px;
 }
-.j-sal-card__avg-label {
+.jy-sal-card__avg-label {
     display: block;
     font-size: 0.6875rem;
     font-weight: 750;
@@ -808,13 +808,13 @@
     color: #64748B;
     margin-bottom: 2px;
 }
-.j-sal-card__avg-amount {
+.jy-sal-card__avg-amount {
     font-size: 1.65rem;
     font-weight: 850;
     color: #065F46;
     line-height: 1.2;
 }
-.j-sal-card__monthly-note {
+.jy-sal-card__monthly-note {
     font-size: 0.78rem;
     font-weight: 600;
     color: #059669;
@@ -822,7 +822,7 @@
 }
 
 /* Mini Spectrum Bar */
-.j-sal-card__bar-wrap {
+.jy-sal-card__bar-wrap {
     background: #F8FAF8;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
@@ -830,7 +830,7 @@
     margin-bottom: 16px;
     margin-top: auto;
 }
-.j-sal-card__bar-track {
+.jy-sal-card__bar-track {
     width: 100%;
     height: 6px;
     border-radius: 9999px;
@@ -838,31 +838,31 @@
     overflow: hidden;
     margin-bottom: 8px;
 }
-.j-sal-card__bar-fill {
+.jy-sal-card__bar-fill {
     width: 100%;
     height: 100%;
     border-radius: 9999px;
     background: linear-gradient(90deg, #A7F3D0 0%, #10B981 50%, #059669 100%);
 }
-.j-sal-card__range-row {
+.jy-sal-card__range-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 0.72rem;
     font-weight: 700;
 }
-.j-sal-card__range-min {
+.jy-sal-card__range-min {
     color: #64748B;
 }
-.j-sal-card__range-max {
+.jy-sal-card__range-max {
     color: #0F172A;
 }
 
 /* Card Button Footer */
-.j-sal-card__footer {
+.jy-sal-card__footer {
     padding-top: 10px;
 }
-.j-sal-card__btn {
+.jy-sal-card__btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -875,13 +875,13 @@
     font-size: 0.8125rem;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.j-sal-card:hover .j-sal-card__btn {
+.jy-sal-card:hover .jy-sal-card__btn {
     background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
     color: #FFFFFF !important;
     border-color: transparent !important;
     box-shadow: 0 6px 14px -2px rgba(5, 150, 105, 0.35) !important;
 }
-.j-sal-card__btn-arrow {
+.jy-sal-card__btn-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -893,7 +893,7 @@
     color: #0F172A;
     transition: all 0.25s ease;
 }
-.j-sal-card:hover .j-sal-card__btn-arrow {
+.jy-sal-card:hover .jy-sal-card__btn-arrow {
     background: rgba(255, 255, 255, 0.25) !important;
     border-color: rgba(255, 255, 255, 0.5) !important;
     color: #FFFFFF !important;
@@ -901,7 +901,7 @@
 }
 
 /* A-Z Pills */
-.j-az-pill {
+.jy-az-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -916,20 +916,20 @@
     text-decoration: none;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.j-az-pill:hover {
+.jy-az-pill:hover {
     border-color: #059669;
     color: #059669;
     background: #F0FDF4;
     transform: translateY(-2px);
 }
-.j-az-pill.active {
+.jy-az-pill.active {
     background: #059669 !important;
     color: #FFFFFF !important;
     border-color: #059669 !important;
     box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
 }
 
-.j-page-btn {
+.jy-page-btn {
     display: inline-flex;
     align-items: center;
     padding: 8px 18px;
@@ -942,7 +942,7 @@
     text-decoration: none;
     transition: all 0.2s ease;
 }
-.j-page-btn:hover {
+.jy-page-btn:hover {
     border-color: #059669;
     color: #059669;
     background: #F0FDF4;
@@ -969,7 +969,7 @@ function filterSalariesLive(val) {
     const clearBtn = document.getElementById('salary-search-clear');
     if (clearBtn) clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
 
-    const cards = document.querySelectorAll('#salary-cards-grid .j-sal-card');
+    const cards = document.querySelectorAll('#salary-cards-grid .jy-sal-card');
     let visible = 0;
 
     cards.forEach(card => {

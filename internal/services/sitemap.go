@@ -64,6 +64,13 @@ func (s *SitemapService) GetJobsSitemap(ctx context.Context) ([]byte, time.Time,
 	return data, lastMod, nil
 }
 
+// InvalidateJobsCache clears the cached jobs sitemap so it regenerates on next request.
+func (s *SitemapService) InvalidateJobsCache() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.jobsCache = nil
+}
+
 // GenerateJobsSitemap generates sitemap xml for active jobs using a high-speed pre-allocated buffer.
 func (s *SitemapService) GenerateJobsSitemap(ctx context.Context) ([]byte, error) {
 	jobs, err := s.repos.Job.FindSitemapJobs(ctx)

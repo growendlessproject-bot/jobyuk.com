@@ -1,4 +1,4 @@
-{{define "content"}}
+﻿{{define "content"}}
 <div class="jy-container" style="padding-top: 14px; padding-bottom: 60px;">
     {{template "breadcrumbs" .}}
 
@@ -227,7 +227,7 @@
 /* =========================================================================
    Mobile Company Detail View (JobyUK Emerald Card Theme)
    ========================================================================= */
-.j-co-mob-card {
+.jy-co-mob-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 20px;
@@ -235,29 +235,29 @@
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
     margin-bottom: 14px;
 }
-.j-co-mob-cover {
+.jy-co-mob-cover {
     width: 100%;
     height: 110px;
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #0F5132 0%, #059669 100%);
 }
-.j-co-mob-cover img {
+.jy-co-mob-cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
-.j-co-mob-cover__overlay {
+.jy-co-mob-cover__overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.45) 100%);
 }
-.j-co-mob-profile {
+.jy-co-mob-profile {
     padding: 0 14px 14px;
     position: relative;
 }
-.j-co-mob-avatar-row {
+.jy-co-mob-avatar-row {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -266,7 +266,7 @@
     position: relative;
     z-index: 2;
 }
-.j-co-mob-avatar {
+.jy-co-mob-avatar {
     width: 62px;
     height: 62px;
     border-radius: 14px;
@@ -279,18 +279,18 @@
     overflow: hidden;
     flex-shrink: 0;
 }
-.j-co-mob-avatar__initial {
+.jy-co-mob-avatar__initial {
     font-size: 1.6rem;
     font-weight: 850;
     color: #059669;
 }
-.j-co-mob-actions-right {
+.jy-co-mob-actions-right {
     display: flex;
     align-items: center;
     gap: 7px;
     margin: 15px 0px;
 }
-.j-co-mob-follow-btn {
+.jy-co-mob-follow-btn {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -304,12 +304,12 @@
     cursor: pointer;
     transition: all 0.15s ease;
 }
-.j-co-mob-follow-btn.following {
+.jy-co-mob-follow-btn.following {
     background: #059669;
     color: #FFFFFF;
     border-color: #059669;
 }
-.j-co-mob-icon-btn {
+.jy-co-mob-icon-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -321,7 +321,7 @@
     color: #475569;
     cursor: pointer;
 }
-.j-co-mob-badges {
+.jy-co-mob-badges {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -330,10 +330,10 @@
     overflow-x: auto;
     scrollbar-width: none;
 }
-.j-co-mob-badges::-webkit-scrollbar {
+.jy-co-mob-badges::-webkit-scrollbar {
     display: none;
 }
-.j-co-mob-verified-badge {
+.jy-co-mob-verified-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -347,7 +347,7 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.j-co-mob-active-badge {
+.jy-co-mob-active-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -361,13 +361,13 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.j-co-mob-pulse-dot {
+.jy-co-mob-pulse-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #10B981;
 }
-.j-co-mob-name {
+.jy-co-mob-name {
     font-size: 1.45rem;
     font-weight: 850;
     color: #0F172A;
@@ -375,13 +375,13 @@
     line-height: 1.22;
     letter-spacing: -0.02em;
 }
-.j-co-mob-meta {
+.jy-co-mob-meta {
     font-size: 0.82rem;
     color: #64748B;
     margin: 0 0 10px 0;
     line-height: 1.45;
 }
-.j-co-mob-glance-rail {
+.jy-co-mob-glance-rail {
     display: flex;
     gap: 6px;
     overflow-x: auto;
@@ -389,10 +389,10 @@
     scrollbar-width: none;
     margin-bottom: 12px;
 }
-.j-co-mob-glance-rail::-webkit-scrollbar {
+.jy-co-mob-glance-rail::-webkit-scrollbar {
     display: none;
 }
-.j-co-glance-chip {
+.jy-co-glance-chip {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -406,7 +406,7 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.j-co-mob-tabs {
+.jy-co-mob-tabs {
     display: flex;
     gap: 6px;
     overflow-x: auto;
@@ -415,10 +415,10 @@
     border-top: 1px solid #F1F5F9;
     padding-top: 10px;
 }
-.j-co-mob-tabs::-webkit-scrollbar {
+.jy-co-mob-tabs::-webkit-scrollbar {
     display: none;
 }
-.j-co-mob-tab {
+.jy-co-mob-tab {
     background: none;
     border: none;
     font-size: 12.5px;
@@ -431,12 +431,12 @@
     flex-shrink: 0;
     transition: all 0.15s ease;
 }
-.j-co-mob-tab.is-active {
+.jy-co-mob-tab.is-active {
     background: #059669;
     color: #FFFFFF;
     font-weight: 750;
 }
-.j-co-info-card {
+.jy-co-info-card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
@@ -444,19 +444,19 @@
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
     margin-bottom: 12px;
 }
-.j-co-card-title {
+.jy-co-card-title {
     font-size: 1.05rem;
     font-weight: 800;
     color: #0F172A;
     margin: 0 0 8px 0;
 }
-.j-co-card-desc {
+.jy-co-card-desc {
     font-size: 0.88rem;
     line-height: 1.6;
     color: #334155;
     margin: 0;
 }
-.j-co-website-btn {
+.jy-co-website-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -470,13 +470,13 @@
     color: #065F46;
     text-decoration: none;
 }
-.j-co-vacancies-head {
+.jy-co-vacancies-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 4px;
 }
-.j-co-count-badge {
+.jy-co-count-badge {
     background: #ECFDF5;
     border: 1px solid #A7F3D0;
     color: #065F46;
@@ -485,13 +485,13 @@
     padding: 3px 9px;
     border-radius: 999px;
 }
-.j-co-perks-grid {
+.jy-co-perks-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin-top: 12px;
 }
-.j-co-perk-box {
+.jy-co-perk-box {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
@@ -500,39 +500,39 @@
     align-items: flex-start;
     gap: 8px;
 }
-.j-co-perk-icon {
+.jy-co-perk-icon {
     font-size: 18px;
 }
-.j-co-perk-head {
+.jy-co-perk-head {
     font-size: 12px;
     font-weight: 750;
     color: #0F172A;
 }
-.j-co-perk-sub {
+.jy-co-perk-sub {
     font-size: 10.5px;
     color: #64748B;
 }
-.j-co-review-rating-row {
+.jy-co-review-rating-row {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.j-co-rating-num {
+.jy-co-rating-num {
     font-size: 1.5rem;
     font-weight: 850;
     color: #0F172A;
 }
-.j-co-rating-stars {
+.jy-co-rating-stars {
     color: #F59E0B;
     font-size: 1rem;
     letter-spacing: 2px;
 }
-.j-co-rating-label {
+.jy-co-rating-label {
     font-size: 11px;
     color: #64748B;
     font-weight: 500;
 }
-.j-co-similar-rail {
+.jy-co-similar-rail {
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -540,10 +540,10 @@
     scrollbar-width: none;
     padding-bottom: 6px;
 }
-.j-co-similar-rail::-webkit-scrollbar {
+.jy-co-similar-rail::-webkit-scrollbar {
     display: none;
 }
-.j-co-similar-chip {
+.jy-co-similar-chip {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -556,7 +556,7 @@
     flex-shrink: 0;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
-.j-co-sim-logo {
+.jy-co-sim-logo {
     width: 28px;
     height: 28px;
     border-radius: 6px;
@@ -570,17 +570,17 @@
     color: #059669;
     flex-shrink: 0;
 }
-.j-co-sim-info {
+.jy-co-sim-info {
     display: flex;
     flex-direction: column;
 }
-.j-co-sim-name {
+.jy-co-sim-name {
     font-size: 12px;
     font-weight: 750;
     color: #0F172A;
     white-space: nowrap;
 }
-.j-co-sim-count {
+.jy-co-sim-count {
     font-size: 10.5px;
     color: #64748B;
 }
@@ -611,7 +611,7 @@ function shareCompanyProfile() {
 }
 
 function switchCompanyTabM(tabName, clickedBtn) {
-    document.querySelectorAll('.j-co-mob-tab').forEach(function(t) {
+    document.querySelectorAll('.jy-co-mob-tab').forEach(function(t) {
         t.classList.remove('is-active');
         t.setAttribute('aria-selected', 'false');
     });

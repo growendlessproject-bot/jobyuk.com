@@ -966,6 +966,8 @@ func (h *AdminHandlers) SettingsPage(w http.ResponseWriter, r *http.Request) {
 	adsDeleted := r.URL.Query().Get("ads_deleted") == "true"
 	adblockSaved := r.URL.Query().Get("adblock_saved") == "true"
 	adblockStatus := r.URL.Query().Get("adblock_status")
+	waSaved := r.URL.Query().Get("wa_saved") == "true"
+	waStatus := r.URL.Query().Get("wa_status")
 
 	indexingEnabled := false
 	indexingEmail := ""
@@ -985,6 +987,8 @@ func (h *AdminHandlers) SettingsPage(w http.ResponseWriter, r *http.Request) {
 			"AdsDeleted":          adsDeleted,
 			"AdblockSaved":        adblockSaved,
 			"AdblockStatus":       adblockStatus,
+			"WASaved":             waSaved,
+			"WAStatus":            waStatus,
 			"IndexingSaved":       indexingSaved,
 			"IndexingTestSuccess": indexingTestSuccess,
 			"AutoIndexerStarted":  autoIndexerStarted,
@@ -1128,6 +1132,10 @@ func (h *AdminHandlers) UpdateSiteSettings(w http.ResponseWriter, r *http.Reques
 		val := r.FormValue("anti_adblock_enabled")
 		current.AntiAdblockEnabled = (val == "true" || val == "on" || val == "1")
 	}
+	if _, ok := r.Form["whatsapp_alerts_present"]; ok {
+		val := r.FormValue("whatsapp_alerts_enabled")
+		current.WhatsAppAlertsEnabled = (val == "true" || val == "on" || val == "1")
+	}
 
 	_ = settings.GetManager().Update(current)
 	http.Redirect(w, r, "/admin-lol/settings?saved=true", http.StatusSeeOther)
@@ -1191,6 +1199,42 @@ func (h *AdminHandlers) ToggleAntiAdblock(w http.ResponseWriter, r *http.Request
 		statusStr = "enabled"
 	}
 	http.Redirect(w, r, "/admin-lol/settings?adblock_saved=true&adblock_status="+statusStr+"#anti-adblock-card", http.StatusSeeOther)
+}
+
+// ToggleWhatsAppAlerts updates the live WhatsApp alerts dispatcher status.
+func (h *AdminHandlers) ToggleWhatsAppAlerts(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		http.Redirect(w, r, "/admin-lol/settings?error=invalid_form#whatsapp-alerts-card", http.StatusSeeOther)
+		return
+	}
+
+	current := settings.GetManager().GetAll()
+	state := strings.ToLower(strings.TrimSpace(r.FormValue("state")))
+	if state == "enable" || state == "1" || state == "true" || state == "on" {
+		current.WhatsAppAlertsEnabled = true
+	} else if state == "disable" || state == "0" || state == "false" || state == "off" {
+		current.WhatsAppAlertsEnabled = false
+	} else {
+		current.WhatsAppAlertsEnabled = !current.WhatsAppAlertsEnabled
+	}
+
+	_ = settings.GetManager().Update(current)
+
+	if r.Header.Get("X-Requested-With") == "XMLHttpRequest" || strings.Contains(r.Header.Get("Accept"), "application/json") {
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": true,
+			"enabled": current.WhatsAppAlertsEnabled,
+			"status":  map[bool]string{true: "enabled", false: "disabled"}[current.WhatsAppAlertsEnabled],
+		})
+		return
+	}
+
+	statusStr := "disabled"
+	if current.WhatsAppAlertsEnabled {
+		statusStr = "enabled"
+	}
+	http.Redirect(w, r, fmt.Sprintf("/admin-lol/settings?wa_saved=true&wa_status=%s#whatsapp-alerts-card", statusStr), http.StatusSeeOther)
 }
 
 func (h *AdminHandlers) SetLinkBot(lb *linkbot.Bot) {
