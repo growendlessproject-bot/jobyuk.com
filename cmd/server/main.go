@@ -300,6 +300,21 @@ func main() {
 
 	// Global middleware stack
 	r.Use(chimw.RealIP)
+	// Enforce Canonical Apex Domain (301 Permanent Redirect www.jobyuk.com -> jobyuk.com for Google SEO)
+	r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			host := r.Host
+			if colon := strings.Index(host, ":"); colon != -1 {
+				host = host[:colon]
+			}
+			if strings.EqualFold(host, "www.jobyuk.com") {
+				target := "https://jobyuk.com" + r.RequestURI
+				http.Redirect(w, r, target, http.StatusMovedPermanently)
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	})
 	r.Use(chimw.GetHead)
 	r.Use(middleware.MethodOverride)
 	r.Use(middleware.Redirects(repos.Redirect))
