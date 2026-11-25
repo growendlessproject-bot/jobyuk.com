@@ -35,6 +35,7 @@ type Handlers struct {
 	taxonomy  *services.TaxonomyService
 	cache     *services.CacheService
 	analytics *services.AnalyticsService
+	feed      *services.FeedService
 	cfg       *config.Config
 	schema    *seo.SchemaGenerator
 	meta      *seo.MetaGenerator
@@ -50,6 +51,7 @@ func NewHandlers(
 	taxonomy *services.TaxonomyService,
 	cache *services.CacheService,
 	analytics *services.AnalyticsService,
+	feedSvc *services.FeedService,
 	cfg *config.Config,
 ) *Handlers {
 	return &Handlers{
@@ -61,6 +63,7 @@ func NewHandlers(
 		taxonomy:  taxonomy,
 		cache:     cache,
 		analytics: analytics,
+		feed:      feedSvc,
 		cfg:       cfg,
 		schema:    seo.NewSchemaGenerator(cfg.BaseURL),
 		meta:      seo.NewMetaGenerator(cfg.BaseURL),

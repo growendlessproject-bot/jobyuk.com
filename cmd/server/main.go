@@ -212,6 +212,7 @@ func main() {
 	}
 
 	// Initialize handlers
+	feedService := services.NewFeedService(repos, cfg.BaseURL)
 	h := handlers.NewHandlers(
 		renderer,
 		repos,
@@ -221,6 +222,7 @@ func main() {
 		taxonomyService,
 		cacheService,
 		analyticsService,
+		feedService,
 		cfg,
 	)
 
@@ -480,6 +482,16 @@ func main() {
 	r.Get("/llms-full.txt", h.LLMsFullTxt)
 	r.Get("/ads.txt", h.AdsTxt)
 	r.Get("/ads.txt/", h.AdsTxt)
+
+	// Job Aggregator XML Syndication Feeds (Jobrapido, Jooble, Adzuna, Indeed, WhatJobs, Careerjet)
+	r.Get("/feeds", h.FeedsDirectory)
+	r.Get("/feeds/", h.FeedsDirectory)
+	r.Get("/feeds/jobrapido.xml", h.FeedJobrapido)
+	r.Get("/feeds/jooble.xml", h.FeedJooble)
+	r.Get("/feeds/adzuna.xml", h.FeedAdzuna)
+	r.Get("/feeds/indeed.xml", h.FeedIndeed)
+	r.Get("/feeds/whatjobs.xml", h.FeedWhatJobs)
+	r.Get("/feeds/careerjet.xml", h.FeedCareerjet)
 
 	// IndexNow verification key for Bing & Yahoo
 	r.Get("/" + cfg.IndexNowKey + ".txt", h.IndexNowKey)
