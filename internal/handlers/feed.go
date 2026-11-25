@@ -139,6 +139,20 @@ func (h *Handlers) FeedsDirectory(w http.ResponseWriter, r *http.Request) {
         <p class="sub">Standardized XML syndication feeds for automated job distribution across UK search engines and partner aggregators.</p>
         
         <div class="feed-grid">
+            <!-- 0. Master Universal Feed -->
+            <div class="card" style="border-color: #10B981; background: #F0FDF4;">
+                <div class="card-head">
+                    <span class="title">🌟 Master Universal XML Feed (/feeds.xml)</span>
+                    <span class="badge" style="background: #059669; color: #fff;">Universal Standard</span>
+                </div>
+                <div class="desc">Default master feed compatible with all aggregators, job search engines, and automated crawlers.</div>
+                <div class="input-wrap">
+                    <input type="text" readonly value="%s/feeds.xml" id="f-master">
+                    <button class="btn btn-outline" onclick="copyFeed('f-master')">Copy URL</button>
+                    <a class="btn btn-primary" href="/feeds.xml" target="_blank">View XML</a>
+                </div>
+            </div>
+
             <!-- 1. Jobrapido -->
             <div class="card">
                 <div class="card-head">
@@ -211,7 +225,7 @@ func (h *Handlers) FeedsDirectory(w http.ResponseWriter, r *http.Request) {
         }
     </script>
 </body>
-</html>`, baseURL, baseURL, baseURL, baseURL)
+</html>`, baseURL, baseURL, baseURL, baseURL, baseURL)
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
