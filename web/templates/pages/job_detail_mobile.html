@@ -146,13 +146,13 @@
 
         <!-- 4. Hero Clean Apply Now Button -->
         <div class="jy-mob-hero-actions">
-            <a href="/jobs/{{.Data.Job.ID}}/apply/" class="jy-mob-hero-apply-btn" target="_blank" rel="nofollow noopener noreferrer">
+            <button type="button" onclick="window.open('/jobs/{{.Data.Job.ID}}/apply/', '_blank', 'noopener,noreferrer')" class="jy-mob-hero-apply-btn" style="border: none; font-family: inherit; cursor: pointer;">
                 <span>Apply Now</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
-            </a>
+            </button>
             <div class="jy-mob-hero-subnote">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>Direct ATS link • 100% Free • Verified Employer</span>
@@ -419,10 +419,10 @@
                 <span class="jy-mob-sticky-bar__title">{{.Data.Job.Title}}</span>
                 <span class="jy-mob-sticky-bar__meta">{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}} • {{end}}{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else}}Verified Direct Employer{{end}}</span>
             </div>
-            <a href="/jobs/{{.Data.Job.ID}}/apply/" class="jy-mob-sticky-bar__btn" target="_blank" rel="nofollow noopener noreferrer">
+            <button type="button" onclick="window.open('/jobs/{{.Data.Job.ID}}/apply/', '_blank', 'noopener,noreferrer')" class="jy-mob-sticky-bar__btn" style="border: none; font-family: inherit; cursor: pointer;">
                 <span>Apply Now</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </a>
+            </button>
         </div>
     </aside>
 

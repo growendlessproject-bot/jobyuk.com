@@ -878,20 +878,20 @@
 
                     <!-- CTA Action Area -->
                     <div class="gw-cta-section">
-                        <a href="{{.Data.DestURL}}" id="gwCtaBtn" class="gw-cta-button" rel="nofollow noopener noreferrer">
+                        <button type="button" onclick="window.location.replace('{{.Data.DestURL}}')" id="gwCtaBtn" class="gw-cta-button" style="border: none; font-family: inherit; cursor: pointer;">
                             <span class="gw-btn-spinner" id="gwSpinner"></span>
                             <span id="gwBtnText">Transferring to Employer Portal ({{if .Data.Countdown}}{{.Data.Countdown}}{{else}}10{{end}}s)...</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="gwBtnArrow" style="display:none; margin-left: 8px;">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
-                        </a>
+                        </button>
 
                         <div class="gw-skip-wrap">
-                            <a href="{{.Data.DestURL}}" class="gw-skip-link" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px;">
+                            <button type="button" onclick="window.location.replace('{{.Data.DestURL}}')" class="gw-skip-link" style="display: inline-flex; align-items: center; gap: 6px; background: transparent; border: none; font-family: inherit; cursor: pointer;">
                                 <span>In a hurry? Skip wait & apply now</span>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>

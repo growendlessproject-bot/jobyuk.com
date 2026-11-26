@@ -174,7 +174,7 @@ function renderSavedJobsList() {
                 <span class="jy-saved-card__time">${escapeHtml(job.timeAgo || 'Recently')}</span>
 
                 <div style="display: flex; align-items: center; gap: 8px; position: relative; z-index: 5;">
-                    <a href="/jobs/${escapeHtml(job.id)}/apply/" target="_blank" rel="noopener noreferrer" class="jy-dream-apply-cta" style="padding: 7px 16px; font-size: 13px; text-decoration: none;" title="Apply for ${escapeHtml(job.title)}">
+                    <a href="/jobs/${escapeHtml(job.slug)}/" class="jy-dream-apply-cta" style="padding: 7px 16px; font-size: 13px; text-decoration: none;" title="View &amp; Apply for ${escapeHtml(job.title)}">
                         <span>Apply</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </a>
