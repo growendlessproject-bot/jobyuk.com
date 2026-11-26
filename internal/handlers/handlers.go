@@ -1173,25 +1173,19 @@ func (h *Handlers) RoleLocation(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Role location search failed", "error", err)
 	}
 
-	var title string
-	if results != nil && results.Total > 0 {
-		title = fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", role.Name, location.Name, results.Total)
-	} else {
-		title = fmt.Sprintf("%s Jobs in %s | JobyUK", role.Name, location.Name)
+	// High-CTR: {Role} Jobs in {Location} (Apply Direct) 2026 | JobyUK
+	title := fmt.Sprintf("%s Jobs in %s (Apply Direct) 2026 | JobyUK", role.Name, location.Name)
+	if len([]rune(title)) > 60 {
+		title = fmt.Sprintf("%s Jobs in %s (Apply Direct) | JobyUK", role.Name, location.Name)
 	}
 	if len([]rune(title)) > 60 {
-		title = fmt.Sprintf("%s Jobs in %s | JobyUK", role.Name, location.Name)
+		title = fmt.Sprintf("%s Jobs in %s 2026 | JobyUK", role.Name, location.Name)
 	}
 	if len([]rune(title)) > 60 {
 		title = truncate(title, 60)
 	}
 
-	var desc string
-	if results != nil && results.Total > 0 {
-		desc = fmt.Sprintf("%d %s jobs in %s right now. Check local pay, see who is hiring and apply direct to the employer – no recruiter in the way.", results.Total, role.Name, location.Name)
-	} else {
-		desc = fmt.Sprintf("%s jobs in %s right now. Check local pay, see who is hiring and apply direct to the employer – no recruiter in the way.", role.Name, location.Name)
-	}
+	desc := fmt.Sprintf("Apply direct for verified %s jobs in %s. Compare live salaries, see hiring employers, and skip recruitment agencies – updated daily on JobyUK.", role.Name, location.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -1299,12 +1293,8 @@ func (h *Handlers) IndustryDetail(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Industry detail search failed", "error", err)
 	}
 
-	var title string
-	if results != nil && results.Total > 0 {
-		title = fmt.Sprintf("%s Jobs UK 2026 – %d Openings | JobyUK", industry.Name, results.Total)
-	} else {
-		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", industry.Name)
-	}
+	// High-CTR: {Industry} Jobs UK 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("%s Jobs UK 2026 (Apply Direct) | JobyUK", industry.Name)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", industry.Name)
 	}
@@ -1312,12 +1302,7 @@ func (h *Handlers) IndustryDetail(w http.ResponseWriter, r *http.Request) {
 		title = truncate(title, 60)
 	}
 
-	var desc string
-	if results != nil && results.Total > 0 {
-		desc = fmt.Sprintf("%d %s jobs across the UK. See which companies are hiring, what they pay, and apply direct – no agencies, no middleman.", results.Total, industry.Name)
-	} else {
-		desc = fmt.Sprintf("%s jobs across the UK. See which companies are hiring, what they pay, and apply direct – no agencies, no middleman.", industry.Name)
-	}
+	desc := fmt.Sprintf("Find verified %s jobs across the UK with upfront pay disclosure. See hiring companies and apply straight to the employer without recruiter middlemen.", industry.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -1425,12 +1410,8 @@ func (h *Handlers) LocationDetail(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Location detail search failed", "error", err)
 	}
 
-	var title string
-	if results != nil && results.Total > 0 {
-		title = fmt.Sprintf("Jobs in %s 2026 – %d Vacancies | JobyUK", location.Name, results.Total)
-	} else {
-		title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", location.Name)
-	}
+	// High-CTR: Jobs in {Location} 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("Jobs in %s 2026 (Apply Direct) | JobyUK", location.Name)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", location.Name)
 	}
@@ -1438,12 +1419,7 @@ func (h *Handlers) LocationDetail(w http.ResponseWriter, r *http.Request) {
 		title = truncate(title, 60)
 	}
 
-	var desc string
-	if results != nil && results.Total > 0 {
-		desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", results.Total, location.Name)
-	} else {
-		desc = fmt.Sprintf("Browse jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
-	}
+	desc := fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -1534,12 +1510,8 @@ func (h *Handlers) JobTypeDetail(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Job type detail search failed", "error", err)
 	}
 
-	var title string
-	if results != nil && results.Total > 0 {
-		title = fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", typeLabel, results.Total)
-	} else {
-		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", typeLabel)
-	}
+	// High-CTR: {Type} Jobs UK 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("%s Jobs UK 2026 (Apply Direct) | JobyUK", typeLabel)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", typeLabel)
 	}
@@ -1547,12 +1519,7 @@ func (h *Handlers) JobTypeDetail(w http.ResponseWriter, r *http.Request) {
 		title = truncate(title, 60)
 	}
 
-	var desc string
-	if results != nil && results.Total > 0 {
-		desc = fmt.Sprintf("Find %d %s jobs in the UK. Pay is shown upfront, every listing links to the employer, and there is no agency spam. Apply in minutes.", results.Total, typeLabel)
-	} else {
-		desc = fmt.Sprintf("Find %s jobs in the UK. Pay is shown upfront, every listing links to the employer, and there is no agency spam. Apply in minutes.", typeLabel)
-	}
+	desc := fmt.Sprintf("Find verified %s jobs in the UK. Pay is shown upfront, every listing links directly to the employer ATS, and there is zero agency spam.", typeLabel)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}

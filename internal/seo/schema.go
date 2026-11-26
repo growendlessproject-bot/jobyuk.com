@@ -538,14 +538,8 @@ func GenerateJobFAQs(job *models.Job) []FAQItem {
 
 // RoleMeta returns meta tags for a role landing page.
 func (m *MetaGenerator) RoleMeta(role *models.JobRole, jobCount int) PageMeta {
-	// Title: {Role} Jobs UK 2026 – {Count} Open Now | JobyUK
-	// Fallback if > 60: {Role} Jobs UK 2026 | JobyUK
-	var title string
-	if jobCount > 0 {
-		title = fmt.Sprintf("%s Jobs UK 2026 – %d Open Now | JobyUK", role.Name, jobCount)
-	} else {
-		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", role.Name)
-	}
+	// High-CTR: {Role} Jobs UK 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("%s Jobs UK 2026 (Apply Direct) | JobyUK", role.Name)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", role.Name)
 	}
@@ -553,13 +547,8 @@ func (m *MetaGenerator) RoleMeta(role *models.JobRole, jobCount int) PageMeta {
 		title = truncate(title, 60)
 	}
 
-	// Description: Apply for {Count} {Role} jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.
-	var desc string
-	if jobCount > 1 {
-		desc = fmt.Sprintf("Apply for %d %s jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.", jobCount, role.Name)
-	} else {
-		desc = fmt.Sprintf("Explore verified %s jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.", role.Name)
-	}
+	// Description: Browse verified {Role} jobs across the UK with upfront salaries and direct employer ATS links.
+	desc := fmt.Sprintf("Browse verified %s jobs across the UK with upfront salaries and direct employer ATS links. Skip recruitment agency spam and apply direct on JobyUK.", role.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -587,14 +576,8 @@ func (m *MetaGenerator) RoleMeta(role *models.JobRole, jobCount int) PageMeta {
 
 // LocationMeta returns meta tags for a location page.
 func (m *MetaGenerator) LocationMeta(location *models.Location, jobCount int) PageMeta {
-	// Title: Jobs in {Location} 2026 – {Count} Vacancies | JobyUK
-	// Fallback if > 60: Jobs in {Location} 2026 | JobyUK
-	var title string
-	if jobCount > 0 {
-		title = fmt.Sprintf("Jobs in %s 2026 – %d Vacancies | JobyUK", location.Name, jobCount)
-	} else {
-		title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", location.Name)
-	}
+	// High-CTR: Jobs in {Location} 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("Jobs in %s 2026 (Apply Direct) | JobyUK", location.Name)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", location.Name)
 	}
@@ -602,13 +585,8 @@ func (m *MetaGenerator) LocationMeta(location *models.Location, jobCount int) Pa
 		title = truncate(title, 60)
 	}
 
-	// Description: Browse {Count} jobs in {Location}: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.
-	var desc string
-	if jobCount > 1 {
-		desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", jobCount, location.Name)
-	} else {
-		desc = fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
-	}
+	// Description: Browse verified jobs in {Location}: full-time, part-time, remote and hybrid.
+	desc := fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -651,14 +629,8 @@ func (m *MetaGenerator) CompanyIndexMeta() PageMeta {
 
 // CompanyMeta returns meta tags for a specific company profile page.
 func (m *MetaGenerator) CompanyMeta(company *models.Company, jobCount int) PageMeta {
-	// Title: Jobs at {Company} 2026 – {Count} Open Roles | JobyUK
-	// Fallback if > 60: Jobs at {Company} 2026 | JobyUK
-	var title string
-	if jobCount > 0 {
-		title = fmt.Sprintf("Jobs at %s 2026 – %d Open Roles | JobyUK", company.Name, jobCount)
-	} else {
-		title = fmt.Sprintf("Jobs at %s 2026 | JobyUK", company.Name)
-	}
+	// High-CTR: Jobs at {Company} 2026 (Apply Direct) | JobyUK
+	title := fmt.Sprintf("Jobs at %s 2026 (Apply Direct) | JobyUK", company.Name)
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("Jobs at %s 2026 | JobyUK", company.Name)
 	}
@@ -666,15 +638,8 @@ func (m *MetaGenerator) CompanyMeta(company *models.Company, jobCount int) PageM
 		title = truncate(title, 60)
 	}
 
-	// Description: {Count} open jobs at {Company}. See roles, locations and pay, then apply direct on {Company}’s own careers site – no agency in between.
-	var desc string
-	if jobCount > 1 {
-		desc = fmt.Sprintf("%d open jobs at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", jobCount, company.Name, company.Name)
-	} else if jobCount == 1 {
-		desc = fmt.Sprintf("1 open job at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
-	} else {
-		desc = fmt.Sprintf("Explore careers at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
-	}
+	// Description: Explore open jobs and careers at {Company}. See roles, locations and pay, then apply direct on their official careers site.
+	desc := fmt.Sprintf("Explore careers at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
 	}
@@ -712,43 +677,31 @@ func (m *MetaGenerator) SearchFilterMeta(query, location string, total int) Page
 	var title, desc string
 
 	if q != "" && loc != "" {
-		// Search ?q=&l=: {Query} Jobs in {Location} – {Total} Open | JobyUK
-		if total > 0 {
-			title = fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", q, loc, total)
-			if len([]rune(title)) > 60 {
-				title = fmt.Sprintf("%s Jobs in %s | JobyUK", q, loc)
-			}
-			desc = fmt.Sprintf("Find %d %s jobs in %s. Compare pay, see who is hiring and apply direct to the employer – no recruiter spam, no middleman.", total, q, loc)
-		} else {
-			title = fmt.Sprintf("%s Jobs in %s | JobyUK", q, loc)
-			desc = fmt.Sprintf("Find verified %s jobs in %s. Compare pay, see who is hiring and apply direct to the employer – no recruiter spam, no middleman.", q, loc)
+		// High-CTR: {Query} Jobs in {Location} (Apply Direct) 2026 | JobyUK
+		title = fmt.Sprintf("%s Jobs in %s (Apply Direct) 2026 | JobyUK", q, loc)
+		if len([]rune(title)) > 60 {
+			title = fmt.Sprintf("%s Jobs in %s (Apply Direct) | JobyUK", q, loc)
 		}
+		if len([]rune(title)) > 60 {
+			title = fmt.Sprintf("%s Jobs in %s 2026 | JobyUK", q, loc)
+		}
+		desc = fmt.Sprintf("Find verified %s jobs in %s. Compare live pay, see who is hiring, and apply direct to employers without recruiter fees or middleman delays.", q, loc)
 	} else if q != "" {
-		// Search ?q=: {Query} Jobs UK 2026 – {Total} Vacancies | JobyUK
-		if total > 0 {
-			title = fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", q, total)
-			if len([]rune(title)) > 60 {
-				title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", q)
-			}
-			desc = fmt.Sprintf("Find %d %s jobs across the UK. Compare pay, filter by location and apply direct to the employer – no recruiter spam, no middleman.", total, q)
-		} else {
+		// High-CTR: {Query} Jobs UK 2026 (Apply Direct) | JobyUK
+		title = fmt.Sprintf("%s Jobs UK 2026 (Apply Direct) | JobyUK", q)
+		if len([]rune(title)) > 60 {
 			title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", q)
-			desc = fmt.Sprintf("Find verified %s jobs across the UK. Compare pay, filter by location and apply direct to the employer – no recruiter spam, no middleman.", q)
 		}
+		desc = fmt.Sprintf("Browse verified %s jobs across the UK with transparent salaries and direct application links to verified employers on JobyUK.", q)
 	} else if loc != "" {
-		// Search ?l=: Jobs in {Location} 2026 – {Total} Vacancies | JobyUK
-		if total > 0 {
-			title = fmt.Sprintf("Jobs in %s 2026 – %d Vacancies | JobyUK", loc, total)
-			if len([]rune(title)) > 60 {
-				title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", loc)
-			}
-			desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", total, loc)
-		} else {
+		// High-CTR: Jobs in {Location} 2026 (Apply Direct) | JobyUK
+		title = fmt.Sprintf("Jobs in %s 2026 (Apply Direct) | JobyUK", loc)
+		if len([]rune(title)) > 60 {
 			title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", loc)
-			desc = fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", loc)
 		}
+		desc = fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", loc)
 	} else {
-		title = "Browse UK Job Vacancies 2026 | Updated Daily | JobyUK"
+		title = "Browse UK Job Vacancies 2026 (Apply Direct) | JobyUK"
 		desc = "Browse the latest UK job vacancies updated daily. Filter by role, city, salary and hours, then apply straight to the employer with no middleman."
 	}
 
