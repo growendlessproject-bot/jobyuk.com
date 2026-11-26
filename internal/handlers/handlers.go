@@ -1173,7 +1173,12 @@ func (h *Handlers) RoleLocation(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Role location search failed", "error", err)
 	}
 
-	title := fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", role.Name, location.Name, results.Total)
+	var title string
+	if results != nil && results.Total > 0 {
+		title = fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", role.Name, location.Name, results.Total)
+	} else {
+		title = fmt.Sprintf("%s Jobs in %s | JobyUK", role.Name, location.Name)
+	}
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs in %s | JobyUK", role.Name, location.Name)
 	}
@@ -1294,7 +1299,12 @@ func (h *Handlers) IndustryDetail(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Industry detail search failed", "error", err)
 	}
 
-	title := fmt.Sprintf("%s Jobs UK 2026 – %d Openings | JobyUK", industry.Name, results.Total)
+	var title string
+	if results != nil && results.Total > 0 {
+		title = fmt.Sprintf("%s Jobs UK 2026 – %d Openings | JobyUK", industry.Name, results.Total)
+	} else {
+		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", industry.Name)
+	}
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", industry.Name)
 	}
@@ -1524,7 +1534,12 @@ func (h *Handlers) JobTypeDetail(w http.ResponseWriter, r *http.Request) {
 		slog.Error("Job type detail search failed", "error", err)
 	}
 
-	title := fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", typeLabel, results.Total)
+	var title string
+	if results != nil && results.Total > 0 {
+		title = fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", typeLabel, results.Total)
+	} else {
+		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", typeLabel)
+	}
 	if len([]rune(title)) > 60 {
 		title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", typeLabel)
 	}

@@ -555,10 +555,10 @@ func (m *MetaGenerator) RoleMeta(role *models.JobRole, jobCount int) PageMeta {
 
 	// Description: Apply for {Count} {Role} jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.
 	var desc string
-	if jobCount > 0 {
+	if jobCount > 1 {
 		desc = fmt.Sprintf("Apply for %d %s jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.", jobCount, role.Name)
 	} else {
-		desc = fmt.Sprintf("Explore %s jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.", role.Name)
+		desc = fmt.Sprintf("Explore verified %s jobs across the UK. See real pay ranges, top hiring employers and apply direct – no agency spam, no CV black hole.", role.Name)
 	}
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
@@ -604,10 +604,10 @@ func (m *MetaGenerator) LocationMeta(location *models.Location, jobCount int) Pa
 
 	// Description: Browse {Count} jobs in {Location}: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.
 	var desc string
-	if jobCount > 0 {
+	if jobCount > 1 {
 		desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", jobCount, location.Name)
 	} else {
-		desc = fmt.Sprintf("Browse jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
+		desc = fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", location.Name)
 	}
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
@@ -668,10 +668,12 @@ func (m *MetaGenerator) CompanyMeta(company *models.Company, jobCount int) PageM
 
 	// Description: {Count} open jobs at {Company}. See roles, locations and pay, then apply direct on {Company}’s own careers site – no agency in between.
 	var desc string
-	if jobCount > 0 {
+	if jobCount > 1 {
 		desc = fmt.Sprintf("%d open jobs at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", jobCount, company.Name, company.Name)
+	} else if jobCount == 1 {
+		desc = fmt.Sprintf("1 open job at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
 	} else {
-		desc = fmt.Sprintf("Open jobs at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
+		desc = fmt.Sprintf("Explore careers at %s. See roles, locations and pay, then apply direct on %s's own careers site – no agency in between.", company.Name, company.Name)
 	}
 	if len([]rune(desc)) > 150 {
 		desc = truncate(desc, 150)
@@ -711,25 +713,40 @@ func (m *MetaGenerator) SearchFilterMeta(query, location string, total int) Page
 
 	if q != "" && loc != "" {
 		// Search ?q=&l=: {Query} Jobs in {Location} – {Total} Open | JobyUK
-		title = fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", q, loc, total)
-		if len([]rune(title)) > 60 {
+		if total > 0 {
+			title = fmt.Sprintf("%s Jobs in %s – %d Open | JobyUK", q, loc, total)
+			if len([]rune(title)) > 60 {
+				title = fmt.Sprintf("%s Jobs in %s | JobyUK", q, loc)
+			}
+			desc = fmt.Sprintf("Find %d %s jobs in %s. Compare pay, see who is hiring and apply direct to the employer – no recruiter spam, no middleman.", total, q, loc)
+		} else {
 			title = fmt.Sprintf("%s Jobs in %s | JobyUK", q, loc)
+			desc = fmt.Sprintf("Find verified %s jobs in %s. Compare pay, see who is hiring and apply direct to the employer – no recruiter spam, no middleman.", q, loc)
 		}
-		desc = fmt.Sprintf("Find %d %s jobs in %s. Compare pay, see who is hiring and apply direct to the employer – no recruiter spam, no middleman.", total, q, loc)
 	} else if q != "" {
 		// Search ?q=: {Query} Jobs UK 2026 – {Total} Vacancies | JobyUK
-		title = fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", q, total)
-		if len([]rune(title)) > 60 {
+		if total > 0 {
+			title = fmt.Sprintf("%s Jobs UK 2026 – %d Vacancies | JobyUK", q, total)
+			if len([]rune(title)) > 60 {
+				title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", q)
+			}
+			desc = fmt.Sprintf("Find %d %s jobs across the UK. Compare pay, filter by location and apply direct to the employer – no recruiter spam, no middleman.", total, q)
+		} else {
 			title = fmt.Sprintf("%s Jobs UK 2026 | JobyUK", q)
+			desc = fmt.Sprintf("Find verified %s jobs across the UK. Compare pay, filter by location and apply direct to the employer – no recruiter spam, no middleman.", q)
 		}
-		desc = fmt.Sprintf("Find %d %s jobs across the UK. Compare pay, filter by location and apply direct to the employer – no recruiter spam, no middleman.", total, q)
 	} else if loc != "" {
 		// Search ?l=: Jobs in {Location} 2026 – {Total} Vacancies | JobyUK
-		title = fmt.Sprintf("Jobs in %s 2026 – %d Vacancies | JobyUK", loc, total)
-		if len([]rune(title)) > 60 {
+		if total > 0 {
+			title = fmt.Sprintf("Jobs in %s 2026 – %d Vacancies | JobyUK", loc, total)
+			if len([]rune(title)) > 60 {
+				title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", loc)
+			}
+			desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", total, loc)
+		} else {
 			title = fmt.Sprintf("Jobs in %s 2026 | JobyUK", loc)
+			desc = fmt.Sprintf("Browse verified jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", loc)
 		}
-		desc = fmt.Sprintf("Browse %d jobs in %s: full-time, part-time, remote and hybrid. Local salaries shown, direct employer links, no agency spam.", total, loc)
 	} else {
 		title = "Browse UK Job Vacancies 2026 | Updated Daily | JobyUK"
 		desc = "Browse the latest UK job vacancies updated daily. Filter by role, city, salary and hours, then apply straight to the employer with no middleman."

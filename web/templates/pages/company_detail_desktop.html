@@ -47,7 +47,7 @@
             <!-- Title & Submeta -->
             <h1 class="jy-company-name">{{.Data.Company.Name}}</h1>
             <p class="jy-company-submeta">
-                Technology • {{if .Data.Company.JobCount}}{{.Data.Company.JobCount}} hiring in UK{{else}}10,000+ employees{{end}} • London, UK
+                Verified UK Employer • {{if and .Data.Results (gt .Data.Results.Total 0)}}{{formatSalary .Data.Results.Total}} active vacancies{{else if .Data.Company.JobCount}}{{.Data.Company.JobCount}} active vacancies{{else}}Direct Hiring{{end}} • Direct ATS Apply
             </p>
 
             <!-- Tabs: About, Jobs ({count}), Life, Reviews -->
@@ -68,7 +68,7 @@
                     {{if .Data.Company.Description}}
                         {{.Data.Company.Description}}
                     {{else}}
-                        {{.Data.Company.Name}} is a global technology company focused on organising the world's information and making it universally accessible and useful.
+                        {{.Data.Company.Name}} is an established employer in the United Kingdom providing career growth, competitive remuneration, and forward-thinking work environments. Apply directly on their official careers portal through JobyUK.
                     {{end}}
                 </p>
 
