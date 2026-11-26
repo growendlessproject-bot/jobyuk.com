@@ -1,4 +1,4 @@
-﻿{{define "content"}}
+{{define "content"}}
 <div class="jy-dream-hub" id="jobs-top">
     {{template "breadcrumbs" .}}
 
@@ -194,11 +194,7 @@
         <main class="jy-dream-listings" aria-label="Job listings list">
             <div class="jy-listing-feed-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
                 <h2 style="font-size: 1.15rem; font-weight: 800; color: #0B1F1A; margin: 0; letter-spacing: -0.015em;">
-                    {{if and .Data.Results (gt .Data.Results.Total 0)}}
-                        Live Openings ({{formatSalary .Data.Results.Total}})
-                    {{else}}
-                        Latest Vacancies
-                    {{end}}
+                    Live Openings
                 </h2>
                 <span style="font-size: 0.85rem; color: #64748B; font-weight: 500;">Sorted by relevance</span>
             </div>

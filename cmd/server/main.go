@@ -74,7 +74,11 @@ func main() {
 		CREATE INDEX IF NOT EXISTS idx_job_reports_job_id ON job_reports(job_id);
 		CREATE INDEX IF NOT EXISTS idx_job_reports_ip ON job_reports(ip_address);
 		ALTER TABLE jobs ADD COLUMN IF NOT EXISTS pinterest_pin_url TEXT DEFAULT '';
+		ALTER TABLE jobs ADD COLUMN IF NOT EXISTS external_slug TEXT DEFAULT '';
+		ALTER TABLE jobs ADD COLUMN IF NOT EXISTS reed_url TEXT DEFAULT '';
+		ALTER TABLE jobs ADD COLUMN IF NOT EXISTS external_url TEXT DEFAULT '';
 		CREATE INDEX IF NOT EXISTS idx_jobs_pinterest_pin ON jobs (pinterest_pin_url) WHERE pinterest_pin_url != '' AND pinterest_pin_url IS NOT NULL;
+		CREATE INDEX IF NOT EXISTS idx_jobs_external_slug ON jobs (external_slug) WHERE external_slug != '' AND external_slug IS NOT NULL;
 
 		CREATE TABLE IF NOT EXISTS pinterest_users (
 			id SERIAL PRIMARY KEY,

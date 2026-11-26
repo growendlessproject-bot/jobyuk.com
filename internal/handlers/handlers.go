@@ -630,6 +630,7 @@ func (h *Handlers) JobDetail(w http.ResponseWriter, r *http.Request) {
 
 	job, err := h.repos.Job.FindBySlug(ctx, slug)
 	if err != nil {
+		slog.Warn("JobDetail: FindBySlug not found", "slug", slug, "error", err)
 		// 2. Slug not found — render 410 Gone with helpful active vacancies rather than 404 error
 		similarJobs, _ := h.repos.Job.FindLatest(ctx, 6)
 		cleanTitle := strings.ReplaceAll(slug, "-", " ")

@@ -150,7 +150,7 @@ func (r *JobRepository) FindBySlug(ctx context.Context, slug string) (*models.Jo
 			COALESCE(c.slug, '') as company_slug
 		FROM jobs j
 		LEFT JOIN companies c ON j.employer_id = c.id
-		WHERE j.slug = $1 OR j.slug = $2 OR j.external_slug = $1 OR j.external_slug = $2 OR ($3 > 0 AND j.reed_job_id = $3)
+		WHERE j.slug = $1 OR j.slug = $2 OR ($3 > 0 AND j.reed_job_id = $3)
 		LIMIT 1
 	`, slug, cleanSlug, reedJobID).Scan(
 		&job.ID, &job.ReedJobID, &job.Slug, &job.Title, &job.Description,

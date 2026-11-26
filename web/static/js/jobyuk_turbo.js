@@ -217,12 +217,17 @@
         return { html, title, timestamp: Date.now() };
     }
 
+    const prefetchedUrls = new Set();
+
     function prefetchUrl(url) {
         if (!url || getCachedPage(url)) return;
         try {
             const dest = new URL(url, window.location.origin);
-            // Don't prefetch current URL
-            if (cleanUrl(dest.href) === cleanUrl(window.location.href)) return;
+            const clean = cleanUrl(dest.href);
+            // Don't prefetch current URL or already-attempted URL
+            if (clean === cleanUrl(window.location.href)) return;
+            if (prefetchedUrls.has(clean)) return;
+            prefetchedUrls.add(clean);
 
             fetchPage(dest.href).catch(() => {});
         } catch (e) {}
