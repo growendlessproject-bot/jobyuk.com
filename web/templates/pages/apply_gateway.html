@@ -738,7 +738,7 @@
             </div>
         </div>
 
-        <!-- Top Leaderboard Ad Slot (Clean White Card) -->
+        {{/* Top Leaderboard Ad Slot (Commented until active sponsor/ad partner is configured)
         <div class="gw-top-ad-card">
             <div class="gw-ad-caption">Sponsored Advertisement</div>
             <div class="gw-top-ad-frame">
@@ -747,6 +747,7 @@
                 </div>
             </div>
         </div>
+        */}}
 
         <!-- Main Content Grid -->
         <div class="gw-layout-grid">
@@ -897,23 +898,26 @@
 
             </div>
 
-            <!-- Right Column (High-CPM Sidebar Ad & VIP Alerts) -->
+            {{if whatsappAlertsEnabled}}
+            <!-- Right Column (VIP Alerts; Sponsor Slot Commented until active partner) -->
             <div class="gw-sidebar-col">
                 <div class="gw-sidebar-card">
+                    {{/*
                     <div class="gw-sidebar-head">
                         <span class="gw-sidebar-badge">Featured Career Partner</span>
                         <span class="gw-sidebar-sponsor">Sponsored</span>
                     </div>
+                    */}}
 
                     <div class="gw-sidebar-body">
-                        <!-- High CPM Ad Slot -->
+                        {{/* High CPM Ad Slot (Commented until active sponsor/ad partner)
                         <div class="gw-ad-300x250">
                             <div class="wfa-ad-container wfa-ad-halfpage">
                                 <div data-wfa-ad="wfa_1229_sidebar_halfpage" data-wfa-size="300x600,336x280,300x250"></div>
                             </div>
                         </div>
+                        */}}
 
-                        {{if whatsappAlertsEnabled}}
                         <!-- Native Fallback & High Engagement VIP Alert -->
                         <div class="gw-vip-box">
                             <div class="gw-vip-icon">
@@ -931,10 +935,10 @@
                                 </svg>
                             </a>
                         </div>
-                        {{end}}
                     </div>
                 </div>
             </div>
+            {{end}}
 
         </div>
 
@@ -978,7 +982,7 @@
             </div>
         </div>
 
-        <!-- Bottom High-CPM Sponsored Banner Ad Card -->
+        {{/* Bottom High-CPM Sponsored Banner Ad Card (Commented until active sponsor/ad partner)
         <div class="gw-bottom-ad-card">
             <div class="gw-ad-caption">Sponsored Advertisement</div>
             <div class="gw-bottom-ad-frame">
@@ -987,6 +991,7 @@
                 </div>
             </div>
         </div>
+        */}}
 
     </div>
 </div>

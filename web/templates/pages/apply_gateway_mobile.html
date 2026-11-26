@@ -619,7 +619,7 @@
         </div>
     </div>
 
-    <!-- Mobile Top Header Ad Slot (Restored) -->
+    {{/* Mobile Top Header Ad Slot (Commented until active sponsor/ad partner)
     <div class="gw-m-card gw-m-top-ad-card">
         <div class="gw-m-ad-caption">Sponsored Advertisement</div>
         <div class="gw-m-top-ad-frame">
@@ -628,6 +628,7 @@
             </div>
         </div>
     </div>
+    */}}
 
     <!-- Mobile Header Hero Card -->
     <div class="gw-m-card gw-m-hero-card">
@@ -738,8 +739,10 @@
         </div>
     </div>
 
-    <!-- Mobile High-CPM Sponsored Zone (300x250) -->
+    {{if whatsappAlertsEnabled}}
+    <!-- Mobile VIP Alerts Card (Sponsor Slot Commented until active partner) -->
     <div class="gw-m-card gw-m-ad-card">
+        {{/*
         <div class="gw-m-ad-header">
             <span class="gw-m-ad-tag">Career Partner</span>
             <span class="gw-m-ad-sponsor">Sponsored</span>
@@ -750,8 +753,8 @@
                 <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="300x250,336x280"></div>
             </div>
         </div>
+        */}}
 
-        {{if whatsappAlertsEnabled}}
         <!-- High-Converting Fallback Alert -->
         <div class="gw-m-native-alert">
             <div class="gw-m-alert-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -1px; margin-right: 4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>VIP Alerts</div>
@@ -762,8 +765,8 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </a>
         </div>
-        {{end}}
     </div>
+    {{end}}
 
     <!-- Candidate Safety Accordion Cards -->
     <div class="gw-m-trust-stack">
@@ -790,7 +793,7 @@
         </div>
     </div>
 
-    <!-- Bottom High-CPM Mobile Sponsored Banner Card -->
+    {{/* Bottom High-CPM Mobile Sponsored Banner Card (Commented until active sponsor/ad partner)
     <div class="gw-m-card gw-m-bottom-ad-card">
         <div class="gw-m-ad-header">
             <span class="gw-m-ad-tag">Featured Career Partner</span>
@@ -802,6 +805,7 @@
             </div>
         </div>
     </div>
+    */}}
 
     <!-- Mobile Spacing Buffer so content isn't obscured by Sticky Bar -->
     <div class="gw-m-bottom-spacer"></div>

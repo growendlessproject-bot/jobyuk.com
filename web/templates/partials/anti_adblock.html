@@ -298,10 +298,7 @@
             detectedByBait = true;
         }
 
-        // Vector B: Check Global WeForAds error signal
-        if (window.__wfaBlocked === true) {
-            detectedByScript = true;
-        }
+        // Vector B: Disabled (WeForAds removed)
 
         // Vector C: Network Bait Fetch (Detects Network-level Adblockers: PiHole, Brave Shield, DNS blockers)
         var testAdUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';

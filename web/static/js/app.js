@@ -2829,14 +2829,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.classList.add('job-card-append-anim');
                     card.style.animationDelay = `${index * 0.05}s`;
                     jobsContainer.appendChild(card);
-
-                    // Insert in-feed ad between job cards in infinite scroll stream (after 4th and 12th cards)
-                    if (index === 3 || index === 11) {
-                        const adBox = document.createElement('div');
-                        adBox.className = 'wfa-ad-container wfa-ad-incontent';
-                        adBox.innerHTML = '<div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="300x250"></div>';
-                        jobsContainer.appendChild(adBox);
-                    }
                 });
 
                 // Refresh ads for newly appended items

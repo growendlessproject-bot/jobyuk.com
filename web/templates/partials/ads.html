@@ -182,6 +182,7 @@ a[href*="weforads"],
     }
 }
 </style>
+{{/* WeForAds runtime script disabled
 <script>
 (function() {
     // Dynamic client-side size gating based on Publift standard IAB sizes
@@ -430,33 +431,34 @@ a[href*="weforads"],
     }
 })();
 </script>
+*/}}
 {{end}}
 
 {{define "wfa_leaderboard"}}
 {{template "wfa_ad_styles" .}}
+{{/* Disabled until active ad/sponsor partner is configured
 <div class="wfa-ad-container wfa-ad-leaderboard">
-    <!-- Publift Top Performing Header Formats:
-         Desktop (>=768px): Billboard (970x250), Large Leaderboard (970x90), Leaderboard (728x90)
-         Mobile (<768px): Large Mobile Banner (320x100), Medium Rectangle (300x250), Mobile Banner (320x50)
-    -->
     <div data-wfa-ad="wfa_1229_header_leaderboard" data-wfa-size="{{if .IsMobile}}320x100,300x250,320x50{{else}}970x250,970x90,728x90{{end}}"></div>
 </div>
+*/}}
 {{end}}
 
 {{define "wfa_incontent"}}
 {{template "wfa_ad_styles" .}}
+{{/* Disabled until active ad/sponsor partner is configured
 <div class="wfa-ad-container wfa-ad-incontent">
-    <!-- Publift Top Performing In-Content Formats: Large Rectangle (336x280), Medium Rectangle (300x250), Half Page (300x600) -->
     <div data-wfa-ad="wfa_1229_incontent_banner" data-wfa-size="336x280,300x250,300x600"></div>
 </div>
+*/}}
 {{end}}
 
 {{define "wfa_halfpage"}}
 {{template "wfa_ad_styles" .}}
+{{/* Disabled until active ad/sponsor partner is configured
 <div class="wfa-ad-container wfa-ad-halfpage" style="min-height: 250px; max-width: 336px; margin: 16px auto;">
-    <!-- Publift Top Performing Sidebar Formats: Half Page (300x600), Large Rectangle (336x280), Medium Rectangle (300x250), Wide Skyscraper (160x600) -->
     <div data-wfa-ad="wfa_1229_sidebar_halfpage" data-wfa-size="300x600,336x280,300x250,160x600"></div>
 </div>
+*/}}
 {{end}}
 
 {{define "JobyUK_article_top_ad"}}
