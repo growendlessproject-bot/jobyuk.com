@@ -211,7 +211,7 @@ func (r *JobRepository) Search(ctx context.Context, params models.JobSearchParam
 	offset := (params.Page - 1) * params.PerPage
 
 	// Build dynamic WHERE clause
-	conditions := []string{"j.status = 'active'"}
+	conditions := []string{"j.status = 'active'", "(j.expiration_date IS NULL OR j.expiration_date > NOW())"}
 	args := []interface{}{}
 	argNum := 1
 
@@ -421,7 +421,7 @@ func (r *JobRepository) FindLatest(ctx context.Context, limit int) ([]models.Job
 			COALESCE(c.slug, '') as company_slug
 		FROM jobs j
 		LEFT JOIN companies c ON j.employer_id = c.id
-		WHERE j.status = 'active'
+		WHERE j.status = 'active' AND (j.expiration_date IS NULL OR j.expiration_date > NOW())
 		ORDER BY j.date_posted DESC
 		LIMIT $1
 	`, limit)
@@ -535,7 +535,7 @@ func (r *JobRepository) FindActiveByRole(ctx context.Context, roleID int, roleNa
 	} else if len(wordConditions) == 1 {
 		whereClause += " OR " + wordConditions[0]
 	}
-	whereClause += ") AND j.status = 'active'"
+	whereClause += ") AND j.status = 'active' AND (j.expiration_date IS NULL OR j.expiration_date > NOW())"
 
 	countQuery := fmt.Sprintf(`
 		SELECT COUNT(DISTINCT j.id) 
@@ -609,6 +609,7 @@ func (r *JobRepository) FindSimilar(ctx context.Context, jobID int64, limit int)
 		FROM jobs j
 		LEFT JOIN companies c ON j.employer_id = c.id
 		WHERE j.status = 'active'
+			AND (j.expiration_date IS NULL OR j.expiration_date > NOW())
 			AND j.id != $1
 			AND j.search_vector @@ plainto_tsquery('english', (SELECT title FROM jobs WHERE id = $1))
 		ORDER BY j.date_posted DESC
@@ -646,7 +647,7 @@ func (r *JobRepository) FindSimilar(ctx context.Context, jobID int64, limit int)
 func (r *JobRepository) FindActiveByCompany(ctx context.Context, companyID int64, limit, offset int) ([]models.Job, int, error) {
 	var total int
 	err := r.db.QueryRow(ctx, `
-		SELECT COUNT(*) FROM jobs WHERE employer_id = $1 AND status = 'active'
+		SELECT COUNT(*) FROM jobs WHERE employer_id = $1 AND status = 'active' AND (expiration_date IS NULL OR expiration_date > NOW())
 	`, companyID).Scan(&total)
 	if err != nil {
 		return nil, 0, err
@@ -661,7 +662,7 @@ func (r *JobRepository) FindActiveByCompany(ctx context.Context, companyID int64
 			COALESCE(c.slug, '') as company_slug
 		FROM jobs j
 		LEFT JOIN companies c ON j.employer_id = c.id
-		WHERE j.employer_id = $1 AND j.status = 'active'
+		WHERE j.employer_id = $1 AND j.status = 'active' AND (j.expiration_date IS NULL OR j.expiration_date > NOW())
 		ORDER BY j.date_posted DESC
 		LIMIT $2 OFFSET $3
 	`, companyID, limit, offset)

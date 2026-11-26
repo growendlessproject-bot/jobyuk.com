@@ -725,6 +725,9 @@ func (h *Handlers) JobDetail(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate SEO
+	if job.IsExpired() {
+		w.Header().Set("X-Robots-Tag", "noindex, follow")
+	}
 	pageMeta := h.meta.JobMeta(job)
 	schemaHTML := h.schema.JobPostingSchema(job)
 	breadcrumbItems := h.schema.JobBreadcrumbs(job)
@@ -2714,6 +2717,11 @@ func (h *Handlers) JobApplyRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if job.IsExpired() {
+		http.Redirect(w, r, fmt.Sprintf("/jobs/%s/", job.Slug), http.StatusFound)
+		return
+	}
+
 	destURL := job.ExternalURL
 	if destURL == "" {
 		destURL = job.ReedURL
@@ -2793,6 +2801,11 @@ func (h *Handlers) JobApplyOut(w http.ResponseWriter, r *http.Request) {
 	job, err := h.repos.Job.FindByID(ctx, id)
 	if err != nil {
 		h.NotFound(w, r)
+		return
+	}
+
+	if job.IsExpired() {
+		http.Redirect(w, r, fmt.Sprintf("/jobs/%s/", job.Slug), http.StatusFound)
 		return
 	}
 

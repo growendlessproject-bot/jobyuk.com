@@ -244,6 +244,7 @@ func (b *Bot) applyLinkResult(ctx context.Context, job JobCandidate, res CheckRe
 		_, err := b.db.Exec(ctx, `
 			UPDATE jobs
 			SET status = 'expired',
+				expiration_date = NOW(),
 				link_status = 'dead',
 				link_http_status = $1,
 				link_check_reason = $2,

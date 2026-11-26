@@ -1,4 +1,4 @@
-﻿{{define "content"}}
+{{define "content"}}
 <!-- ==========================================================================
      JobyUK.com Next-Level Mobile Job Detail (Card-Free / Open Modern Canvas)
      ========================================================================== -->
@@ -144,8 +144,27 @@
             </div>
         </div>
 
+        {{if .Data.IsExpired}}
+        <div role="alert" style="margin: 12px 0 16px 0; padding: 12px 14px; border-radius: 12px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.45;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2" style="flex-shrink: 0; margin-top: 1px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div>
+                <strong>Position Closed / Expired:</strong> This vacancy is no longer accepting applications.
+                <a href="/jobs/" style="color: #991b1b; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">Browse active UK jobs &rarr;</a>
+            </div>
+        </div>
+        {{end}}
+
         <!-- 4. Hero Clean Apply Now Button -->
         <div class="jy-mob-hero-actions">
+            {{if .Data.IsExpired}}
+            <a href="/jobs/" class="jy-mob-hero-apply-btn" style="background: #475569;">
+                <span>Position Closed – Browse Active Jobs</span>
+            </a>
+            {{else}}
             <button type="button" onclick="window.open('/jobs/{{.Data.Job.ID}}/apply/', '_blank', 'noopener,noreferrer')" class="jy-mob-hero-apply-btn" style="border: none; font-family: inherit; cursor: pointer;">
                 <span>Apply Now</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
@@ -153,6 +172,7 @@
                     <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
             </button>
+            {{end}}
             <div class="jy-mob-hero-subnote">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>Direct ATS link • 100% Free • Verified Employer</span>
@@ -419,10 +439,16 @@
                 <span class="jy-mob-sticky-bar__title">{{.Data.Job.Title}}</span>
                 <span class="jy-mob-sticky-bar__meta">{{if .Data.Job.EmployerName}}{{.Data.Job.EmployerName}} • {{end}}{{if .Data.Job.FormattedSalary}}{{.Data.Job.FormattedSalary}}{{else}}Verified Direct Employer{{end}}</span>
             </div>
+            {{if .Data.IsExpired}}
+            <a href="/jobs/" class="jy-mob-sticky-bar__btn" style="background: #475569;">
+                <span>Closed</span>
+            </a>
+            {{else}}
             <button type="button" onclick="window.open('/jobs/{{.Data.Job.ID}}/apply/', '_blank', 'noopener,noreferrer')" class="jy-mob-sticky-bar__btn" style="border: none; font-family: inherit; cursor: pointer;">
                 <span>Apply Now</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
+            {{end}}
         </div>
     </aside>
 

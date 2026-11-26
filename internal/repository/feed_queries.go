@@ -40,7 +40,7 @@ func (r *JobRepository) FindFeedJobs(ctx context.Context, limit int) ([]FeedJob,
 		       COALESCE((SELECT ind.name FROM job_industries_mapping jim JOIN industries ind ON ind.id = jim.industry_id WHERE jim.job_id = j.id LIMIT 1), 'General') AS category
 		FROM jobs j
 		LEFT JOIN companies c ON j.employer_id = c.id
-		WHERE j.status = 'active' AND j.slug IS NOT NULL AND j.slug != ''
+		WHERE j.status = 'active' AND (j.expiration_date IS NULL OR j.expiration_date > NOW()) AND j.slug IS NOT NULL AND j.slug != ''
 		ORDER BY j.date_posted DESC
 		LIMIT $1
 	`

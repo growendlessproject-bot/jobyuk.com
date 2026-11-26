@@ -23,7 +23,7 @@ func (r *JobRepository) FindSitemapJobs(ctx context.Context) ([]SitemapJob, erro
 	rows, err := r.db.Query(ctx, `
 		SELECT slug, COALESCE(updated_at, date_posted, NOW()) AS updated_at 
 		FROM jobs 
-		WHERE status = 'active' AND slug IS NOT NULL AND slug != ''
+		WHERE status = 'active' AND (expiration_date IS NULL OR expiration_date > NOW()) AND slug IS NOT NULL AND slug != ''
 		ORDER BY date_posted DESC
 		LIMIT 1500
 	`)
@@ -50,7 +50,7 @@ func (r *JobRepository) FindSitemapJobs(ctx context.Context) ([]SitemapJob, erro
 func (r *JobRepository) GetLatestJobUpdatedAt(ctx context.Context) (time.Time, error) {
 	var t time.Time
 	err := r.db.QueryRow(ctx, `
-		SELECT COALESCE(MAX(updated_at), NOW()) FROM jobs WHERE status = 'active'
+		SELECT COALESCE(MAX(updated_at), NOW()) FROM jobs WHERE status = 'active' AND (expiration_date IS NULL OR expiration_date > NOW())
 	`).Scan(&t)
 	return t, err
 }
